@@ -113,10 +113,10 @@
       }
     },
     "screen": {
-      "headline": "一个账户，畅通所有应用。",
-      "subhead": "登录一次，即可访问与 {name} 关联的所有应用。您的个人资料和安全设置随处可用。",
-      "footer": "由 {name} 保护。",
-      "ecosystem": "适用于"
+      "headline": "One account for your whole security journey.",
+      "subhead": "Sign in once to reach your labs, courses and team dashboards. Your progress and skills follow you across the ecosystem.",
+      "footer": "Secured by Cyber Auth.",
+      "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
       "or": "或",

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { brand } from "@ostiary/core/lib/brand";
 
 import { themeColor } from "@ostiary/core/lib/brand";
-import { Geist_Mono, Instrument_Sans, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -17,16 +17,9 @@ import { cn } from "@ostiary/core/lib/utils";
 import "../globals.css";
 
 
-const instrumentSans = Instrument_Sans({
+const geistSans = Geist({
   variable: "--font-sans",
   subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
 });
 
 const geistMono = Geist_Mono({
@@ -110,8 +103,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={cn(
         "h-full",
         "antialiased",
-        instrumentSans.variable,
-        instrumentSerif.variable,
+        geistSans.variable,
         geistMono.variable,
         "font-sans",
       )}

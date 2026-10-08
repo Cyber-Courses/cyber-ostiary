@@ -337,7 +337,7 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             // letting any user register one would let them intercept that domain's SSO sign-ins.
             sso({
                 // A provider only takes sign-ins once its domain owner publishes a DNS TXT record.
-                domainVerification: { enabled: true, tokenPrefix: "ostiary" },
+                domainVerification: { enabled: true, tokenPrefix: "cyber-auth" },
                 providersLimit: (user) =>
                     userHasAdminRole((user as { role?: string | null }).role, ["admin"]) ? 100 : 0,
             }),
