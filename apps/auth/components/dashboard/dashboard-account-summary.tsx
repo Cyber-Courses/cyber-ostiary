@@ -37,8 +37,8 @@ function SummaryTile({ href, icon: Icon, label, value, tone = "default" }: Summa
           aria-hidden
           className={cn(
             "size-4 shrink-0",
-            tone === "positive" && "text-emerald-600 dark:text-emerald-500",
-            tone === "warning" && "text-amber-600 dark:text-amber-500",
+            tone === "positive" && "text-success",
+            tone === "warning" && "text-warning",
             tone === "default" && "text-muted-foreground",
           )}
         />

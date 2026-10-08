@@ -197,7 +197,7 @@ export function DashboardProfileSection() {
                     usernameStatus === "taken" || usernameStatus === "invalid"
                       ? "text-destructive"
                       : usernameStatus === "available"
-                        ? "text-emerald-600 dark:text-emerald-500"
+                        ? "text-success"
                         : undefined
                   }
                 >

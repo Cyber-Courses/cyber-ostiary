@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Monitor, Moon, Sun } from "lucide-react";
+import { Globe, Moon, MoonStar, Sun } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 
@@ -27,7 +27,7 @@ export function PreferencesMenuItems() {
   const tLocaleNames = useTranslations("common.localeNames");
   const tTheme = useTranslations("admin.themeToggle");
 
-  const ThemeIcon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;
+  const ThemeIcon = theme === "light" ? Sun : theme === "black" ? MoonStar : Moon;
 
   return (
     <>
@@ -57,10 +57,10 @@ export function PreferencesMenuItems() {
           <span className="flex-1">{tTheme("label")}</span>
         </DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup value={theme ?? "system"} onValueChange={setTheme}>
-            <DropdownMenuRadioItem value="light">{tTheme("light")}</DropdownMenuRadioItem>
+          <DropdownMenuRadioGroup value={theme === "black" || theme === "light" ? theme : "dark"} onValueChange={setTheme}>
             <DropdownMenuRadioItem value="dark">{tTheme("dark")}</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="system">{tTheme("system")}</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="black">{tTheme("black")}</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="light">{tTheme("light")}</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuSubContent>
       </DropdownMenuSub>

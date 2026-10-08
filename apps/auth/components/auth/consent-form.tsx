@@ -152,7 +152,7 @@ export function ConsentForm({
                 alt=""
                 width={48}
                 height={48}
-                className="size-12 shrink-0 rounded-md border border-border object-cover"
+                className="size-12 shrink-0 rounded-xl border border-border object-cover"
               />
             ) : null}
             <div className="min-w-0 flex-1 space-y-1">
@@ -165,7 +165,7 @@ export function ConsentForm({
         </CardHeader>
         <CardContent className="flex flex-col gap-6">
           {loadError ? (
-            <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-sm text-muted-foreground">
+            <div className="rounded-xl bg-glass px-3.5 py-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_var(--border)]">
               <p>{loadError}</p>
               {loadNeedsSignIn ? (
                 <Button className="mt-3" variant="secondary" size="sm" asChild>
@@ -186,9 +186,9 @@ export function ConsentForm({
           {client && origin ? (
             <div
               role="note"
-              className="flex gap-3 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-3 text-sm text-amber-950 dark:text-amber-100"
+              className="flex gap-3 rounded-xl border border-warning/40 bg-warning/10 px-3 py-3 text-sm text-foreground"
             >
-              <ShieldAlertIcon className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden />
+              <ShieldAlertIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
               <div className="min-w-0 space-y-1">
                 <p className="font-medium">{t("unverified.title")}</p>
                 <p>
@@ -224,7 +224,7 @@ export function ConsentForm({
               ) : null}
 
               <div>
-                <h3 className="mb-2 text-sm font-medium">
+                <h3 className="mb-2.5 font-mono text-xs font-medium text-faint">
                   {t("requestedAccess")}
                 </h3>
                 {scopes.length === 0 ? (
@@ -236,7 +236,7 @@ export function ConsentForm({
                     {scopes.map((scope) => (
                       <li
                         key={scope}
-                        className="rounded-md border border-border bg-muted/30 px-3 py-2"
+                        className="rounded-xl bg-glass px-3.5 py-2.5 shadow-[inset_0_0_0_1px_var(--border)]"
                       >
                         <span className="font-mono text-xs text-foreground">
                           {scope}

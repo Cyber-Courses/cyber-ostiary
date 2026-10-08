@@ -164,10 +164,14 @@
       }
     },
     "screen": {
-      "headline": "One account for your whole security journey.",
+      "headline": "One account for your whole security <accent>journey</accent>.",
       "subhead": "Sign in once to reach your labs, courses and team dashboards. Your progress and skills follow you across the ecosystem.",
       "footer": "Secured by Cyber Auth.",
-      "ecosystem": "Part of the Cyber ecosystem"
+      "ecosystem": "Part of the Cyber ecosystem",
+      "eyebrow": "Cyber account",
+      "continueTo": "Continue to <product>{name}</product>",
+      "continueLead": "Sign in with your Cyber account. The same account works across Cyber CTF, Courses, Bench and Library.",
+      "continueShort": "Continuing to {name}"
     },
     "social": {
       "or": "或",
@@ -216,7 +220,8 @@
       "dark": "深色",
       "system": "跟随系统",
       "srOnly": "切换主题",
-      "label": "主题"
+      "label": "主题",
+      "black": "Black"
     },
     "nav": {
       "groupAdmin": "管理",
@@ -699,12 +704,18 @@
       "no": "挪威语",
       "fi": "芬兰语",
       "cs": "捷克语"
-    }
+    },
+    "preferences": "Preferences",
+    "theme": "Theme"
   },
   "errors": {
     "boundaryTitle": "出错了",
     "boundaryDescription": "加载此页面时发生错误。",
-    "retry": "重试"
+    "retry": "重试",
+    "notFoundTitle": "Page not <em>found</em>",
+    "notFoundDescription": "This page does not exist or has moved.",
+    "notFoundAction": "Go to sign in",
+    "boundaryEyebrow": "Error"
   },
   "rateLimit": {
     "seconds": "尝试次数过多。请在 {seconds} 秒后重试。",

@@ -21,7 +21,7 @@ export default function LocaleError({
   return (
     <div className="flex min-h-svh w-full flex-col items-center justify-center gap-4 p-8">
       <div className="max-w-md text-center">
-        <h1 className="text-lg font-semibold">{t("boundaryTitle")}</h1>
+        <h1 className="text-3xl">{t("boundaryTitle")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {t("boundaryDescription")}
         </p>

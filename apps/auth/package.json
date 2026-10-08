@@ -16,6 +16,8 @@
     "@better-auth/passkey": "catalog:",
     "@better-auth/scim": "catalog:",
     "@better-auth/sso": "catalog:",
+    "@cyber-courses/ui": "^0.2.0",
+    "@ostiary/core": "workspace:*",
     "better-auth": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
@@ -38,8 +40,7 @@
     "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",
     "uqr": "catalog:",
-    "zod": "catalog:",
-    "@ostiary/core": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

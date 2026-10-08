@@ -31,7 +31,7 @@ export default async function SsoSignInPage({
     <AuthScreen locale={locale}>
       <div className="w-full max-w-md space-y-6">
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{t("signInTitle")}</h1>
+          <h1 className="text-3xl sm:text-4xl">{t("signInTitle")}</h1>
           <p className="text-sm text-muted-foreground">{t("signInDescription")}</p>
         </div>
         <SsoSignInForm />

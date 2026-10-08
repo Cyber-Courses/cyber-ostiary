@@ -1,4 +1,5 @@
 import { AuthScreen } from "@/components/auth/auth-screen";
+import { clientProduct } from "@/lib/client-product";
 import { captchaConfig } from "@ostiary/core/lib/captcha";
 import { Suspense } from "react";
 
@@ -16,13 +17,17 @@ export const dynamic = "force-dynamic";
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
+  // An authorize request from a Cyber product tints the screen (visual only).
+  const product = await clientProduct((await searchParams).client_id);
 
   return (
-    <AuthScreen locale={locale}>
+    <AuthScreen locale={locale} product={product}>
         <Suspense fallback={<LoginFallback />}>
           <LoginForm socialProviders={await enabledSocialProviders()} captcha={captchaConfig()} />
         </Suspense>

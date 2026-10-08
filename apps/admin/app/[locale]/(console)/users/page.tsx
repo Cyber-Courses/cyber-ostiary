@@ -27,7 +27,7 @@ export default async function AdminUsersPage({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
+        <h1 className="text-3xl sm:text-4xl">{t("title")}</h1>
         <p className="max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
           {t("description")}
         </p>

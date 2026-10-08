@@ -164,10 +164,14 @@
       }
     },
     "screen": {
-      "headline": "One account for your whole security journey.",
+      "headline": "One account for your whole security <accent>journey</accent>.",
       "subhead": "Sign in once to reach your labs, courses and team dashboards. Your progress and skills follow you across the ecosystem.",
       "footer": "Secured by Cyber Auth.",
-      "ecosystem": "Part of the Cyber ecosystem"
+      "ecosystem": "Part of the Cyber ecosystem",
+      "eyebrow": "Cyber account",
+      "continueTo": "Continue to <product>{name}</product>",
+      "continueLead": "Sign in with your Cyber account. The same account works across Cyber CTF, Courses, Bench and Library.",
+      "continueShort": "Continuing to {name}"
     },
     "social": {
       "or": "または",
@@ -216,7 +220,8 @@
       "dark": "Dark",
       "system": "System",
       "srOnly": "Toggle theme",
-      "label": "Theme"
+      "label": "Theme",
+      "black": "Black"
     },
     "nav": {
       "groupAdmin": "Admin",
@@ -699,12 +704,18 @@
       "no": "ノルウェー語",
       "fi": "フィンランド語",
       "cs": "チェコ語"
-    }
+    },
+    "preferences": "Preferences",
+    "theme": "Theme"
   },
   "errors": {
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
-    "retry": "Try again"
+    "retry": "Try again",
+    "notFoundTitle": "Page not <em>found</em>",
+    "notFoundDescription": "This page does not exist or has moved.",
+    "notFoundAction": "Go to sign in",
+    "boundaryEyebrow": "Error"
   },
   "rateLimit": {
     "seconds": "試行回数が多すぎます。{seconds} 秒後にもう一度お試しください。",

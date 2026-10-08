@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { AuthScreen } from "@/components/auth/auth-screen";
+import { clientProduct } from "@/lib/client-product";
 import { ConsentForm, type ConsentClientOrigin } from "@/components/auth/consent-form";
 import { clientRegistrationSource } from "@ostiary/core/lib/client-registration";
 
@@ -44,8 +45,9 @@ export default async function ConsentPage({
   const query = await searchParams;
   const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
   const origin = await clientOrigin(first(query.client_id), first(query.redirect_uri));
+  const product = await clientProduct(query.client_id);
   return (
-    <AuthScreen locale={locale}>
+    <AuthScreen locale={locale} product={product}>
       <Suspense fallback={<ConsentFallback />}>
         <ConsentForm origin={origin} />
       </Suspense>
