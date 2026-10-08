@@ -113,10 +113,10 @@
       }
     },
     "screen": {
-      "headline": "Un seul compte pour <accent>toutes vos applications</accent>.",
-      "subhead": "Connectez-vous une fois et accédez à toutes les applications reliées à {name}. Votre profil et vos réglages de sécurité vous suivent partout.",
-      "footer": "Sécurisé par {name}.",
-      "ecosystem": "Compatible avec"
+      "headline": "Un seul compte pour tout votre parcours en sécurité.",
+      "subhead": "Connectez-vous une fois pour accéder à vos labs, cours et tableaux de bord d'équipe. Votre progression et vos compétences vous suivent dans tout l'écosystème.",
+      "footer": "Sécurisé par Cyber Auth.",
+      "ecosystem": "Fait partie de l'écosystème Cyber"
     },
     "social": {
       "or": "ou",
