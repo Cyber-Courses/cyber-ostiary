@@ -1,18 +1,26 @@
 import { randomUUID } from "node:crypto";
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { oauthProvider } from "@better-auth/oauth-provider";
+import { createCimdClientDiscovery } from "@better-auth/cimd";
+import { fetchClientMetadataResource } from "@better-auth/cimd/node";
+import { oauthDeviceAuthorization, oauthProvider } from "@better-auth/oauth-provider";
+import { eq } from "drizzle-orm";
 import { passkey } from "@better-auth/passkey";
+import { scim } from "@better-auth/scim";
 import { sso } from "@better-auth/sso";
 import {
     admin,
+    captcha,
+    emailOTP,
     haveIBeenPwned,
     jwt,
     lastLoginMethod,
+    multiSession,
     organization,
     username,
 } from "better-auth/plugins";
+import { twoFactor } from "better-auth/plugins/two-factor";
 
 import { db } from "@ostiary/core/db/index";
 import * as schema from "@ostiary/core/db/schema";
@@ -20,16 +28,44 @@ import { queueOrganizationInviteEmail } from "@ostiary/core/lib/email/queue-orga
 import { queueChangeEmailConfirmation } from "@ostiary/core/lib/email/queue-change-email-confirmation";
 import { queuePasswordResetEmail } from "@ostiary/core/lib/email/queue-password-reset-email";
 import { queueVerificationEmail } from "@ostiary/core/lib/email/queue-verification-email";
+import { queueSignInCodeEmail } from "@ostiary/core/lib/email/queue-sign-in-code-email";
+import { SIGN_IN_CODE_LENGTH, SIGN_IN_CODE_MINUTES } from "@ostiary/core/lib/sign-in-code";
+import { emailLocale } from "@ostiary/core/lib/email/email-locale";
+import { captchaPluginOptions } from "@ostiary/core/lib/captcha";
 import { routing } from "@ostiary/core/i18n/routing";
 import { recordAudit } from "@ostiary/core/lib/audit";
 import { clientIp, recordAuthEvent } from "@ostiary/core/lib/auth-events";
+import { adminNeedsTwoFactor } from "@ostiary/core/lib/admin/admin-two-factor";
+import { MAX_DEVICE_SESSIONS } from "@ostiary/core/lib/device-accounts";
 import { userHasAdminRole } from "@ostiary/core/lib/admin/user-has-admin-role";
+import { brand } from "@ostiary/core/lib/brand";
 import { PUBLIC_ORGANIZATION_ID } from "@ostiary/core/lib/organization-public";
 import { getPasskeyWebAuthnOptions } from "@ostiary/core/lib/passkey-options";
 import { env } from "@ostiary/core/lib/env";
 import { ENV_API_SCOPES, OIDC_SCOPES, syncProviderScopes } from "@ostiary/core/lib/oauth-scopes";
 import { oauthResourceIdentifiers } from "@ostiary/core/lib/oauth-resources";
+import { withOpenApiLinks } from "@ostiary/core/lib/oauth-resource-access";
+import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN } from "@ostiary/core/lib/oauth-resource-policy";
+import {
+    clientExists,
+    clientRegistrationSource,
+    currentClientRegistrationSettings,
+    registrationCapacityLeft,
+    syncClientRegistration,
+} from "@ostiary/core/lib/client-registration";
+import {
+    markDynamicRegistration,
+    metadataDocumentHostAllowed,
+    registrationRequestError,
+} from "@ostiary/core/lib/client-registration-policy";
 import { socialProvidersConfig } from "@ostiary/core/lib/social-providers";
+import {
+    SCIM_DEACTIVATED_MESSAGE,
+    SCIM_DEACTIVATED_REASON,
+    scimCredentialHashSecret,
+    scimIdentity,
+    scimProjection,
+} from "@ostiary/core/lib/scim";
 
 type AuditTarget = "user" | "oauth_client" | "sso_provider" | "organization";
 type Bag = Record<string, unknown>;
@@ -54,12 +90,14 @@ const AUDITED_ENDPOINTS: Record<string, { action: string; target?: AuditTarget; 
     "/oauth2/client/rotate-secret": { action: "oauth_client.rotate_secret", target: "oauth_client", id: (b) => str(b.client_id) },
     "/oauth2/update-consent": { action: "oauth_consent.update" },
     "/oauth2/delete-consent": { action: "oauth_consent.delete" },
+    "/device/approve": { action: "oauth_device.approve" },
+    "/device/deny": { action: "oauth_device.deny" },
     "/sso/register": { action: "sso_provider.create", target: "sso_provider", id: (b) => str(b.providerId) },
     "/organization/create": { action: "organization.create", target: "organization", id: (_b, r) => str(r.id) },
 };
 
 /** Request fields that are never written to the audit log. */
-const SECRET_FIELDS = new Set(["password", "newPassword", "sessionToken", "clientSecret", "client_secret", "oidcConfig", "samlConfig"]);
+const SECRET_FIELDS = new Set(["password", "newPassword", "sessionToken", "clientSecret", "client_secret", "oidcConfig", "samlConfig", "userCode"]);
 
 /**
  * Endpoints that grant lasting access to the account. They need a sign-in from the last
@@ -77,6 +115,51 @@ const RECENT_SIGN_IN_SECONDS = 10 * 60;
 /** Password sign-in endpoints whose failures are counted for the security page. */
 const PASSWORD_SIGN_IN_PATHS = new Set(["/sign-in/email", "/sign-in/username"]);
 
+/** Sign-ins that may stop for two-factor authentication: passwords and emailed codes. */
+const TWO_STEP_SIGN_IN_PATHS = new Set([...PASSWORD_SIGN_IN_PATHS, "/sign-in/email-otp"]);
+
+/** Admin-only endpoints. An admin who must turn on two-factor authentication first cannot call them. */
+function isAdminPath(path: string): boolean {
+    // Never block the way back from impersonation.
+    if (path === "/admin/stop-impersonating") return false;
+    return path.startsWith("/admin/") || path === "/sso/register" || path === "/organization/create";
+}
+
+/**
+ * Records a password or code sign-in once it has a session. Placed after the twoFactor plugin,
+ * whose hook deletes the session (and clears `newSession`) while the second step is pending: that
+ * sign-in is counted when the code is verified, by the session hook.
+ */
+const passwordSignInEvents = {
+    id: "ostiary-password-sign-in-events",
+    hooks: {
+        after: [
+            {
+                matcher: (ctx) => TWO_STEP_SIGN_IN_PATHS.has(ctx.path ?? ""),
+                handler: createAuthMiddleware(async (ctx) => {
+                    const created = ctx.context.newSession;
+                    if (created) await recordAuthEvent("sign_in", created.user.id);
+                }),
+            },
+        ],
+    },
+} satisfies BetterAuthPlugin;
+
+/**
+ * The email OTP plugin's endpoints other than sign-in codes. Email verification and password
+ * reset keep their links, so these stay closed rather than becoming a second, unprotected way
+ * to do the same thing (and to send email to any address).
+ */
+const UNUSED_EMAIL_OTP_PATHS = [
+    "/email-otp/check-verification-otp",
+    "/email-otp/verify-email",
+    "/email-otp/request-password-reset",
+    "/forget-password/email-otp",
+    "/email-otp/reset-password",
+    "/email-otp/request-email-change",
+    "/email-otp/change-email",
+];
+
 /** First-run setup: these addresses get the admin role when their account is created. */
 const adminEmails = new Set(
     (env.ADMIN_EMAILS ?? "")
@@ -84,6 +167,42 @@ const adminEmails = new Set(
         .map((email) => email.trim().toLowerCase())
         .filter(Boolean),
 );
+
+/**
+ * Records that a client came from /oauth2/register (`oauth_client.metadata`), which is how
+ * the admin console and the consent screen tell it from an admin-registered one. If that
+ * fails the client is deleted, so an unmarked client never passes for a reviewed one.
+ */
+async function markDynamicClient(
+    returned: unknown,
+    actor: { id: string; email: string } | null,
+    ipAddress: string | null,
+) {
+    const created = (returned && typeof returned === "object" ? returned : {}) as Bag;
+    const clientId = str(created.client_id);
+    if (!clientId) return;
+    try {
+        const [row] = await db
+            .select({ metadata: schema.oauthClient.metadata })
+            .from(schema.oauthClient)
+            .where(eq(schema.oauthClient.clientId, clientId));
+        await db
+            .update(schema.oauthClient)
+            .set({ metadata: markDynamicRegistration(row?.metadata) })
+            .where(eq(schema.oauthClient.clientId, clientId));
+    } catch (error) {
+        console.error("Could not mark a dynamically registered client; deleting it", error);
+        await db.delete(schema.oauthClient).where(eq(schema.oauthClient.clientId, clientId)).catch(() => {});
+        throw new APIError("INTERNAL_SERVER_ERROR", { error: "server_error", error_description: "Registration failed" });
+    }
+    await recordAudit({
+        actor: actor ? { id: actor.id, email: actor.email } : null,
+        action: "oauth_client.self_register",
+        target: { type: "oauth_client", id: clientId, label: str(created.client_name) ?? null },
+        metadata: { source: "dynamic", redirect_uris: created.redirect_uris, scope: created.scope },
+        ipAddress,
+    });
+}
 
 export type AuthFactoryOptions = {
     /**
@@ -104,9 +223,63 @@ export type AuthFactoryOptions = {
  */
 export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactoryOptions) {
     const passkeyWebAuthn = getPasskeyWebAuthnOptions(baseURL);
+    const captchaOptions = captchaPluginOptions();
+    const twoFactorPlugin = twoFactor({
+        issuer: brand.name,
+        // Users without a password (passkey or GitHub only) can turn it on too, so an
+        // admin who never set a password is not locked out of the console. Accounts with
+        // a password must still confirm it.
+        allowPasswordless: true,
+    });
+    /**
+     * The twoFactor plugin asks for the second step after password sign-ins only. A sign-in
+     * code proves the inbox: one factor, like a password. Run the same check after it (trusted
+     * device, else the /two-factor challenge), so a code never skips an authenticator.
+     */
+    const emailCodeTwoFactor = {
+        id: "ostiary-email-code-two-factor",
+        hooks: {
+            after: twoFactorPlugin.hooks.after.map((hook) => ({
+                ...hook,
+                matcher: (ctx: { path?: string }) => ctx.path === "/sign-in/email-otp",
+            })),
+        },
+    } satisfies BetterAuthPlugin;
+    // Client ID Metadata Documents (the client_id is an HTTPS URL to the client's JSON
+    // metadata, as MCP clients use). Added to the provider only while an admin has turned it
+    // on, see syncClientRegistration. Better Auth's Node transport resolves the host once,
+    // refuses private and reserved addresses, pins the connection and never follows
+    // redirects; documents are capped at 5 KB and fetched with a 5 s timeout.
+    const metadataDocuments = {
+        clientDiscovery: createCimdClientDiscovery({
+            fetchClientMetadataResource,
+            // Requires client_name and redirect_uris, both shown on the consent screen.
+            metadataProfile: "mcp-2026-07-28",
+            isMetadataDocumentUrlAllowed: async (url) => {
+                const settings = await currentClientRegistrationSettings();
+                if (!settings.metadataDocuments) return false;
+                if (!metadataDocumentHostAllowed(url, settings.metadataDocumentHosts)) return false;
+                // Refreshing a known client is not a new registration.
+                return (await clientExists(url)) || (await registrationCapacityLeft(settings));
+            },
+            onClientCreated: async ({ client, context }) => {
+                await recordAudit({
+                    actor: null,
+                    action: "oauth_client.self_register",
+                    target: { type: "oauth_client", id: client.clientId, label: client.name ?? null },
+                    metadata: { source: "metadata_document" },
+                    ipAddress: clientIp(context.headers),
+                });
+            },
+        }),
+    };
     const provider = oauthProvider({
         loginPage: "/login",
         consentPage: "/consent",
+        // Self-registration (Dynamic Client Registration, metadata documents) is off here and
+        // set from the admin console's settings before each request, see syncClientRegistration.
+        allowDynamicClientRegistration: false,
+        allowUnauthenticatedClientRegistration: false,
         // Only for clients that ask with prompt=select_account (e.g. a native app signing in
         // through the system browser, whose session may belong to someone else).
         selectAccount: { page: "/select-account", shouldRedirect: () => false },
@@ -116,9 +289,9 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
         // OAUTH_API_AUDIENCES. The build registers the same rows first (`db:seed`), see
         // db/seed-resources.ts. APIs added from the admin console live only in the database.
         resources: oauthResourceIdentifiers(baseURL),
-        // As in 1.5: any client may request any listed resource. Per-client links
-        // (oauthClientResource) can be introduced later from the admin app.
-        enforcePerClientResources: false,
+        // A client gets a token for an API only if it is linked to it. APIs open to every
+        // application (the default) count as linked to every client, see withOpenApiLinks.
+        enforcePerClientResources: true,
         // 1.7 requires a policy before anyone may grant client_credentials scopes. Only
         // platform admins may; every other client action keeps its 1.5 behavior.
         clientPrivileges: ({ action, user }) =>
@@ -130,7 +303,9 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             userHasAdminRole(user?.role as string | null | undefined, ["admin"]),
         // Explicit (not left to the library default): resource servers reject tokens
         // only after expiry, so this bounds how long a leaked access token works.
-        accessTokenExpiresIn: 60 * 60,
+        accessTokenExpiresIn: ACCESS_TOKEN_EXPIRES_IN,
+        // Better Auth's default, explicit because per-API lifetimes can only be shorter.
+        refreshTokenExpiresIn: REFRESH_TOKEN_EXPIRES_IN,
         // Resource servers authorize on the admin plugin's role (e.g. "admin" or "admin,user").
         customAccessTokenClaims: ({ user }) =>
             typeof user?.role === "string" ? { role: user.role } : {},
@@ -149,14 +324,17 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
     return betterAuth({
         baseURL,
         trustedOrigins,
+        disabledPaths: UNUSED_EMAIL_OTP_PATHS,
         advanced: cookieDomain
             ? { crossSubDomainCookies: { enabled: true, domain: cookieDomain } }
             : undefined,
         databaseHooks: {
             user: {
                 create: {
-                    before: async (newUser) => {
+                    before: async (newUser, context) => {
                         if (!adminEmails.has(newUser.email.toLowerCase())) return;
+                        // An identity provider pushing users must not be able to claim an admin address.
+                        if (context?.path?.startsWith("/scim/")) return;
                         return { data: { ...newUser, role: "admin" } };
                     },
                     after: async (createdUser) => {
@@ -191,7 +369,11 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                         };
                     },
                     // Every new session is a sign-in, whatever the method (password, passkey, SSO, OAuth).
-                    after: async (createdSession) => {
+                    after: async (createdSession, ctx) => {
+                        // Password and code sign-ins are counted by passwordSignInEvents, after the 2FA check.
+                        if (ctx && TWO_STEP_SIGN_IN_PATHS.has(ctx.path)) return;
+                        // Turning 2FA on or off replaces the current session: not a new sign-in.
+                        if (ctx?.path.startsWith("/two-factor/") && ctx.context.session) return;
                         await recordAuthEvent("sign_in", createdSession.userId);
                     },
                 },
@@ -201,6 +383,45 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             before: createAuthMiddleware(async (ctx) => {
                 // APIs registered from the admin console add scopes without a redeploy.
                 await syncProviderScopes(provider.options);
+                if (env.REQUIRE_ADMIN_2FA === "true" && isAdminPath(ctx.path)) {
+                    const current = await getSessionFromCtx(ctx);
+                    if (current && adminNeedsTwoFactor(current.user as { role?: string | null; twoFactorEnabled?: boolean | null }, true)) {
+                        throw new APIError("FORBIDDEN", {
+                            message: "Turn on two-factor authentication to use admin features.",
+                            code: "TWO_FACTOR_REQUIRED",
+                        });
+                    }
+                }
+                const registration = await syncClientRegistration(provider.options, metadataDocuments);
+                if (ctx.path === "/device/code") {
+                    // Device sign-in shows only the app's name to the user, who types a code
+                    // elsewhere: an easy phishing setup for an app nobody reviewed. Self-registered
+                    // clients (whatever grants their metadata lists) sign in through the browser.
+                    const clientId = str((ctx.body as Bag | undefined)?.client_id);
+                    if (clientId && (await clientRegistrationSource(clientId)) !== "admin") {
+                        throw new APIError("BAD_REQUEST", {
+                            error: "unauthorized_client",
+                            error_description: "Self-registered clients cannot use device sign-in",
+                        });
+                    }
+                    return;
+                }
+                if (ctx.path === "/oauth2/register" && registration.dynamic !== "off") {
+                    // Better Auth checks scopes, redirect URIs and PKCE. Self-registered clients
+                    // also get no machine access, and an hourly cap across instances limits abuse
+                    // (on top of Better Auth's per-IP limit of 5 registrations a minute).
+                    const refused = registrationRequestError(ctx.body);
+                    if (refused) {
+                        throw new APIError("BAD_REQUEST", { error: "invalid_client_metadata", error_description: refused });
+                    }
+                    if (!(await registrationCapacityLeft(registration))) {
+                        throw new APIError("TOO_MANY_REQUESTS", {
+                            error: "temporarily_unavailable",
+                            error_description: "Too many clients registered in the last hour. Try again later.",
+                        });
+                    }
+                    return;
+                }
                 if (RECENT_SIGN_IN_PATHS.has(ctx.path)) {
                     const current = await getSessionFromCtx(ctx);
                     const signedInAt = current ? new Date(current.session.createdAt).getTime() : 0;
@@ -225,7 +446,15 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                     }
                     return;
                 }
+                // Signing out of one of several accounts (account switcher) deletes that session only.
+                if (ctx.path === "/multi-session/revoke") {
+                    const token = (ctx.body as { sessionToken?: unknown } | undefined)?.sessionToken;
+                    const revoked = typeof token === "string" ? await ctx.context.internalAdapter.findSession(token) : null;
+                    if (revoked) await recordAuthEvent("sign_out", revoked.user.id, { ipAddress: clientIp(ctx.headers) });
+                    return;
+                }
                 // Sign-out deletes the session, so read who is signing out before the handler runs.
+                // With several accounts signed in, it signs out of all of them; this records the active one.
                 if (ctx.path !== "/sign-out") return;
                 const current = await getSessionFromCtx(ctx);
                 if (current) await recordAuthEvent("sign_out", current.user.id, { ipAddress: clientIp(ctx.headers) });
@@ -238,6 +467,11 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 if (PASSWORD_SIGN_IN_PATHS.has(ctx.path) && failed) {
                     const identifier = typeof body.email === "string" ? body.email : typeof body.username === "string" ? body.username : null;
                     await recordAuthEvent("sign_in_failed", null, { identifier, ipAddress: clientIp(ctx.headers) });
+                    return;
+                }
+
+                if (ctx.path === "/oauth2/register" && !failed) {
+                    await markDynamicClient(returned, ctx.context.session?.user ?? null, clientIp(ctx.headers));
                     return;
                 }
 
@@ -262,10 +496,16 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 });
             }),
         },
-        database: drizzleAdapter(db, {
-            provider: "pg",
-            schema,
-        }),
+        // Per-API access: APIs open to every application count as linked to every client.
+        database: withOpenApiLinks(
+            drizzleAdapter(db, {
+                provider: "pg",
+                schema,
+                // Real transactions (the SCIM plugin refuses to start without them). Better Auth then
+                // runs multi-step writes such as sign-up atomically; after-hooks still run post-commit.
+                transaction: true,
+            }),
+        ),
         socialProviders: socialProvidersConfig(),
         account: {
             accountLinking: {
@@ -313,7 +553,12 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
         },
         plugins: [
             jwt(),
-            admin(),
+            admin({
+                bannedUserMessage: (user: { banReason?: string | null }) =>
+                    user.banReason === SCIM_DEACTIVATED_REASON
+                        ? SCIM_DEACTIVATED_MESSAGE
+                        : "You have been banned from this application. Please contact support if you believe this is an error.",
+            }),
             lastLoginMethod({
                 customResolveMethod: (ctx) => {
                     if (ctx.path.includes("sign-in/username")) return "username";
@@ -322,6 +567,39 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             }),
             username(),
             haveIBeenPwned(),
+            // Authenticator app (TOTP) and backup codes. The second step applies to password
+            // sign-ins (email or username) and emailed sign-in codes. Passkeys are already two factors; social and SSO
+            // sign-ins rely on the identity provider's own checks. Must come before the OAuth
+            // provider: its hook replaces the sign-in response before an authorization resumes.
+            twoFactorPlugin,
+            emailCodeTwoFactor,
+            passwordSignInEvents,
+            // "Email me a sign-in code": a 6-digit code, typed on the sign-in page that asked for
+            // it, so an OAuth sign-in carries on in that tab even when the email is read on a phone.
+            emailOTP({
+                // A code signs in to an existing account only. Creating one takes the sign-up page
+                // (username, password, captcha); an unknown address gets the same answer and no email.
+                disableSignUp: true,
+                otpLength: SIGN_IN_CODE_LENGTH,
+                expiresIn: SIGN_IN_CODE_MINUTES * 60,
+                // Kept as a hash, like a password: a database read does not reveal live codes.
+                storeOTP: "hashed",
+                // Better Auth's defaults, stated: 3 wrong codes void the code, and each IP may ask
+                // for 3 codes and try 3 times a minute.
+                allowedAttempts: 3,
+                rateLimit: { window: 60, max: 3 },
+                // A code proves the inbox. Better Auth marks an unverified account as verified on
+                // first use, after removing its password and sessions (they were never proven).
+                sendVerificationOTP: async ({ email, otp, type }, ctx) => {
+                    if (type !== "sign-in") return;
+                    const locale = emailLocale(ctx?.headers ?? ctx?.request?.headers);
+                    void queueSignInCodeEmail({ to: email, code: otp, locale }).catch((error: unknown) => {
+                        console.error("[email] sign-in code error:", error);
+                    });
+                },
+            }),
+            // Optional: off unless CAPTCHA_PROVIDER, CAPTCHA_SITE_KEY and CAPTCHA_SECRET_KEY are set.
+            ...(captchaOptions ? [captcha(captchaOptions)] : []),
             passkey({
                 rpID: passkeyWebAuthn.rpID,
                 rpName: passkeyWebAuthn.rpName,
@@ -343,6 +621,16 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 },
             }),
             provider,
+            // RFC 8628 device sign-in for CLIs, TVs and other apps without a browser. Clients opt in
+            // with the device_code grant (admin console). The device shows a code, the user enters
+            // it on the auth app's /device page, then the device collects tokens at /oauth2/token.
+            oauthDeviceAuthorization({
+                // The page, not the plugin's JSON endpoint (`/api/auth/device`). The locale is added
+                // by the auth app's middleware.
+                verificationUri: `${baseURL}/device`,
+                expiresIn: "10m",
+                interval: "5s",
+            }),
             // Enterprise SSO (OIDC / SAML) per organization. Providers are managed from the admin app.
             // Only platform admins may register providers: a provider claims an email domain, so
             // letting any user register one would let them intercept that domain's SSO sign-ins.
@@ -351,6 +639,23 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 domainVerification: { enabled: true, tokenPrefix: "cyber-auth" },
                 providersLimit: (user) =>
                     userHasAdminRole((user as { role?: string | null }).role, ["admin"]) ? 100 : 0,
+            }),
+            // Several accounts in one browser: the account menu switches between them and the
+            // select-account page (prompt=select_account) lets the person pick one. Each account
+            // has its own signed cookie, scoped like the session cookie (shared across subdomains).
+            multiSession({ maximumSessions: MAX_DEVICE_SESSIONS }),
+            // SCIM 2.0 provisioning at /api/auth/scim/v2, one connection per organization.
+            // Connections and tokens are managed only through the plugin's server-only endpoints,
+            // which have no HTTP route: the admin console calls them after its admin check
+            // (see apps/admin .../organizations/[id]/scim-actions.ts). Okta or Entra authenticate
+            // with the bearer token; nothing else (no session, no API key) reaches SCIM.
+            scim({
+                connections: [],
+                managedConnections: { credentialHashSecret: scimCredentialHashSecret(env) },
+                identity: scimIdentity,
+                projection: scimProjection,
+                // Entra ID sends this legacy group schema; accepting it avoids failed group pushes.
+                compatibility: { microsoftEntra: { acceptLegacyGroupSchema: true } },
             }),
         ],
     });

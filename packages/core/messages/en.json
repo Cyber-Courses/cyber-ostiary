@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Email me a sign-in code",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "You last signed in with a code sent by email.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. Can't find the link? Ask for a new one below.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Accounts already signed in on this browser stay signed in."
+    },
+    "emailCode": {
+      "title": "Sign in with a code",
+      "description": "We'll email a 6-digit code to the address on your account. Read it on any device, then type it here.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "send": "Send code",
+      "sending": "Sending…",
+      "sentTitle": "Check your email",
+      "sent": "If an account uses {email}, a 6-digit code is on its way. It expires in {minutes} minutes.",
+      "codeLabel": "Sign-in code",
+      "verify": "Sign in",
+      "verifying": "Signing in…",
+      "newCode": "Didn't get it? Send a new code",
+      "usePassword": "Use your password instead",
+      "errors": {
+        "invalidEmail": "Enter a valid email address.",
+        "invalidCode": "That code isn't right. Check it and try again.",
+        "expired": "This code has expired. Ask for a new one.",
+        "tooManyAttempts": "Too many wrong codes. Ask for a new one.",
+        "rateLimited": "Too many attempts. Wait a minute and try again.",
+        "sendFailed": "Could not send the code. Try again in a minute.",
+        "signInFailed": "Could not sign in. Try again."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Two-factor authentication",
+      "title": "Two-factor authentication",
+      "descriptionTotp": "Enter the 6-digit code from your authenticator app.",
+      "descriptionBackup": "Enter one of your backup codes. Each code works once.",
+      "codeLabel": "Code",
+      "backupCodeLabel": "Backup code",
+      "trustDevice": "Trust this device for 30 days",
+      "trustDeviceHint": "You won’t be asked for a code on this device. Only choose this on a device you own.",
+      "submit": "Verify",
+      "submitting": "Verifying…",
+      "useBackupCode": "Use a backup code",
+      "useAuthenticator": "Use your authenticator app",
+      "backToLogin": "Back to sign in",
+      "expiredTitle": "Sign in again",
+      "expiredDescription": "This sign-in expired or had too many wrong codes. Sign in with your password again.",
+      "errors": {
+        "invalidCode": "That code is not valid. Enter the current code from your app.",
+        "invalidBackupCode": "That backup code is not valid or was already used.",
+        "locked": "Too many wrong codes. Try again in 15 minutes.",
+        "rateLimited": "Too many attempts. Wait a few seconds and try again.",
+        "failed": "Could not verify the code. Try again."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Unverified app",
+      "dynamic": "This app registered itself and has not been reviewed. Only allow it if you trust it and started this sign-in yourself.",
+      "metadataDocument": "This app identifies itself with a document on {host} and has not been reviewed. Only allow it if you trust it and started this sign-in yourself.",
+      "redirect": "If you allow, you will be sent to <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "APIs",
-        "description": "Your APIs (protected resources) that accept {name} access tokens, and the scopes clients can request for them."
+        "description": "Your APIs (protected resources) that accept {name} access tokens: the scopes clients can request, which applications can use them, and their token settings."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Two-factor authentication",
+      "hint": "When you sign in with your password, also enter a code from an authenticator app.",
+      "statusOn": "On",
+      "statusOff": "Off",
+      "enable": "Turn on",
+      "disable": "Turn off",
+      "regenerate": "New backup codes",
+      "passwordLabel": "Password",
+      "passwordHint": "Enter your password to continue.",
+      "continue": "Continue",
+      "cancel": "Cancel",
+      "done": "Done",
+      "doneAdmin": "Go to the admin console",
+      "setupTitle": "Turn on two-factor authentication",
+      "scanTitle": "Scan the QR code",
+      "scanHint": "Scan it with an authenticator app such as 1Password, Google Authenticator or Microsoft Authenticator, then enter the 6-digit code it shows.",
+      "qrAlt": "QR code to add this account to an authenticator app",
+      "manualKey": "Can't scan it? Enter this key in your app:",
+      "codeLabel": "6-digit code",
+      "verify": "Verify and turn on",
+      "codesTitle": "Save your backup codes",
+      "codesHint": "If you lose your authenticator app, each code lets you sign in once. Store them somewhere safe: they are not shown again.",
+      "copy": "Copy",
+      "copied": "Backup codes copied",
+      "download": "Download",
+      "fileTitle": "{name} backup codes. Each code works once.",
+      "disableTitle": "Turn off two-factor authentication?",
+      "disableBody": "You will sign in with your password alone. Your authenticator app and backup codes stop working.",
+      "regenerateTitle": "Create new backup codes?",
+      "regenerateBody": "Your current backup codes stop working. Enter your password to continue.",
+      "enabled": "Two-factor authentication is on",
+      "disabled": "Two-factor authentication is off",
+      "signInAgainToDisable": "For your security, this needs a recent sign-in. Sign in again, then try again.",
+      "signInAgain": "Sign in again",
+      "adminRequiredTitle": "Turn on two-factor authentication",
+      "adminRequiredBody": "Admins need two-factor authentication to open the admin console.",
+      "adminRequiredLink": "Set it up",
+      "errors": {
+        "invalidPassword": "Incorrect password.",
+        "invalidCode": "That code is not valid. Check that your device's clock is correct and try again.",
+        "rateLimited": "Too many attempts. Wait a few seconds and try again.",
+        "generic": "Something went wrong. Try again."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Switch to",
+      "add": "Add another account",
+      "signOutOf": "Sign out of {email}",
+      "signOutAll": "Sign out of all accounts",
+      "switchFailed": "Couldn't switch accounts. Try again."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Continue to the app with this account, or sign in with another one.",
     "continueAs": "Continue as {name}",
     "useAnother": "Use another account",
-    "error": "Something went wrong. Try again."
+    "error": "Something went wrong. Try again.",
+    "descriptionMany": "Choose the account to continue to the app with."
+  },
+  "device": {
+    "title": "Connect a device",
+    "description": "Enter the code shown on your device, TV or command line.",
+    "codeLabel": "Code",
+    "continue": "Continue",
+    "reviewTitle": "{name} wants to use your account",
+    "reviewDescription": "Approve only if you started this sign-in yourself and the code below matches the one on your device.",
+    "codeOnDevice": "Code on your device",
+    "noScopes": "Basic access to your account, no specific permissions.",
+    "signedInAs": "Signed in as {email}",
+    "switchAccount": "Use another account",
+    "deny": "Deny",
+    "approve": "Approve",
+    "useAnotherCode": "Enter a different code",
+    "approvedTitle": "Device connected",
+    "approvedDescription": "You can go back to your device. It finishes signing in on its own.",
+    "deniedTitle": "Request denied",
+    "deniedDescription": "The device did not get access to your account.",
+    "errors": {
+      "invalid": "This code is not valid. Check it and try again.",
+      "expired": "This code has expired. Start again on your device to get a new one.",
+      "processed": "This code was already used. Start again on your device if you still need to sign in.",
+      "otherAccount": "This code is being used by another account.",
+      "tooManyAttempts": "Too many attempts. Wait a few minutes and try again.",
+      "failed": "Something went wrong. Try again."
+    }
+  },
+  "captcha": {
+    "label": "Security check",
+    "required": "Complete the security check first.",
+    "failed": "The security check failed. Try again.",
+    "unavailable": "The security check could not load. Check your connection or turn off content blockers, then reload the page."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Your {brand} sign-in code",
+      "preheader": "Use this code to sign in. It expires in {minutes} minutes.",
+      "heading": "Your sign-in code",
+      "body": "Enter this code on the {brand} sign-in page to finish signing in.",
+      "note": "The code expires in {minutes} minutes and works only once.",
+      "footnote": "Didn't ask for a code? Ignore this email: no one can sign in without it. Never share it with anyone."
+    }
   }
 }

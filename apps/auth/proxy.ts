@@ -128,7 +128,23 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (restPath === "/login" || restPath === "/signup") {
+  // Device sign-in: the code is bound to whoever opens it, so sign in first and come back with
+  // the code (verification_uri_complete carries it as ?user_code=).
+  if (restPath === "/device") {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session) {
+      const callbackPath = `/${locale}/device${request.nextUrl.search}`;
+      const loginWithReturn = `/login?callbackURL=${encodeURIComponent(callbackPath)}`;
+      return NextResponse.redirect(localizedUrl(request, locale, loginWithReturn));
+    }
+  }
+
+  // `addAccount=1` signs in one more account (account menu, select-account page): no redirect.
+  const addingAccount = restPath === "/login" && request.nextUrl.searchParams.get("addAccount") === "1";
+  if ((restPath === "/login" || restPath === "/signup") && !addingAccount) {
     const session = await auth.api.getSession({
       headers: request.headers,
     });

@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Wyślij mi kod logowania e-mailem",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Ostatnio zalogowano się kodem wysłanym e-mailem.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Konta zalogowane już w tej przeglądarce pozostaną zalogowane."
+    },
+    "emailCode": {
+      "title": "Zaloguj się kodem",
+      "description": "Wyślemy 6-cyfrowy kod na adres e-mail Twojego konta. Odczytaj go na dowolnym urządzeniu i wpisz tutaj.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "ty@przyklad.pl",
+      "send": "Wyślij kod",
+      "sending": "Wysyłanie…",
+      "sentTitle": "Sprawdź pocztę",
+      "sent": "Jeśli konto używa adresu {email}, wysłaliśmy na niego 6-cyfrowy kod. Wygaśnie za {minutes} minut.",
+      "codeLabel": "Kod logowania",
+      "verify": "Zaloguj się",
+      "verifying": "Logowanie…",
+      "newCode": "Nie dotarł? Wyślij nowy kod",
+      "usePassword": "Użyj hasła",
+      "errors": {
+        "invalidEmail": "Wpisz prawidłowy adres e-mail.",
+        "invalidCode": "Ten kod jest nieprawidłowy. Sprawdź go i spróbuj ponownie.",
+        "expired": "Ten kod wygasł. Poproś o nowy.",
+        "tooManyAttempts": "Zbyt wiele błędnych kodów. Poproś o nowy.",
+        "rateLimited": "Zbyt wiele prób. Odczekaj minutę i spróbuj ponownie.",
+        "sendFailed": "Nie udało się wysłać kodu. Spróbuj ponownie za minutę.",
+        "signInFailed": "Nie udało się zalogować. Spróbuj ponownie."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Uwierzytelnianie dwuskładnikowe",
+      "title": "Uwierzytelnianie dwuskładnikowe",
+      "descriptionTotp": "Wpisz 6-cyfrowy kod z aplikacji uwierzytelniającej.",
+      "descriptionBackup": "Wpisz jeden z kodów zapasowych. Każdy kod działa tylko raz.",
+      "codeLabel": "Kod",
+      "backupCodeLabel": "Kod zapasowy",
+      "trustDevice": "Ufaj temu urządzeniu przez 30 dni",
+      "trustDeviceHint": "Na tym urządzeniu kod nie będzie wymagany. Wybierz to tylko na własnym urządzeniu.",
+      "submit": "Zweryfikuj",
+      "submitting": "Weryfikowanie…",
+      "useBackupCode": "Użyj kodu zapasowego",
+      "useAuthenticator": "Użyj aplikacji uwierzytelniającej",
+      "backToLogin": "Wróć do logowania",
+      "expiredTitle": "Zaloguj się ponownie",
+      "expiredDescription": "To logowanie wygasło lub wpisano zbyt wiele błędnych kodów. Zaloguj się ponownie hasłem.",
+      "errors": {
+        "invalidCode": "Ten kod jest nieprawidłowy. Wpisz aktualny kod z aplikacji.",
+        "invalidBackupCode": "Ten kod zapasowy jest nieprawidłowy lub został już użyty.",
+        "locked": "Zbyt wiele błędnych kodów. Spróbuj ponownie za 15 minut.",
+        "rateLimited": "Zbyt wiele prób. Odczekaj kilka sekund i spróbuj ponownie.",
+        "failed": "Nie udało się zweryfikować kodu. Spróbuj ponownie."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Niezweryfikowana aplikacja",
+      "dynamic": "Ta aplikacja zarejestrowała się sama i nie została sprawdzona. Zezwól na nią tylko wtedy, gdy jej ufasz i to Ty rozpocząłeś to logowanie.",
+      "metadataDocument": "Ta aplikacja identyfikuje się dokumentem opublikowanym w {host} i nie została sprawdzona. Zezwól na nią tylko wtedy, gdy jej ufasz i to Ty rozpocząłeś to logowanie.",
+      "redirect": "Jeśli zezwolisz, zostaniesz przekierowany do <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "Twoje API (chronione zasoby), które przyjmują tokeny dostępu {name}, oraz scope'y, o które klienci mogą dla nich prosić."
+        "description": "Twoje API (chronione zasoby), które przyjmują tokeny dostępu {name}: scope'y, o które klienci mogą prosić, aplikacje, które mogą z nich korzystać, i ustawienia ich tokenów."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Uwierzytelnianie dwuskładnikowe",
+      "hint": "Przy logowaniu hasłem wpisz też kod z aplikacji uwierzytelniającej.",
+      "statusOn": "Włączone",
+      "statusOff": "Wyłączone",
+      "enable": "Włącz",
+      "disable": "Wyłącz",
+      "regenerate": "Nowe kody zapasowe",
+      "passwordLabel": "Hasło",
+      "passwordHint": "Wpisz hasło, aby kontynuować.",
+      "continue": "Dalej",
+      "cancel": "Anuluj",
+      "done": "Gotowe",
+      "doneAdmin": "Przejdź do konsoli administracyjnej",
+      "setupTitle": "Włącz uwierzytelnianie dwuskładnikowe",
+      "scanTitle": "Zeskanuj kod QR",
+      "scanHint": "Zeskanuj go aplikacją uwierzytelniającą, np. 1Password, Google Authenticator lub Microsoft Authenticator, a następnie wpisz wyświetlony 6-cyfrowy kod.",
+      "qrAlt": "Kod QR do dodania tego konta w aplikacji uwierzytelniającej",
+      "manualKey": "Nie możesz zeskanować? Wpisz ten klucz w aplikacji:",
+      "codeLabel": "6-cyfrowy kod",
+      "verify": "Zweryfikuj i włącz",
+      "codesTitle": "Zapisz kody zapasowe",
+      "codesHint": "Jeśli stracisz aplikację uwierzytelniającą, każdy kod pozwoli zalogować się jeden raz. Przechowuj je w bezpiecznym miejscu: nie zostaną pokazane ponownie.",
+      "copy": "Kopiuj",
+      "copied": "Skopiowano kody zapasowe",
+      "download": "Pobierz",
+      "fileTitle": "Kody zapasowe {name}. Każdy kod działa tylko raz.",
+      "disableTitle": "Wyłączyć uwierzytelnianie dwuskładnikowe?",
+      "disableBody": "Będziesz logować się samym hasłem. Aplikacja uwierzytelniająca i kody zapasowe przestaną działać.",
+      "regenerateTitle": "Utworzyć nowe kody zapasowe?",
+      "regenerateBody": "Obecne kody zapasowe przestaną działać. Wpisz hasło, aby kontynuować.",
+      "enabled": "Uwierzytelnianie dwuskładnikowe jest włączone",
+      "disabled": "Uwierzytelnianie dwuskładnikowe jest wyłączone",
+      "signInAgainToDisable": "Ze względów bezpieczeństwa wymagane jest niedawne logowanie. Zaloguj się ponownie i spróbuj jeszcze raz.",
+      "signInAgain": "Zaloguj się ponownie",
+      "adminRequiredTitle": "Włącz uwierzytelnianie dwuskładnikowe",
+      "adminRequiredBody": "Administratorzy potrzebują uwierzytelniania dwuskładnikowego, aby otworzyć konsolę administracyjną.",
+      "adminRequiredLink": "Skonfiguruj",
+      "errors": {
+        "invalidPassword": "Nieprawidłowe hasło.",
+        "invalidCode": "Ten kod jest nieprawidłowy. Sprawdź, czy zegar urządzenia jest ustawiony poprawnie, i spróbuj ponownie.",
+        "rateLimited": "Zbyt wiele prób. Odczekaj kilka sekund i spróbuj ponownie.",
+        "generic": "Coś poszło nie tak. Spróbuj ponownie."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Przełącz na",
+      "add": "Dodaj kolejne konto",
+      "signOutOf": "Wyloguj z {email}",
+      "signOutAll": "Wyloguj ze wszystkich kont",
+      "switchFailed": "Nie udało się przełączyć konta. Spróbuj ponownie."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Przejdź do aplikacji z tym kontem lub zaloguj się innym.",
     "continueAs": "Kontynuuj jako {name}",
     "useAnother": "Użyj innego konta",
-    "error": "Coś poszło nie tak. Spróbuj ponownie."
+    "error": "Coś poszło nie tak. Spróbuj ponownie.",
+    "descriptionMany": "Wybierz konto, którym chcesz przejść do aplikacji."
+  },
+  "device": {
+    "title": "Połącz urządzenie",
+    "description": "Wpisz kod wyświetlony na urządzeniu, telewizorze lub w wierszu poleceń.",
+    "codeLabel": "Kod",
+    "continue": "Dalej",
+    "reviewTitle": "{name} chce używać Twojego konta",
+    "reviewDescription": "Zatwierdź tylko wtedy, gdy to Ty rozpocząłeś logowanie, a poniższy kod zgadza się z kodem na urządzeniu.",
+    "codeOnDevice": "Kod na urządzeniu",
+    "noScopes": "Podstawowy dostęp do konta, bez szczególnych uprawnień.",
+    "signedInAs": "Zalogowano jako {email}",
+    "switchAccount": "Użyj innego konta",
+    "deny": "Odrzuć",
+    "approve": "Zatwierdź",
+    "useAnotherCode": "Wpisz inny kod",
+    "approvedTitle": "Urządzenie połączone",
+    "approvedDescription": "Możesz wrócić do urządzenia. Samo dokończy logowanie.",
+    "deniedTitle": "Prośba odrzucona",
+    "deniedDescription": "Urządzenie nie otrzymało dostępu do Twojego konta.",
+    "errors": {
+      "invalid": "Ten kod jest nieprawidłowy. Sprawdź go i spróbuj ponownie.",
+      "expired": "Ten kod wygasł. Zacznij od nowa na urządzeniu, aby otrzymać nowy.",
+      "processed": "Ten kod został już użyty. Zacznij od nowa na urządzeniu, jeśli nadal chcesz się zalogować.",
+      "otherAccount": "Ten kod jest używany przez inne konto.",
+      "tooManyAttempts": "Zbyt wiele prób. Odczekaj kilka minut i spróbuj ponownie.",
+      "failed": "Coś poszło nie tak. Spróbuj ponownie."
+    }
+  },
+  "captcha": {
+    "label": "Weryfikacja bezpieczeństwa",
+    "required": "Najpierw ukończ weryfikację bezpieczeństwa.",
+    "failed": "Weryfikacja bezpieczeństwa nie powiodła się. Spróbuj ponownie.",
+    "unavailable": "Nie udało się wczytać weryfikacji bezpieczeństwa. Sprawdź połączenie lub wyłącz blokowanie treści, a następnie odśwież stronę."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Twój kod logowania do {brand}",
+      "preheader": "Użyj tego kodu, aby się zalogować. Wygaśnie za {minutes} minut.",
+      "heading": "Twój kod logowania",
+      "body": "Wpisz ten kod na stronie logowania {brand}, aby dokończyć logowanie.",
+      "note": "Kod wygaśnie za {minutes} minut i działa tylko raz.",
+      "footnote": "Nie prosiłeś o kod? Zignoruj tę wiadomość: bez kodu nikt się nie zaloguje. Nigdy nikomu go nie udostępniaj."
+    }
   }
 }
