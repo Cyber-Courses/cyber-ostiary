@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "oder",
+      "continueWith": "Weiter mit {provider}",
+      "signInWith": "Mit {provider} anmelden",
+      "lastUsed": "Zuletzt verwendet",
+      "otherProviders": "Weitere Anmeldemöglichkeiten",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "API-Schlüssel",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Anmeldeanbieter",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signaturschlüssel"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "API-Schlüssel",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Anmeldeanbieter",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signaturschlüssel"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "APIs",
         "description": "Ihre APIs (geschützte Ressourcen), die Zugriffstoken von {name} akzeptieren: die Scopes, die Clients anfordern können, welche Anwendungen sie nutzen dürfen, und ihre Token-Einstellungen."
       },
+      "signInProviders": {
+        "title": "Anmeldeanbieter",
+        "description": "Lassen Sie Personen sich bei {name} mit Google, Apple, Microsoft und über 30 weiteren Konten anmelden."
+      },
+      "apiKeys": {
+        "title": "API-Schlüssel",
+        "description": "Schlüssel, mit denen Skripte Ihrer Nutzer Ihre APIs aufrufen: ein- oder ausschalten, ihre maximale Gültigkeitsdauer festlegen und jeden Schlüssel widerrufen."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Signierte HTTPS-Benachrichtigungen, die deine Apps informieren, wenn sich Benutzer, Rollen oder Organisationsmitgliedschaften in {name} ändern.",
+        "deliveries": "Zustellprotokoll"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Signaturschlüssel",
+        "description": "Die Schlüssel, mit denen {name} ID-Tokens und JWT-Access-Tokens signiert. Apps und APIs prüfen Tokens anhand der öffentlichen Schlüssel im JWKS.",
+        "jwksUrl": "JWKS-URL",
+        "days": "{count, plural, one {# Tag} other {# Tage}}",
+        "rotation": {
+          "title": "Automatische Rotation",
+          "description": "Ersetzt den Signaturschlüssel nach einem Zeitplan. Ein ausgemusterter Schlüssel bleibt für die Übergangsfrist im JWKS, damit von ihm signierte Tokens weiter gültig geprüft werden.",
+          "on": "An",
+          "off": "Aus",
+          "edit": "Bearbeiten",
+          "interval": "Schlüssel rotieren",
+          "never": "Nie (nur manuell rotieren)",
+          "every": "Alle {count, plural, one {# Tag} other {# Tage}}",
+          "grace": "Übergangsfrist",
+          "graceValue": "{count, plural, one {# Tag} other {# Tage}} nach Ausmusterung eines Schlüssels",
+          "dialogTitle": "Automatische Rotation",
+          "dialogDescription": "Sobald der aktuelle Schlüssel das Intervall erreicht, wird ein neuer erstellt. Apps, die das JWKS zwischenspeichern, laden es neu, wenn sie die neue Schlüssel-ID sehen.",
+          "intervalHint": "Das Intervall gilt auch für den aktuellen Schlüssel: Er wird ausgemustert, sobald er das neue Alter erreicht, oder beim nächsten Token, falls er schon älter ist.",
+          "graceHint": "Wie lange ein ausgemusterter Schlüssel veröffentlicht bleibt. Wähle mehr als die längste Token-Lebensdauer (Access-Tokens: 1 Stunde, ID-Tokens: 10 Stunden).",
+          "save": "Speichern",
+          "cancel": "Abbrechen",
+          "saved": "Einstellungen gespeichert. Der Auth-Server übernimmt sie innerhalb einer Minute."
+        },
+        "keys": {
+          "title": "Schlüssel",
+          "description": "Private Schlüssel werden verschlüsselt gespeichert und nie angezeigt.",
+          "keyId": "Schlüssel-ID (kid)",
+          "algorithm": "Algorithmus",
+          "created": "Erstellt",
+          "retires": "Signiert bis",
+          "unpublished": "Veröffentlicht bis",
+          "status": "Status",
+          "current": "Aktuell",
+          "published": "Zur Prüfung veröffentlicht",
+          "expired": "Abgelaufen",
+          "noExpiry": "Kein Ablauf",
+          "empty": "Noch kein Schlüssel. Der erste wird beim Signieren des ersten Tokens oder bei einer Rotation erstellt."
+        },
+        "rotate": {
+          "button": "Jetzt rotieren",
+          "title": "Signaturschlüssel jetzt rotieren?",
+          "newKey": "Ein neuer Schlüssel signiert ab sofort jedes Token.",
+          "caching": "Apps und APIs, die das JWKS zwischenspeichern, übernehmen den neuen Schlüssel automatisch: Sie laden das JWKS neu, sobald sie seine Schlüssel-ID sehen.",
+          "oldTokens": "Mit dem aktuellen Schlüssel signierte Tokens bleiben bis zum Ablauf gültig: Der Schlüssel bleibt für die Übergangsfrist ({grace}) veröffentlicht.",
+          "compromised": "Wenn der Schlüssel kompromittiert sein könnte, rotiere ihn jetzt und wähle dann eine kurze Übergangsfrist: Ein ausgemusterter Schlüssel prüft Tokens, solange er veröffentlicht ist.",
+          "confirm": "Jetzt rotieren",
+          "cancel": "Abbrechen",
+          "done": "Schlüssel rotiert. Neue Tokens verwenden den Schlüssel {kid}."
+        },
+        "errors": {
+          "interval": "Wähle eines der angebotenen Rotationsintervalle.",
+          "grace": "Wähle eine der angebotenen Übergangsfristen.",
+          "save": "Einstellungen konnten nicht gespeichert werden.",
+          "rotate": "Schlüssel konnte nicht rotiert werden."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API-Schlüssel",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API-Schlüssel",
+      "description": "Langlebige Schlüssel für Ihre Skripte und Tools. Jeder Schlüssel gilt für eine API, mit den von Ihnen gewählten Scopes, bis er abläuft oder Sie ihn widerrufen.",
+      "create": "API-Schlüssel erstellen",
+      "turnedOff": "API-Schlüssel sind auf diesem Server ausgeschaltet. Sie können Ihre vorhandenen Schlüssel weiterhin widerrufen.",
+      "noApis": "Noch keine API akzeptiert Schlüssel.",
+      "empty": "Sie haben keine API-Schlüssel.",
+      "loadError": "Ihre API-Schlüssel konnten nicht geladen werden.",
+      "expired": "Abgelaufen",
+      "api": "API",
+      "unknownApi": "Entfernte API",
+      "scopes": "Scopes",
+      "createdOn": "Erstellt am {date}",
+      "lastUsedOn": "zuletzt verwendet am {date}",
+      "neverUsed": "nie verwendet",
+      "expiresOn": "läuft am {date} ab",
+      "revoke": "Widerrufen",
+      "revoked": "API-Schlüssel widerrufen",
+      "revokeError": "Der API-Schlüssel konnte nicht widerrufen werden.",
+      "confirmRevokeTitle": "{name} widerrufen?",
+      "confirmRevokeBody": "Skripte, die diesen Schlüssel verwenden, funktionieren sofort nicht mehr. Dies kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "createTitle": "API-Schlüssel erstellen",
+      "createDescription": "Wählen Sie die API, für die dieser Schlüssel gilt, und was er dort tun darf.",
+      "name": "Name",
+      "namePlaceholder": "z. B. Nächtlicher Export",
+      "scopesHint": "Wählen Sie nur, was der Schlüssel braucht. Die API prüft diese Scopes bei jeder Anfrage.",
+      "expiry": "Läuft ab nach",
+      "expiryHint": "Höchstens {max} Tage, festgelegt von Ihrem Administrator.",
+      "days": "{count, plural, one {# Tag} other {# Tage}}",
+      "createSubmit": "Schlüssel erstellen",
+      "issuedTitle": "Ihr neuer Schlüssel: {name}",
+      "issuedDescription": "Fügen Sie ihn in die Konfiguration Ihres Skripts oder Tools ein. Die API prüft ihn bei diesem Server.",
+      "issuedWarningTitle": "Jetzt kopieren",
+      "issuedWarningBody": "Der Schlüssel wird nur dieses eine Mal angezeigt. Halten Sie ihn geheim wie ein Passwort. Wenn Sie ihn verlieren, widerrufen Sie ihn und erstellen Sie einen neuen.",
+      "copy": "Schlüssel kopieren",
+      "copied": "Schlüssel kopiert",
+      "copyError": "Kopieren nicht möglich. Markieren Sie den Schlüssel und kopieren Sie ihn selbst.",
+      "done": "Fertig",
+      "signInAgain": "Erneut anmelden",
+      "errors": {
+        "disabled": "API-Schlüssel sind auf diesem Server ausgeschaltet.",
+        "name": "Geben Sie einen Namen für den Schlüssel ein.",
+        "api": "Wählen Sie eine API, die Schlüssel akzeptiert.",
+        "scopes": "Wählen Sie mindestens einen Scope.",
+        "lifetime": "Wählen Sie eine Ablaufzeit innerhalb des erlaubten Maximums.",
+        "limit": "Sie haben bereits {max} Schlüssel. Widerrufen Sie einen, um einen neuen zu erstellen.",
+        "signedOut": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an.",
+        "impersonating": "API-Schlüssel können nicht erstellt werden, während Sie das Konto einer anderen Person ansehen.",
+        "recentSignIn": "Aus Sicherheitsgründen müssen Sie sich erneut anmelden, um einen API-Schlüssel zu erstellen.",
+        "failed": "Der API-Schlüssel konnte nicht erstellt werden."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Zu viele Versuche. Versuchen Sie es in {seconds, plural, one {# Sekunde} other {# Sekunden}} erneut.",
+    "minutes": "Zu viele Versuche. Versuchen Sie es in {minutes, plural, one {# Minute} other {# Minuten}} erneut.",
+    "later": "Zu viele Versuche. Warten Sie einige Minuten und versuchen Sie es erneut."
   },
   "sso": {
     "title": "Single sign-on",

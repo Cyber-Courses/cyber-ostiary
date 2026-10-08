@@ -172,7 +172,9 @@
     "social": {
       "or": "ou",
       "continueWith": "Continuer avec {provider}",
+      "signInWith": "Se connecter avec {provider}",
       "lastUsed": "Dernière utilisation",
+      "otherProviders": "Autres moyens de se connecter",
       "error": "Connexion impossible avec ce compte. Réessayez ou utilisez une autre méthode.",
       "notLinked": "Ce compte n’est pas encore relié à un compte {name}. Connectez-vous autrement, puis reliez-le depuis vos paramètres de sécurité."
     }
@@ -223,11 +225,15 @@
       "users": "Utilisateurs",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Clés d’API",
       "consent": "Consentements",
       "organizations": "Organisations",
       "sso": "SSO",
+      "signInProviders": "Fournisseurs de connexion",
+      "webhooks": "Webhooks",
       "security": "Sécurité",
-      "audit": "Journal d’audit"
+      "audit": "Journal d’audit",
+      "signingKeys": "Clés de signature"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Utilisateurs",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Clés d’API",
       "consent": "Consentements",
       "organizations": "Organisations",
       "sso": "SSO",
+      "signInProviders": "Fournisseurs de connexion",
+      "webhooks": "Webhooks",
       "security": "Sécurité",
-      "audit": "Journal d’audit"
+      "audit": "Journal d’audit",
+      "signingKeys": "Clés de signature"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API",
         "description": "Vos API (ressources protégées) qui acceptent les jetons d’accès {name} : les scopes que les clients peuvent demander, les applications qui peuvent les utiliser et les réglages de leurs jetons."
       },
+      "signInProviders": {
+        "title": "Fournisseurs de connexion",
+        "description": "Permettez la connexion à {name} avec Google, Apple, Microsoft et plus de 30 autres comptes."
+      },
+      "apiKeys": {
+        "title": "Clés d’API",
+        "description": "Clés que les utilisateurs créent pour que leurs scripts appellent vos API : activez-les ou désactivez-les, fixez leur durée de vie maximale et révoquez n’importe quelle clé."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Notifications HTTPS signées qui préviennent vos applications quand les utilisateurs, les rôles ou les adhésions aux organisations de {name} changent.",
+        "deliveries": "Journal des envois"
+      },
       "users": {
         "title": "Utilisateurs",
         "description": "Retrouvez des comptes, modifiez leurs rôles, bannissez-les ou supprimez-les, et ouvrez un compte pour voir ses sessions et son activité."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Sécurité",
         "description": "Tentatives de connexion échouées, comptes et adresses concernés, et comptes bannis."
+      },
+      "signingKeys": {
+        "title": "Clés de signature",
+        "description": "Les clés avec lesquelles {name} signe les jetons d’ID et les jetons d’accès JWT. Les applications et les API vérifient les jetons avec les clés publiques publiées dans le JWKS.",
+        "jwksUrl": "URL du JWKS",
+        "days": "{count, plural, one {# jour} other {# jours}}",
+        "rotation": {
+          "title": "Rotation automatique",
+          "description": "Remplace la clé de signature selon un calendrier. Une clé retirée reste dans le JWKS pendant le délai de grâce, pour que les jetons qu’elle a signés restent vérifiables.",
+          "on": "Activée",
+          "off": "Désactivée",
+          "edit": "Modifier",
+          "interval": "Renouveler la clé",
+          "never": "Jamais (rotation manuelle uniquement)",
+          "every": "Tous les {count, plural, one {# jour} other {# jours}}",
+          "grace": "Délai de grâce",
+          "graceValue": "{count, plural, one {# jour} other {# jours}} après la mise hors service d’une clé",
+          "dialogTitle": "Rotation automatique",
+          "dialogDescription": "Une nouvelle clé est créée quand la clé actuelle atteint l’intervalle. Les applications qui mettent le JWKS en cache le récupèrent à nouveau quand elles voient le nouvel ID de clé.",
+          "intervalHint": "Le nouvel intervalle s’applique aussi à la clé actuelle : elle est retirée quand elle atteint le nouvel âge, ou au prochain jeton si elle est déjà plus ancienne.",
+          "graceHint": "Durée pendant laquelle une clé retirée reste publiée. Prévoyez plus que la durée de vie de jeton la plus longue (jetons d’accès : 1 heure, jetons d’ID : 10 heures).",
+          "save": "Enregistrer",
+          "cancel": "Annuler",
+          "saved": "Paramètres enregistrés. Le serveur d’authentification les applique en moins d’une minute."
+        },
+        "keys": {
+          "title": "Clés",
+          "description": "Les clés privées sont stockées chiffrées et ne sont jamais affichées.",
+          "keyId": "ID de clé (kid)",
+          "algorithm": "Algorithme",
+          "created": "Créée",
+          "retires": "Signe jusqu’au",
+          "unpublished": "Publiée jusqu’au",
+          "status": "Statut",
+          "current": "Actuelle",
+          "published": "Publiée pour vérification",
+          "expired": "Expirée",
+          "noExpiry": "Sans expiration",
+          "empty": "Aucune clé pour l’instant. La première est créée à la signature du premier jeton, ou lors d’une rotation."
+        },
+        "rotate": {
+          "button": "Renouveler maintenant",
+          "title": "Renouveler la clé de signature maintenant ?",
+          "newKey": "Une nouvelle clé signe chaque jeton à partir de maintenant.",
+          "caching": "Les applications et API qui mettent le JWKS en cache adoptent la nouvelle clé automatiquement : elles récupèrent à nouveau le JWKS dès qu’elles rencontrent son ID de clé.",
+          "oldTokens": "Les jetons signés avec la clé actuelle restent valides jusqu’à leur expiration : la clé reste publiée pendant le délai de grâce ({grace}).",
+          "compromised": "Si la clé a pu fuiter, renouvelez-la maintenant, puis choisissez un délai de grâce court : une clé retirée vérifie les jetons tant qu’elle est publiée.",
+          "confirm": "Renouveler maintenant",
+          "cancel": "Annuler",
+          "done": "Clé renouvelée. Les nouveaux jetons utilisent la clé {kid}."
+        },
+        "errors": {
+          "interval": "Choisissez l’un des intervalles de rotation proposés.",
+          "grace": "Choisissez l’un des délais de grâce proposés.",
+          "save": "Impossible d’enregistrer les paramètres.",
+          "rotate": "Impossible de renouveler la clé."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organisations",
       "security": "Sécurité",
       "apps": "Applications",
+      "apiKeys": "Clés d’API",
       "admin": "Administration",
       "marketingHome": "À propos",
       "signOut": "Déconnexion"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Révoquer l’accès de {app} ?",
       "confirmRevokeBody": "Cette application ne pourra plus accéder à votre compte tant que vous ne l’aurez pas de nouveau autorisée."
     },
+    "apiKeys": {
+      "title": "Clés d’API",
+      "description": "Clés longue durée pour vos scripts et outils. Chaque clé fonctionne avec une seule API, avec les autorisations que vous choisissez, jusqu’à son expiration ou sa révocation.",
+      "create": "Créer une clé d’API",
+      "turnedOff": "Les clés d’API sont désactivées sur ce serveur. Vous pouvez toujours révoquer vos clés existantes.",
+      "noApis": "Aucune API n’accepte encore de clés.",
+      "empty": "Vous n’avez aucune clé d’API.",
+      "loadError": "Impossible de charger vos clés d’API.",
+      "expired": "Expirée",
+      "api": "API",
+      "unknownApi": "API supprimée",
+      "scopes": "Autorisations",
+      "createdOn": "Créée le {date}",
+      "lastUsedOn": "dernière utilisation le {date}",
+      "neverUsed": "jamais utilisée",
+      "expiresOn": "expire le {date}",
+      "revoke": "Révoquer",
+      "revoked": "Clé d’API révoquée",
+      "revokeError": "Impossible de révoquer la clé d’API.",
+      "confirmRevokeTitle": "Révoquer {name} ?",
+      "confirmRevokeBody": "Les scripts qui utilisent cette clé cesseront de fonctionner immédiatement. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "createTitle": "Créer une clé d’API",
+      "createDescription": "Choisissez l’API à laquelle cette clé est destinée et ce qu’elle peut y faire.",
+      "name": "Nom",
+      "namePlaceholder": "ex. Export nocturne",
+      "scopesHint": "Ne choisissez que ce dont la clé a besoin. L’API vérifie ces autorisations à chaque requête.",
+      "expiry": "Expire après",
+      "expiryHint": "{max} jours maximum, fixé par votre administrateur.",
+      "days": "{count, plural, one {# jour} other {# jours}}",
+      "createSubmit": "Créer la clé",
+      "issuedTitle": "Votre nouvelle clé : {name}",
+      "issuedDescription": "Ajoutez-la à la configuration de votre script ou outil. L’API la vérifie auprès de ce serveur.",
+      "issuedWarningTitle": "Copiez-la maintenant",
+      "issuedWarningBody": "La clé ne s’affiche qu’une seule fois. Gardez-la secrète, comme un mot de passe. Si vous la perdez, révoquez-la et créez-en une autre.",
+      "copy": "Copier la clé",
+      "copied": "Clé copiée",
+      "copyError": "Impossible de copier. Sélectionnez la clé et copiez-la vous-même.",
+      "done": "Terminé",
+      "signInAgain": "Se reconnecter",
+      "errors": {
+        "disabled": "Les clés d’API sont désactivées sur ce serveur.",
+        "name": "Saisissez un nom pour la clé.",
+        "api": "Choisissez une API qui accepte les clés.",
+        "scopes": "Choisissez au moins une autorisation.",
+        "lifetime": "Choisissez une durée de validité dans la limite autorisée.",
+        "limit": "Vous avez déjà {max} clés. Révoquez-en une pour en créer une autre.",
+        "signedOut": "Votre session a expiré. Reconnectez-vous.",
+        "impersonating": "Impossible de créer des clés d’API lorsque vous consultez le compte d’une autre personne.",
+        "recentSignIn": "Pour votre sécurité, reconnectez-vous pour créer une clé d’API.",
+        "failed": "Impossible de créer la clé d’API."
+      }
+    },
     "accountMenu": "Menu du compte",
     "connectedAccounts": {
       "title": "Comptes connectés",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Une erreur s'est produite",
     "boundaryDescription": "Une erreur est survenue lors du chargement de cette page.",
     "retry": "Réessayer"
+  },
+  "rateLimit": {
+    "seconds": "Trop de tentatives. Réessayez dans {seconds, plural, one {# seconde} other {# secondes}}.",
+    "minutes": "Trop de tentatives. Réessayez dans {minutes, plural, one {# minute} other {# minutes}}.",
+    "later": "Trop de tentatives. Patientez quelques minutes et réessayez."
   },
   "sso": {
     "title": "Authentification unique (SSO)",

@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "أو",
+      "continueWith": "المتابعة باستخدام {provider}",
+      "signInWith": "تسجيل الدخول باستخدام {provider}",
+      "lastUsed": "آخر استخدام",
+      "otherProviders": "طرق أخرى لتسجيل الدخول",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "واجهات API",
+      "apiKeys": "مفاتيح API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "مزودو تسجيل الدخول",
+      "webhooks": "خطافات الويب",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "مفاتيح التوقيع"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "واجهات API",
+      "apiKeys": "مفاتيح API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "مزودو تسجيل الدخول",
+      "webhooks": "خطافات الويب",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "مفاتيح التوقيع"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "واجهات API",
         "description": "واجهات API الخاصة بك (الموارد المحمية) التي تقبل رموز الوصول من {name}: النطاقات (scopes) التي يمكن للعملاء طلبها، والتطبيقات التي يمكنها استخدامها، وإعدادات رموزها."
       },
+      "signInProviders": {
+        "title": "مزودو تسجيل الدخول",
+        "description": "اسمح للأشخاص بتسجيل الدخول إلى {name} باستخدام Google وApple وMicrosoft وأكثر من 30 حسابًا آخر."
+      },
+      "apiKeys": {
+        "title": "مفاتيح API",
+        "description": "مفاتيح ينشئها المستخدمون لتستدعي برامجهم النصية واجهات API الخاصة بك: فعّلها أو عطّلها، وحدّد أقصى مدة لصلاحيتها، وأبطل أي مفتاح."
+      },
+      "webhooks": {
+        "title": "خطافات الويب",
+        "description": "إشعارات HTTPS موقّعة تُعلم تطبيقاتك عند تغيّر مستخدمي {name} وأدوارهم وعضويات المؤسسات.",
+        "deliveries": "سجل التسليم"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "مفاتيح التوقيع",
+        "description": "المفاتيح التي يوقّع بها {name} رموز ID ورموز وصول JWT. تتحقق التطبيقات وواجهات API من الرموز باستخدام المفاتيح العامة المنشورة في JWKS.",
+        "jwksUrl": "عنوان JWKS",
+        "days": "{count, plural, zero {# يوم} one {يوم واحد} two {يومان} few {# أيام} many {# يومًا} other {# يوم}}",
+        "rotation": {
+          "title": "التدوير التلقائي",
+          "description": "يستبدل مفتاح التوقيع وفق جدول زمني. يبقى المفتاح الموقوف في JWKS طوال مهلة السماح، فتظل الرموز التي وقّعها قابلة للتحقق.",
+          "on": "مفعّل",
+          "off": "متوقف",
+          "edit": "تعديل",
+          "interval": "تدوير المفتاح",
+          "never": "أبدًا (تدوير يدوي فقط)",
+          "every": "كل {count, plural, zero {# يوم} one {يوم واحد} two {يومان} few {# أيام} many {# يومًا} other {# يوم}}",
+          "grace": "مهلة السماح",
+          "graceValue": "{count, plural, zero {# يوم} one {يوم واحد} two {يومان} few {# أيام} many {# يومًا} other {# يوم}} بعد إيقاف المفتاح",
+          "dialogTitle": "التدوير التلقائي",
+          "dialogDescription": "يُنشأ مفتاح جديد عندما يبلغ المفتاح الحالي المدة المحددة. التطبيقات التي تخزّن JWKS مؤقتًا تجلبه من جديد عندما ترى معرّف المفتاح الجديد.",
+          "intervalHint": "تنطبق المدة الجديدة على المفتاح الحالي أيضًا: يُوقَف عند بلوغه العمر الجديد، أو عند الرمز التالي إذا كان أقدم من ذلك.",
+          "graceHint": "المدة التي يبقى فيها المفتاح الموقوف منشورًا. اجعلها أطول من أطول عمر لأي رمز (رموز الوصول: ساعة واحدة، رموز ID: 10 ساعات).",
+          "save": "حفظ",
+          "cancel": "إلغاء",
+          "saved": "تم حفظ الإعدادات. يطبّقها خادم المصادقة خلال دقيقة."
+        },
+        "keys": {
+          "title": "المفاتيح",
+          "description": "تُخزَّن المفاتيح الخاصة مشفّرة ولا تُعرض أبدًا.",
+          "keyId": "معرّف المفتاح (kid)",
+          "algorithm": "الخوارزمية",
+          "created": "تاريخ الإنشاء",
+          "retires": "يوقّع حتى",
+          "unpublished": "منشور حتى",
+          "status": "الحالة",
+          "current": "الحالي",
+          "published": "منشور للتحقق",
+          "expired": "منتهي الصلاحية",
+          "noExpiry": "بلا انتهاء",
+          "empty": "لا يوجد مفتاح بعد. يُنشأ أول مفتاح عند توقيع أول رمز، أو عند التدوير."
+        },
+        "rotate": {
+          "button": "دوّر الآن",
+          "title": "تدوير مفتاح التوقيع الآن؟",
+          "newKey": "سيوقّع مفتاح جديد كل رمز من الآن فصاعدًا.",
+          "caching": "التطبيقات وواجهات API التي تخزّن JWKS مؤقتًا تلتقط المفتاح الجديد تلقائيًا: تجلب JWKS من جديد عندما تصادف معرّف المفتاح.",
+          "oldTokens": "تبقى الرموز الموقّعة بالمفتاح الحالي صالحة حتى انتهاء صلاحيتها: يبقى المفتاح منشورًا طوال مهلة السماح ({grace}).",
+          "compromised": "إذا كان المفتاح قد تسرّب، فدوّره الآن ثم اختر مهلة سماح قصيرة: المفتاح الموقوف يتحقق من الرموز ما دام منشورًا.",
+          "confirm": "دوّر الآن",
+          "cancel": "إلغاء",
+          "done": "تم تدوير المفتاح. الرموز الجديدة تستخدم المفتاح {kid}."
+        },
+        "errors": {
+          "interval": "اختر إحدى مدد التدوير المتاحة.",
+          "grace": "اختر إحدى مهل السماح المتاحة.",
+          "save": "تعذّر حفظ الإعدادات.",
+          "rotate": "تعذّر تدوير المفتاح."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "مفاتيح API",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "مفاتيح API",
+      "description": "مفاتيح طويلة الأمد لبرامجك النصية وأدواتك. يعمل كل مفتاح مع واجهة API واحدة، وبالنطاقات التي تختارها، حتى تنتهي صلاحيته أو تُبطله.",
+      "create": "إنشاء مفتاح API",
+      "turnedOff": "مفاتيح API معطّلة على هذا الخادم. لا يزال بإمكانك إبطال مفاتيحك الحالية.",
+      "noApis": "لا توجد واجهة API تقبل المفاتيح بعد.",
+      "empty": "ليس لديك مفاتيح API.",
+      "loadError": "تعذّر تحميل مفاتيح API.",
+      "expired": "منتهي الصلاحية",
+      "api": "واجهة API",
+      "unknownApi": "واجهة API محذوفة",
+      "scopes": "النطاقات",
+      "createdOn": "أُنشئ في {date}",
+      "lastUsedOn": "آخر استخدام في {date}",
+      "neverUsed": "لم يُستخدم قط",
+      "expiresOn": "تنتهي صلاحيته في {date}",
+      "revoke": "إبطال",
+      "revoked": "تم إبطال مفتاح API",
+      "revokeError": "تعذّر إبطال مفتاح API.",
+      "confirmRevokeTitle": "إبطال {name}؟",
+      "confirmRevokeBody": "ستتوقف البرامج النصية التي تستخدم هذا المفتاح عن العمل فورًا. لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "createTitle": "إنشاء مفتاح API",
+      "createDescription": "اختر واجهة API المخصص لها هذا المفتاح وما يمكنه فعله فيها.",
+      "name": "الاسم",
+      "namePlaceholder": "مثال: تصدير ليلي",
+      "scopesHint": "اختر فقط ما يحتاجه المفتاح. تتحقق واجهة API من هذه النطاقات في كل طلب.",
+      "expiry": "تنتهي الصلاحية بعد",
+      "expiryHint": "الحد الأقصى: {max} يوم، كما حدده المسؤول.",
+      "days": "{count, plural, zero {# يوم} one {يوم واحد} two {يومان} few {# أيام} many {# يومًا} other {# يوم}}",
+      "createSubmit": "إنشاء المفتاح",
+      "issuedTitle": "مفتاحك الجديد: {name}",
+      "issuedDescription": "أضِفه إلى إعدادات برنامجك النصي أو أداتك. تتحقق واجهة API منه عبر هذا الخادم.",
+      "issuedWarningTitle": "انسخه الآن",
+      "issuedWarningBody": "هذه هي المرة الوحيدة التي يُعرض فيها المفتاح. احتفظ به سرًا مثل كلمة المرور. إذا فقدته، فأبطله وأنشئ مفتاحًا آخر.",
+      "copy": "نسخ المفتاح",
+      "copied": "تم نسخ المفتاح",
+      "copyError": "تعذّر النسخ. حدّد المفتاح وانسخه بنفسك.",
+      "done": "تم",
+      "signInAgain": "تسجيل الدخول مرة أخرى",
+      "errors": {
+        "disabled": "مفاتيح API معطّلة على هذا الخادم.",
+        "name": "أدخل اسمًا للمفتاح.",
+        "api": "اختر واجهة API تقبل المفاتيح.",
+        "scopes": "اختر نطاقًا واحدًا على الأقل.",
+        "lifetime": "اختر مدة صلاحية ضمن الحد الأقصى المسموح به.",
+        "limit": "لديك بالفعل الحد الأقصى من المفاتيح ({max}). أبطل أحدها لإنشاء مفتاح آخر.",
+        "signedOut": "انتهت جلستك. سجّل الدخول مرة أخرى.",
+        "impersonating": "لا يمكن إنشاء مفاتيح API أثناء عرض حساب شخص آخر.",
+        "recentSignIn": "لأمانك، سجّل الدخول مرة أخرى لإنشاء مفتاح API.",
+        "failed": "تعذّر إنشاء مفتاح API."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "محاولات كثيرة جدًا. حاول مرة أخرى بعد {seconds, plural, zero {# ثانية} one {ثانية واحدة} two {ثانيتين} few {# ثوانٍ} many {# ثانية} other {# ثانية}}.",
+    "minutes": "محاولات كثيرة جدًا. حاول مرة أخرى بعد {minutes, plural, zero {# دقيقة} one {دقيقة واحدة} two {دقيقتين} few {# دقائق} many {# دقيقة} other {# دقيقة}}.",
+    "later": "محاولات كثيرة جدًا. انتظر بضع دقائق وحاول مرة أخرى."
   },
   "sso": {
     "title": "Single sign-on",

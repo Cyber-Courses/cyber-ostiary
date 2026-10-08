@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "eller",
+      "continueWith": "Fortsæt med {provider}",
+      "signInWith": "Log ind med {provider}",
+      "lastUsed": "Sidst brugt",
+      "otherProviders": "Flere måder at logge ind på",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API'er",
+      "apiKeys": "API-nøgler",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Loginudbydere",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnøgler"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API'er",
+      "apiKeys": "API-nøgler",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Loginudbydere",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnøgler"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API'er",
         "description": "Dine API'er (beskyttede ressourcer), der accepterer adgangstokens fra {name}: de scopes, klienter kan anmode om, hvilke applikationer der må bruge dem, og deres tokenindstillinger."
       },
+      "signInProviders": {
+        "title": "Loginudbydere",
+        "description": "Lad folk logge ind på {name} med Google, Apple, Microsoft og over 30 andre konti."
+      },
+      "apiKeys": {
+        "title": "API-nøgler",
+        "description": "Nøgler, som brugere opretter, så deres scripts kan kalde dine API'er: slå dem til eller fra, angiv deres maksimale levetid, og tilbagekald enhver nøgle."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Signerede HTTPS-notifikationer, der fortæller dine apps, når brugere, roller og organisationsmedlemskaber i {name} ændres.",
+        "deliveries": "Leveringslog"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Signeringsnøgler",
+        "description": "De nøgler, {name} signerer ID-tokens og JWT-adgangstokens med. Apps og API’er verificerer tokens mod de offentlige nøgler i JWKS’et.",
+        "jwksUrl": "JWKS-URL",
+        "days": "{count, plural, one {# dag} other {# dage}}",
+        "rotation": {
+          "title": "Automatisk rotation",
+          "description": "Udskifter signeringsnøglen efter en plan. En udgået nøgle bliver i JWKS’et i udsættelsesperioden, så tokens, den har signeret, stadig kan verificeres.",
+          "on": "Til",
+          "off": "Fra",
+          "edit": "Rediger",
+          "interval": "Rotér nøglen",
+          "never": "Aldrig (kun manuel rotation)",
+          "every": "Hver {count, plural, one {# dag} other {# dage}}",
+          "grace": "Udsættelsesperiode",
+          "graceValue": "{count, plural, one {# dag} other {# dage}} efter at en nøgle er udgået",
+          "dialogTitle": "Automatisk rotation",
+          "dialogDescription": "Der oprettes en ny nøgle, når den nuværende når intervallet. Apps, der cacher JWKS’et, henter det igen, når de ser det nye nøgle-id.",
+          "intervalHint": "Et nyt interval gælder også for den nuværende nøgle: Den udgår, når den når den nye alder, eller ved næste token, hvis den allerede er ældre.",
+          "graceHint": "Hvor længe en udgået nøgle forbliver publiceret. Vælg længere end din længste token-levetid (adgangstokens: 1 time, ID-tokens: 10 timer).",
+          "save": "Gem",
+          "cancel": "Annuller",
+          "saved": "Indstillinger gemt. Godkendelsesserveren anvender dem inden for et minut."
+        },
+        "keys": {
+          "title": "Nøgler",
+          "description": "Private nøgler gemmes krypteret og vises aldrig.",
+          "keyId": "Nøgle-id (kid)",
+          "algorithm": "Algoritme",
+          "created": "Oprettet",
+          "retires": "Signerer indtil",
+          "unpublished": "Publiceret indtil",
+          "status": "Status",
+          "current": "Nuværende",
+          "published": "Publiceret til verificering",
+          "expired": "Udløbet",
+          "noExpiry": "Ingen udløb",
+          "empty": "Ingen nøgle endnu. Den første oprettes, når det første token signeres, eller når du roterer."
+        },
+        "rotate": {
+          "button": "Rotér nu",
+          "title": "Rotér signeringsnøglen nu?",
+          "newKey": "En ny nøgle signerer alle tokens fra nu af.",
+          "caching": "Apps og API’er, der cacher JWKS’et, henter den nye nøgle automatisk: De henter JWKS’et igen, når de møder dens nøgle-id.",
+          "oldTokens": "Tokens signeret med den nuværende nøgle er gyldige, til de udløber: Nøglen forbliver publiceret i udsættelsesperioden ({grace}).",
+          "compromised": "Hvis nøglen kan være lækket, så rotér den nu og vælg derefter en kort udsættelsesperiode: En udgået nøgle verificerer tokens, så længe den er publiceret.",
+          "confirm": "Rotér nu",
+          "cancel": "Annuller",
+          "done": "Nøgle roteret. Nye tokens bruger nøglen {kid}."
+        },
+        "errors": {
+          "interval": "Vælg et af de tilbudte rotationsintervaller.",
+          "grace": "Vælg en af de tilbudte udsættelsesperioder.",
+          "save": "Indstillingerne kunne ikke gemmes.",
+          "rotate": "Nøglen kunne ikke roteres."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API-nøgler",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API-nøgler",
+      "description": "Langvarige nøgler til dine scripts og værktøjer. Hver nøgle virker med én API, med de scopes, du vælger, indtil den udløber, eller du tilbagekalder den.",
+      "create": "Opret API-nøgle",
+      "turnedOff": "API-nøgler er slået fra på denne server. Du kan stadig tilbagekalde de nøgler, du har.",
+      "noApis": "Ingen API accepterer nøgler endnu.",
+      "empty": "Du har ingen API-nøgler.",
+      "loadError": "Kunne ikke indlæse dine API-nøgler.",
+      "expired": "Udløbet",
+      "api": "API",
+      "unknownApi": "Fjernet API",
+      "scopes": "Scopes",
+      "createdOn": "Oprettet {date}",
+      "lastUsedOn": "sidst brugt {date}",
+      "neverUsed": "aldrig brugt",
+      "expiresOn": "udløber {date}",
+      "revoke": "Tilbagekald",
+      "revoked": "API-nøglen er tilbagekaldt",
+      "revokeError": "Kunne ikke tilbagekalde API-nøglen.",
+      "confirmRevokeTitle": "Tilbagekald {name}?",
+      "confirmRevokeBody": "Scripts, der bruger denne nøgle, holder straks op med at virke. Det kan ikke fortrydes.",
+      "cancel": "Annuller",
+      "createTitle": "Opret en API-nøgle",
+      "createDescription": "Vælg den API, nøglen er til, og hvad den må gøre der.",
+      "name": "Navn",
+      "namePlaceholder": "f.eks. Natlig eksport",
+      "scopesHint": "Vælg kun det, nøglen har brug for. API'en tjekker disse scopes ved hver anmodning.",
+      "expiry": "Udløber efter",
+      "expiryHint": "Højst {max} dage, fastsat af din administrator.",
+      "days": "{count, plural, one {# dag} other {# dage}}",
+      "createSubmit": "Opret nøgle",
+      "issuedTitle": "Din nye nøgle: {name}",
+      "issuedDescription": "Tilføj den til konfigurationen af dit script eller værktøj. API'en tjekker den hos denne server.",
+      "issuedWarningTitle": "Kopiér den nu",
+      "issuedWarningBody": "Nøglen vises kun denne ene gang. Hold den hemmelig ligesom en adgangskode. Hvis du mister den, så tilbagekald den, og opret en ny.",
+      "copy": "Kopiér nøgle",
+      "copied": "Nøglen er kopieret",
+      "copyError": "Kunne ikke kopiere. Markér nøglen, og kopiér den selv.",
+      "done": "Færdig",
+      "signInAgain": "Log ind igen",
+      "errors": {
+        "disabled": "API-nøgler er slået fra på denne server.",
+        "name": "Angiv et navn til nøglen.",
+        "api": "Vælg en API, der accepterer nøgler.",
+        "scopes": "Vælg mindst ét scope.",
+        "lifetime": "Vælg en udløbstid inden for det tilladte maksimum.",
+        "limit": "Du har allerede {max} nøgler. Tilbagekald en for at oprette en ny.",
+        "signedOut": "Din session er udløbet. Log ind igen.",
+        "impersonating": "API-nøgler kan ikke oprettes, mens du ser en anden persons konto.",
+        "recentSignIn": "Af hensyn til din sikkerhed skal du logge ind igen for at oprette en API-nøgle.",
+        "failed": "Kunne ikke oprette API-nøglen."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "For mange forsøg. Prøv igen om {seconds, plural, one {# sekund} other {# sekunder}}.",
+    "minutes": "For mange forsøg. Prøv igen om {minutes, plural, one {# minut} other {# minutter}}.",
+    "later": "For mange forsøg. Vent et par minutter, og prøv igen."
   },
   "sso": {
     "title": "Single sign-on",

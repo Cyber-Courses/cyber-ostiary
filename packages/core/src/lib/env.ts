@@ -68,6 +68,38 @@ export const envSchema = z
     CAPTCHA_PROVIDER: optional(z.enum(CAPTCHA_PROVIDERS)),
     CAPTCHA_SITE_KEY: optional(z.string().min(1)),
     CAPTCHA_SECRET_KEY: optional(z.string().min(1)),
+    /**
+     * Rate limiting of the auth endpoints, counted in the database (table `rate_limit`) so
+     * every instance shares the counts. Unset: on in production, off in development.
+     */
+    RATE_LIMIT_ENABLED: optional(z.enum(["true", "false"])),
+    /**
+     * Comma-separated request headers holding the client IP, tried in order. Default
+     * `x-forwarded-for`, which Vercel overwrites with the real client address. Behind another
+     * proxy, name a header that proxy sets and clients cannot (e.g. `cf-connecting-ip`).
+     */
+    IP_ADDRESS_HEADERS: optional(z.string()),
+    /**
+     * Comma-separated IPs or CIDR ranges of your own proxies. When set, the client IP is the
+     * right-most address in `x-forwarded-for` that is not one of them. Unset (default), a
+     * header with several addresses is not trusted at all.
+     */
+    TRUSTED_PROXIES: optional(z.string()),
+    /**
+     * Secret that the webhook retry route (/api/cron/webhooks) expects as a bearer token.
+     * Vercel Cron sends `Authorization: Bearer $CRON_SECRET` by itself. Unset: the route refuses.
+     */
+    CRON_SECRET: optional(z.string().min(16)),
+    /**
+     * Development only: when "true", webhook endpoints may be http://localhost (or another
+     * loopback address). Ignored when NODE_ENV is "production".
+     */
+    WEBHOOKS_ALLOW_LOCALHOST: optional(z.enum(["true", "false"])),
+    /**
+     * Prefix of new API keys (letters, digits, `_` and `-`), so they are easy to recognize and
+     * to find with secret scanners. Existing keys keep theirs.
+     */
+    API_KEY_PREFIX: optional(z.string().regex(/^[A-Za-z0-9_-]{1,16}$/)),
     /** Enable verbose request logging when "true". */
     LOG_REQUESTS: z.enum(["true", "false"]).optional(),
   })

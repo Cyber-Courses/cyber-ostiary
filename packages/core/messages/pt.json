@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "ou",
+      "continueWith": "Continuar com {provider}",
+      "signInWith": "Entrar com {provider}",
+      "lastUsed": "Usado por último",
+      "otherProviders": "Mais formas de entrar",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "Chaves de API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Provedores de login",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Chaves de assinatura"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "Chaves de API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Provedores de login",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Chaves de assinatura"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "APIs",
         "description": "As suas APIs (recursos protegidos) que aceitam tokens de acesso do {name}: os scopes que os clientes podem pedir, que aplicações as podem usar e as definições dos seus tokens."
       },
+      "signInProviders": {
+        "title": "Provedores de login",
+        "description": "Permita entrar no {name} com Google, Apple, Microsoft e mais de 30 outras contas."
+      },
+      "apiKeys": {
+        "title": "Chaves de API",
+        "description": "Chaves que as pessoas criam para os seus scripts chamarem as suas APIs: ative-as ou desative-as, defina a sua validade máxima e revogue qualquer chave."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Notificações HTTPS assinadas que avisam as suas aplicações quando utilizadores, funções ou associações a organizações do {name} mudam.",
+        "deliveries": "Registo de entregas"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Chaves de assinatura",
+        "description": "As chaves com que {name} assina tokens de ID e tokens de acesso JWT. Aplicações e APIs verificam os tokens com as chaves públicas publicadas no JWKS.",
+        "jwksUrl": "URL do JWKS",
+        "days": "{count, plural, one {# dia} other {# dias}}",
+        "rotation": {
+          "title": "Rotação automática",
+          "description": "Substitui a chave de assinatura de acordo com um calendário. Uma chave retirada continua no JWKS durante o período de tolerância, para que os tokens que ela assinou continuem a ser verificados.",
+          "on": "Ativada",
+          "off": "Desativada",
+          "edit": "Editar",
+          "interval": "Rodar a chave",
+          "never": "Nunca (apenas rotação manual)",
+          "every": "A cada {count, plural, one {# dia} other {# dias}}",
+          "grace": "Período de tolerância",
+          "graceValue": "{count, plural, one {# dia} other {# dias}} depois de uma chave ser retirada",
+          "dialogTitle": "Rotação automática",
+          "dialogDescription": "Uma nova chave é criada quando a atual atinge o intervalo. As aplicações que guardam o JWKS em cache voltam a obtê-lo quando veem o novo ID de chave.",
+          "intervalHint": "O novo intervalo também se aplica à chave atual: ela é retirada ao atingir a nova idade, ou no próximo token se já for mais antiga.",
+          "graceHint": "Quanto tempo uma chave retirada continua publicada. Mantenha-o acima da duração máxima dos seus tokens (tokens de acesso: 1 hora, tokens de ID: 10 horas).",
+          "save": "Guardar",
+          "cancel": "Cancelar",
+          "saved": "Definições guardadas. O servidor de autenticação aplica-as em menos de um minuto."
+        },
+        "keys": {
+          "title": "Chaves",
+          "description": "As chaves privadas são guardadas cifradas e nunca são mostradas.",
+          "keyId": "ID da chave (kid)",
+          "algorithm": "Algoritmo",
+          "created": "Criada",
+          "retires": "Assina até",
+          "unpublished": "Publicada até",
+          "status": "Estado",
+          "current": "Atual",
+          "published": "Publicada para verificação",
+          "expired": "Expirada",
+          "noExpiry": "Sem expiração",
+          "empty": "Ainda não há chaves. A primeira é criada quando o primeiro token é assinado, ou quando fizer uma rotação."
+        },
+        "rotate": {
+          "button": "Rodar agora",
+          "title": "Rodar agora a chave de assinatura?",
+          "newKey": "Uma nova chave assina todos os tokens a partir de agora.",
+          "caching": "As aplicações e APIs que guardam o JWKS em cache adotam a nova chave automaticamente: voltam a obter o JWKS quando encontram o respetivo ID de chave.",
+          "oldTokens": "Os tokens assinados com a chave atual continuam válidos até expirarem: a chave continua publicada durante o período de tolerância ({grace}).",
+          "compromised": "Se a chave puder ter sido exposta, rode-a agora e depois escolha um período de tolerância curto: uma chave retirada verifica tokens enquanto estiver publicada.",
+          "confirm": "Rodar agora",
+          "cancel": "Cancelar",
+          "done": "Chave rodada. Os novos tokens usam a chave {kid}."
+        },
+        "errors": {
+          "interval": "Escolha um dos intervalos de rotação disponíveis.",
+          "grace": "Escolha um dos períodos de tolerância disponíveis.",
+          "save": "Não foi possível guardar as definições.",
+          "rotate": "Não foi possível rodar a chave."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "Chaves de API",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "Chaves de API",
+      "description": "Chaves de longa duração para seus scripts e ferramentas. Cada chave funciona com uma API, com os scopes que você escolher, até expirar ou ser revogada.",
+      "create": "Criar chave de API",
+      "turnedOff": "As chaves de API estão desativadas neste servidor. Você ainda pode revogar as chaves que já tem.",
+      "noApis": "Nenhuma API aceita chaves ainda.",
+      "empty": "Você não tem chaves de API.",
+      "loadError": "Não foi possível carregar suas chaves de API.",
+      "expired": "Expirada",
+      "api": "API",
+      "unknownApi": "API removida",
+      "scopes": "Scopes",
+      "createdOn": "Criada em {date}",
+      "lastUsedOn": "último uso em {date}",
+      "neverUsed": "nunca usada",
+      "expiresOn": "expira em {date}",
+      "revoke": "Revogar",
+      "revoked": "Chave de API revogada",
+      "revokeError": "Não foi possível revogar a chave de API.",
+      "confirmRevokeTitle": "Revogar {name}?",
+      "confirmRevokeBody": "Os scripts que usam esta chave param de funcionar imediatamente. Isso não pode ser desfeito.",
+      "cancel": "Cancelar",
+      "createTitle": "Criar uma chave de API",
+      "createDescription": "Escolha a API a que esta chave se destina e o que ela pode fazer lá.",
+      "name": "Nome",
+      "namePlaceholder": "ex.: Exportação noturna",
+      "scopesHint": "Escolha apenas o que a chave precisa. A API verifica esses scopes em cada solicitação.",
+      "expiry": "Expira após",
+      "expiryHint": "No máximo {max} dias, definido pelo seu administrador.",
+      "days": "{count, plural, one {# dia} other {# dias}}",
+      "createSubmit": "Criar chave",
+      "issuedTitle": "Sua nova chave: {name}",
+      "issuedDescription": "Adicione-a à configuração do seu script ou ferramenta. A API a verifica com este servidor.",
+      "issuedWarningTitle": "Copie agora",
+      "issuedWarningBody": "Esta é a única vez que a chave é exibida. Mantenha-a em segredo, como uma senha. Se perdê-la, revogue-a e crie outra.",
+      "copy": "Copiar chave",
+      "copied": "Chave copiada",
+      "copyError": "Não foi possível copiar. Selecione a chave e copie-a manualmente.",
+      "done": "Concluído",
+      "signInAgain": "Entrar novamente",
+      "errors": {
+        "disabled": "As chaves de API estão desativadas neste servidor.",
+        "name": "Digite um nome para a chave.",
+        "api": "Escolha uma API que aceite chaves.",
+        "scopes": "Escolha pelo menos um scope.",
+        "lifetime": "Escolha uma validade dentro do máximo permitido.",
+        "limit": "Você já tem {max} chaves. Revogue uma para criar outra.",
+        "signedOut": "Sua sessão terminou. Entre novamente.",
+        "impersonating": "Não é possível criar chaves de API enquanto você visualiza a conta de outra pessoa.",
+        "recentSignIn": "Por segurança, entre novamente para criar uma chave de API.",
+        "failed": "Não foi possível criar a chave de API."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Tentativas demais. Tente novamente em {seconds, plural, one {# segundo} other {# segundos}}.",
+    "minutes": "Tentativas demais. Tente novamente em {minutes, plural, one {# minuto} other {# minutos}}.",
+    "later": "Muitas tentativas. Aguarde alguns minutos e tente novamente."
   },
   "sso": {
     "title": "Single sign-on",

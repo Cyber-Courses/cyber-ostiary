@@ -3,13 +3,17 @@
 import {
   Boxes,
   Building2,
+  FileKey,
   History,
   KeyRound,
+  KeySquare,
   Network,
   LayoutDashboard,
+  LogIn,
   ScrollText,
   ShieldAlert,
   Users,
+  Webhook,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -40,6 +44,16 @@ export function useAdminSectionNavItems(): NavMainItem[] {
       icon: <KeyRound />,
     },
     {
+      title: t("signInProviders"),
+      url: "/sign-in-providers",
+      icon: <LogIn />,
+    },
+    {
+      title: t("webhooks"),
+      url: "/webhooks",
+      icon: <Webhook />,
+    },
+    {
       title: t("security"),
       url: "/security",
       icon: <ShieldAlert />,
@@ -66,9 +80,19 @@ export function useOauthSectionNavItems(): NavMainItem[] {
       icon: <Network />,
     },
     {
+      title: t("apiKeys"),
+      url: "/api-keys",
+      icon: <KeySquare />,
+    },
+    {
       title: t("consent"),
       url: "/consent",
       icon: <ScrollText />,
+    },
+    {
+      title: t("signingKeys"),
+      url: "/signing-keys",
+      icon: <FileKey />,
     },
   ];
 }

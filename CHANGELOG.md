@@ -8,6 +8,81 @@ All notable changes are documented here. The format follows
 
 ### Added
 
+- **API keys** for the APIs registered in Ostiary, with Better Auth's `@better-auth/api-key`
+  plugin. Users create keys from the account page: a name, one API, some of its scopes and an
+  expiry (needs a sign-in from the last 10 minutes); the key is shown once and stored as a
+  digest. APIs verify keys at `POST /api/auth/api-key/verify`, authenticated as a confidential
+  application linked to the API; a key for another API is refused, as are expired, revoked and
+  banned users' keys. Keys are never sessions (`enableSessionForAPIKeys` stays off) and the
+  plugin's own HTTP endpoints are closed. Admin console: a new **API keys** page (turn keys on,
+  off by default; maximum lifetime; every key with revoke), keys on the user's page, and
+  creations and revocations in the audit log. Banning or deleting an account (or a SCIM
+  deactivation) revokes its keys. Rate limits: 300 verifications per key per minute, 600 per
+  minute per address on the endpoint. Optional `API_KEY_PREFIX`. Needs the `apikey` table
+  (migration `0007_api_keys`).
+- Rate limits that work on serverless: Better Auth's counters are kept in Postgres
+  (new `rate_limit` table, migration `0005_rate_limit`) instead of each instance's
+  memory, so a limit holds across every Vercel function instance and both apps. On in
+  production, off in development (`RATE_LIMIT_ENABLED`). Stricter limits per client IP
+  on password sign-in (10 a minute), sign-up, password reset and verification emails,
+  and two-factor codes (5 a minute); a higher one on `/oauth2/token` (300 a minute)
+  for machine clients and refreshes; none on `/get-session` and `/jwks`. A refused
+  request gets a standard `Retry-After` header, and the sign-in, code, two-factor and
+  device screens say how long to wait, in all 20 languages. See README, Rate limiting.
+- `IP_ADDRESS_HEADERS` and `TRUSTED_PROXIES` to read the client IP behind proxies other
+  than Vercel's (Cloudflare, nginx, load balancers). The default, a single-address
+  `x-forwarded-for`, is right on Vercel.
+- Admin console: a **Signing keys** page for the keys that sign ID tokens and JWT
+  access tokens. It lists every key (key ID, algorithm, created, signs until, published
+  until, and whether it is current, still published for verification, or expired; private
+  keys are never shown), has a **Rotate now** button, and sets automatic rotation (off,
+  or every 30, 90, 180 or 365 days) and the grace period a retired key stays in the JWKS
+  (1, 7, 30 or 90 days). Settings are stored in `app_setting` and applied to Better
+  Auth's jwt plugin before each request, so they reach the auth server within a minute.
+  Rotation stays off and the grace period stays 30 days until an admin changes them, so
+  upgrading changes nothing. Turning rotation on also dates the current key (it retires
+  when it reaches the interval, or at the next token if it is already older). Rotations
+  and setting changes are in the audit log, with a new **Signing keys** filter. The
+  discovery document and the JWKS URL are unchanged. No migration.
+- **Webhooks**: apps are told when users change. Admin console **Webhooks** page to
+  add, edit, disable and delete endpoints, choose events, regenerate the signing
+  secret (shown once, stored encrypted; the old one keeps signing for 24 hours),
+  send a test event, and read each endpoint's delivery log with **Redeliver**.
+  Events: `user.created`, `user.updated`, `user.deleted`, `user.banned`,
+  `user.unbanned` (including SCIM deactivation), `user.role_changed`,
+  `organization.member.added`, `organization.member.removed` and
+  `organization.member.role_changed`, recorded once the change is committed, with
+  a minimal payload. Deliveries are signed per Standard Webhooks, sent right after
+  the request, and retried with backoff (5 attempts over about a day) by the new
+  `/api/cron/webhooks` route (`CRON_SECRET`; daily in `vercel.json`, as Vercel Hobby
+  allows); an endpoint failing 15 times in a row is disabled. URLs must be HTTPS on
+  public addresses (`WEBHOOKS_ALLOW_LOCALHOST=true` for local development). Admin
+  actions are in the audit log. Migration `0006_webhooks` adds `webhook_endpoint`
+  and `webhook_delivery`.
+- Social sign-in with every provider Better Auth supports (36: Apple, Atlassian,
+  Cloudflare, Amazon Cognito, Discord, Dropbox, Facebook, Figma, GitHub, GitLab,
+  Google, Hugging Face, Kakao, Kick, LINE, Linear, LinkedIn, Microsoft, Naver,
+  Notion, Paybin, PayPal, Polar, Railway, Reddit, Roblox, Salesforce, Slack,
+  Spotify, TikTok, Twitch, X, Vercel, VK, WeChat, Zoom). Admin console: a new
+  **Sign-in providers** page lists them with their logos; each one shows the
+  callback URL to register, links to the provider's console and the setup guide,
+  and takes its credentials, including provider-specific fields (Apple's team ID,
+  key ID and private key, from which the client secret JWT is generated; the
+  Microsoft tenant; Cognito's domain, region and user pool; GitLab's URL...).
+  Providers can be turned on and off, ordered, renamed on their button, and limited
+  to existing accounts. Secrets are encrypted at rest (AES-256-GCM, key derived from
+  `BETTER_AUTH_SECRET`) and never sent back to the browser. Changes reach the auth
+  server within 30 seconds, without a restart, and are in the audit log (with a
+  **Sign-in providers** filter). `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` keep
+  working and show as set by the environment. Needs the new `social_provider` table
+  (migration `0008_social_provider`).
+- Sign-in and sign-up pages: brand buttons in each provider's colours (legible in
+  dark mode), "Sign in with Apple" / "Continue with Google" wording, and a layout
+  that stays compact with many providers (a grid of names, then of logos with
+  tooltips), keeping the last-used provider highlighted. Account dashboard:
+  **Connected accounts** lists every enabled provider with its logo, still shows
+  accounts of providers turned off since, and cannot remove the last way to sign
+  in. The admin user page shows each linked provider's logo.
 - Admin console: an **APIs** page to register the APIs (OAuth protected resources)
   that accept access tokens, with the scopes clients may request for each. Scopes
   are read from the database and reach the auth server within a minute, without a
