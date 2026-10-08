@@ -8,6 +8,34 @@
       "when": 1791341410518,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791441141926,
+      "tag": "0001_device_code",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791442693388,
+      "tag": "0002_two_factor",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791443352834,
+      "tag": "0003_scim_provisioning",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791444355630,
+      "tag": "0004_app_setting",
+      "breakpoints": true
     }
   ]
 }

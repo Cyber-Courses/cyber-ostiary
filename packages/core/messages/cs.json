@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Poslat přihlašovací kód e-mailem",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Naposledy jste se přihlásili kódem zaslaným e-mailem.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Účty, které jsou v tomto prohlížeči už přihlášené, zůstanou přihlášené."
+    },
+    "emailCode": {
+      "title": "Přihlášení kódem",
+      "description": "Na e-mailovou adresu vašeho účtu pošleme 6místný kód. Přečtěte si ho na libovolném zařízení a zadejte ho sem.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "vy@priklad.cz",
+      "send": "Poslat kód",
+      "sending": "Odesílání…",
+      "sentTitle": "Zkontrolujte e-mail",
+      "sent": "Pokud adresu {email} používá nějaký účet, posíláme na ni 6místný kód. Platnost vyprší za {minutes} minut.",
+      "codeLabel": "Přihlašovací kód",
+      "verify": "Přihlásit se",
+      "verifying": "Přihlašování…",
+      "newCode": "Nepřišel? Poslat nový kód",
+      "usePassword": "Použít heslo",
+      "errors": {
+        "invalidEmail": "Zadejte platnou e-mailovou adresu.",
+        "invalidCode": "Tento kód není správný. Zkontrolujte ho a zkuste to znovu.",
+        "expired": "Platnost kódu vypršela. Požádejte o nový.",
+        "tooManyAttempts": "Příliš mnoho chybných kódů. Požádejte o nový.",
+        "rateLimited": "Příliš mnoho pokusů. Počkejte minutu a zkuste to znovu.",
+        "sendFailed": "Kód se nepodařilo odeslat. Zkuste to znovu za minutu.",
+        "signInFailed": "Přihlášení se nezdařilo. Zkuste to znovu."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Dvoufázové ověření",
+      "title": "Dvoufázové ověření",
+      "descriptionTotp": "Zadejte 6místný kód z ověřovací aplikace.",
+      "descriptionBackup": "Zadejte jeden ze záložních kódů. Každý kód funguje jen jednou.",
+      "codeLabel": "Kód",
+      "backupCodeLabel": "Záložní kód",
+      "trustDevice": "Důvěřovat tomuto zařízení 30 dní",
+      "trustDeviceHint": "Na tomto zařízení se kód nebude vyžadovat. Zvolte to jen na vlastním zařízení.",
+      "submit": "Ověřit",
+      "submitting": "Ověřování…",
+      "useBackupCode": "Použít záložní kód",
+      "useAuthenticator": "Použít ověřovací aplikaci",
+      "backToLogin": "Zpět na přihlášení",
+      "expiredTitle": "Přihlaste se znovu",
+      "expiredDescription": "Platnost tohoto přihlášení vypršela nebo bylo zadáno příliš mnoho chybných kódů. Přihlaste se znovu heslem.",
+      "errors": {
+        "invalidCode": "Kód není platný. Zadejte aktuální kód z aplikace.",
+        "invalidBackupCode": "Záložní kód není platný nebo už byl použit.",
+        "locked": "Příliš mnoho chybných kódů. Zkuste to znovu za 15 minut.",
+        "rateLimited": "Příliš mnoho pokusů. Počkejte několik sekund a zkuste to znovu.",
+        "failed": "Kód se nepodařilo ověřit. Zkuste to znovu."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Neověřená aplikace",
+      "dynamic": "Tato aplikace se zaregistrovala sama a nebyla zkontrolována. Povolte ji, jen pokud jí důvěřujete a toto přihlášení jste zahájili sami.",
+      "metadataDocument": "Tato aplikace se identifikuje dokumentem zveřejněným na {host} a nebyla zkontrolována. Povolte ji, jen pokud jí důvěřujete a toto přihlášení jste zahájili sami.",
+      "redirect": "Pokud povolíte, budete přesměrováni na <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "Vaše API (chráněné zdroje), která přijímají přístupové tokeny {name}, a scopy, které si pro ně klienti mohou vyžádat."
+        "description": "Vaše API (chráněné zdroje), která přijímají přístupové tokeny {name}: scopy, které si klienti mohou vyžádat, aplikace, které je mohou používat, a nastavení jejich tokenů."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Dvoufázové ověření",
+      "hint": "Při přihlášení heslem zadejte také kód z ověřovací aplikace.",
+      "statusOn": "Zapnuto",
+      "statusOff": "Vypnuto",
+      "enable": "Zapnout",
+      "disable": "Vypnout",
+      "regenerate": "Nové záložní kódy",
+      "passwordLabel": "Heslo",
+      "passwordHint": "Pokračujte zadáním hesla.",
+      "continue": "Pokračovat",
+      "cancel": "Zrušit",
+      "done": "Hotovo",
+      "doneAdmin": "Přejít do administrační konzole",
+      "setupTitle": "Zapnout dvoufázové ověření",
+      "scanTitle": "Naskenujte QR kód",
+      "scanHint": "Naskenujte ho ověřovací aplikací, například 1Password, Google Authenticator nebo Microsoft Authenticator, a pak zadejte zobrazený 6místný kód.",
+      "qrAlt": "QR kód pro přidání tohoto účtu do ověřovací aplikace",
+      "manualKey": "Nejde to naskenovat? Zadejte v aplikaci tento klíč:",
+      "codeLabel": "6místný kód",
+      "verify": "Ověřit a zapnout",
+      "codesTitle": "Uložte si záložní kódy",
+      "codesHint": "Pokud ztratíte ověřovací aplikaci, každým kódem se můžete jednou přihlásit. Uložte je na bezpečné místo: znovu se nezobrazí.",
+      "copy": "Kopírovat",
+      "copied": "Záložní kódy zkopírovány",
+      "download": "Stáhnout",
+      "fileTitle": "Záložní kódy {name}. Každý kód funguje jen jednou.",
+      "disableTitle": "Vypnout dvoufázové ověření?",
+      "disableBody": "Budete se přihlašovat jen heslem. Ověřovací aplikace a záložní kódy přestanou fungovat.",
+      "regenerateTitle": "Vytvořit nové záložní kódy?",
+      "regenerateBody": "Současné záložní kódy přestanou fungovat. Pokračujte zadáním hesla.",
+      "enabled": "Dvoufázové ověření je zapnuté",
+      "disabled": "Dvoufázové ověření je vypnuté",
+      "signInAgainToDisable": "Z bezpečnostních důvodů je potřeba nedávné přihlášení. Přihlaste se znovu a pak to zkuste znovu.",
+      "signInAgain": "Přihlásit se znovu",
+      "adminRequiredTitle": "Zapněte dvoufázové ověření",
+      "adminRequiredBody": "Správci potřebují dvoufázové ověření, aby mohli otevřít administrační konzoli.",
+      "adminRequiredLink": "Nastavit",
+      "errors": {
+        "invalidPassword": "Nesprávné heslo.",
+        "invalidCode": "Kód není platný. Zkontrolujte, zda máte na zařízení správný čas, a zkuste to znovu.",
+        "rateLimited": "Příliš mnoho pokusů. Počkejte několik sekund a zkuste to znovu.",
+        "generic": "Něco se pokazilo. Zkuste to znovu."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Přepnout na",
+      "add": "Přidat další účet",
+      "signOutOf": "Odhlásit {email}",
+      "signOutAll": "Odhlásit všechny účty",
+      "switchFailed": "Účet se nepodařilo přepnout. Zkuste to znovu."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Pokračujte do aplikace s tímto účtem, nebo se přihlaste jiným.",
     "continueAs": "Pokračovat jako {name}",
     "useAnother": "Použít jiný účet",
-    "error": "Něco se pokazilo. Zkuste to znovu."
+    "error": "Něco se pokazilo. Zkuste to znovu.",
+    "descriptionMany": "Vyberte účet, se kterým chcete pokračovat do aplikace."
+  },
+  "device": {
+    "title": "Připojit zařízení",
+    "description": "Zadejte kód zobrazený na zařízení, televizi nebo v příkazovém řádku.",
+    "codeLabel": "Kód",
+    "continue": "Pokračovat",
+    "reviewTitle": "{name} chce používat váš účet",
+    "reviewDescription": "Schvalte jen tehdy, pokud jste toto přihlášení zahájili sami a kód níže odpovídá kódu na zařízení.",
+    "codeOnDevice": "Kód na zařízení",
+    "noScopes": "Základní přístup k účtu bez zvláštních oprávnění.",
+    "signedInAs": "Přihlášeni jako {email}",
+    "switchAccount": "Použít jiný účet",
+    "deny": "Zamítnout",
+    "approve": "Schválit",
+    "useAnotherCode": "Zadat jiný kód",
+    "approvedTitle": "Zařízení připojeno",
+    "approvedDescription": "Můžete se vrátit k zařízení. Přihlášení dokončí samo.",
+    "deniedTitle": "Žádost zamítnuta",
+    "deniedDescription": "Zařízení nezískalo přístup k vašemu účtu.",
+    "errors": {
+      "invalid": "Tento kód není platný. Zkontrolujte ho a zkuste to znovu.",
+      "expired": "Platnost kódu vypršela. Začněte znovu na zařízení a získejte nový.",
+      "processed": "Tento kód už byl použit. Pokud se stále potřebujete přihlásit, začněte znovu na zařízení.",
+      "otherAccount": "Tento kód používá jiný účet.",
+      "tooManyAttempts": "Příliš mnoho pokusů. Počkejte několik minut a zkuste to znovu.",
+      "failed": "Něco se pokazilo. Zkuste to znovu."
+    }
+  },
+  "captcha": {
+    "label": "Bezpečnostní kontrola",
+    "required": "Nejprve dokončete bezpečnostní kontrolu.",
+    "failed": "Bezpečnostní kontrola selhala. Zkuste to znovu.",
+    "unavailable": "Bezpečnostní kontrolu se nepodařilo načíst. Zkontrolujte připojení nebo vypněte blokování obsahu a stránku znovu načtěte."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Váš přihlašovací kód do {brand}",
+      "preheader": "Tímto kódem se přihlásíte. Platnost vyprší za {minutes} minut.",
+      "heading": "Váš přihlašovací kód",
+      "body": "Zadejte tento kód na přihlašovací stránce {brand} a dokončete přihlášení.",
+      "note": "Platnost kódu vyprší za {minutes} minut a lze ho použít jen jednou.",
+      "footnote": "Nežádali jste o kód? Tento e-mail ignorujte: bez kódu se nikdo nepřihlásí. Nikdy ho nikomu nesdělujte."
+    }
   }
 }

@@ -10,9 +10,11 @@
     "db:seed": "tsx src/db/seed-resources.ts"
   },
   "dependencies": {
+    "@better-auth/cimd": "catalog:",
     "@better-auth/drizzle-adapter": "catalog:",
     "@better-auth/oauth-provider": "catalog:",
     "@better-auth/passkey": "catalog:",
+    "@better-auth/scim": "catalog:",
     "@better-auth/sso": "catalog:",
     "better-auth": "catalog:",
     "class-variance-authority": "catalog:",
