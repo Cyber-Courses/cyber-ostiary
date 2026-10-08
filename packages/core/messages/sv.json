@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "eller",
+      "continueWith": "Fortsätt med {provider}",
+      "signInWith": "Logga in med {provider}",
+      "lastUsed": "Senast använd",
+      "otherProviders": "Fler sätt att logga in",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API:er",
+      "apiKeys": "API-nycklar",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Inloggningsleverantörer",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnycklar"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API:er",
+      "apiKeys": "API-nycklar",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Inloggningsleverantörer",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnycklar"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API:er",
         "description": "Dina API:er (skyddade resurser) som tar emot åtkomsttoken från {name}: de scopes som klienter kan begära, vilka applikationer som får använda dem och deras tokeninställningar."
       },
+      "signInProviders": {
+        "title": "Inloggningsleverantörer",
+        "description": "Låt användare logga in på {name} med Google, Apple, Microsoft och över 30 andra konton."
+      },
+      "apiKeys": {
+        "title": "API-nycklar",
+        "description": "Nycklar som användare skapar så att deras skript kan anropa dina API:er: slå på eller av dem, ange längsta giltighetstid och återkalla valfri nyckel."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Signerade HTTPS-aviseringar som meddelar dina appar när användare, roller och organisationsmedlemskap i {name} ändras.",
+        "deliveries": "Leveranslogg"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Signeringsnycklar",
+        "description": "Nycklarna som {name} signerar ID-token och JWT-åtkomsttoken med. Appar och API:er verifierar token mot de publika nycklarna i JWKS.",
+        "jwksUrl": "JWKS-URL",
+        "days": "{count, plural, one {# dag} other {# dagar}}",
+        "rotation": {
+          "title": "Automatisk rotation",
+          "description": "Byter ut signeringsnyckeln enligt ett schema. En tillbakadragen nyckel finns kvar i JWKS under respitperioden, så att token den har signerat fortsätter att verifieras.",
+          "on": "På",
+          "off": "Av",
+          "edit": "Redigera",
+          "interval": "Rotera nyckeln",
+          "never": "Aldrig (endast manuell rotation)",
+          "every": "Var {count, plural, one {# dag} other {# dagar}}",
+          "grace": "Respitperiod",
+          "graceValue": "{count, plural, one {# dag} other {# dagar}} efter att en nyckel dragits tillbaka",
+          "dialogTitle": "Automatisk rotation",
+          "dialogDescription": "En ny nyckel skapas när den nuvarande når intervallet. Appar som cachar JWKS hämtar den igen när de ser det nya nyckel-id:t.",
+          "intervalHint": "Ett nytt intervall gäller även den nuvarande nyckeln: den dras tillbaka när den når den nya åldern, eller vid nästa token om den redan är äldre.",
+          "graceHint": "Hur länge en tillbakadragen nyckel förblir publicerad. Välj längre än din längsta token-livslängd (åtkomsttoken: 1 timme, ID-token: 10 timmar).",
+          "save": "Spara",
+          "cancel": "Avbryt",
+          "saved": "Inställningarna sparades. Autentiseringsservern tillämpar dem inom en minut."
+        },
+        "keys": {
+          "title": "Nycklar",
+          "description": "Privata nycklar lagras krypterade och visas aldrig.",
+          "keyId": "Nyckel-id (kid)",
+          "algorithm": "Algoritm",
+          "created": "Skapad",
+          "retires": "Signerar till",
+          "unpublished": "Publicerad till",
+          "status": "Status",
+          "current": "Aktuell",
+          "published": "Publicerad för verifiering",
+          "expired": "Utgången",
+          "noExpiry": "Ingen utgång",
+          "empty": "Ingen nyckel än. Den första skapas när den första token signeras, eller när du roterar."
+        },
+        "rotate": {
+          "button": "Rotera nu",
+          "title": "Rotera signeringsnyckeln nu?",
+          "newKey": "En ny nyckel signerar varje token från och med nu.",
+          "caching": "Appar och API:er som cachar JWKS hämtar den nya nyckeln automatiskt: de hämtar JWKS igen när de möter nyckelns id.",
+          "oldTokens": "Token som signerats med den nuvarande nyckeln gäller tills de går ut: nyckeln förblir publicerad under respitperioden ({grace}).",
+          "compromised": "Om nyckeln kan ha läckt, rotera den nu och välj sedan en kort respitperiod: en tillbakadragen nyckel verifierar token så länge den är publicerad.",
+          "confirm": "Rotera nu",
+          "cancel": "Avbryt",
+          "done": "Nyckeln roterades. Nya token använder nyckeln {kid}."
+        },
+        "errors": {
+          "interval": "Välj ett av de erbjudna rotationsintervallen.",
+          "grace": "Välj en av de erbjudna respitperioderna.",
+          "save": "Det gick inte att spara inställningarna.",
+          "rotate": "Det gick inte att rotera nyckeln."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API-nycklar",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API-nycklar",
+      "description": "Långlivade nycklar för dina skript och verktyg. Varje nyckel fungerar med ett API, med de scopes du väljer, tills den går ut eller du återkallar den.",
+      "create": "Skapa API-nyckel",
+      "turnedOff": "API-nycklar är avstängda på den här servern. Du kan fortfarande återkalla de nycklar du har.",
+      "noApis": "Inget API tar emot nycklar ännu.",
+      "empty": "Du har inga API-nycklar.",
+      "loadError": "Det gick inte att läsa in dina API-nycklar.",
+      "expired": "Utgången",
+      "api": "API",
+      "unknownApi": "Borttaget API",
+      "scopes": "Scopes",
+      "createdOn": "Skapad {date}",
+      "lastUsedOn": "senast använd {date}",
+      "neverUsed": "aldrig använd",
+      "expiresOn": "går ut {date}",
+      "revoke": "Återkalla",
+      "revoked": "API-nyckeln har återkallats",
+      "revokeError": "Det gick inte att återkalla API-nyckeln.",
+      "confirmRevokeTitle": "Återkalla {name}?",
+      "confirmRevokeBody": "Skript som använder den här nyckeln slutar fungera direkt. Det går inte att ångra.",
+      "cancel": "Avbryt",
+      "createTitle": "Skapa en API-nyckel",
+      "createDescription": "Välj vilket API nyckeln är till för och vad den får göra där.",
+      "name": "Namn",
+      "namePlaceholder": "t.ex. Nattlig export",
+      "scopesHint": "Välj bara det nyckeln behöver. API:et kontrollerar dessa scopes vid varje anrop.",
+      "expiry": "Går ut efter",
+      "expiryHint": "Högst {max} dagar, enligt din administratör.",
+      "days": "{count, plural, one {# dag} other {# dagar}}",
+      "createSubmit": "Skapa nyckel",
+      "issuedTitle": "Din nya nyckel: {name}",
+      "issuedDescription": "Lägg till den i konfigurationen för ditt skript eller verktyg. API:et kontrollerar den mot den här servern.",
+      "issuedWarningTitle": "Kopiera den nu",
+      "issuedWarningBody": "Nyckeln visas bara den här gången. Håll den hemlig, precis som ett lösenord. Om du tappar bort den, återkalla den och skapa en ny.",
+      "copy": "Kopiera nyckel",
+      "copied": "Nyckeln har kopierats",
+      "copyError": "Det gick inte att kopiera. Markera nyckeln och kopiera den själv.",
+      "done": "Klar",
+      "signInAgain": "Logga in igen",
+      "errors": {
+        "disabled": "API-nycklar är avstängda på den här servern.",
+        "name": "Ange ett namn för nyckeln.",
+        "api": "Välj ett API som tar emot nycklar.",
+        "scopes": "Välj minst ett scope.",
+        "lifetime": "Välj en giltighetstid inom det tillåtna maxvärdet.",
+        "limit": "Du har redan {max} nycklar. Återkalla en för att skapa en ny.",
+        "signedOut": "Din session har avslutats. Logga in igen.",
+        "impersonating": "Det går inte att skapa API-nycklar medan du visar någon annans konto.",
+        "recentSignIn": "Av säkerhetsskäl måste du logga in igen för att skapa en API-nyckel.",
+        "failed": "Det gick inte att skapa API-nyckeln."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "För många försök. Försök igen om {seconds, plural, one {# sekund} other {# sekunder}}.",
+    "minutes": "För många försök. Försök igen om {minutes, plural, one {# minut} other {# minuter}}.",
+    "later": "För många försök. Vänta några minuter och försök igen."
   },
   "sso": {
     "title": "Single sign-on",

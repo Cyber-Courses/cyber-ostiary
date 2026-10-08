@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "o",
+      "continueWith": "Continuar con {provider}",
+      "signInWith": "Iniciar sesión con {provider}",
+      "lastUsed": "Último usado",
+      "otherProviders": "Más formas de iniciar sesión",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Claves de API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Proveedores de inicio de sesión",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Claves de firma"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Claves de API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Proveedores de inicio de sesión",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Claves de firma"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API",
         "description": "Tus API (recursos protegidos) que aceptan tokens de acceso de {name}: los scopes que los clientes pueden solicitar, qué aplicaciones pueden usarlas y la configuración de sus tokens."
       },
+      "signInProviders": {
+        "title": "Proveedores de inicio de sesión",
+        "description": "Permite iniciar sesión en {name} con Google, Apple, Microsoft y más de 30 cuentas más."
+      },
+      "apiKeys": {
+        "title": "Claves de API",
+        "description": "Claves que los usuarios crean para que sus scripts llamen a tus API: actívalas o desactívalas, define su vigencia máxima y revoca cualquier clave."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Notificaciones HTTPS firmadas que avisan a tus aplicaciones cuando cambian los usuarios, los roles o las membresías de organizaciones de {name}.",
+        "deliveries": "Registro de entregas"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Claves de firma",
+        "description": "Las claves con las que {name} firma los tokens de ID y los tokens de acceso JWT. Las aplicaciones y las API verifican los tokens con las claves públicas publicadas en el JWKS.",
+        "jwksUrl": "URL del JWKS",
+        "days": "{count, plural, one {# día} other {# días}}",
+        "rotation": {
+          "title": "Rotación automática",
+          "description": "Sustituye la clave de firma según un calendario. Una clave retirada sigue en el JWKS durante el periodo de gracia, para que los tokens que firmó se sigan verificando.",
+          "on": "Activada",
+          "off": "Desactivada",
+          "edit": "Editar",
+          "interval": "Rotar la clave",
+          "never": "Nunca (solo rotación manual)",
+          "every": "Cada {count, plural, one {# día} other {# días}}",
+          "grace": "Periodo de gracia",
+          "graceValue": "{count, plural, one {# día} other {# días}} después de retirar una clave",
+          "dialogTitle": "Rotación automática",
+          "dialogDescription": "Se crea una clave nueva cuando la actual alcanza el intervalo. Las aplicaciones que guardan el JWKS en caché lo vuelven a descargar al ver el nuevo ID de clave.",
+          "intervalHint": "El nuevo intervalo también se aplica a la clave actual: se retira al alcanzar la nueva antigüedad, o en el siguiente token si ya es más antigua.",
+          "graceHint": "Cuánto tiempo sigue publicada una clave retirada. Debe ser mayor que la vida útil más larga de tus tokens (tokens de acceso: 1 hora, tokens de ID: 10 horas).",
+          "save": "Guardar",
+          "cancel": "Cancelar",
+          "saved": "Ajustes guardados. El servidor de autenticación los aplica en menos de un minuto."
+        },
+        "keys": {
+          "title": "Claves",
+          "description": "Las claves privadas se almacenan cifradas y nunca se muestran.",
+          "keyId": "ID de clave (kid)",
+          "algorithm": "Algoritmo",
+          "created": "Creada",
+          "retires": "Firma hasta",
+          "unpublished": "Publicada hasta",
+          "status": "Estado",
+          "current": "Actual",
+          "published": "Publicada para verificación",
+          "expired": "Caducada",
+          "noExpiry": "Sin caducidad",
+          "empty": "Aún no hay ninguna clave. La primera se crea al firmar el primer token o al rotar."
+        },
+        "rotate": {
+          "button": "Rotar ahora",
+          "title": "¿Rotar la clave de firma ahora?",
+          "newKey": "Una clave nueva firma todos los tokens a partir de ahora.",
+          "caching": "Las aplicaciones y API que guardan el JWKS en caché adoptan la clave nueva automáticamente: vuelven a descargar el JWKS cuando encuentran su ID de clave.",
+          "oldTokens": "Los tokens firmados con la clave actual siguen siendo válidos hasta que caducan: la clave sigue publicada durante el periodo de gracia ({grace}).",
+          "compromised": "Si la clave pudo filtrarse, rótala ahora y luego elige un periodo de gracia corto: una clave retirada verifica tokens mientras siga publicada.",
+          "confirm": "Rotar ahora",
+          "cancel": "Cancelar",
+          "done": "Clave rotada. Los tokens nuevos usan la clave {kid}."
+        },
+        "errors": {
+          "interval": "Elige uno de los intervalos de rotación disponibles.",
+          "grace": "Elige uno de los periodos de gracia disponibles.",
+          "save": "No se pudieron guardar los ajustes.",
+          "rotate": "No se pudo rotar la clave."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "Claves de API",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "Claves de API",
+      "description": "Claves de larga duración para tus scripts y herramientas. Cada clave funciona con una API, con los scopes que elijas, hasta que caduque o la revoques.",
+      "create": "Crear clave de API",
+      "turnedOff": "Las claves de API están desactivadas en este servidor. Aún puedes revocar las claves que tienes.",
+      "noApis": "Todavía ninguna API acepta claves.",
+      "empty": "No tienes claves de API.",
+      "loadError": "No se pudieron cargar tus claves de API.",
+      "expired": "Caducada",
+      "api": "API",
+      "unknownApi": "API eliminada",
+      "scopes": "Scopes",
+      "createdOn": "Creada el {date}",
+      "lastUsedOn": "último uso el {date}",
+      "neverUsed": "nunca usada",
+      "expiresOn": "caduca el {date}",
+      "revoke": "Revocar",
+      "revoked": "Clave de API revocada",
+      "revokeError": "No se pudo revocar la clave de API.",
+      "confirmRevokeTitle": "¿Revocar {name}?",
+      "confirmRevokeBody": "Los scripts que usan esta clave dejarán de funcionar de inmediato. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "createTitle": "Crear una clave de API",
+      "createDescription": "Elige la API para la que es esta clave y lo que puede hacer en ella.",
+      "name": "Nombre",
+      "namePlaceholder": "p. ej., Exportación nocturna",
+      "scopesHint": "Elige solo lo que la clave necesita. La API comprueba estos scopes en cada solicitud.",
+      "expiry": "Caduca después de",
+      "expiryHint": "Como máximo {max} días, según lo establecido por tu administrador.",
+      "days": "{count, plural, one {# día} other {# días}}",
+      "createSubmit": "Crear clave",
+      "issuedTitle": "Tu nueva clave: {name}",
+      "issuedDescription": "Añádela a la configuración de tu script o herramienta. La API la verifica con este servidor.",
+      "issuedWarningTitle": "Cópiala ahora",
+      "issuedWarningBody": "Esta es la única vez que se muestra la clave. Mantenla en secreto, como una contraseña. Si la pierdes, revócala y crea otra.",
+      "copy": "Copiar clave",
+      "copied": "Clave copiada",
+      "copyError": "No se pudo copiar. Selecciona la clave y cópiala manualmente.",
+      "done": "Listo",
+      "signInAgain": "Volver a iniciar sesión",
+      "errors": {
+        "disabled": "Las claves de API están desactivadas en este servidor.",
+        "name": "Introduce un nombre para la clave.",
+        "api": "Elige una API que acepte claves.",
+        "scopes": "Elige al menos un scope.",
+        "lifetime": "Elige una caducidad dentro del máximo permitido.",
+        "limit": "Ya tienes {max} claves. Revoca una para crear otra.",
+        "signedOut": "Tu sesión ha terminado. Vuelve a iniciar sesión.",
+        "impersonating": "No se pueden crear claves de API mientras ves la cuenta de otra persona.",
+        "recentSignIn": "Por seguridad, vuelve a iniciar sesión para crear una clave de API.",
+        "failed": "No se pudo crear la clave de API."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Demasiados intentos. Vuelve a intentarlo en {seconds, plural, one {# segundo} other {# segundos}}.",
+    "minutes": "Demasiados intentos. Vuelve a intentarlo en {minutes, plural, one {# minuto} other {# minutos}}.",
+    "later": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo."
   },
   "sso": {
     "title": "Single sign-on",

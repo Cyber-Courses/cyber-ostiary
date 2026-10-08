@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "lub",
+      "continueWith": "Kontynuuj przez {provider}",
+      "signInWith": "Zaloguj się przez {provider}",
+      "lastUsed": "Ostatnio używane",
+      "otherProviders": "Inne sposoby logowania",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Klucze API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Dostawcy logowania",
+      "webhooks": "Webhooki",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Klucze podpisujące"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API",
+      "apiKeys": "Klucze API",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Dostawcy logowania",
+      "webhooks": "Webhooki",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Klucze podpisujące"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API",
         "description": "Twoje API (chronione zasoby), które przyjmują tokeny dostępu {name}: scope'y, o które klienci mogą prosić, aplikacje, które mogą z nich korzystać, i ustawienia ich tokenów."
       },
+      "signInProviders": {
+        "title": "Dostawcy logowania",
+        "description": "Pozwól logować się do {name} kontem Google, Apple, Microsoft i ponad 30 innymi."
+      },
+      "apiKeys": {
+        "title": "Klucze API",
+        "description": "Klucze, które użytkownicy tworzą, aby ich skrypty mogły wywoływać Twoje API: włączaj je lub wyłączaj, ustawiaj ich maksymalny czas ważności i unieważniaj dowolny klucz."
+      },
+      "webhooks": {
+        "title": "Webhooki",
+        "description": "Podpisane powiadomienia HTTPS informujące Twoje aplikacje o zmianach użytkowników, ról i członkostwa w organizacjach w {name}.",
+        "deliveries": "Dziennik dostarczeń"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Klucze podpisujące",
+        "description": "Klucze, którymi {name} podpisuje tokeny ID i tokeny dostępu JWT. Aplikacje i API weryfikują tokeny kluczami publicznymi opublikowanymi w JWKS.",
+        "jwksUrl": "Adres URL JWKS",
+        "days": "{count, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+        "rotation": {
+          "title": "Automatyczna rotacja",
+          "description": "Wymienia klucz podpisujący według harmonogramu. Wycofany klucz pozostaje w JWKS przez okres karencji, więc podpisane nim tokeny nadal się weryfikują.",
+          "on": "Włączona",
+          "off": "Wyłączona",
+          "edit": "Edytuj",
+          "interval": "Obróć klucz",
+          "never": "Nigdy (tylko ręczna rotacja)",
+          "every": "Co {count, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+          "grace": "Okres karencji",
+          "graceValue": "{count, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}} po wycofaniu klucza",
+          "dialogTitle": "Automatyczna rotacja",
+          "dialogDescription": "Nowy klucz powstaje, gdy bieżący osiągnie ustalony odstęp. Aplikacje buforujące JWKS pobierają go ponownie, gdy zobaczą nowy identyfikator klucza.",
+          "intervalHint": "Nowy odstęp dotyczy też bieżącego klucza: zostanie wycofany po osiągnięciu nowego wieku albo przy następnym tokenie, jeśli jest już starszy.",
+          "graceHint": "Jak długo wycofany klucz pozostaje opublikowany. Ustaw dłużej niż najdłuższy czas życia tokenów (tokeny dostępu: 1 godzina, tokeny ID: 10 godzin).",
+          "save": "Zapisz",
+          "cancel": "Anuluj",
+          "saved": "Ustawienia zapisane. Serwer uwierzytelniania zastosuje je w ciągu minuty."
+        },
+        "keys": {
+          "title": "Klucze",
+          "description": "Klucze prywatne są przechowywane w postaci zaszyfrowanej i nigdy nie są wyświetlane.",
+          "keyId": "Identyfikator klucza (kid)",
+          "algorithm": "Algorytm",
+          "created": "Utworzono",
+          "retires": "Podpisuje do",
+          "unpublished": "Opublikowany do",
+          "status": "Status",
+          "current": "Bieżący",
+          "published": "Opublikowany do weryfikacji",
+          "expired": "Wygasły",
+          "noExpiry": "Bez wygaśnięcia",
+          "empty": "Brak kluczy. Pierwszy powstanie przy podpisaniu pierwszego tokenu lub przy rotacji."
+        },
+        "rotate": {
+          "button": "Obróć teraz",
+          "title": "Obrócić teraz klucz podpisujący?",
+          "newKey": "Od teraz każdy token podpisuje nowy klucz.",
+          "caching": "Aplikacje i API buforujące JWKS przejmą nowy klucz automatycznie: pobiorą JWKS ponownie, gdy trafią na jego identyfikator.",
+          "oldTokens": "Tokeny podpisane bieżącym kluczem pozostają ważne do wygaśnięcia: klucz pozostaje opublikowany przez okres karencji ({grace}).",
+          "compromised": "Jeśli klucz mógł wyciec, obróć go teraz, a potem wybierz krótki okres karencji: wycofany klucz weryfikuje tokeny, dopóki jest opublikowany.",
+          "confirm": "Obróć teraz",
+          "cancel": "Anuluj",
+          "done": "Klucz obrócony. Nowe tokeny używają klucza {kid}."
+        },
+        "errors": {
+          "interval": "Wybierz jeden z dostępnych odstępów rotacji.",
+          "grace": "Wybierz jeden z dostępnych okresów karencji.",
+          "save": "Nie udało się zapisać ustawień.",
+          "rotate": "Nie udało się obrócić klucza."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "Klucze API",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "Klucze API",
+      "description": "Długoterminowe klucze dla Twoich skryptów i narzędzi. Każdy klucz działa z jednym API, z wybranymi przez Ciebie scope'ami, dopóki nie wygaśnie lub go nie unieważnisz.",
+      "create": "Utwórz klucz API",
+      "turnedOff": "Klucze API są wyłączone na tym serwerze. Nadal możesz unieważnić swoje klucze.",
+      "noApis": "Żadne API nie przyjmuje jeszcze kluczy.",
+      "empty": "Nie masz kluczy API.",
+      "loadError": "Nie udało się wczytać Twoich kluczy API.",
+      "expired": "Wygasł",
+      "api": "API",
+      "unknownApi": "Usunięte API",
+      "scopes": "Scope'y",
+      "createdOn": "Utworzono {date}",
+      "lastUsedOn": "ostatnio użyto {date}",
+      "neverUsed": "nigdy nieużywany",
+      "expiresOn": "wygasa {date}",
+      "revoke": "Unieważnij",
+      "revoked": "Klucz API unieważniony",
+      "revokeError": "Nie udało się unieważnić klucza API.",
+      "confirmRevokeTitle": "Unieważnić {name}?",
+      "confirmRevokeBody": "Skrypty używające tego klucza natychmiast przestaną działać. Tej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "createTitle": "Utwórz klucz API",
+      "createDescription": "Wybierz API, do którego jest ten klucz, i co może w nim robić.",
+      "name": "Nazwa",
+      "namePlaceholder": "np. Nocny eksport",
+      "scopesHint": "Wybierz tylko to, czego klucz potrzebuje. API sprawdza te scope'y przy każdym żądaniu.",
+      "expiry": "Wygasa po",
+      "expiryHint": "Maksymalnie {max} dni, zgodnie z ustawieniem administratora.",
+      "days": "{count, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+      "createSubmit": "Utwórz klucz",
+      "issuedTitle": "Twój nowy klucz: {name}",
+      "issuedDescription": "Dodaj go do konfiguracji swojego skryptu lub narzędzia. API weryfikuje go na tym serwerze.",
+      "issuedWarningTitle": "Skopiuj go teraz",
+      "issuedWarningBody": "Klucz jest wyświetlany tylko ten jeden raz. Zachowaj go w tajemnicy, jak hasło. Jeśli go zgubisz, unieważnij go i utwórz nowy.",
+      "copy": "Kopiuj klucz",
+      "copied": "Skopiowano klucz",
+      "copyError": "Nie udało się skopiować. Zaznacz klucz i skopiuj go ręcznie.",
+      "done": "Gotowe",
+      "signInAgain": "Zaloguj się ponownie",
+      "errors": {
+        "disabled": "Klucze API są wyłączone na tym serwerze.",
+        "name": "Wpisz nazwę klucza.",
+        "api": "Wybierz API, które przyjmuje klucze.",
+        "scopes": "Wybierz co najmniej jeden scope.",
+        "lifetime": "Wybierz okres ważności mieszczący się w dozwolonym maksimum.",
+        "limit": "Masz już maksymalną liczbę kluczy ({max}). Unieważnij jeden, aby utworzyć nowy.",
+        "signedOut": "Twoja sesja wygasła. Zaloguj się ponownie.",
+        "impersonating": "Nie można tworzyć kluczy API podczas przeglądania konta innej osoby.",
+        "recentSignIn": "Ze względów bezpieczeństwa zaloguj się ponownie, aby utworzyć klucz API.",
+        "failed": "Nie udało się utworzyć klucza API."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Zbyt wiele prób. Spróbuj ponownie za {seconds, plural, one {# sekundę} few {# sekundy} many {# sekund} other {# sekundy}}.",
+    "minutes": "Zbyt wiele prób. Spróbuj ponownie za {minutes, plural, one {# minutę} few {# minuty} many {# minut} other {# minuty}}.",
+    "later": "Zbyt wiele prób. Odczekaj kilka minut i spróbuj ponownie."
   },
   "sso": {
     "title": "Single sign-on",

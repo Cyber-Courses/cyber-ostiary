@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "tai",
+      "continueWith": "Jatka palvelulla {provider}",
+      "signInWith": "Kirjaudu palvelulla {provider}",
+      "lastUsed": "Viimeksi käytetty",
+      "otherProviders": "Muita kirjautumistapoja",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API:t",
+      "apiKeys": "API-avaimet",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Kirjautumispalvelut",
+      "webhooks": "Webhookit",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Allekirjoitusavaimet"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API:t",
+      "apiKeys": "API-avaimet",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Kirjautumispalvelut",
+      "webhooks": "Webhookit",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Allekirjoitusavaimet"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API:t",
         "description": "API:si (suojatut resurssit), jotka hyväksyvät {name}-käyttöoikeustunnukset: scopet, joita asiakkaat voivat pyytää, sovellukset, jotka voivat käyttää niitä, ja niiden tunnusasetukset."
       },
+      "signInProviders": {
+        "title": "Kirjautumispalvelut",
+        "description": "Anna käyttäjien kirjautua palveluun {name} Google-, Apple-, Microsoft- ja yli 30 muulla tilillä."
+      },
+      "apiKeys": {
+        "title": "API-avaimet",
+        "description": "Avaimet, joita käyttäjät luovat, jotta heidän skriptinsä voivat kutsua API:itasi: ota ne käyttöön tai poista käytöstä, aseta enimmäisvoimassaoloaika ja mitätöi mikä tahansa avain."
+      },
+      "webhooks": {
+        "title": "Webhookit",
+        "description": "Allekirjoitetut HTTPS-ilmoitukset, jotka kertovat sovelluksillesi, kun {name}-käyttäjät, roolit tai organisaatiojäsenyydet muuttuvat.",
+        "deliveries": "Toimitusloki"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Allekirjoitusavaimet",
+        "description": "Avaimet, joilla {name} allekirjoittaa ID-tokenit ja JWT-käyttötokenit. Sovellukset ja API:t tarkistavat tokenit JWKS:ssä julkaistuja julkisia avaimia vasten.",
+        "jwksUrl": "JWKS-URL",
+        "days": "{count, plural, one {# päivä} other {# päivää}}",
+        "rotation": {
+          "title": "Automaattinen kierrätys",
+          "description": "Vaihtaa allekirjoitusavaimen aikataulun mukaan. Poistettu avain pysyy JWKS:ssä siirtymäajan, jotta sen allekirjoittamat tokenit tarkistuvat edelleen.",
+          "on": "Päällä",
+          "off": "Pois",
+          "edit": "Muokkaa",
+          "interval": "Kierrätä avain",
+          "never": "Ei koskaan (vain käsin)",
+          "every": "Joka {count, plural, one {# päivä} other {# päivää}}",
+          "grace": "Siirtymäaika",
+          "graceValue": "{count, plural, one {# päivä} other {# päivää}} avaimen poistamisen jälkeen",
+          "dialogTitle": "Automaattinen kierrätys",
+          "dialogDescription": "Uusi avain luodaan, kun nykyinen saavuttaa aikavälin. JWKS:ää välimuistissa pitävät sovellukset hakevat sen uudelleen, kun ne näkevät uuden avaintunnuksen.",
+          "intervalHint": "Uusi aikaväli koskee myös nykyistä avainta: se poistetaan, kun se saavuttaa uuden iän, tai seuraavan tokenin kohdalla, jos se on jo vanhempi.",
+          "graceHint": "Kuinka kauan poistettu avain pysyy julkaistuna. Valitse pidempi kuin pisin tokenin elinaika (käyttötokenit: 1 tunti, ID-tokenit: 10 tuntia).",
+          "save": "Tallenna",
+          "cancel": "Peruuta",
+          "saved": "Asetukset tallennettu. Todennuspalvelin ottaa ne käyttöön minuutissa."
+        },
+        "keys": {
+          "title": "Avaimet",
+          "description": "Yksityiset avaimet tallennetaan salattuina, eikä niitä näytetä koskaan.",
+          "keyId": "Avaintunnus (kid)",
+          "algorithm": "Algoritmi",
+          "created": "Luotu",
+          "retires": "Allekirjoittaa asti",
+          "unpublished": "Julkaistu asti",
+          "status": "Tila",
+          "current": "Nykyinen",
+          "published": "Julkaistu tarkistusta varten",
+          "expired": "Vanhentunut",
+          "noExpiry": "Ei vanhene",
+          "empty": "Ei vielä avainta. Ensimmäinen luodaan, kun ensimmäinen token allekirjoitetaan tai kun kierrätät."
+        },
+        "rotate": {
+          "button": "Kierrätä nyt",
+          "title": "Kierrätetäänkö allekirjoitusavain nyt?",
+          "newKey": "Uusi avain allekirjoittaa jokaisen tokenin tästä lähtien.",
+          "caching": "JWKS:ää välimuistissa pitävät sovellukset ja API:t ottavat uuden avaimen käyttöön automaattisesti: ne hakevat JWKS:n uudelleen, kun ne kohtaavat sen avaintunnuksen.",
+          "oldTokens": "Nykyisellä avaimella allekirjoitetut tokenit pysyvät voimassa vanhenemiseensa asti: avain pysyy julkaistuna siirtymäajan ({grace}).",
+          "compromised": "Jos avain on voinut vuotaa, kierrätä se nyt ja valitse sitten lyhyt siirtymäaika: poistettu avain tarkistaa tokeneita niin kauan kuin se on julkaistu.",
+          "confirm": "Kierrätä nyt",
+          "cancel": "Peruuta",
+          "done": "Avain kierrätetty. Uudet tokenit käyttävät avainta {kid}."
+        },
+        "errors": {
+          "interval": "Valitse jokin tarjotuista kierrätysväleistä.",
+          "grace": "Valitse jokin tarjotuista siirtymäajoista.",
+          "save": "Asetusten tallennus epäonnistui.",
+          "rotate": "Avaimen kierrätys epäonnistui."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API-avaimet",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API-avaimet",
+      "description": "Pitkäikäisiä avaimia skripteillesi ja työkaluillesi. Kukin avain toimii yhden API:n kanssa valitsemillasi scopeilla, kunnes se vanhenee tai mitätöit sen.",
+      "create": "Luo API-avain",
+      "turnedOff": "API-avaimet on poistettu käytöstä tällä palvelimella. Voit silti mitätöidä nykyiset avaimesi.",
+      "noApis": "Mikään API ei vielä hyväksy avaimia.",
+      "empty": "Sinulla ei ole API-avaimia.",
+      "loadError": "API-avaimiasi ei voitu ladata.",
+      "expired": "Vanhentunut",
+      "api": "API",
+      "unknownApi": "Poistettu API",
+      "scopes": "Scopet",
+      "createdOn": "Luotu {date}",
+      "lastUsedOn": "viimeksi käytetty {date}",
+      "neverUsed": "ei koskaan käytetty",
+      "expiresOn": "vanhenee {date}",
+      "revoke": "Mitätöi",
+      "revoked": "API-avain mitätöity",
+      "revokeError": "API-avainta ei voitu mitätöidä.",
+      "confirmRevokeTitle": "Mitätöidäänkö {name}?",
+      "confirmRevokeBody": "Tätä avainta käyttävät skriptit lakkaavat toimimasta heti. Tätä ei voi kumota.",
+      "cancel": "Peruuta",
+      "createTitle": "Luo API-avain",
+      "createDescription": "Valitse API, jota varten avain on, ja mitä se saa siellä tehdä.",
+      "name": "Nimi",
+      "namePlaceholder": "esim. Yöllinen vienti",
+      "scopesHint": "Valitse vain se, mitä avain tarvitsee. API tarkistaa nämä scopet jokaisessa pyynnössä.",
+      "expiry": "Voimassaoloaika",
+      "expiryHint": "Enintään {max} päivää, ylläpitäjäsi määrittämänä.",
+      "days": "{count, plural, one {# päivä} other {# päivää}}",
+      "createSubmit": "Luo avain",
+      "issuedTitle": "Uusi avaimesi: {name}",
+      "issuedDescription": "Lisää se skriptisi tai työkalusi asetuksiin. API tarkistaa sen tältä palvelimelta.",
+      "issuedWarningTitle": "Kopioi se nyt",
+      "issuedWarningBody": "Avain näytetään vain tämän kerran. Pidä se salassa kuten salasana. Jos kadotat sen, mitätöi se ja luo uusi.",
+      "copy": "Kopioi avain",
+      "copied": "Avain kopioitu",
+      "copyError": "Kopiointi epäonnistui. Valitse avain ja kopioi se itse.",
+      "done": "Valmis",
+      "signInAgain": "Kirjaudu uudelleen",
+      "errors": {
+        "disabled": "API-avaimet on poistettu käytöstä tällä palvelimella.",
+        "name": "Anna avaimelle nimi.",
+        "api": "Valitse API, joka hyväksyy avaimia.",
+        "scopes": "Valitse vähintään yksi scope.",
+        "lifetime": "Valitse voimassaoloaika sallitun enimmäisajan sisällä.",
+        "limit": "Sinulla on jo {max} avainta. Mitätöi yksi luodaksesi uuden.",
+        "signedOut": "Istuntosi on päättynyt. Kirjaudu uudelleen.",
+        "impersonating": "API-avaimia ei voi luoda, kun tarkastelet toisen henkilön tiliä.",
+        "recentSignIn": "Turvallisuussyistä kirjaudu uudelleen luodaksesi API-avaimen.",
+        "failed": "API-avainta ei voitu luoda."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Liian monta yritystä. Yritä uudelleen {seconds} sekunnin kuluttua.",
+    "minutes": "Liian monta yritystä. Yritä uudelleen {minutes} minuutin kuluttua.",
+    "later": "Liian monta yritystä. Odota muutama minuutti ja yritä uudelleen."
   },
   "sso": {
     "title": "Single sign-on",

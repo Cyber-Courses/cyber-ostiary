@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "eller",
+      "continueWith": "Fortsett med {provider}",
+      "signInWith": "Logg på med {provider}",
+      "lastUsed": "Sist brukt",
+      "otherProviders": "Flere måter å logge på",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API-er",
+      "apiKeys": "API-nøkler",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Påloggingsleverandører",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnøkler"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API-er",
+      "apiKeys": "API-nøkler",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Påloggingsleverandører",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signeringsnøkler"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API-er",
         "description": "API-ene dine (beskyttede ressurser) som godtar tilgangstokener fra {name}: scopene klienter kan be om, hvilke applikasjoner som kan bruke dem, og tokeninnstillingene deres."
       },
+      "signInProviders": {
+        "title": "Påloggingsleverandører",
+        "description": "La folk logge på {name} med Google, Apple, Microsoft og over 30 andre kontoer."
+      },
+      "apiKeys": {
+        "title": "API-nøkler",
+        "description": "Nøkler som brukere oppretter slik at skriptene deres kan kalle API-ene dine: slå dem av eller på, angi maksimal levetid og trekk tilbake hvilken som helst nøkkel."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Signerte HTTPS-varsler som forteller appene dine når brukere, roller og organisasjonsmedlemskap i {name} endres.",
+        "deliveries": "Leveringslogg"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Signeringsnøkler",
+        "description": "Nøklene {name} signerer ID-tokens og JWT-tilgangstokens med. Apper og API-er verifiserer tokens mot de offentlige nøklene i JWKS-en.",
+        "jwksUrl": "JWKS-URL",
+        "days": "{count, plural, one {# dag} other {# dager}}",
+        "rotation": {
+          "title": "Automatisk rotasjon",
+          "description": "Bytter ut signeringsnøkkelen etter en tidsplan. En utgått nøkkel blir liggende i JWKS-en i utsettelsesperioden, slik at tokens den har signert fortsatt kan verifiseres.",
+          "on": "På",
+          "off": "Av",
+          "edit": "Rediger",
+          "interval": "Roter nøkkelen",
+          "never": "Aldri (kun manuell rotasjon)",
+          "every": "Hver {count, plural, one {# dag} other {# dager}}",
+          "grace": "Utsettelsesperiode",
+          "graceValue": "{count, plural, one {# dag} other {# dager}} etter at en nøkkel er utgått",
+          "dialogTitle": "Automatisk rotasjon",
+          "dialogDescription": "En ny nøkkel opprettes når den nåværende når intervallet. Apper som mellomlagrer JWKS-en, henter den på nytt når de ser den nye nøkkel-ID-en.",
+          "intervalHint": "Et nytt intervall gjelder også for den nåværende nøkkelen: Den utgår når den når den nye alderen, eller ved neste token hvis den allerede er eldre.",
+          "graceHint": "Hvor lenge en utgått nøkkel forblir publisert. Velg lenger enn den lengste levetiden til tokens (tilgangstokens: 1 time, ID-tokens: 10 timer).",
+          "save": "Lagre",
+          "cancel": "Avbryt",
+          "saved": "Innstillingene er lagret. Autentiseringsserveren bruker dem innen et minutt."
+        },
+        "keys": {
+          "title": "Nøkler",
+          "description": "Private nøkler lagres kryptert og vises aldri.",
+          "keyId": "Nøkkel-ID (kid)",
+          "algorithm": "Algoritme",
+          "created": "Opprettet",
+          "retires": "Signerer til",
+          "unpublished": "Publisert til",
+          "status": "Status",
+          "current": "Gjeldende",
+          "published": "Publisert for verifisering",
+          "expired": "Utløpt",
+          "noExpiry": "Ingen utløpsdato",
+          "empty": "Ingen nøkkel ennå. Den første opprettes når det første tokenet signeres, eller når du roterer."
+        },
+        "rotate": {
+          "button": "Roter nå",
+          "title": "Rotere signeringsnøkkelen nå?",
+          "newKey": "En ny nøkkel signerer alle tokens fra nå av.",
+          "caching": "Apper og API-er som mellomlagrer JWKS-en, henter den nye nøkkelen automatisk: De henter JWKS-en på nytt når de møter nøkkel-ID-en.",
+          "oldTokens": "Tokens signert med den nåværende nøkkelen er gyldige til de utløper: Nøkkelen forblir publisert i utsettelsesperioden ({grace}).",
+          "compromised": "Hvis nøkkelen kan ha lekket, roter den nå og velg deretter en kort utsettelsesperiode: En utgått nøkkel verifiserer tokens så lenge den er publisert.",
+          "confirm": "Roter nå",
+          "cancel": "Avbryt",
+          "done": "Nøkkelen er rotert. Nye tokens bruker nøkkelen {kid}."
+        },
+        "errors": {
+          "interval": "Velg et av de tilbudte rotasjonsintervallene.",
+          "grace": "Velg en av de tilbudte utsettelsesperiodene.",
+          "save": "Kunne ikke lagre innstillingene.",
+          "rotate": "Kunne ikke rotere nøkkelen."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API-nøkler",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API-nøkler",
+      "description": "Langvarige nøkler for skriptene og verktøyene dine. Hver nøkkel fungerer med ett API, med scopene du velger, til den utløper eller du trekker den tilbake.",
+      "create": "Opprett API-nøkkel",
+      "turnedOff": "API-nøkler er slått av på denne serveren. Du kan fortsatt trekke tilbake nøklene du har.",
+      "noApis": "Ingen API-er godtar nøkler ennå.",
+      "empty": "Du har ingen API-nøkler.",
+      "loadError": "Kunne ikke laste inn API-nøklene dine.",
+      "expired": "Utløpt",
+      "api": "API",
+      "unknownApi": "Fjernet API",
+      "scopes": "Scopes",
+      "createdOn": "Opprettet {date}",
+      "lastUsedOn": "sist brukt {date}",
+      "neverUsed": "aldri brukt",
+      "expiresOn": "utløper {date}",
+      "revoke": "Trekk tilbake",
+      "revoked": "API-nøkkelen er trukket tilbake",
+      "revokeError": "Kunne ikke trekke tilbake API-nøkkelen.",
+      "confirmRevokeTitle": "Trekke tilbake {name}?",
+      "confirmRevokeBody": "Skript som bruker denne nøkkelen, slutter å virke med en gang. Dette kan ikke angres.",
+      "cancel": "Avbryt",
+      "createTitle": "Opprett en API-nøkkel",
+      "createDescription": "Velg hvilket API nøkkelen er for, og hva den kan gjøre der.",
+      "name": "Navn",
+      "namePlaceholder": "f.eks. Nattlig eksport",
+      "scopesHint": "Velg bare det nøkkelen trenger. API-et sjekker disse scopene ved hver forespørsel.",
+      "expiry": "Utløper etter",
+      "expiryHint": "Maks {max} dager, angitt av administratoren din.",
+      "days": "{count, plural, one {# dag} other {# dager}}",
+      "createSubmit": "Opprett nøkkel",
+      "issuedTitle": "Den nye nøkkelen din: {name}",
+      "issuedDescription": "Legg den til i konfigurasjonen for skriptet eller verktøyet ditt. API-et kontrollerer den mot denne serveren.",
+      "issuedWarningTitle": "Kopier den nå",
+      "issuedWarningBody": "Dette er eneste gang nøkkelen vises. Hold den hemmelig, som et passord. Hvis du mister den, trekker du den tilbake og oppretter en ny.",
+      "copy": "Kopier nøkkel",
+      "copied": "Nøkkelen er kopiert",
+      "copyError": "Kunne ikke kopiere. Merk nøkkelen og kopier den selv.",
+      "done": "Ferdig",
+      "signInAgain": "Logg inn på nytt",
+      "errors": {
+        "disabled": "API-nøkler er slått av på denne serveren.",
+        "name": "Skriv inn et navn på nøkkelen.",
+        "api": "Velg et API som godtar nøkler.",
+        "scopes": "Velg minst ett scope.",
+        "lifetime": "Velg en utløpstid innenfor det tillatte maksimumet.",
+        "limit": "Du har allerede {max} nøkler. Trekk tilbake én for å opprette en ny.",
+        "signedOut": "Økten din er avsluttet. Logg inn på nytt.",
+        "impersonating": "API-nøkler kan ikke opprettes mens du ser på en annen persons konto.",
+        "recentSignIn": "Av sikkerhetshensyn må du logge inn på nytt for å opprette en API-nøkkel.",
+        "failed": "Kunne ikke opprette API-nøkkelen."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "For mange forsøk. Prøv igjen om {seconds, plural, one {# sekund} other {# sekunder}}.",
+    "minutes": "For mange forsøk. Prøv igjen om {minutes, plural, one {# minutt} other {# minutter}}.",
+    "later": "For mange forsøk. Vent noen minutter og prøv igjen."
   },
   "sso": {
     "title": "Single sign-on",

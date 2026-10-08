@@ -172,7 +172,9 @@
     "social": {
       "or": "or",
       "continueWith": "Continue with {provider}",
+      "signInWith": "Sign in with {provider}",
       "lastUsed": "Last used",
+      "otherProviders": "More ways to sign in",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "API keys",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Sign-in providers",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signing keys"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "APIs",
+      "apiKeys": "API keys",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Sign-in providers",
+      "webhooks": "Webhooks",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "Signing keys"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "APIs",
         "description": "Your APIs (protected resources) that accept {name} access tokens: the scopes clients can request, which applications can use them, and their token settings."
       },
+      "signInProviders": {
+        "title": "Sign-in providers",
+        "description": "Let people sign in to {name} with Google, Apple, Microsoft and 30+ other accounts."
+      },
+      "apiKeys": {
+        "title": "API keys",
+        "description": "Keys people create for their scripts to call your APIs: turn them on or off, set their maximum lifetime, and revoke any key."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Signed HTTPS notifications that tell your apps when {name} users, roles and organization memberships change.",
+        "deliveries": "Delivery log"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "Signing keys",
+        "description": "The keys {name} signs ID tokens and JWT access tokens with. Apps and APIs verify tokens against the public keys published in the JWKS.",
+        "jwksUrl": "JWKS URL",
+        "days": "{count, plural, one {# day} other {# days}}",
+        "rotation": {
+          "title": "Automatic rotation",
+          "description": "Replaces the signing key on a schedule. A retired key stays in the JWKS for the grace period, so tokens it signed keep verifying.",
+          "on": "On",
+          "off": "Off",
+          "edit": "Edit",
+          "interval": "Rotate the key",
+          "never": "Never (rotate by hand only)",
+          "every": "Every {count, plural, one {# day} other {# days}}",
+          "grace": "Grace period",
+          "graceValue": "{count, plural, one {# day} other {# days}} after a key retires",
+          "dialogTitle": "Automatic rotation",
+          "dialogDescription": "A new key is created when the current one reaches the interval. Apps that cache the JWKS fetch it again when they see the new key id.",
+          "intervalHint": "Changing the interval also applies to the current key: it retires when it reaches the new age, or at the next token if it is already older.",
+          "graceHint": "How long a retired key stays published. Keep it longer than your longest token lifetime (access tokens: 1 hour, ID tokens: 10 hours).",
+          "save": "Save",
+          "cancel": "Cancel",
+          "saved": "Settings saved. The auth server applies them within a minute."
+        },
+        "keys": {
+          "title": "Keys",
+          "description": "Private keys are stored encrypted and never shown.",
+          "keyId": "Key ID (kid)",
+          "algorithm": "Algorithm",
+          "created": "Created",
+          "retires": "Signs until",
+          "unpublished": "Published until",
+          "status": "Status",
+          "current": "Current",
+          "published": "Published for verification",
+          "expired": "Expired",
+          "noExpiry": "No expiry",
+          "empty": "No key yet. The first one is created when the first token is signed, or when you rotate."
+        },
+        "rotate": {
+          "button": "Rotate now",
+          "title": "Rotate the signing key now?",
+          "newKey": "A new key signs every token from now on.",
+          "caching": "Apps and APIs that cache the JWKS pick up the new key automatically: they fetch the JWKS again when they meet its key id.",
+          "oldTokens": "Tokens signed with the current key stay valid until they expire: the key stays published for the grace period ({grace}).",
+          "compromised": "If the key may have leaked, rotate now, then choose a short grace period: a retired key verifies tokens for as long as it is published.",
+          "confirm": "Rotate now",
+          "cancel": "Cancel",
+          "done": "Key rotated. New tokens use key {kid}."
+        },
+        "errors": {
+          "interval": "Choose one of the rotation intervals offered.",
+          "grace": "Choose one of the grace periods offered.",
+          "save": "Could not save the settings.",
+          "rotate": "Could not rotate the key."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API keys",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API keys",
+      "description": "Long-lived keys for your scripts and tools. Each key works with one API, with the scopes you choose, until it expires or you revoke it.",
+      "create": "Create API key",
+      "turnedOff": "API keys are turned off on this server. You can still revoke the keys you have.",
+      "noApis": "No API accepts keys yet.",
+      "empty": "You have no API keys.",
+      "loadError": "Could not load your API keys.",
+      "expired": "Expired",
+      "api": "API",
+      "unknownApi": "Removed API",
+      "scopes": "Scopes",
+      "createdOn": "Created {date}",
+      "lastUsedOn": "last used {date}",
+      "neverUsed": "never used",
+      "expiresOn": "expires {date}",
+      "revoke": "Revoke",
+      "revoked": "API key revoked",
+      "revokeError": "Could not revoke the API key.",
+      "confirmRevokeTitle": "Revoke {name}?",
+      "confirmRevokeBody": "Scripts using this key stop working right away. This cannot be undone.",
+      "cancel": "Cancel",
+      "createTitle": "Create an API key",
+      "createDescription": "Choose the API this key is for and what it may do there.",
+      "name": "Name",
+      "namePlaceholder": "e.g. Nightly export",
+      "scopesHint": "Pick only what the key needs. The API checks these scopes on every request.",
+      "expiry": "Expires after",
+      "expiryHint": "At most {max} days, set by your administrator.",
+      "days": "{count, plural, one {# day} other {# days}}",
+      "createSubmit": "Create key",
+      "issuedTitle": "Your new key: {name}",
+      "issuedDescription": "Add it to your script or tool's configuration. The API checks it with this server.",
+      "issuedWarningTitle": "Copy it now",
+      "issuedWarningBody": "This is the only time the key is shown. Keep it secret, like a password. If you lose it, revoke it and create another one.",
+      "copy": "Copy key",
+      "copied": "Key copied",
+      "copyError": "Could not copy. Select the key and copy it yourself.",
+      "done": "Done",
+      "signInAgain": "Sign in again",
+      "errors": {
+        "disabled": "API keys are turned off on this server.",
+        "name": "Enter a name for the key.",
+        "api": "Choose an API that accepts keys.",
+        "scopes": "Choose at least one scope.",
+        "lifetime": "Choose an expiry within the allowed maximum.",
+        "limit": "You already have {max} keys. Revoke one to create another.",
+        "signedOut": "Your session has ended. Sign in again.",
+        "impersonating": "API keys cannot be created while viewing someone else's account.",
+        "recentSignIn": "For your security, sign in again to create an API key.",
+        "failed": "Could not create the API key."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Too many attempts. Try again in {seconds, plural, one {# second} other {# seconds}}.",
+    "minutes": "Too many attempts. Try again in {minutes, plural, one {# minute} other {# minutes}}.",
+    "later": "Too many attempts. Wait a few minutes and try again."
   },
   "sso": {
     "title": "Single sign-on",

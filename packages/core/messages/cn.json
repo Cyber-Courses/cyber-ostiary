@@ -172,7 +172,9 @@
     "social": {
       "or": "或",
       "continueWith": "使用 {provider} 继续",
+      "signInWith": "使用 {provider} 登录",
       "lastUsed": "上次使用",
+      "otherProviders": "更多登录方式",
       "error": "无法使用该账户登录。请重试或改用其他方式。",
       "notLinked": "该账户尚未关联到 {name} 账户。请先用其他方式登录，再在安全设置中关联。"
     }
@@ -223,11 +225,15 @@
       "users": "用户",
       "applications": "应用",
       "apis": "API",
+      "apiKeys": "API 密钥",
       "consent": "授权记录",
       "organizations": "组织",
       "sso": "SSO",
+      "signInProviders": "登录提供商",
+      "webhooks": "Webhook",
       "security": "安全",
-      "audit": "审计日志"
+      "audit": "审计日志",
+      "signingKeys": "签名密钥"
     },
     "header": {
       "crumb": "管理",
@@ -236,11 +242,15 @@
       "users": "用户",
       "applications": "应用",
       "apis": "API",
+      "apiKeys": "API 密钥",
       "consent": "授权记录",
       "organizations": "组织",
       "sso": "SSO",
+      "signInProviders": "登录提供商",
+      "webhooks": "Webhook",
       "security": "安全",
-      "audit": "审计日志"
+      "audit": "审计日志",
+      "signingKeys": "签名密钥"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API",
         "description": "接受 {name} 访问令牌的 API(受保护资源):客户端可以请求的 scope、可以使用它们的应用,以及它们的令牌设置。"
       },
+      "signInProviders": {
+        "title": "登录提供商",
+        "description": "让用户使用 Google、Apple、Microsoft 等 30 多种账号登录 {name}。"
+      },
+      "apiKeys": {
+        "title": "API 密钥",
+        "description": "用户为让脚本调用您的 API 而创建的密钥：开启或关闭此功能、设置最长有效期，以及撤销任意密钥。"
+      },
+      "webhooks": {
+        "title": "Webhook",
+        "description": "签名的 HTTPS 通知，在 {name} 的用户、角色和组织成员关系发生变化时通知你的应用。",
+        "deliveries": "投递日志"
+      },
       "users": {
         "title": "用户",
         "description": "查找账户、修改角色、封禁或删除账户，并打开账户查看其会话和活动。"
@@ -283,6 +306,63 @@
       "security": {
         "title": "安全",
         "description": "登录失败记录、相关账户与 IP 地址，以及被封禁的账户。"
+      },
+      "signingKeys": {
+        "title": "签名密钥",
+        "description": "{name} 用来签署 ID 令牌和 JWT 访问令牌的密钥。应用和 API 通过 JWKS 中发布的公钥验证令牌。",
+        "jwksUrl": "JWKS URL",
+        "days": "{count, plural, other {#天}}",
+        "rotation": {
+          "title": "自动轮换",
+          "description": "按计划更换签名密钥。已退役的密钥会在宽限期内保留在 JWKS 中，因此它签发的令牌仍可验证。",
+          "on": "开启",
+          "off": "关闭",
+          "edit": "编辑",
+          "interval": "轮换密钥",
+          "never": "从不（仅手动轮换）",
+          "every": "每 {count, plural, other {#天}}",
+          "grace": "宽限期",
+          "graceValue": "密钥退役后 {count, plural, other {#天}}",
+          "dialogTitle": "自动轮换",
+          "dialogDescription": "当前密钥达到间隔时会创建新密钥。缓存 JWKS 的应用看到新的密钥 ID 后会重新获取。",
+          "intervalHint": "新的间隔也适用于当前密钥：达到新的使用时长时退役；如果已经超过，则在下一个令牌签发时退役。",
+          "graceHint": "已退役的密钥继续公开的时间。请设置得比最长的令牌有效期更长（访问令牌：1 小时，ID 令牌：10 小时）。",
+          "save": "保存",
+          "cancel": "取消",
+          "saved": "设置已保存。认证服务器会在一分钟内生效。"
+        },
+        "keys": {
+          "title": "密钥",
+          "description": "私钥加密存储，不会显示。",
+          "keyId": "密钥 ID (kid)",
+          "algorithm": "算法",
+          "created": "创建时间",
+          "retires": "签名截止",
+          "unpublished": "公开截止",
+          "status": "状态",
+          "current": "当前",
+          "published": "已公开用于验证",
+          "expired": "已过期",
+          "noExpiry": "无过期时间",
+          "empty": "还没有密钥。第一个密钥会在签署第一个令牌时或你执行轮换时创建。"
+        },
+        "rotate": {
+          "button": "立即轮换",
+          "title": "现在轮换签名密钥？",
+          "newKey": "从现在起，每个令牌都由新密钥签名。",
+          "caching": "缓存 JWKS 的应用和 API 会自动采用新密钥：遇到其密钥 ID 时会重新获取 JWKS。",
+          "oldTokens": "用当前密钥签发的令牌在过期前仍然有效：密钥会在宽限期（{grace}）内保持公开。",
+          "compromised": "如果密钥可能已泄露，请立即轮换，然后选择较短的宽限期：已退役的密钥只要仍处于公开状态，就能验证令牌。",
+          "confirm": "立即轮换",
+          "cancel": "取消",
+          "done": "密钥已轮换。新令牌使用密钥 {kid}。"
+        },
+        "errors": {
+          "interval": "请选择提供的轮换间隔之一。",
+          "grace": "请选择提供的宽限期之一。",
+          "save": "无法保存设置。",
+          "rotate": "无法轮换密钥。"
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "组织",
       "security": "安全",
       "apps": "已连接应用",
+      "apiKeys": "API 密钥",
       "admin": "管理后台",
       "marketingHome": "关于",
       "signOut": "退出登录"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "撤销 {app} 的访问权限？",
       "confirmRevokeBody": "在您重新授权之前，该应用将无法再访问您的账户。"
     },
+    "apiKeys": {
+      "title": "API 密钥",
+      "description": "供脚本和工具使用的长期密钥。每个密钥仅适用于一个 API 和您选择的权限范围，直到过期或被撤销。",
+      "create": "创建 API 密钥",
+      "turnedOff": "此服务器已关闭 API 密钥功能。您仍可撤销已有的密钥。",
+      "noApis": "暂无接受密钥的 API。",
+      "empty": "您还没有 API 密钥。",
+      "loadError": "无法加载 API 密钥。",
+      "expired": "已过期",
+      "api": "API",
+      "unknownApi": "已删除的 API",
+      "scopes": "权限范围",
+      "createdOn": "创建于 {date}",
+      "lastUsedOn": "最近使用于 {date}",
+      "neverUsed": "从未使用",
+      "expiresOn": "{date} 过期",
+      "revoke": "撤销",
+      "revoked": "API 密钥已撤销",
+      "revokeError": "无法撤销 API 密钥。",
+      "confirmRevokeTitle": "撤销 {name}？",
+      "confirmRevokeBody": "使用此密钥的脚本将立即停止工作。此操作不可恢复。",
+      "cancel": "取消",
+      "createTitle": "创建 API 密钥",
+      "createDescription": "选择此密钥用于哪个 API，以及它在该 API 中可执行的操作。",
+      "name": "名称",
+      "namePlaceholder": "例如：每晚导出",
+      "scopesHint": "只选择密钥需要的权限。API 会在每次请求时检查这些权限范围。",
+      "expiry": "有效期",
+      "expiryHint": "最长 {max} 天，由管理员设置。",
+      "days": "{count, plural, other {# 天}}",
+      "createSubmit": "创建密钥",
+      "issuedTitle": "您的新密钥：{name}",
+      "issuedDescription": "将其添加到脚本或工具的配置中。API 会通过此服务器验证该密钥。",
+      "issuedWarningTitle": "请立即复制",
+      "issuedWarningBody": "密钥仅显示这一次。请像密码一样妥善保密。如果丢失，请撤销它并重新创建一个。",
+      "copy": "复制密钥",
+      "copied": "已复制密钥",
+      "copyError": "无法复制。请选中密钥后手动复制。",
+      "done": "完成",
+      "signInAgain": "重新登录",
+      "errors": {
+        "disabled": "此服务器已关闭 API 密钥功能。",
+        "name": "请输入密钥名称。",
+        "api": "请选择接受密钥的 API。",
+        "scopes": "请至少选择一个权限范围。",
+        "lifetime": "请选择不超过允许上限的有效期。",
+        "limit": "您已有 {max} 个密钥。请先撤销一个再创建新的。",
+        "signedOut": "您的会话已结束。请重新登录。",
+        "impersonating": "查看他人账户时无法创建 API 密钥。",
+        "recentSignIn": "为了您的安全，请重新登录后再创建 API 密钥。",
+        "failed": "无法创建 API 密钥。"
+      }
+    },
     "accountMenu": "账户菜单",
     "connectedAccounts": {
       "title": "已关联账户",
@@ -571,6 +705,11 @@
     "boundaryTitle": "出错了",
     "boundaryDescription": "加载此页面时发生错误。",
     "retry": "重试"
+  },
+  "rateLimit": {
+    "seconds": "尝试次数过多。请在 {seconds} 秒后重试。",
+    "minutes": "尝试次数过多。请在 {minutes} 分钟后重试。",
+    "later": "尝试次数过多。请等待几分钟后重试。"
   },
   "sso": {
     "title": "单点登录（SSO）",

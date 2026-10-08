@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { betterAuth, type BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { apiKey } from "@better-auth/api-key";
 import { createCimdClientDiscovery } from "@better-auth/cimd";
 import { fetchClientMetadataResource } from "@better-auth/cimd/node";
 import { oauthDeviceAuthorization, oauthProvider } from "@better-auth/oauth-provider";
@@ -15,6 +16,7 @@ import {
     emailOTP,
     haveIBeenPwned,
     jwt,
+    type JwtOptions,
     lastLoginMethod,
     multiSession,
     organization,
@@ -42,9 +44,12 @@ import { brand } from "@ostiary/core/lib/brand";
 import { PUBLIC_ORGANIZATION_ID } from "@ostiary/core/lib/organization-public";
 import { getPasskeyWebAuthnOptions } from "@ostiary/core/lib/passkey-options";
 import { env } from "@ostiary/core/lib/env";
+import { ipAddressOptions, rateLimitOptions } from "@ostiary/core/lib/rate-limit";
 import { ENV_API_SCOPES, OIDC_SCOPES, syncProviderScopes } from "@ostiary/core/lib/oauth-scopes";
+import { syncSigningKeys } from "@ostiary/core/lib/signing-keys";
 import { oauthResourceIdentifiers } from "@ostiary/core/lib/oauth-resources";
 import { withOpenApiLinks } from "@ostiary/core/lib/oauth-resource-access";
+import { withWebhookEvents } from "@ostiary/core/lib/webhooks/adapter";
 import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN } from "@ostiary/core/lib/oauth-resource-policy";
 import {
     clientExists,
@@ -58,7 +63,10 @@ import {
     metadataDocumentHostAllowed,
     registrationRequestError,
 } from "@ostiary/core/lib/client-registration-policy";
-import { socialProvidersConfig } from "@ostiary/core/lib/social-providers";
+import { socialProvidersConfig, syncSocialProviders } from "@ostiary/core/lib/social-providers";
+import { KEY_RATE_LIMIT, API_KEY_NAME_MAX_LENGTH, MAX_LIFETIME_DAYS_LIMIT } from "@ostiary/core/lib/api-key-policy";
+import { deleteUserApiKeys } from "@ostiary/core/lib/api-keys";
+import { apiKeyVerification } from "@ostiary/core/lib/api-key-verification";
 import {
     SCIM_DEACTIVATED_MESSAGE,
     SCIM_DEACTIVATED_REASON,
@@ -110,7 +118,7 @@ const RECENT_SIGN_IN_PATHS = new Set([
     // Connecting a GitHub (or other) account adds a way to sign in, like a passkey.
     "/link-social",
 ]);
-const RECENT_SIGN_IN_SECONDS = 10 * 60;
+export const RECENT_SIGN_IN_SECONDS = 10 * 60;
 
 /** Password sign-in endpoints whose failures are counted for the security page. */
 const PASSWORD_SIGN_IN_PATHS = new Set(["/sign-in/email", "/sign-in/username"]);
@@ -159,6 +167,17 @@ const UNUSED_EMAIL_OTP_PATHS = [
     "/email-otp/request-email-change",
     "/email-otp/change-email",
 ];
+
+/**
+ * The API key plugin's HTTP endpoints. Keys are created, listed and revoked only through the
+ * dashboard's and the admin console's server actions, which apply Ostiary's rules (the global
+ * switch, one registered API and its scopes, the maximum lifetime) and write the audit log.
+ * The plugin's verification has no HTTP route; APIs use /api-key/verify (api-key-verification.ts).
+ */
+const API_KEY_PLUGIN_PATHS = ["/api-key/create", "/api-key/get", "/api-key/update", "/api-key/delete", "/api-key/list"];
+
+/** Prefix of new API keys. */
+const API_KEY_PREFIX = env.API_KEY_PREFIX ?? "ost_";
 
 /** First-run setup: these addresses get the admin role when their account is created. */
 const adminEmails = new Set(
@@ -273,6 +292,10 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             },
         }),
     };
+    // Signs ID tokens and JWT access tokens and publishes /jwks. Key rotation (interval and
+    // grace period) is set from the admin console before each request, see syncSigningKeys:
+    // Better Auth reads both from this options object on every call.
+    const jwtOptions: JwtOptions = { jwks: {} };
     const provider = oauthProvider({
         loginPage: "/login",
         consentPage: "/consent",
@@ -321,13 +344,37 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
         }),
     });
 
+    // API keys for the APIs registered in Ostiary, owned by users. Each key holds one API and
+    // some of its scopes in `permissions`. Never a session: `enableSessionForAPIKeys` stays off
+    // (the default), so a key sent to Ostiary itself (x-api-key or otherwise) signs nobody in,
+    // on the auth app as on the admin console.
+    const apiKeys = apiKey({
+        enableSessionForAPIKeys: false,
+        defaultPrefix: API_KEY_PREFIX,
+        // 64 random letters after the prefix (the default), stored as a SHA-256 digest.
+        startingCharactersConfig: { shouldStore: true, charactersLength: API_KEY_PREFIX.length + 6 },
+        requireName: true,
+        maximumNameLength: API_KEY_NAME_MAX_LENGTH,
+        // Every key expires; the admin console sets the maximum (checked before creation).
+        keyExpiration: { defaultExpiresIn: null, minExpiresIn: 1, maxExpiresIn: MAX_LIFETIME_DAYS_LIMIT },
+        rateLimit: { enabled: true, timeWindow: KEY_RATE_LIMIT.timeWindowMs, maxRequests: KEY_RATE_LIMIT.maxRequests },
+    });
+
     return betterAuth({
         baseURL,
-        trustedOrigins,
-        disabledPaths: UNUSED_EMAIL_OTP_PATHS,
-        advanced: cookieDomain
-            ? { crossSubDomainCookies: { enabled: true, domain: cookieDomain } }
-            : undefined,
+        // Sign in with Apple returns with a form POST from Apple's origin.
+        trustedOrigins: [...trustedOrigins, "https://appleid.apple.com"],
+        disabledPaths: [...UNUSED_EMAIL_OTP_PATHS, ...API_KEY_PLUGIN_PATHS],
+        // Per-IP limits counted in the database, shared by every serverless instance. Rules in
+        // lib/rate-limit.ts; off in development unless RATE_LIMIT_ENABLED=true.
+        rateLimit: rateLimitOptions(env),
+        advanced: {
+            // Client IP for rate limits and sessions: IP_ADDRESS_HEADERS and TRUSTED_PROXIES.
+            ipAddress: ipAddressOptions(env),
+            ...(cookieDomain
+                ? { crossSubDomainCookies: { enabled: true, domain: cookieDomain } }
+                : {}),
+        },
         databaseHooks: {
             user: {
                 create: {
@@ -354,6 +401,24 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                                 ],
                             });
                         await recordAuthEvent("sign_up", createdUser.id);
+                    },
+                },
+                update: {
+                    // A banned account loses its API keys (admin ban; a ban written elsewhere, such
+                    // as SCIM deactivation, is also refused at verification). Deleting an account
+                    // deletes its keys with it (foreign key).
+                    after: async (updatedUser, context) => {
+                        if (!updatedUser.banned) return;
+                        const revoked = await deleteUserApiKeys(updatedUser.id);
+                        if (revoked === 0) return;
+                        const actor = context?.context.session?.user;
+                        await recordAudit({
+                            actor: actor ? { id: actor.id, email: actor.email } : null,
+                            action: "api_key.revoke_all",
+                            target: { type: "user", id: updatedUser.id, label: updatedUser.email },
+                            metadata: { reason: "banned", keys: revoked },
+                            ipAddress: context ? clientIp(context.headers) : null,
+                        });
                     },
                 },
             },
@@ -383,6 +448,10 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             before: createAuthMiddleware(async (ctx) => {
                 // APIs registered from the admin console add scopes without a redeploy.
                 await syncProviderScopes(provider.options);
+                // Signing key rotation interval and grace period, from the admin console.
+                await syncSigningKeys(jwtOptions);
+                // Sign-in providers enabled from the admin console, without a restart.
+                await syncSocialProviders(ctx.context);
                 if (env.REQUIRE_ADMIN_2FA === "true" && isAdminPath(ctx.path)) {
                     const current = await getSessionFromCtx(ctx);
                     if (current && adminNeedsTwoFactor(current.user as { role?: string | null; twoFactorEnabled?: boolean | null }, true)) {
@@ -497,15 +566,19 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             }),
         },
         // Per-API access: APIs open to every application count as linked to every client.
+        // User and membership changes become webhook events once committed (lib/webhooks).
         database: withOpenApiLinks(
-            drizzleAdapter(db, {
-                provider: "pg",
-                schema,
-                // Real transactions (the SCIM plugin refuses to start without them). Better Auth then
-                // runs multi-step writes such as sign-up atomically; after-hooks still run post-commit.
-                transaction: true,
-            }),
+            withWebhookEvents(
+                drizzleAdapter(db, {
+                    provider: "pg",
+                    schema,
+                    // Real transactions (the SCIM plugin refuses to start without them). Better Auth then
+                    // runs multi-step writes such as sign-up atomically; after-hooks still run post-commit.
+                    transaction: true,
+                }),
+            ),
         ),
+        // The environment's (GitHub); the admin console's are added per request, see syncSocialProviders.
         socialProviders: socialProvidersConfig(),
         account: {
             accountLinking: {
@@ -552,7 +625,7 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             },
         },
         plugins: [
-            jwt(),
+            jwt(jwtOptions),
             admin({
                 bannedUserMessage: (user: { banReason?: string | null }) =>
                     user.banReason === SCIM_DEACTIVATED_REASON
@@ -585,7 +658,7 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 // Kept as a hash, like a password: a database read does not reveal live codes.
                 storeOTP: "hashed",
                 // Better Auth's defaults, stated: 3 wrong codes void the code, and each IP may ask
-                // for 3 codes and try 3 times a minute.
+                // for 3 codes and try 3 times a minute (counted in the database, see lib/rate-limit.ts).
                 allowedAttempts: 3,
                 rateLimit: { window: 60, max: 3 },
                 // A code proves the inbox. Better Auth marks an unverified account as verified on
@@ -649,6 +722,12 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             // which have no HTTP route: the admin console calls them after its admin check
             // (see apps/admin .../organizations/[id]/scim-actions.ts). Okta or Entra authenticate
             // with the bearer token; nothing else (no session, no API key) reaches SCIM.
+            apiKeys,
+            apiKeyVerification({
+                providerOptions: provider.options,
+                verifyApiKey: apiKeys.endpoints.verifyApiKey as never,
+                authServer: baseURL,
+            }),
             scim({
                 connections: [],
                 managedConnections: { credentialHashSecret: scimCredentialHashSecret(env) },

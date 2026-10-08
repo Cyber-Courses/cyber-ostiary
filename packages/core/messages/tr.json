@@ -170,9 +170,11 @@
       "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
-      "or": "or",
-      "continueWith": "Continue with {provider}",
-      "lastUsed": "Last used",
+      "or": "veya",
+      "continueWith": "{provider} ile devam et",
+      "signInWith": "{provider} ile oturum aç",
+      "lastUsed": "Son kullanılan",
+      "otherProviders": "Diğer oturum açma yolları",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings."
     }
@@ -223,11 +225,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API'ler",
+      "apiKeys": "API anahtarları",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Oturum açma sağlayıcıları",
+      "webhooks": "Webhook'lar",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "İmzalama anahtarları"
     },
     "header": {
       "crumb": "Admin",
@@ -236,11 +242,15 @@
       "users": "Users",
       "applications": "Applications",
       "apis": "API'ler",
+      "apiKeys": "API anahtarları",
       "consent": "Consent",
       "organizations": "Organizations",
       "sso": "SSO",
+      "signInProviders": "Oturum açma sağlayıcıları",
+      "webhooks": "Webhook'lar",
       "security": "Security",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "signingKeys": "İmzalama anahtarları"
     },
     "pages": {
       "overview": {
@@ -267,6 +277,19 @@
         "title": "API'ler",
         "description": "{name} erişim belirteçlerini kabul eden API'leriniz (korumalı kaynaklar): istemcilerin isteyebileceği scope'lar, bunları kullanabilecek uygulamalar ve belirteç ayarları."
       },
+      "signInProviders": {
+        "title": "Oturum açma sağlayıcıları",
+        "description": "Kullanıcıların {name} hesabına Google, Apple, Microsoft ve 30'dan fazla başka hesapla oturum açmasını sağlayın."
+      },
+      "apiKeys": {
+        "title": "API anahtarları",
+        "description": "Kullanıcıların, betiklerinin API'lerinizi çağırması için oluşturduğu anahtarlar: bunları açın veya kapatın, en uzun geçerlilik sürelerini belirleyin ve herhangi bir anahtarı geçersiz kılın."
+      },
+      "webhooks": {
+        "title": "Webhook'lar",
+        "description": "{name} kullanıcıları, rolleri veya kuruluş üyelikleri değiştiğinde uygulamalarınızı bilgilendiren imzalı HTTPS bildirimleri.",
+        "deliveries": "Teslimat günlüğü"
+      },
       "users": {
         "title": "Users",
         "description": "Find accounts, change roles, ban or remove them, and open an account to see its sessions and activity."
@@ -283,6 +306,63 @@
       "security": {
         "title": "Security",
         "description": "Failed sign-in attempts, the accounts and addresses behind them, and banned accounts."
+      },
+      "signingKeys": {
+        "title": "İmzalama anahtarları",
+        "description": "{name} uygulamasının ID token’larını ve JWT erişim token’larını imzalamak için kullandığı anahtarlar. Uygulamalar ve API’ler token’ları JWKS’te yayımlanan açık anahtarlarla doğrular.",
+        "jwksUrl": "JWKS URL’si",
+        "days": "{count, plural, one {# gün} other {# gün}}",
+        "rotation": {
+          "title": "Otomatik döndürme",
+          "description": "İmzalama anahtarını bir takvime göre değiştirir. Kullanımdan kalkan anahtar, imzaladığı token’lar doğrulanmaya devam etsin diye ek süre boyunca JWKS’te kalır.",
+          "on": "Açık",
+          "off": "Kapalı",
+          "edit": "Düzenle",
+          "interval": "Anahtarı döndür",
+          "never": "Hiçbir zaman (yalnızca elle döndür)",
+          "every": "Her {count, plural, one {# gün} other {# gün}}",
+          "grace": "Ek süre",
+          "graceValue": "Anahtar kullanımdan kalktıktan {count, plural, one {# gün} other {# gün}} sonra",
+          "dialogTitle": "Otomatik döndürme",
+          "dialogDescription": "Geçerli anahtar aralığa ulaştığında yeni bir anahtar oluşturulur. JWKS’i önbelleğe alan uygulamalar, yeni anahtar kimliğini gördüklerinde onu yeniden alır.",
+          "intervalHint": "Yeni aralık geçerli anahtara da uygulanır: yeni yaşa ulaştığında ya da zaten daha eskiyse bir sonraki token’da kullanımdan kalkar.",
+          "graceHint": "Kullanımdan kalkan anahtarın ne kadar süre yayımda kalacağı. En uzun token ömründen daha uzun tutun (erişim token’ları: 1 saat, ID token’lar: 10 saat).",
+          "save": "Kaydet",
+          "cancel": "İptal",
+          "saved": "Ayarlar kaydedildi. Kimlik doğrulama sunucusu bunları bir dakika içinde uygular."
+        },
+        "keys": {
+          "title": "Anahtarlar",
+          "description": "Özel anahtarlar şifrelenmiş saklanır ve asla gösterilmez.",
+          "keyId": "Anahtar kimliği (kid)",
+          "algorithm": "Algoritma",
+          "created": "Oluşturulma",
+          "retires": "İmzalama bitişi",
+          "unpublished": "Yayım bitişi",
+          "status": "Durum",
+          "current": "Geçerli",
+          "published": "Doğrulama için yayımda",
+          "expired": "Süresi doldu",
+          "noExpiry": "Süresiz",
+          "empty": "Henüz anahtar yok. İlki, ilk token imzalandığında ya da döndürdüğünüzde oluşturulur."
+        },
+        "rotate": {
+          "button": "Şimdi döndür",
+          "title": "İmzalama anahtarı şimdi döndürülsün mü?",
+          "newKey": "Bundan sonra her token’ı yeni bir anahtar imzalar.",
+          "caching": "JWKS’i önbelleğe alan uygulamalar ve API’ler yeni anahtarı otomatik alır: anahtar kimliğiyle karşılaştıklarında JWKS’i yeniden getirirler.",
+          "oldTokens": "Geçerli anahtarla imzalanan token’lar süresi dolana kadar geçerli kalır: anahtar ek süre ({grace}) boyunca yayımda kalır.",
+          "compromised": "Anahtar sızmış olabilirse şimdi döndürün, ardından kısa bir ek süre seçin: kullanımdan kalkan anahtar, yayımda kaldığı sürece token’ları doğrular.",
+          "confirm": "Şimdi döndür",
+          "cancel": "İptal",
+          "done": "Anahtar döndürüldü. Yeni token’lar {kid} anahtarını kullanır."
+        },
+        "errors": {
+          "interval": "Sunulan döndürme aralıklarından birini seçin.",
+          "grace": "Sunulan ek sürelerden birini seçin.",
+          "save": "Ayarlar kaydedilemedi.",
+          "rotate": "Anahtar döndürülemedi."
+        }
       }
     }
   },
@@ -296,6 +376,7 @@
       "organizations": "Organizations",
       "security": "Security",
       "apps": "Connected apps",
+      "apiKeys": "API anahtarları",
       "admin": "Admin",
       "marketingHome": "About",
       "signOut": "Sign out"
@@ -501,6 +582,59 @@
       "confirmRevokeTitle": "Revoke access for {app}?",
       "confirmRevokeBody": "This app will no longer be able to access your account until you authorize it again."
     },
+    "apiKeys": {
+      "title": "API anahtarları",
+      "description": "Betikleriniz ve araçlarınız için uzun ömürlü anahtarlar. Her anahtar, süresi dolana veya siz geçersiz kılana kadar, seçtiğiniz scope'larla tek bir API ile çalışır.",
+      "create": "API anahtarı oluştur",
+      "turnedOff": "API anahtarları bu sunucuda kapalı. Mevcut anahtarlarınızı yine de geçersiz kılabilirsiniz.",
+      "noApis": "Henüz anahtar kabul eden bir API yok.",
+      "empty": "API anahtarınız yok.",
+      "loadError": "API anahtarlarınız yüklenemedi.",
+      "expired": "Süresi doldu",
+      "api": "API",
+      "unknownApi": "Kaldırılan API",
+      "scopes": "Scope'lar",
+      "createdOn": "Oluşturulma: {date}",
+      "lastUsedOn": "son kullanım: {date}",
+      "neverUsed": "hiç kullanılmadı",
+      "expiresOn": "bitiş: {date}",
+      "revoke": "Geçersiz kıl",
+      "revoked": "API anahtarı geçersiz kılındı",
+      "revokeError": "API anahtarı geçersiz kılınamadı.",
+      "confirmRevokeTitle": "{name} geçersiz kılınsın mı?",
+      "confirmRevokeBody": "Bu anahtarı kullanan betikler hemen çalışmayı durdurur. Bu işlem geri alınamaz.",
+      "cancel": "İptal",
+      "createTitle": "API anahtarı oluşturun",
+      "createDescription": "Bu anahtarın hangi API için olduğunu ve orada neler yapabileceğini seçin.",
+      "name": "Ad",
+      "namePlaceholder": "örn. Gece dışa aktarımı",
+      "scopesHint": "Yalnızca anahtarın ihtiyaç duyduklarını seçin. API her istekte bu scope'ları kontrol eder.",
+      "expiry": "Geçerlilik süresi",
+      "expiryHint": "Yöneticinizin belirlediği en fazla {max} gün.",
+      "days": "{count, plural, one {# gün} other {# gün}}",
+      "createSubmit": "Anahtarı oluştur",
+      "issuedTitle": "Yeni anahtarınız: {name}",
+      "issuedDescription": "Bunu betiğinizin veya aracınızın yapılandırmasına ekleyin. API, anahtarı bu sunucu üzerinden doğrular.",
+      "issuedWarningTitle": "Şimdi kopyalayın",
+      "issuedWarningBody": "Anahtar yalnızca bu sefer gösterilir. Bir parola gibi gizli tutun. Kaybederseniz geçersiz kılın ve yeni bir tane oluşturun.",
+      "copy": "Anahtarı kopyala",
+      "copied": "Anahtar kopyalandı",
+      "copyError": "Kopyalanamadı. Anahtarı seçip kendiniz kopyalayın.",
+      "done": "Bitti",
+      "signInAgain": "Yeniden giriş yap",
+      "errors": {
+        "disabled": "API anahtarları bu sunucuda kapalı.",
+        "name": "Anahtar için bir ad girin.",
+        "api": "Anahtar kabul eden bir API seçin.",
+        "scopes": "En az bir scope seçin.",
+        "lifetime": "İzin verilen azami süre içinde bir geçerlilik süresi seçin.",
+        "limit": "Zaten {max} anahtarınız var. Yeni bir tane oluşturmak için birini geçersiz kılın.",
+        "signedOut": "Oturumunuz sona erdi. Yeniden giriş yapın.",
+        "impersonating": "Başka birinin hesabını görüntülerken API anahtarı oluşturulamaz.",
+        "recentSignIn": "Güvenliğiniz için API anahtarı oluşturmadan önce yeniden giriş yapın.",
+        "failed": "API anahtarı oluşturulamadı."
+      }
+    },
     "accountMenu": "Account menu",
     "connectedAccounts": {
       "title": "Connected accounts",
@@ -571,6 +705,11 @@
     "boundaryTitle": "Something went wrong",
     "boundaryDescription": "An error occurred while loading this page.",
     "retry": "Try again"
+  },
+  "rateLimit": {
+    "seconds": "Çok fazla deneme. {seconds} saniye sonra yeniden deneyin.",
+    "minutes": "Çok fazla deneme. {minutes} dakika sonra yeniden deneyin.",
+    "later": "Çok fazla deneme. Birkaç dakika bekleyip tekrar deneyin."
   },
   "sso": {
     "title": "Single sign-on",
