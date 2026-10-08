@@ -164,10 +164,14 @@
       }
     },
     "screen": {
-      "headline": "Un seul compte pour tout votre parcours en sécurité.",
+      "headline": "Un seul compte pour tout votre <accent>parcours</accent> en sécurité.",
       "subhead": "Connectez-vous une fois pour accéder à vos labs, cours et tableaux de bord d'équipe. Votre progression et vos compétences vous suivent dans tout l'écosystème.",
       "footer": "Sécurisé par Cyber Auth.",
-      "ecosystem": "Fait partie de l'écosystème Cyber"
+      "ecosystem": "Fait partie de l'écosystème Cyber",
+      "eyebrow": "Compte Cyber",
+      "continueTo": "Continuer vers <product>{name}</product>",
+      "continueLead": "Connectez-vous avec votre compte Cyber. Le même compte fonctionne sur Cyber CTF, Courses, Bench et Library.",
+      "continueShort": "Vers {name}"
     },
     "social": {
       "or": "ou",
@@ -216,7 +220,8 @@
       "dark": "Sombre",
       "system": "Système",
       "srOnly": "Changer le thème",
-      "label": "Thème"
+      "label": "Thème",
+      "black": "Noir"
     },
     "nav": {
       "groupAdmin": "Admin",
@@ -699,12 +704,18 @@
       "no": "Norvégien",
       "fi": "Finnois",
       "cs": "Tchèque"
-    }
+    },
+    "preferences": "Préférences",
+    "theme": "Thème"
   },
   "errors": {
     "boundaryTitle": "Une erreur s'est produite",
     "boundaryDescription": "Une erreur est survenue lors du chargement de cette page.",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "notFoundTitle": "Page <em>introuvable</em>",
+    "notFoundDescription": "Cette page n'existe pas ou a été déplacée.",
+    "notFoundAction": "Aller à la connexion",
+    "boundaryEyebrow": "Erreur"
   },
   "rateLimit": {
     "seconds": "Trop de tentatives. Réessayez dans {seconds, plural, one {# seconde} other {# secondes}}.",

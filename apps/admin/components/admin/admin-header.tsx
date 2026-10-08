@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@ostiary/core/components/ui/breadcrumb";
+import { Preferences } from "@ostiary/core/components/layout/preferences";
 import { Separator } from "@ostiary/core/components/ui/separator";
 import { SidebarTrigger } from "@ostiary/core/components/ui/sidebar";
 
@@ -72,7 +73,7 @@ export function AdminHeader() {
   const title = t(`header.${key}`);
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+    <header className="sticky top-0 z-30 flex h-15 shrink-0 items-center gap-2 border-b bg-[color-mix(in_oklab,var(--background)_72%,transparent)] backdrop-blur-lg backdrop-saturate-[1.4] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator
@@ -92,6 +93,9 @@ export function AdminHeader() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+      </div>
+      <div className="ml-auto px-4">
+        <Preferences />
       </div>
     </header>
   );

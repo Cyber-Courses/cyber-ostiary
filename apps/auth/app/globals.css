@@ -2,3 +2,84 @@
 
 /* Tailwind scans the shared UI package too, so its classes are generated here. */
 @source "../../../packages/core/src";
+
+/*
+ * Product tint for the auth screens. A sign-in for an admin-registered Cyber client
+ * (lib/client-product.ts) wraps the screen in data-auth-product, which swaps the silver
+ * family jewel for that product's jewel. The values are the @cyber-courses/ui jewels
+ * (tokens.css): the package only switches products on <html> or a [data-cyber] root,
+ * which would also reset the mode's neutrals, so the auth screen scopes the jewel alone.
+ */
+[data-auth-product] {
+  --primary: var(--jewel-solid);
+  --primary-foreground: var(--jewel-on);
+  --ring: var(--jewel);
+}
+[data-auth-product="ctf"] {
+  --jewel: #34d399; --jewel-text: #6ee7b7; --jewel-top: #3ee0a3; --jewel-bottom: #059669;
+  --jewel-solid: #10b981; --jewel-on: #022c1e; --jewel-rgb: 16 185 129;
+}
+[data-auth-product="courses"] {
+  --jewel: #a78bfa; --jewel-text: #c4b5fd; --jewel-top: #9a7bff; --jewel-bottom: #6a42e8;
+  --jewel-solid: #6d4aeb; --jewel-on: #ffffff; --jewel-rgb: 124 92 240;
+}
+[data-auth-product="bench"] {
+  --jewel: #60a5fa; --jewel-text: #93c5fd; --jewel-top: #6aa8ff; --jewel-bottom: #2563eb;
+  --jewel-solid: #2563eb; --jewel-on: #ffffff; --jewel-rgb: 59 130 246;
+}
+.light [data-auth-product="ctf"] { --jewel-text: #047857; }
+.light [data-auth-product="courses"] { --jewel-text: #5b2bd6; }
+.light [data-auth-product="bench"] { --jewel-text: #1d4ed8; }
+/* Library keeps the silver family jewel set on <html>. */
+
+/*
+ * The brand panel's glow field: the jewel in the middle and the family lights around it,
+ * with a faint masked grid. Only on the auth brand panel, never in the dashboard.
+ */
+.auth-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.auth-glow::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 52rem;
+  height: 44rem;
+  translate: -50% 0;
+  background:
+    radial-gradient(38% 42% at 50% 42%, rgb(var(--jewel-rgb) / 0.3), transparent 70%),
+    radial-gradient(26% 30% at 26% 62%, rgb(52 211 153 / 0.14), transparent 70%),
+    radial-gradient(26% 30% at 74% 58%, rgb(96 165 250 / 0.16), transparent 70%),
+    radial-gradient(24% 28% at 50% 80%, rgb(167 139 250 / 0.14), transparent 70%);
+  filter: blur(10px);
+  animation: auth-glow-drift 18s ease-in-out infinite alternate;
+}
+.auth-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+  mask-image: radial-gradient(48% 46% at 50% 52%, #000, transparent 75%);
+  opacity: 0.5;
+}
+.light .auth-glow::before {
+  opacity: 0.5;
+}
+@keyframes auth-glow-drift {
+  to {
+    translate: -48% 1.5rem;
+  }
+}
+
+/* Auth forms: the card title is the screen's serif headline. */
+.auth-main [data-slot="card-title"] {
+  font-weight: 350;
+  font-size: 1.875rem;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}

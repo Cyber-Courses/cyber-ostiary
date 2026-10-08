@@ -1,157 +1,370 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* Cyber design system: tokens (Dark, Black, Light; product jewels) and the cy-* classes. */
+@import "@cyber-courses/ui/tokens.css";
+@import "@cyber-courses/ui/components.css";
 
-@custom-variant dark (&:is(.dark *));
+/* Generate the utility classes the package components use. */
+@source "../../node_modules/@cyber-courses/ui/dist";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --color-brass: var(--brass);
-  --color-brass-foreground: var(--brass-foreground);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
+/* Dark and Black are both dark modes; Light is Paper. */
+@custom-variant dark (&:is(.dark *, .black *));
+@custom-variant light (&:is(.light *));
 
 /*
- * Cyber Auth: neutral black and white, no accent hue. `--brass` (Ostiary's accent
- * token) is a neutral here. Mirrors `lib/brand.ts`.
+ * Cyber Auth on the Cyber design system ("lit from within").
+ *
+ * The neutrals, status colors, radii and fonts come from @cyber-courses/ui/tokens.css,
+ * selected by the mode class next-themes puts on <html> (dark, black, light) and by
+ * data-product="library" on <html>: the silver jewel is the family's neutral. This file
+ * maps the remaining shadcn tokens onto them and dresses the shadcn components (through
+ * their data-slot attributes) as Cyber panels, glass, pills and inputs, so the Ostiary
+ * component files stay as upstream ships them.
  */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card: #ffffff;
-  --card-foreground: #171717;
-  --popover: #ffffff;
-  --popover-foreground: #171717;
-  --primary: #171717;
-  --primary-foreground: #ffffff;
-  --secondary: #f2f2f2;
-  --secondary-foreground: #171717;
-  --muted: #f2f2f2;
-  --muted-foreground: #666666;
-  --accent: #f2f2f2;
-  --accent-foreground: #171717;
-  --destructive: #da2f35;
-  --border: #ebebeb;
-  --input: #d4d4d4;
-  --ring: #a1a1a1;
-  --brass: #171717;
-  --brass-foreground: #171717;
-  --brand-tile: #171717;
-  --brand-mark: #ffffff;
-  --chart-1: #d4d4d4;
-  --chart-2: #a1a1a1;
-  --chart-3: #8f8f8f;
-  --chart-4: #666666;
-  --chart-5: #404040;
-  --radius: 0.5rem;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #171717;
-  --sidebar-primary: #171717;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f2f2f2;
-  --sidebar-accent-foreground: #171717;
-  --sidebar-border: #ebebeb;
-  --sidebar-ring: #a1a1a1;
+@theme inline {
+  --color-card-foreground: var(--card-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-glass-2: var(--glass-2);
+  --color-edge: var(--edge);
+  --color-jewel-solid: var(--jewel-solid);
+  --color-jewel-on: var(--jewel-on);
+  /* Ostiary's accent token: the jewel here. */
+  --color-brass: var(--jewel-text);
+  --color-brass-foreground: var(--jewel-text);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-serif: var(--font-display);
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2.25rem;
 }
 
-.dark {
-  --background: #000000;
-  --foreground: #ededed;
-  --card: #0a0a0a;
-  --card-foreground: #ededed;
-  --popover: #0a0a0a;
-  --popover-foreground: #ededed;
-  --primary: #ededed;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ededed;
-  --muted: #1a1a1a;
-  --muted-foreground: #a1a1a1;
-  --accent: #1a1a1a;
-  --accent-foreground: #ededed;
-  --destructive: #ff6166;
-  --border: #262626;
-  --input: #333333;
-  --ring: #707070;
-  --brass: #ededed;
-  --brass-foreground: #ededed;
-  --brand-tile: #ededed;
-  --brand-mark: #0a0a0a;
-  --chart-1: #4d4d4d;
-  --chart-2: #666666;
-  --chart-3: #8f8f8f;
-  --chart-4: #a1a1a1;
-  --chart-5: #d4d4d4;
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #ededed;
-  --sidebar-primary: #ededed;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #ededed;
-  --sidebar-border: #262626;
-  --sidebar-ring: #707070;
+:root {
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --accent-foreground: var(--foreground);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--jewel-solid);
+  --sidebar-primary-foreground: var(--jewel-on);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--jewel);
+  /* Charts: the silver ramp plus the family jewels. */
+  --chart-1: #d4d4d8;
+  --chart-2: #60a5fa;
+  --chart-3: #a78bfa;
+  --chart-4: #34d399;
+  --chart-5: #71717a;
+  /* Flat Key mark layers. */
+  --key-top: #d4d4d8;
+  --key-base: #52525b;
+}
+
+:root.light {
+  --chart-1: #3f3f46;
+  --chart-2: #2563eb;
+  --chart-3: #6d4aeb;
+  --chart-4: #059669;
+  --chart-5: #a1a1aa;
+  --key-top: #3f3f46;
+  --key-base: #b4b4bc;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  html {
+    @apply bg-background font-sans;
+    text-rendering: optimizeLegibility;
   }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
-  ::selection {
-    background-color: var(--accent);
-    color: var(--accent-foreground);
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
   }
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-heading);
+    font-weight: 350;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    text-wrap: balance;
+    font-optical-sizing: auto;
+  }
   h3 {
     text-wrap: balance;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
   }
+  /* One italic word per headline, in the jewel. */
+  h1 em,
+  h2 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--jewel-text);
+    padding-right: 0.04em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background-color: rgb(var(--jewel-rgb) / 0.25);
+  }
+}
+
+@layer utilities {
+  /* Editorial accent (Ostiary API): one or two words of a headline in the serif italic. */
+  .text-serif-accent {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: var(--jewel-text);
+  }
+  .surface-panel {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    box-shadow: inset 0 1px 0 var(--glass-2), 0 0 0 1px var(--border);
+  }
+  .surface-glass {
+    background: color-mix(in oklab, var(--card-2) 82%, transparent);
+    backdrop-filter: blur(18px) saturate(1.4);
+    box-shadow: var(--shadow-xl), inset 0 1px 0 var(--glass-2);
+  }
+}
+
+/*
+ * shadcn components in the Cyber look. Unlayered on purpose: these beat the component
+ * defaults (utility classes) for color and shape. Sizing stays with the utilities.
+ */
+
+/* Buttons: pills. Primary is the jewel gradient, outline/secondary ghost glass. */
+[data-slot="button"] {
+  border-radius: 999px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+[data-slot="button"]:active:not(:disabled) {
+  transform: scale(0.97);
+}
+[data-slot="button"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+[data-slot="button"][data-size="default"] {
+  height: 2.5rem;
+  padding-inline: 1.1rem;
+}
+[data-slot="button"][data-size="lg"] {
+  height: 3rem;
+  padding-inline: 1.5rem;
+}
+[data-slot="button"][data-size="sm"] {
+  padding-inline: 0.875rem;
+}
+[data-slot="button"][data-variant="default"] {
+  color: var(--jewel-on);
+  border-color: transparent;
+  background: linear-gradient(180deg, var(--jewel-top), var(--jewel-bottom));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 0 0 1px rgb(var(--jewel-rgb) / 0.6), 0 0.75rem 2rem -0.75rem rgb(var(--jewel-rgb) / 0.7);
+}
+[data-slot="button"][data-variant="default"]:hover {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.32), 0 0 0 1px rgb(var(--jewel-rgb) / 0.85), 0 1rem 2.5rem -0.75rem rgb(var(--jewel-rgb) / 0.9);
+}
+[data-slot="button"][data-variant="outline"],
+[data-slot="button"][data-variant="secondary"] {
+  color: var(--foreground);
+  border-color: transparent;
+  background: var(--glass);
+  box-shadow: inset 0 1px 0 var(--glass-2), 0 0 0 1px var(--input);
+}
+[data-slot="button"][data-variant="outline"]:hover,
+[data-slot="button"][data-variant="secondary"]:hover,
+[data-slot="button"][data-variant="outline"][aria-expanded="true"] {
+  background: var(--glass-2);
+}
+[data-slot="button"][data-variant="ghost"] {
+  color: var(--muted-foreground);
+}
+[data-slot="button"][data-variant="ghost"]:hover,
+[data-slot="button"][data-variant="ghost"][aria-expanded="true"] {
+  color: var(--foreground);
+  background: var(--accent);
+}
+[data-slot="button"][data-variant="destructive"] {
+  color: var(--destructive);
+  background: var(--glass);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--destructive) 40%, transparent);
+}
+[data-slot="button"][data-variant="destructive"]:hover {
+  background: color-mix(in oklab, var(--destructive) 10%, transparent);
+}
+[data-slot="button"][data-variant="link"] {
+  color: var(--jewel-text);
+  border-radius: 0.25rem;
+}
+
+/* Panels: vertical gradient with a lit top edge. */
+[data-slot="card"] {
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, var(--card-2), var(--card));
+  box-shadow: inset 0 1px 0 var(--glass-2), 0 0 0 1px var(--border);
+}
+.light [data-slot="card"] {
+  box-shadow: 0 0 0 1px var(--border), 0 1rem 2rem -1.5rem rgb(30 20 60 / 0.2);
+}
+[data-slot="card-title"] {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+[data-slot="alert"] {
+  border-radius: 1rem;
+  border-color: var(--border);
+  background: var(--glass);
+}
+
+/* Inputs: glass fill, input ring, jewel focus with a soft glow. */
+[data-slot="input"],
+[data-slot="textarea"],
+[data-slot="select-trigger"] {
+  border-color: transparent;
+  border-radius: 0.75rem;
+  background: var(--glass);
+  box-shadow: inset 0 0 0 1px var(--input);
+  transition: box-shadow 0.15s;
+}
+[data-slot="input"] {
+  height: 2.6rem;
+  padding-inline: 0.9rem;
+}
+[data-slot="input"]::placeholder,
+[data-slot="textarea"]::placeholder {
+  color: var(--faint);
+}
+[data-slot="input"]:focus-visible,
+[data-slot="textarea"]:focus-visible,
+[data-slot="select-trigger"]:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--jewel), 0 0 0 4px rgb(var(--jewel-rgb) / 0.18);
+}
+[data-slot="input"][aria-invalid="true"],
+[data-slot="textarea"][aria-invalid="true"],
+[data-slot="select-trigger"][aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--destructive), 0 0 0 4px color-mix(in oklab, var(--destructive) 18%, transparent);
+}
+
+/* Overlays: glass. */
+[data-slot="dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="dropdown-menu-sub-content"],
+[data-slot="select-content"],
+[data-slot="popover-content"] {
+  border-color: transparent;
+  background: color-mix(in oklab, var(--card-2) 82%, transparent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow-xl), inset 0 1px 0 var(--glass-2);
+}
+[data-slot="dialog-content"] {
+  border-radius: 1.1rem;
+}
+[data-slot="dropdown-menu-content"],
+[data-slot="dropdown-menu-sub-content"],
+[data-slot="select-content"] {
+  border-radius: 0.9rem;
+}
+[data-slot="dialog-overlay"],
+[data-slot="sheet-overlay"] {
+  background: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(4px);
+}
+[data-slot="dropdown-menu-label"] {
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--faint);
+}
+
+/* Badges: mono pills. */
+[data-slot="badge"] {
+  border-radius: 999px;
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+[data-slot="badge"][data-variant="outline"],
+[data-slot="badge"][data-variant="secondary"] {
+  color: var(--muted-foreground);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--input);
+}
+
+/* Tables: dense rows, mono headings. */
+[data-slot="table-head"] {
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--faint);
+}
+[data-slot="table-row"] {
+  border-color: var(--border);
+}
+[data-slot="table-row"]:hover {
+  background: var(--glass);
+}
+
+/* Tabs: the active tab is underlined in the jewel. */
+[data-slot="tabs-trigger"][data-state="active"]::after,
+[data-slot="tabs-trigger"][data-active]::after {
+  background: var(--jewel);
+}
+
+/* Sidebar (admin): the active item is a glass row with a jewel tick. */
+[data-slot="sidebar-menu-button"] {
+  border-radius: 0.6rem;
+}
+[data-slot="sidebar-menu-button"][data-active="true"] {
+  background: var(--glass-2);
+  box-shadow: inset 0 0 0 1px var(--border), inset 2px 0 0 var(--jewel);
+}
+[data-slot="sidebar-group-label"] {
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
+  color: var(--faint);
+}
+
+[data-slot="skeleton"] {
+  background: var(--glass-2);
+}
+
+/* Toasts: rounded glass, Geist. */
+[data-sonner-toaster] [data-sonner-toast] {
+  border-radius: 1rem;
+  font-family: var(--font-body);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -162,15 +375,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@layer utilities {
-  /* Editorial accent: one or two words of a headline set in Instrument Serif italic. */
-  .text-serif-accent {
-    font-family: var(--font-serif), ui-serif, Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
   }
 }

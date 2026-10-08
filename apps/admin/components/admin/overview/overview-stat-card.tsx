@@ -46,8 +46,8 @@ export function OverviewStatCard({ stat }: { stat: OverviewStatDefinition }) {
               className={cn(
                 "gap-0.5 px-1.5 font-medium tabular-nums",
                 stat.positive
-                  ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
-                  : "border-red-500/25 bg-red-500/10 text-red-700 dark:text-red-400"
+                  ? "border-success/25 bg-success/10 text-success"
+                  : "border-destructive/25 bg-destructive/10 text-destructive"
               )}
             >
               <DeltaIcon className="size-3" />
