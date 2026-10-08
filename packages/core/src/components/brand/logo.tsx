@@ -2,15 +2,22 @@ import { brand, logoMark } from "@ostiary/core/lib/brand";
 import { cn } from "@ostiary/core/lib/utils";
 
 /**
- * The mark: an arched door with a keyhole. Geometry lives in `lib/brand.ts` (shared with
- * the favicon and social images); colors follow the `--brand-*` tokens, so the tile
- * inverts in dark mode.
+ * The Key mark. Geometry lives in `lib/brand.ts` (shared with the favicon and social
+ * images); colors follow the `--brand-*` tokens, so the tile inverts in dark mode.
  */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg viewBox={logoMark.viewBox} aria-hidden className={cn("size-7 shrink-0", className)}>
       <rect width="32" height="32" rx={logoMark.radius} className="fill-[var(--brand-tile)]" />
-      <path d={logoMark.path} fillRule="evenodd" className="fill-[var(--brand-mark)]" />
+      <path d={logoMark.path} className="fill-[var(--brand-mark)]" />
+      <path
+        d={logoMark.stroke}
+        fill="none"
+        strokeWidth={logoMark.strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="stroke-[var(--brand-mark)]"
+      />
     </svg>
   );
 }

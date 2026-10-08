@@ -11,11 +11,11 @@ import { adminActor } from "@/lib/admin-audit";
 /*
  * SSO providers are managed here rather than through the plugin's endpoints, which only let
  * the admin who registered a provider (or an admin of its organization) change it. The DNS
- * record format matches the plugin's (tokenPrefix "ostiary"), so both stay compatible.
+ * record format matches the plugin's (tokenPrefix "cyber-auth"), so both stay compatible.
  */
 
 type Result = { ok: true } | { ok: false; error: string };
-const verificationIdentifier = (providerId: string) => `_ostiary-${providerId}`;
+const verificationIdentifier = (providerId: string) => `_cyber-auth-${providerId}`;
 
 function hostnameOf(domain: string): string | null {
   try {
