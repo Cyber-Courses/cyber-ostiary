@@ -32,4 +32,6 @@ Keep this list short: anything that is not branding belongs upstream.
 
 Besides Ostiary's variables, Cyber Auth sets:
 
-- `OAUTH_API_SCOPES=labs:publish,leads:write` (CyberBackend scopes)
+- `OAUTH_API_SCOPES=labs:publish,leads:write` (CyberBackend scopes). APIs and their scopes can
+  now be managed in the admin console (APIs). Once these scopes are declared on their API
+  there, this variable can be removed.
