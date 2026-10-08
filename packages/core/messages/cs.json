@@ -113,10 +113,10 @@
       }
     },
     "screen": {
-      "headline": "One account for all your apps.",
-      "subhead": "Sign in once and reach every app connected to {name}. Your profile and security settings follow you everywhere.",
-      "footer": "Secured by {name}.",
-      "ecosystem": "Works with"
+      "headline": "One account for your whole security journey.",
+      "subhead": "Sign in once to reach your labs, courses and team dashboards. Your progress and skills follow you across the ecosystem.",
+      "footer": "Secured by Cyber Auth.",
+      "ecosystem": "Part of the Cyber ecosystem"
     },
     "social": {
       "or": "or",

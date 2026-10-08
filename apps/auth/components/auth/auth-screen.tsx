@@ -6,30 +6,17 @@ import { LocaleSwitcher } from "@ostiary/core/components/layout/locale-switcher"
 import { ThemeToggle } from "@ostiary/core/components/theme-toggle";
 import { getTranslations } from "next-intl/server";
 
-/**
- * The brand panel's backdrop: the mark's arch drawn at full height, with brass light
- * coming through the keyhole. Dependency-free SVG; purely decorative.
- */
-function Doorway() {
+/** Faint dot grid, masked to a soft glow, the Cyber family hero background, dependency-free. */
+function DotField() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(700px_420px_at_75%_85%,color-mix(in_oklab,var(--brass)_14%,transparent),transparent)]" />
-      <svg viewBox="0 0 420 630" preserveAspectRatio="xMidYMax meet" className="absolute right-[-16%] bottom-0 h-[72%] w-auto xl:right-[-8%]">
+      <svg className="absolute inset-0 h-full w-full [mask-image:radial-gradient(520px_circle_at_30%_40%,black,transparent)]">
         <defs>
-          <radialGradient id="doorway-glow" cx="50%" cy="58%" r="60%">
-            <stop offset="0" stopColor="var(--brass)" stopOpacity="0.32" />
-            <stop offset="0.55" stopColor="var(--brass)" stopOpacity="0.07" />
-            <stop offset="1" stopColor="var(--brass)" stopOpacity="0" />
-          </radialGradient>
-          <linearGradient id="doorway-edge" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="var(--brass)" stopOpacity="0.8" />
-            <stop offset="1" stopColor="var(--brass)" stopOpacity="0.1" />
-          </linearGradient>
+          <pattern id="auth-dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" className="fill-foreground/[0.14]" />
+          </pattern>
         </defs>
-        <path d="M40 630V250a170 170 0 0 1 340 0v380Z" fill="url(#doorway-glow)" />
-        <path d="M40 630V250a170 170 0 0 1 340 0v380" fill="none" stroke="url(#doorway-edge)" strokeWidth="1.5" />
-        <path d="M84 630V258a126 126 0 0 1 252 0v372" fill="none" stroke="var(--brass)" strokeOpacity="0.18" strokeWidth="1" />
-        <path d="M210 296a32 32 0 0 1 15 60.2L233 410h-46l8-53.8A32 32 0 0 1 210 296Z" fill="var(--brass)" />
+        <rect width="100%" height="100%" fill="url(#auth-dots)" />
       </svg>
     </div>
   );
@@ -49,18 +36,18 @@ export async function AuthScreen({ children, locale }: { children: ReactNode; lo
     <div className="relative grid min-h-svh lg:grid-cols-2">
 
       {/* Brand panel */}
-      <aside className="dark relative hidden flex-col justify-between overflow-hidden border-r bg-background p-10 text-foreground lg:flex xl:p-14">
-        <Doorway />
+      <aside className="relative hidden flex-col justify-between overflow-hidden border-r bg-card p-10 lg:flex xl:p-14">
+        <DotField />
         <div className="relative">
           <Logo />
         </div>
         <div className="relative max-w-sm">
-          <h1 className="text-4xl leading-[1.05] font-semibold tracking-[-0.035em] xl:text-5xl">
+          <h1 className="text-3xl font-semibold tracking-tighter text-balance xl:text-4xl">
             {t.rich("headline", {
               accent: (chunks) => <span className="text-serif-accent text-brass">{chunks}</span>,
             })}
           </h1>
-          <p className="mt-5 max-w-[19rem] leading-relaxed text-muted-foreground">{t("subhead", { name: brand.name })}</p>
+          <p className="mt-4 leading-relaxed text-muted-foreground">{t("subhead", { name: brand.name })}</p>
           {ecosystem.length ? (
             <ul className="mt-8 flex flex-wrap gap-2">
               {ecosystem.map((name) => (
