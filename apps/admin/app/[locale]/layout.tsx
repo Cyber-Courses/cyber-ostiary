@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { brand } from "@ostiary/core/lib/brand";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -15,14 +15,25 @@ import { cn } from "@ostiary/core/lib/utils";
 import "../globals.css";
 
 
-const geistSans = Geist({
-  variable: "--font-sans",
+/* The Cyber family typefaces: Newsreader headlines, Geist UI, Geist Mono data. */
+const newsreader = Newsreader({
+  variable: "--font-brand-heading",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
+const geistSans = Geist({
+  variable: "--font-brand-sans",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable: "--font-brand-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export function generateStaticParams() {
@@ -78,9 +89,11 @@ export default async function LocaleLayout({ children, params }: Props) {
       lang={htmlLang}
       dir={dir}
       suppressHydrationWarning
+      data-product="library"
       className={cn(
         "h-full",
         "antialiased",
+        newsreader.variable,
         geistSans.variable,
         geistMono.variable,
         "font-sans",

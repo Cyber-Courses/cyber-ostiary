@@ -64,7 +64,7 @@ function RegistrationBadge({ source }: { source: RegistrationSource }) {
   return (
     <Badge
       variant="outline"
-      className="border-amber-500/40 bg-amber-500/10 font-normal text-amber-800 dark:text-amber-300"
+      className="border-warning/40 bg-warning/10 font-normal text-warning"
       title="Registered itself: not reviewed by an admin"
     >
       {source === "dynamic" ? "Self-registered" : "Metadata document"}

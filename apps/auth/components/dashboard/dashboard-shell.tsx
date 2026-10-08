@@ -4,6 +4,7 @@ import * as React from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Logo } from "@ostiary/core/components/brand/logo";
+import { Preferences } from "@ostiary/core/components/layout/preferences";
 import { Button } from "@ostiary/core/components/ui/button";
 import { AccountMenu } from "@/components/dashboard/account-menu";
 import { Link } from "@/i18n/navigation";
@@ -48,7 +49,7 @@ function useActiveSection(ids: string[]) {
 function ImpersonationBanner({ email, returnUrl }: { email: string; returnUrl: string }) {
   const [busy, setBusy] = React.useState(false);
   return (
-    <div className="border-b border-amber-500/40 bg-amber-500/10 text-sm" role="status">
+    <div className="border-b border-warning/40 bg-warning/10 text-sm" role="status">
       <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-2 px-4 py-2 md:px-6">
         <span>
           You are viewing this account as <span className="font-medium">{email}</span>.
@@ -130,16 +131,19 @@ export function DashboardShell({
           }
         />
       ) : null}
-      <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-4 px-4 md:px-6">
+      <header className="sticky top-0 z-40 border-b bg-[color-mix(in_oklab,var(--background)_72%,transparent)] backdrop-blur-lg backdrop-saturate-[1.4]">
+        <div className="mx-auto flex h-15 max-w-4xl items-center justify-between gap-4 px-4 md:px-6">
           <Link
             href="/dashboard"
-            className="shrink-0 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="min-w-0 shrink rounded-md"
           >
             <Logo />
           </Link>
 
-          <AccountMenu user={user} isAdmin={isAdmin} multiAccount={!impersonation} />
+          <div className="flex shrink-0 items-center gap-1.5">
+            <Preferences />
+            <AccountMenu user={user} isAdmin={isAdmin} multiAccount={!impersonation} />
+          </div>
         </div>
 
         <nav
@@ -155,9 +159,9 @@ export function DashboardShell({
                     href={item.href}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
-                      "relative block whitespace-nowrap rounded-md px-2.5 py-2.5 text-muted-foreground transition-colors hover:text-foreground",
-                      isActive && "font-medium text-foreground",
-                      "after:absolute after:inset-x-2.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-foreground after:transition-opacity",
+                      "relative block whitespace-nowrap rounded-md px-2.5 py-3 text-faint transition-colors hover:text-muted-foreground",
+                      isActive && "text-foreground hover:text-foreground",
+                      "after:absolute after:inset-x-2.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-jewel after:transition-opacity",
                       isActive ? "after:opacity-100" : "after:opacity-0",
                     )}
                   >

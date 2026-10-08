@@ -10,6 +10,7 @@ import { DashboardSecuritySection } from "@/components/dashboard/dashboard-secur
 import { getDashboardContext } from "@/lib/dashboard-context";
 import { Alert, AlertDescription, AlertTitle } from "@ostiary/core/components/ui/alert";
 import { adminNeedsTwoFactor } from "@ostiary/core/lib/admin/admin-two-factor";
+import { brand } from "@ostiary/core/lib/brand";
 import { env } from "@ostiary/core/lib/env";
 import { enabledSocialProviders } from "@ostiary/core/lib/social-providers";
 
@@ -27,8 +28,9 @@ export default async function DashboardPage({
   return (
     <div className="space-y-10">
       <section id="overview" className="scroll-mt-32 space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
+        <div className="space-y-3">
+          <p className="cy-eyebrow">{brand.name}</p>
+          <h1 className="text-4xl sm:text-5xl">{t("title")}</h1>
           <p className="max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
             {t("description")}
           </p>

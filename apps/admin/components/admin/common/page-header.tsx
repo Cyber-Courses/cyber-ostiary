@@ -27,7 +27,7 @@ export function PageHeader({
       ) : null}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 space-y-1">
-          <h1 className="truncate text-2xl font-semibold tracking-tight">{title}</h1>
+          <h1 className="truncate pb-1 text-3xl sm:text-4xl">{title}</h1>
           {description ? (
             <p className="max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
               {description}

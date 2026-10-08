@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
+  "installCommand": "echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> ~/.npmrc && pnpm install --frozen-lockfile",
   "buildCommand": "next build"
 }

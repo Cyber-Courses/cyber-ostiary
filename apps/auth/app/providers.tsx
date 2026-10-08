@@ -14,7 +14,7 @@ function ThemedToaster() {
       position="bottom-right"
       richColors
       closeButton
-      theme={resolvedTheme === "dark" ? "dark" : "light"}
+      theme={resolvedTheme === "light" ? "light" : "dark"}
     />
   );
 }
@@ -22,9 +22,10 @@ function ThemedToaster() {
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
+      attribute={["class", "data-mode"]}
+      themes={["dark", "black", "light"]}
+      defaultTheme="dark"
+      enableSystem={false}
       disableTransitionOnChange
     >
       {children}
