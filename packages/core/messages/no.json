@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Send meg en innloggingskode på e-post",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Du logget sist inn med en kode sendt på e-post.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Kontoer som allerede er logget inn i denne nettleseren, forblir logget inn."
+    },
+    "emailCode": {
+      "title": "Logg inn med en kode",
+      "description": "Vi sender en 6-sifret kode til e-postadressen på kontoen din. Les den på en hvilken som helst enhet, og skriv den inn her.",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "deg@eksempel.no",
+      "send": "Send kode",
+      "sending": "Sender…",
+      "sentTitle": "Sjekk e-posten din",
+      "sent": "Hvis en konto bruker {email}, er en 6-sifret kode på vei. Den utløper om {minutes} minutter.",
+      "codeLabel": "Innloggingskode",
+      "verify": "Logg inn",
+      "verifying": "Logger inn…",
+      "newCode": "Ikke mottatt? Send en ny kode",
+      "usePassword": "Bruk passordet ditt i stedet",
+      "errors": {
+        "invalidEmail": "Skriv inn en gyldig e-postadresse.",
+        "invalidCode": "Koden er feil. Sjekk den og prøv igjen.",
+        "expired": "Koden har utløpt. Be om en ny.",
+        "tooManyAttempts": "For mange feil koder. Be om en ny.",
+        "rateLimited": "For mange forsøk. Vent ett minutt og prøv igjen.",
+        "sendFailed": "Kunne ikke sende koden. Prøv igjen om ett minutt.",
+        "signInFailed": "Kunne ikke logge inn. Prøv igjen."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Tofaktorautentisering",
+      "title": "Tofaktorautentisering",
+      "descriptionTotp": "Skriv inn den 6-sifrede koden fra autentiseringsappen din.",
+      "descriptionBackup": "Skriv inn en av reservekodene dine. Hver kode virker én gang.",
+      "codeLabel": "Kode",
+      "backupCodeLabel": "Reservekode",
+      "trustDevice": "Stol på denne enheten i 30 dager",
+      "trustDeviceHint": "Du blir ikke bedt om kode på denne enheten. Velg dette bare på en enhet du eier.",
+      "submit": "Bekreft",
+      "submitting": "Bekrefter…",
+      "useBackupCode": "Bruk en reservekode",
+      "useAuthenticator": "Bruk autentiseringsappen",
+      "backToLogin": "Tilbake til innlogging",
+      "expiredTitle": "Logg inn på nytt",
+      "expiredDescription": "Denne innloggingen har utløpt eller fikk for mange feil koder. Logg inn med passordet ditt på nytt.",
+      "errors": {
+        "invalidCode": "Koden er ugyldig. Skriv inn den gjeldende koden fra appen.",
+        "invalidBackupCode": "Reservekoden er ugyldig eller allerede brukt.",
+        "locked": "For mange feil koder. Prøv igjen om 15 minutter.",
+        "rateLimited": "For mange forsøk. Vent noen sekunder og prøv igjen.",
+        "failed": "Kunne ikke bekrefte koden. Prøv igjen."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Ubekreftet app",
+      "dynamic": "Denne appen registrerte seg selv og er ikke gjennomgått. Tillat den bare hvis du stoler på den og selv startet denne innloggingen.",
+      "metadataDocument": "Denne appen identifiserer seg med et dokument på {host} og er ikke gjennomgått. Tillat den bare hvis du stoler på den og selv startet denne innloggingen.",
+      "redirect": "Hvis du tillater, blir du sendt til <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API-er",
-        "description": "API-ene dine (beskyttede ressurser) som godtar tilgangstokener fra {name}, og scopene klienter kan be om for dem."
+        "description": "API-ene dine (beskyttede ressurser) som godtar tilgangstokener fra {name}: scopene klienter kan be om, hvilke applikasjoner som kan bruke dem, og tokeninnstillingene deres."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Tofaktorautentisering",
+      "hint": "Når du logger inn med passordet ditt, skriver du også inn en kode fra en autentiseringsapp.",
+      "statusOn": "På",
+      "statusOff": "Av",
+      "enable": "Slå på",
+      "disable": "Slå av",
+      "regenerate": "Nye reservekoder",
+      "passwordLabel": "Passord",
+      "passwordHint": "Skriv inn passordet ditt for å fortsette.",
+      "continue": "Fortsett",
+      "cancel": "Avbryt",
+      "done": "Ferdig",
+      "doneAdmin": "Gå til administrasjonskonsollen",
+      "setupTitle": "Slå på tofaktorautentisering",
+      "scanTitle": "Skann QR-koden",
+      "scanHint": "Skann den med en autentiseringsapp som 1Password, Google Authenticator eller Microsoft Authenticator, og skriv deretter inn den 6-sifrede koden som vises.",
+      "qrAlt": "QR-kode for å legge til denne kontoen i en autentiseringsapp",
+      "manualKey": "Får du ikke skannet? Skriv inn denne nøkkelen i appen:",
+      "codeLabel": "6-sifret kode",
+      "verify": "Bekreft og slå på",
+      "codesTitle": "Lagre reservekodene",
+      "codesHint": "Hvis du mister autentiseringsappen, kan du logge inn én gang med hver kode. Oppbevar dem trygt: de vises ikke igjen.",
+      "copy": "Kopier",
+      "copied": "Reservekodene er kopiert",
+      "download": "Last ned",
+      "fileTitle": "Reservekoder for {name}. Hver kode virker én gang.",
+      "disableTitle": "Slå av tofaktorautentisering?",
+      "disableBody": "Du logger inn med bare passordet. Autentiseringsappen og reservekodene slutter å virke.",
+      "regenerateTitle": "Lage nye reservekoder?",
+      "regenerateBody": "De nåværende reservekodene slutter å virke. Skriv inn passordet ditt for å fortsette.",
+      "enabled": "Tofaktorautentisering er på",
+      "disabled": "Tofaktorautentisering er av",
+      "signInAgainToDisable": "Av sikkerhetshensyn krever dette en nylig innlogging. Logg inn på nytt, og prøv igjen.",
+      "signInAgain": "Logg inn på nytt",
+      "adminRequiredTitle": "Slå på tofaktorautentisering",
+      "adminRequiredBody": "Administratorer må ha tofaktorautentisering for å åpne administrasjonskonsollen.",
+      "adminRequiredLink": "Konfigurer nå",
+      "errors": {
+        "invalidPassword": "Feil passord.",
+        "invalidCode": "Koden er ugyldig. Sjekk at klokken på enheten er riktig, og prøv igjen.",
+        "rateLimited": "For mange forsøk. Vent noen sekunder og prøv igjen.",
+        "generic": "Noe gikk galt. Prøv igjen."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Bytt til",
+      "add": "Legg til en annen konto",
+      "signOutOf": "Logg ut av {email}",
+      "signOutAll": "Logg ut av alle kontoer",
+      "switchFailed": "Kunne ikke bytte konto. Prøv igjen."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Fortsett til appen med denne kontoen, eller logg inn med en annen.",
     "continueAs": "Fortsett som {name}",
     "useAnother": "Bruk en annen konto",
-    "error": "Noe gikk galt. Prøv igjen."
+    "error": "Noe gikk galt. Prøv igjen.",
+    "descriptionMany": "Velg kontoen du vil fortsette til appen med."
+  },
+  "device": {
+    "title": "Koble til en enhet",
+    "description": "Skriv inn koden som vises på enheten, TV-en eller kommandolinjen.",
+    "codeLabel": "Kode",
+    "continue": "Fortsett",
+    "reviewTitle": "{name} vil bruke kontoen din",
+    "reviewDescription": "Godkjenn bare hvis du selv startet denne påloggingen og koden nedenfor stemmer med den på enheten.",
+    "codeOnDevice": "Kode på enheten",
+    "noScopes": "Grunnleggende tilgang til kontoen din, uten spesielle tillatelser.",
+    "signedInAs": "Logget inn som {email}",
+    "switchAccount": "Bruk en annen konto",
+    "deny": "Avslå",
+    "approve": "Godkjenn",
+    "useAnotherCode": "Skriv inn en annen kode",
+    "approvedTitle": "Enheten er koblet til",
+    "approvedDescription": "Du kan gå tilbake til enheten. Den fullfører påloggingen selv.",
+    "deniedTitle": "Forespørselen ble avslått",
+    "deniedDescription": "Enheten fikk ikke tilgang til kontoen din.",
+    "errors": {
+      "invalid": "Koden er ugyldig. Sjekk den og prøv igjen.",
+      "expired": "Koden er utløpt. Start på nytt på enheten for å få en ny.",
+      "processed": "Koden er allerede brukt. Start på nytt på enheten hvis du fortsatt må logge inn.",
+      "otherAccount": "Koden brukes av en annen konto.",
+      "tooManyAttempts": "For mange forsøk. Vent noen minutter og prøv igjen.",
+      "failed": "Noe gikk galt. Prøv igjen."
+    }
+  },
+  "captcha": {
+    "label": "Sikkerhetssjekk",
+    "required": "Fullfør sikkerhetssjekken først.",
+    "failed": "Sikkerhetssjekken mislyktes. Prøv igjen.",
+    "unavailable": "Sikkerhetssjekken kunne ikke lastes inn. Sjekk tilkoblingen eller slå av innholdsblokkering, og last inn siden på nytt."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Innloggingskoden din for {brand}",
+      "preheader": "Bruk denne koden for å logge inn. Den utløper om {minutes} minutter.",
+      "heading": "Innloggingskoden din",
+      "body": "Skriv inn denne koden på innloggingssiden til {brand} for å fullføre innloggingen.",
+      "note": "Koden utløper om {minutes} minutter og fungerer bare én gang.",
+      "footnote": "Har du ikke bedt om en kode? Se bort fra denne e-posten: ingen kan logge inn uten koden. Del den aldri med noen."
+    }
   }
 }

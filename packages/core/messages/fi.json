@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Lähetä minulle kirjautumiskoodi sähköpostiin",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Kirjauduit viimeksi sähköpostiin lähetetyllä koodilla.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Tässä selaimessa jo kirjautuneet tilit pysyvät kirjautuneina."
+    },
+    "emailCode": {
+      "title": "Kirjaudu koodilla",
+      "description": "Lähetämme 6-numeroisen koodin tilisi sähköpostiosoitteeseen. Lue se millä tahansa laitteella ja kirjoita se tähän.",
+      "emailLabel": "Sähköposti",
+      "emailPlaceholder": "sina@esimerkki.fi",
+      "send": "Lähetä koodi",
+      "sending": "Lähetetään…",
+      "sentTitle": "Tarkista sähköpostisi",
+      "sent": "Jos osoite {email} kuuluu tilille, 6-numeroinen koodi on matkalla. Se vanhenee {minutes} minuutissa.",
+      "codeLabel": "Kirjautumiskoodi",
+      "verify": "Kirjaudu",
+      "verifying": "Kirjaudutaan…",
+      "newCode": "Eikö koodia kuulunut? Lähetä uusi koodi",
+      "usePassword": "Käytä salasanaa",
+      "errors": {
+        "invalidEmail": "Anna kelvollinen sähköpostiosoite.",
+        "invalidCode": "Koodi ei ole oikein. Tarkista se ja yritä uudelleen.",
+        "expired": "Koodi on vanhentunut. Pyydä uusi.",
+        "tooManyAttempts": "Liian monta väärää koodia. Pyydä uusi.",
+        "rateLimited": "Liian monta yritystä. Odota minuutti ja yritä uudelleen.",
+        "sendFailed": "Koodia ei voitu lähettää. Yritä uudelleen minuutin kuluttua.",
+        "signInFailed": "Kirjautuminen epäonnistui. Yritä uudelleen."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Kaksivaiheinen tunnistautuminen",
+      "title": "Kaksivaiheinen tunnistautuminen",
+      "descriptionTotp": "Anna todennussovelluksesi 6-numeroinen koodi.",
+      "descriptionBackup": "Anna yksi varakoodeistasi. Kukin koodi toimii kerran.",
+      "codeLabel": "Koodi",
+      "backupCodeLabel": "Varakoodi",
+      "trustDevice": "Luota tähän laitteeseen 30 päivän ajan",
+      "trustDeviceHint": "Tällä laitteella ei kysytä koodia. Valitse tämä vain omalla laitteellasi.",
+      "submit": "Vahvista",
+      "submitting": "Vahvistetaan…",
+      "useBackupCode": "Käytä varakoodia",
+      "useAuthenticator": "Käytä todennussovellusta",
+      "backToLogin": "Takaisin kirjautumiseen",
+      "expiredTitle": "Kirjaudu uudelleen",
+      "expiredDescription": "Tämä kirjautuminen vanheni tai siinä annettiin liian monta väärää koodia. Kirjaudu uudelleen salasanallasi.",
+      "errors": {
+        "invalidCode": "Koodi ei kelpaa. Anna sovelluksen nykyinen koodi.",
+        "invalidBackupCode": "Varakoodi ei kelpaa tai se on jo käytetty.",
+        "locked": "Liian monta väärää koodia. Yritä uudelleen 15 minuutin kuluttua.",
+        "rateLimited": "Liian monta yritystä. Odota hetki ja yritä uudelleen.",
+        "failed": "Koodia ei voitu vahvistaa. Yritä uudelleen."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Vahvistamaton sovellus",
+      "dynamic": "Tämä sovellus rekisteröityi itse, eikä sitä ole tarkistettu. Salli se vain, jos luotat siihen ja aloitit tämän kirjautumisen itse.",
+      "metadataDocument": "Tämä sovellus tunnistautuu sivustolla {host} julkaistulla asiakirjalla, eikä sitä ole tarkistettu. Salli se vain, jos luotat siihen ja aloitit tämän kirjautumisen itse.",
+      "redirect": "Jos sallit, sinut ohjataan osoitteeseen <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API:t",
-        "description": "API:si (suojatut resurssit), jotka hyväksyvät {name}-käyttöoikeustunnukset, ja scopet, joita asiakkaat voivat pyytää niille."
+        "description": "API:si (suojatut resurssit), jotka hyväksyvät {name}-käyttöoikeustunnukset: scopet, joita asiakkaat voivat pyytää, sovellukset, jotka voivat käyttää niitä, ja niiden tunnusasetukset."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Kaksivaiheinen tunnistautuminen",
+      "hint": "Kun kirjaudut salasanalla, anna myös todennussovelluksen koodi.",
+      "statusOn": "Käytössä",
+      "statusOff": "Ei käytössä",
+      "enable": "Ota käyttöön",
+      "disable": "Poista käytöstä",
+      "regenerate": "Uudet varakoodit",
+      "passwordLabel": "Salasana",
+      "passwordHint": "Jatka antamalla salasanasi.",
+      "continue": "Jatka",
+      "cancel": "Peruuta",
+      "done": "Valmis",
+      "doneAdmin": "Siirry hallintakonsoliin",
+      "setupTitle": "Ota kaksivaiheinen tunnistautuminen käyttöön",
+      "scanTitle": "Skannaa QR-koodi",
+      "scanHint": "Skannaa se todennussovelluksella, kuten 1Password, Google Authenticator tai Microsoft Authenticator, ja anna sitten näkyvä 6-numeroinen koodi.",
+      "qrAlt": "QR-koodi tämän tilin lisäämiseksi todennussovellukseen",
+      "manualKey": "Etkö voi skannata? Anna tämä avain sovellukseen:",
+      "codeLabel": "6-numeroinen koodi",
+      "verify": "Vahvista ja ota käyttöön",
+      "codesTitle": "Tallenna varakoodit",
+      "codesHint": "Jos kadotat todennussovelluksen, voit kirjautua kullakin koodilla kerran. Säilytä ne turvallisesti: niitä ei näytetä uudelleen.",
+      "copy": "Kopioi",
+      "copied": "Varakoodit kopioitu",
+      "download": "Lataa",
+      "fileTitle": "{name}-varakoodit. Kukin koodi toimii kerran.",
+      "disableTitle": "Poistetaanko kaksivaiheinen tunnistautuminen käytöstä?",
+      "disableBody": "Kirjaudut pelkällä salasanalla. Todennussovellus ja varakoodit lakkaavat toimimasta.",
+      "regenerateTitle": "Luodaanko uudet varakoodit?",
+      "regenerateBody": "Nykyiset varakoodisi lakkaavat toimimasta. Jatka antamalla salasanasi.",
+      "enabled": "Kaksivaiheinen tunnistautuminen on käytössä",
+      "disabled": "Kaksivaiheinen tunnistautuminen ei ole käytössä",
+      "signInAgainToDisable": "Turvallisuussyistä tämä vaatii tuoreen kirjautumisen. Kirjaudu uudelleen ja yritä sitten uudelleen.",
+      "signInAgain": "Kirjaudu uudelleen",
+      "adminRequiredTitle": "Ota kaksivaiheinen tunnistautuminen käyttöön",
+      "adminRequiredBody": "Ylläpitäjät tarvitsevat kaksivaiheisen tunnistautumisen avatakseen hallintakonsolin.",
+      "adminRequiredLink": "Ota käyttöön nyt",
+      "errors": {
+        "invalidPassword": "Väärä salasana.",
+        "invalidCode": "Koodi ei kelpaa. Tarkista, että laitteesi kello on oikeassa ajassa, ja yritä uudelleen.",
+        "rateLimited": "Liian monta yritystä. Odota hetki ja yritä uudelleen.",
+        "generic": "Jokin meni vikaan. Yritä uudelleen."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Vaihda tiliin",
+      "add": "Lisää toinen tili",
+      "signOutOf": "Kirjaudu ulos tililtä {email}",
+      "signOutAll": "Kirjaudu ulos kaikilta tileiltä",
+      "switchFailed": "Tilin vaihto epäonnistui. Yritä uudelleen."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Jatka sovellukseen tällä tilillä tai kirjaudu toisella.",
     "continueAs": "Jatka nimellä {name}",
     "useAnother": "Käytä toista tiliä",
-    "error": "Jokin meni pieleen. Yritä uudelleen."
+    "error": "Jokin meni pieleen. Yritä uudelleen.",
+    "descriptionMany": "Valitse tili, jolla jatkat sovellukseen."
+  },
+  "device": {
+    "title": "Yhdistä laite",
+    "description": "Syötä laitteessa, televisiossa tai komentorivillä näkyvä koodi.",
+    "codeLabel": "Koodi",
+    "continue": "Jatka",
+    "reviewTitle": "{name} haluaa käyttää tiliäsi",
+    "reviewDescription": "Hyväksy vain, jos aloitit tämän kirjautumisen itse ja alla oleva koodi vastaa laitteessasi näkyvää.",
+    "codeOnDevice": "Koodi laitteessasi",
+    "noScopes": "Perustason pääsy tiliisi ilman erityisiä oikeuksia.",
+    "signedInAs": "Kirjautuneena: {email}",
+    "switchAccount": "Käytä toista tiliä",
+    "deny": "Hylkää",
+    "approve": "Hyväksy",
+    "useAnotherCode": "Syötä toinen koodi",
+    "approvedTitle": "Laite yhdistetty",
+    "approvedDescription": "Voit palata laitteeseesi. Se viimeistelee kirjautumisen itse.",
+    "deniedTitle": "Pyyntö hylätty",
+    "deniedDescription": "Laite ei saanut pääsyä tiliisi.",
+    "errors": {
+      "invalid": "Koodi ei kelpaa. Tarkista se ja yritä uudelleen.",
+      "expired": "Koodi on vanhentunut. Aloita alusta laitteessasi saadaksesi uuden.",
+      "processed": "Koodi on jo käytetty. Aloita alusta laitteessasi, jos sinun on yhä kirjauduttava.",
+      "otherAccount": "Toinen tili käyttää tätä koodia.",
+      "tooManyAttempts": "Liian monta yritystä. Odota muutama minuutti ja yritä uudelleen.",
+      "failed": "Jokin meni vikaan. Yritä uudelleen."
+    }
+  },
+  "captcha": {
+    "label": "Turvatarkistus",
+    "required": "Suorita ensin turvatarkistus.",
+    "failed": "Turvatarkistus epäonnistui. Yritä uudelleen.",
+    "unavailable": "Turvatarkistusta ei voitu ladata. Tarkista yhteys tai poista sisällönesto käytöstä ja lataa sivu uudelleen."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "{brand}-kirjautumiskoodisi",
+      "preheader": "Kirjaudu tällä koodilla. Se vanhenee {minutes} minuutissa.",
+      "heading": "Kirjautumiskoodisi",
+      "body": "Viimeistele kirjautuminen syöttämällä tämä koodi {brand}-kirjautumissivulle.",
+      "note": "Koodi vanhenee {minutes} minuutissa ja toimii vain kerran.",
+      "footnote": "Etkö pyytänyt koodia? Voit ohittaa tämän viestin: kukaan ei voi kirjautua ilman koodia. Älä koskaan kerro sitä kenellekään."
+    }
   }
 }

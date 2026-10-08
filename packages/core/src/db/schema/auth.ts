@@ -27,6 +27,7 @@ export const user = pgTable("user", {
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
+  twoFactorEnabled: boolean("two_factor_enabled").default(false),
 });
 
 export const organization = pgTable("organization", {
@@ -177,6 +178,25 @@ export const passkey = pgTable(
   (table) => [
     index("passkey_userId_idx").on(table.userId),
     index("passkey_credentialID_idx").on(table.credentialID),
+  ],
+);
+
+export const twoFactor = pgTable(
+  "two_factor",
+  {
+    id: text("id").primaryKey(),
+    secret: text("secret").notNull(),
+    backupCodes: text("backup_codes").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    verified: boolean("verified").default(true),
+    failedVerificationCount: integer("failed_verification_count").default(0),
+    lockedUntil: timestamp("locked_until"),
+  },
+  (table) => [
+    index("twoFactor_secret_idx").on(table.secret),
+    index("twoFactor_userId_idx").on(table.userId),
   ],
 );
 
@@ -370,10 +390,41 @@ export const oauthClientAssertion = pgTable("oauth_client_assertion", {
   expiresAt: timestamp("expires_at").notNull(),
 });
 
+/**
+ * Pending device sign-ins (RFC 8628, `oauthDeviceAuthorization`). A row lives from the device's
+ * request until the device collects its tokens, or until it expires. `userId` is set when a
+ * signed-in user opens the code on the /device page.
+ */
+export const deviceCode = pgTable(
+  "device_code",
+  {
+    id: text("id").primaryKey(),
+    deviceCode: text("device_code").notNull(),
+    userCode: text("user_code").notNull(),
+    userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at").notNull(),
+    status: text("status").notNull(),
+    lastPolledAt: timestamp("last_polled_at"),
+    pollingInterval: integer("polling_interval"),
+    clientId: text("client_id"),
+    scope: text("scope"),
+    // Added by the OAuth provider: the registered client and the requested RFC 8707 resources.
+    oauthClientId: text("oauth_client_id").references(() => oauthClient.clientId, {
+      onDelete: "cascade",
+    }),
+    resources: text("resources").array(),
+  },
+  (table) => [
+    uniqueIndex("deviceCode_deviceCode_uidx").on(table.deviceCode),
+    uniqueIndex("deviceCode_userCode_uidx").on(table.userCode),
+  ],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
+  twoFactors: many(twoFactor),
   organizationMemberships: many(member),
   sentOrganizationInvitations: many(invitation),
   oauthClients: many(oauthClient),
@@ -432,6 +483,13 @@ export const accountRelations = relations(account, ({ one }) => ({
 export const passkeyRelations = relations(passkey, ({ one }) => ({
   user: one(user, {
     fields: [passkey.userId],
+    references: [user.id],
+  }),
+}));
+
+export const twoFactorRelations = relations(twoFactor, ({ one }) => ({
+  user: one(user, {
+    fields: [twoFactor.userId],
     references: [user.id],
   }),
 }));

@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Send mig en loginkode på e-mail",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Du loggede sidst ind med en kode sendt på e-mail.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Konti, der allerede er logget ind i denne browser, forbliver logget ind."
+    },
+    "emailCode": {
+      "title": "Log ind med en kode",
+      "description": "Vi sender en 6-cifret kode til e-mailadressen på din konto. Læs den på en hvilken som helst enhed, og skriv den her.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "dig@eksempel.dk",
+      "send": "Send kode",
+      "sending": "Sender…",
+      "sentTitle": "Tjek din e-mail",
+      "sent": "Hvis en konto bruger {email}, er en 6-cifret kode på vej. Den udløber om {minutes} minutter.",
+      "codeLabel": "Loginkode",
+      "verify": "Log ind",
+      "verifying": "Logger ind…",
+      "newCode": "Ikke modtaget? Send en ny kode",
+      "usePassword": "Brug din adgangskode i stedet",
+      "errors": {
+        "invalidEmail": "Indtast en gyldig e-mailadresse.",
+        "invalidCode": "Koden er forkert. Tjek den, og prøv igen.",
+        "expired": "Koden er udløbet. Bed om en ny.",
+        "tooManyAttempts": "For mange forkerte koder. Bed om en ny.",
+        "rateLimited": "For mange forsøg. Vent et minut, og prøv igen.",
+        "sendFailed": "Koden kunne ikke sendes. Prøv igen om et minut.",
+        "signInFailed": "Du kunne ikke logges ind. Prøv igen."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Totrinsgodkendelse",
+      "title": "Totrinsgodkendelse",
+      "descriptionTotp": "Indtast den 6-cifrede kode fra din godkendelsesapp.",
+      "descriptionBackup": "Indtast en af dine backupkoder. Hver kode virker én gang.",
+      "codeLabel": "Kode",
+      "backupCodeLabel": "Backupkode",
+      "trustDevice": "Stol på denne enhed i 30 dage",
+      "trustDeviceHint": "Der bliver ikke bedt om en kode på denne enhed. Vælg kun dette på en enhed, du ejer.",
+      "submit": "Bekræft",
+      "submitting": "Bekræfter…",
+      "useBackupCode": "Brug en backupkode",
+      "useAuthenticator": "Brug din godkendelsesapp",
+      "backToLogin": "Tilbage til login",
+      "expiredTitle": "Log ind igen",
+      "expiredDescription": "Dette login er udløbet eller fik for mange forkerte koder. Log ind med din adgangskode igen.",
+      "errors": {
+        "invalidCode": "Koden er ugyldig. Indtast den aktuelle kode fra din app.",
+        "invalidBackupCode": "Backupkoden er ugyldig eller allerede brugt.",
+        "locked": "For mange forkerte koder. Prøv igen om 15 minutter.",
+        "rateLimited": "For mange forsøg. Vent et par sekunder, og prøv igen.",
+        "failed": "Koden kunne ikke bekræftes. Prøv igen."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Ikke-verificeret app",
+      "dynamic": "Denne app har registreret sig selv og er ikke blevet gennemgået. Tillad den kun, hvis du stoler på den og selv har startet dette login.",
+      "metadataDocument": "Denne app identificerer sig med et dokument på {host} og er ikke blevet gennemgået. Tillad den kun, hvis du stoler på den og selv har startet dette login.",
+      "redirect": "Hvis du tillader, bliver du sendt til <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API'er",
-        "description": "Dine API'er (beskyttede ressourcer), der accepterer adgangstokens fra {name}, og de scopes, klienter kan anmode om til dem."
+        "description": "Dine API'er (beskyttede ressourcer), der accepterer adgangstokens fra {name}: de scopes, klienter kan anmode om, hvilke applikationer der må bruge dem, og deres tokenindstillinger."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Totrinsgodkendelse",
+      "hint": "Når du logger ind med din adgangskode, skal du også indtaste en kode fra en godkendelsesapp.",
+      "statusOn": "Til",
+      "statusOff": "Fra",
+      "enable": "Slå til",
+      "disable": "Slå fra",
+      "regenerate": "Nye backupkoder",
+      "passwordLabel": "Adgangskode",
+      "passwordHint": "Indtast din adgangskode for at fortsætte.",
+      "continue": "Fortsæt",
+      "cancel": "Annuller",
+      "done": "Færdig",
+      "doneAdmin": "Gå til administrationskonsollen",
+      "setupTitle": "Slå totrinsgodkendelse til",
+      "scanTitle": "Scan QR-koden",
+      "scanHint": "Scan den med en godkendelsesapp som 1Password, Google Authenticator eller Microsoft Authenticator, og indtast derefter den 6-cifrede kode, den viser.",
+      "qrAlt": "QR-kode til at tilføje denne konto i en godkendelsesapp",
+      "manualKey": "Kan du ikke scanne den? Indtast denne nøgle i din app:",
+      "codeLabel": "6-cifret kode",
+      "verify": "Bekræft og slå til",
+      "codesTitle": "Gem dine backupkoder",
+      "codesHint": "Hvis du mister din godkendelsesapp, kan du logge ind én gang med hver kode. Opbevar dem sikkert: de bliver ikke vist igen.",
+      "copy": "Kopiér",
+      "copied": "Backupkoderne er kopieret",
+      "download": "Download",
+      "fileTitle": "Backupkoder til {name}. Hver kode virker én gang.",
+      "disableTitle": "Slå totrinsgodkendelse fra?",
+      "disableBody": "Du logger ind med kun din adgangskode. Din godkendelsesapp og dine backupkoder holder op med at virke.",
+      "regenerateTitle": "Opret nye backupkoder?",
+      "regenerateBody": "Dine nuværende backupkoder holder op med at virke. Indtast din adgangskode for at fortsætte.",
+      "enabled": "Totrinsgodkendelse er slået til",
+      "disabled": "Totrinsgodkendelse er slået fra",
+      "signInAgainToDisable": "Af hensyn til din sikkerhed kræver dette et nyligt login. Log ind igen, og prøv så igen.",
+      "signInAgain": "Log ind igen",
+      "adminRequiredTitle": "Slå totrinsgodkendelse til",
+      "adminRequiredBody": "Administratorer skal bruge totrinsgodkendelse for at åbne administrationskonsollen.",
+      "adminRequiredLink": "Konfigurer nu",
+      "errors": {
+        "invalidPassword": "Forkert adgangskode.",
+        "invalidCode": "Koden er ugyldig. Tjek, at enhedens ur går rigtigt, og prøv igen.",
+        "rateLimited": "For mange forsøg. Vent et par sekunder, og prøv igen.",
+        "generic": "Noget gik galt. Prøv igen."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Skift til",
+      "add": "Tilføj en anden konto",
+      "signOutOf": "Log ud af {email}",
+      "signOutAll": "Log ud af alle konti",
+      "switchFailed": "Kunne ikke skifte konto. Prøv igen."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Fortsæt til appen med denne konto, eller log ind med en anden.",
     "continueAs": "Fortsæt som {name}",
     "useAnother": "Brug en anden konto",
-    "error": "Noget gik galt. Prøv igen."
+    "error": "Noget gik galt. Prøv igen.",
+    "descriptionMany": "Vælg den konto, du vil fortsætte til appen med."
+  },
+  "device": {
+    "title": "Tilslut en enhed",
+    "description": "Indtast koden, der vises på din enhed, dit tv eller i kommandolinjen.",
+    "codeLabel": "Kode",
+    "continue": "Fortsæt",
+    "reviewTitle": "{name} vil bruge din konto",
+    "reviewDescription": "Godkend kun, hvis du selv har startet dette login, og koden nedenfor matcher den på din enhed.",
+    "codeOnDevice": "Kode på din enhed",
+    "noScopes": "Grundlæggende adgang til din konto uden særlige tilladelser.",
+    "signedInAs": "Logget ind som {email}",
+    "switchAccount": "Brug en anden konto",
+    "deny": "Afvis",
+    "approve": "Godkend",
+    "useAnotherCode": "Indtast en anden kode",
+    "approvedTitle": "Enheden er tilsluttet",
+    "approvedDescription": "Du kan gå tilbage til din enhed. Den fuldfører selv login.",
+    "deniedTitle": "Anmodning afvist",
+    "deniedDescription": "Enheden fik ikke adgang til din konto.",
+    "errors": {
+      "invalid": "Koden er ugyldig. Tjek den, og prøv igen.",
+      "expired": "Koden er udløbet. Start forfra på din enhed for at få en ny.",
+      "processed": "Koden er allerede brugt. Start forfra på din enhed, hvis du stadig skal logge ind.",
+      "otherAccount": "Koden bruges af en anden konto.",
+      "tooManyAttempts": "For mange forsøg. Vent et par minutter, og prøv igen.",
+      "failed": "Noget gik galt. Prøv igen."
+    }
+  },
+  "captcha": {
+    "label": "Sikkerhedstjek",
+    "required": "Gennemfør sikkerhedstjekket først.",
+    "failed": "Sikkerhedstjekket mislykkedes. Prøv igen.",
+    "unavailable": "Sikkerhedstjekket kunne ikke indlæses. Tjek din forbindelse, eller slå indholdsblokering fra, og genindlæs siden."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Din loginkode til {brand}",
+      "preheader": "Brug denne kode til at logge ind. Den udløber om {minutes} minutter.",
+      "heading": "Din loginkode",
+      "body": "Indtast denne kode på loginsiden for {brand} for at fuldføre login.",
+      "note": "Koden udløber om {minutes} minutter og virker kun én gang.",
+      "footnote": "Har du ikke bedt om en kode? Ignorer denne e-mail: ingen kan logge ind uden koden. Del den aldrig med nogen."
+    }
   }
 }

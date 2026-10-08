@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Stuur mij een inlogcode per e-mail",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Je hebt de vorige keer ingelogd met een code per e-mail.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Accounts die al zijn aangemeld in deze browser blijven aangemeld."
+    },
+    "emailCode": {
+      "title": "Inloggen met een code",
+      "description": "We sturen een 6-cijferige code naar het e-mailadres van je account. Lees hem op elk apparaat en typ hem hier in.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.nl",
+      "send": "Code versturen",
+      "sending": "Versturen…",
+      "sentTitle": "Controleer je e-mail",
+      "sent": "Als een account {email} gebruikt, is er een 6-cijferige code onderweg. Hij verloopt over {minutes} minuten.",
+      "codeLabel": "Inlogcode",
+      "verify": "Inloggen",
+      "verifying": "Inloggen…",
+      "newCode": "Niets ontvangen? Stuur een nieuwe code",
+      "usePassword": "Gebruik je wachtwoord",
+      "errors": {
+        "invalidEmail": "Voer een geldig e-mailadres in.",
+        "invalidCode": "Die code klopt niet. Controleer hem en probeer het opnieuw.",
+        "expired": "Deze code is verlopen. Vraag een nieuwe aan.",
+        "tooManyAttempts": "Te veel onjuiste codes. Vraag een nieuwe aan.",
+        "rateLimited": "Te veel pogingen. Wacht een minuut en probeer het opnieuw.",
+        "sendFailed": "De code kon niet worden verstuurd. Probeer het over een minuut opnieuw.",
+        "signInFailed": "Inloggen is mislukt. Probeer het opnieuw."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Tweestapsverificatie",
+      "title": "Tweestapsverificatie",
+      "descriptionTotp": "Voer de 6-cijferige code uit je authenticator-app in.",
+      "descriptionBackup": "Voer een van je back-upcodes in. Elke code werkt maar één keer.",
+      "codeLabel": "Code",
+      "backupCodeLabel": "Back-upcode",
+      "trustDevice": "Dit apparaat 30 dagen vertrouwen",
+      "trustDeviceHint": "Op dit apparaat wordt geen code gevraagd. Kies dit alleen op een apparaat dat van jou is.",
+      "submit": "Verifiëren",
+      "submitting": "Verifiëren…",
+      "useBackupCode": "Een back-upcode gebruiken",
+      "useAuthenticator": "Je authenticator-app gebruiken",
+      "backToLogin": "Terug naar inloggen",
+      "expiredTitle": "Opnieuw inloggen",
+      "expiredDescription": "Deze inlogpoging is verlopen of had te veel foute codes. Log opnieuw in met je wachtwoord.",
+      "errors": {
+        "invalidCode": "Deze code is ongeldig. Voer de huidige code uit je app in.",
+        "invalidBackupCode": "Deze back-upcode is ongeldig of al gebruikt.",
+        "locked": "Te veel foute codes. Probeer het over 15 minuten opnieuw.",
+        "rateLimited": "Te veel pogingen. Wacht een paar seconden en probeer het opnieuw.",
+        "failed": "De code kon niet worden geverifieerd. Probeer het opnieuw."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Niet-geverifieerde app",
+      "dynamic": "Deze app heeft zichzelf geregistreerd en is niet gecontroleerd. Sta hem alleen toe als je hem vertrouwt en je deze aanmelding zelf hebt gestart.",
+      "metadataDocument": "Deze app identificeert zich met een document op {host} en is niet gecontroleerd. Sta hem alleen toe als je hem vertrouwt en je deze aanmelding zelf hebt gestart.",
+      "redirect": "Als je toestaat, word je doorgestuurd naar <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API's",
-        "description": "Je API's (beschermde resources) die toegangstokens van {name} accepteren, en de scopes die clients ervoor kunnen aanvragen."
+        "description": "Je API's (beschermde resources) die toegangstokens van {name} accepteren: de scopes die clients kunnen aanvragen, welke applicaties ze mogen gebruiken en hun tokeninstellingen."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Tweestapsverificatie",
+      "hint": "Voer bij inloggen met je wachtwoord ook een code uit een authenticator-app in.",
+      "statusOn": "Aan",
+      "statusOff": "Uit",
+      "enable": "Inschakelen",
+      "disable": "Uitschakelen",
+      "regenerate": "Nieuwe back-upcodes",
+      "passwordLabel": "Wachtwoord",
+      "passwordHint": "Voer je wachtwoord in om door te gaan.",
+      "continue": "Doorgaan",
+      "cancel": "Annuleren",
+      "done": "Klaar",
+      "doneAdmin": "Naar de beheerconsole",
+      "setupTitle": "Tweestapsverificatie inschakelen",
+      "scanTitle": "Scan de QR-code",
+      "scanHint": "Scan hem met een authenticator-app zoals 1Password, Google Authenticator of Microsoft Authenticator en voer daarna de 6-cijferige code in die de app toont.",
+      "qrAlt": "QR-code om dit account aan een authenticator-app toe te voegen",
+      "manualKey": "Lukt scannen niet? Voer deze sleutel in je app in:",
+      "codeLabel": "6-cijferige code",
+      "verify": "Verifiëren en inschakelen",
+      "codesTitle": "Bewaar je back-upcodes",
+      "codesHint": "Als je je authenticator-app kwijtraakt, kun je met elke code één keer inloggen. Bewaar ze op een veilige plek: ze worden niet opnieuw getoond.",
+      "copy": "Kopiëren",
+      "copied": "Back-upcodes gekopieerd",
+      "download": "Downloaden",
+      "fileTitle": "Back-upcodes voor {name}. Elke code werkt maar één keer.",
+      "disableTitle": "Tweestapsverificatie uitschakelen?",
+      "disableBody": "Je logt dan alleen met je wachtwoord in. Je authenticator-app en back-upcodes werken niet meer.",
+      "regenerateTitle": "Nieuwe back-upcodes maken?",
+      "regenerateBody": "Je huidige back-upcodes werken dan niet meer. Voer je wachtwoord in om door te gaan.",
+      "enabled": "Tweestapsverificatie is ingeschakeld",
+      "disabled": "Tweestapsverificatie is uitgeschakeld",
+      "signInAgainToDisable": "Voor je veiligheid is hiervoor een recente aanmelding nodig. Log opnieuw in en probeer het dan nog eens.",
+      "signInAgain": "Opnieuw inloggen",
+      "adminRequiredTitle": "Schakel tweestapsverificatie in",
+      "adminRequiredBody": "Beheerders hebben tweestapsverificatie nodig om de beheerconsole te openen.",
+      "adminRequiredLink": "Nu instellen",
+      "errors": {
+        "invalidPassword": "Onjuist wachtwoord.",
+        "invalidCode": "Deze code is ongeldig. Controleer of de klok van je apparaat klopt en probeer het opnieuw.",
+        "rateLimited": "Te veel pogingen. Wacht een paar seconden en probeer het opnieuw.",
+        "generic": "Er is iets misgegaan. Probeer het opnieuw."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Overschakelen naar",
+      "add": "Ander account toevoegen",
+      "signOutOf": "Afmelden bij {email}",
+      "signOutAll": "Afmelden bij alle accounts",
+      "switchFailed": "Wisselen van account mislukt. Probeer het opnieuw."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Ga verder naar de app met dit account, of meld je aan met een ander.",
     "continueAs": "Doorgaan als {name}",
     "useAnother": "Een ander account gebruiken",
-    "error": "Er ging iets mis. Probeer het opnieuw."
+    "error": "Er ging iets mis. Probeer het opnieuw.",
+    "descriptionMany": "Kies het account waarmee je doorgaat naar de app."
+  },
+  "device": {
+    "title": "Apparaat koppelen",
+    "description": "Voer de code in die op je apparaat, tv of opdrachtregel wordt getoond.",
+    "codeLabel": "Code",
+    "continue": "Doorgaan",
+    "reviewTitle": "{name} wil je account gebruiken",
+    "reviewDescription": "Keur alleen goed als je deze aanmelding zelf hebt gestart en de code hieronder overeenkomt met die op je apparaat.",
+    "codeOnDevice": "Code op je apparaat",
+    "noScopes": "Basistoegang tot je account, zonder specifieke rechten.",
+    "signedInAs": "Aangemeld als {email}",
+    "switchAccount": "Ander account gebruiken",
+    "deny": "Weigeren",
+    "approve": "Goedkeuren",
+    "useAnotherCode": "Andere code invoeren",
+    "approvedTitle": "Apparaat gekoppeld",
+    "approvedDescription": "Je kunt teruggaan naar je apparaat. Het rondt de aanmelding zelf af.",
+    "deniedTitle": "Verzoek geweigerd",
+    "deniedDescription": "Het apparaat heeft geen toegang tot je account gekregen.",
+    "errors": {
+      "invalid": "Deze code is ongeldig. Controleer hem en probeer het opnieuw.",
+      "expired": "Deze code is verlopen. Begin opnieuw op je apparaat voor een nieuwe code.",
+      "processed": "Deze code is al gebruikt. Begin opnieuw op je apparaat als je je nog moet aanmelden.",
+      "otherAccount": "Deze code wordt door een ander account gebruikt.",
+      "tooManyAttempts": "Te veel pogingen. Wacht een paar minuten en probeer het opnieuw.",
+      "failed": "Er ging iets mis. Probeer het opnieuw."
+    }
+  },
+  "captcha": {
+    "label": "Beveiligingscontrole",
+    "required": "Voltooi eerst de beveiligingscontrole.",
+    "failed": "De beveiligingscontrole is mislukt. Probeer het opnieuw.",
+    "unavailable": "De beveiligingscontrole kon niet worden geladen. Controleer je verbinding of schakel contentblokkers uit en laad de pagina opnieuw."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Je inlogcode voor {brand}",
+      "preheader": "Gebruik deze code om in te loggen. Hij verloopt over {minutes} minuten.",
+      "heading": "Je inlogcode",
+      "body": "Voer deze code in op de inlogpagina van {brand} om het inloggen af te ronden.",
+      "note": "De code verloopt over {minutes} minuten en werkt maar één keer.",
+      "footnote": "Geen code aangevraagd? Negeer deze e-mail: zonder de code kan niemand inloggen. Deel hem nooit met iemand."
+    }
   }
 }

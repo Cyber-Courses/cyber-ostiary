@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Enviarme un código de acceso por correo",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "La última vez iniciaste sesión con un código enviado por correo.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Las cuentas que ya tienen sesión en este navegador la mantienen."
+    },
+    "emailCode": {
+      "title": "Iniciar sesión con un código",
+      "description": "Te enviaremos un código de 6 dígitos a la dirección de tu cuenta. Léelo en cualquier dispositivo y escríbelo aquí.",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "send": "Enviar código",
+      "sending": "Enviando…",
+      "sentTitle": "Revisa tu correo",
+      "sent": "Si una cuenta usa {email}, te hemos enviado un código de 6 dígitos. Caduca en {minutes} minutos.",
+      "codeLabel": "Código de acceso",
+      "verify": "Iniciar sesión",
+      "verifying": "Iniciando sesión…",
+      "newCode": "¿No te ha llegado? Enviar un código nuevo",
+      "usePassword": "Usar mi contraseña",
+      "errors": {
+        "invalidEmail": "Introduce una dirección de correo válida.",
+        "invalidCode": "Ese código no es correcto. Revísalo e inténtalo de nuevo.",
+        "expired": "Este código ha caducado. Pide uno nuevo.",
+        "tooManyAttempts": "Demasiados códigos incorrectos. Pide uno nuevo.",
+        "rateLimited": "Demasiados intentos. Espera un minuto e inténtalo de nuevo.",
+        "sendFailed": "No se pudo enviar el código. Inténtalo de nuevo en un minuto.",
+        "signInFailed": "No se pudo iniciar sesión. Inténtalo de nuevo."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Autenticación en dos pasos",
+      "title": "Autenticación en dos pasos",
+      "descriptionTotp": "Introduce el código de 6 dígitos de tu aplicación de autenticación.",
+      "descriptionBackup": "Introduce uno de tus códigos de respaldo. Cada código funciona una sola vez.",
+      "codeLabel": "Código",
+      "backupCodeLabel": "Código de respaldo",
+      "trustDevice": "Confiar en este dispositivo durante 30 días",
+      "trustDeviceHint": "No se pedirá ningún código en este dispositivo. Elígelo solo en un dispositivo que sea tuyo.",
+      "submit": "Verificar",
+      "submitting": "Verificando…",
+      "useBackupCode": "Usar un código de respaldo",
+      "useAuthenticator": "Usar tu aplicación de autenticación",
+      "backToLogin": "Volver a iniciar sesión",
+      "expiredTitle": "Inicia sesión de nuevo",
+      "expiredDescription": "Este inicio de sesión caducó o recibió demasiados códigos incorrectos. Vuelve a iniciar sesión con tu contraseña.",
+      "errors": {
+        "invalidCode": "El código no es válido. Introduce el código actual de tu aplicación.",
+        "invalidBackupCode": "El código de respaldo no es válido o ya se usó.",
+        "locked": "Demasiados códigos incorrectos. Vuelve a intentarlo en 15 minutos.",
+        "rateLimited": "Demasiados intentos. Espera unos segundos y vuelve a intentarlo.",
+        "failed": "No se pudo verificar el código. Inténtalo de nuevo."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Aplicación no verificada",
+      "dynamic": "Esta aplicación se registró por sí misma y no ha sido revisada. Autorízala solo si confías en ella y tú mismo iniciaste este inicio de sesión.",
+      "metadataDocument": "Esta aplicación se identifica con un documento publicado en {host} y no ha sido revisada. Autorízala solo si confías en ella y tú mismo iniciaste este inicio de sesión.",
+      "redirect": "Si la autorizas, se te enviará a <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "Tus API (recursos protegidos) que aceptan tokens de acceso de {name}, y los scopes que los clientes pueden solicitar para ellas."
+        "description": "Tus API (recursos protegidos) que aceptan tokens de acceso de {name}: los scopes que los clientes pueden solicitar, qué aplicaciones pueden usarlas y la configuración de sus tokens."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Autenticación en dos pasos",
+      "hint": "Cuando inicies sesión con tu contraseña, introduce también un código de una aplicación de autenticación.",
+      "statusOn": "Activada",
+      "statusOff": "Desactivada",
+      "enable": "Activar",
+      "disable": "Desactivar",
+      "regenerate": "Nuevos códigos de respaldo",
+      "passwordLabel": "Contraseña",
+      "passwordHint": "Introduce tu contraseña para continuar.",
+      "continue": "Continuar",
+      "cancel": "Cancelar",
+      "done": "Listo",
+      "doneAdmin": "Ir a la consola de administración",
+      "setupTitle": "Activar la autenticación en dos pasos",
+      "scanTitle": "Escanea el código QR",
+      "scanHint": "Escanéalo con una aplicación de autenticación como 1Password, Google Authenticator o Microsoft Authenticator y luego introduce el código de 6 dígitos que muestra.",
+      "qrAlt": "Código QR para añadir esta cuenta a una aplicación de autenticación",
+      "manualKey": "¿No puedes escanearlo? Introduce esta clave en tu aplicación:",
+      "codeLabel": "Código de 6 dígitos",
+      "verify": "Verificar y activar",
+      "codesTitle": "Guarda tus códigos de respaldo",
+      "codesHint": "Si pierdes tu aplicación de autenticación, cada código te permite iniciar sesión una vez. Guárdalos en un lugar seguro: no se volverán a mostrar.",
+      "copy": "Copiar",
+      "copied": "Códigos de respaldo copiados",
+      "download": "Descargar",
+      "fileTitle": "Códigos de respaldo de {name}. Cada código funciona una sola vez.",
+      "disableTitle": "¿Desactivar la autenticación en dos pasos?",
+      "disableBody": "Iniciarás sesión solo con tu contraseña. Tu aplicación de autenticación y tus códigos de respaldo dejarán de funcionar.",
+      "regenerateTitle": "¿Crear nuevos códigos de respaldo?",
+      "regenerateBody": "Tus códigos de respaldo actuales dejarán de funcionar. Introduce tu contraseña para continuar.",
+      "enabled": "La autenticación en dos pasos está activada",
+      "disabled": "La autenticación en dos pasos está desactivada",
+      "signInAgainToDisable": "Por seguridad, esto requiere un inicio de sesión reciente. Vuelve a iniciar sesión e inténtalo de nuevo.",
+      "signInAgain": "Volver a iniciar sesión",
+      "adminRequiredTitle": "Activa la autenticación en dos pasos",
+      "adminRequiredBody": "Los administradores necesitan la autenticación en dos pasos para abrir la consola de administración.",
+      "adminRequiredLink": "Configurarla",
+      "errors": {
+        "invalidPassword": "Contraseña incorrecta.",
+        "invalidCode": "El código no es válido. Comprueba que la hora de tu dispositivo sea correcta e inténtalo de nuevo.",
+        "rateLimited": "Demasiados intentos. Espera unos segundos y vuelve a intentarlo.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Cambiar a",
+      "add": "Añadir otra cuenta",
+      "signOutOf": "Cerrar sesión de {email}",
+      "signOutAll": "Cerrar sesión en todas las cuentas",
+      "switchFailed": "No se pudo cambiar de cuenta. Inténtalo de nuevo."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Continúa a la aplicación con esta cuenta o inicia sesión con otra.",
     "continueAs": "Continuar como {name}",
     "useAnother": "Usar otra cuenta",
-    "error": "Algo salió mal. Inténtalo de nuevo."
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "descriptionMany": "Elige la cuenta con la que continuar a la aplicación."
+  },
+  "device": {
+    "title": "Conectar un dispositivo",
+    "description": "Introduce el código que aparece en tu dispositivo, TV o línea de comandos.",
+    "codeLabel": "Código",
+    "continue": "Continuar",
+    "reviewTitle": "{name} quiere usar tu cuenta",
+    "reviewDescription": "Aprueba solo si iniciaste este acceso tú mismo y el código de abajo coincide con el de tu dispositivo.",
+    "codeOnDevice": "Código en tu dispositivo",
+    "noScopes": "Acceso básico a tu cuenta, sin permisos específicos.",
+    "signedInAs": "Sesión iniciada como {email}",
+    "switchAccount": "Usar otra cuenta",
+    "deny": "Denegar",
+    "approve": "Aprobar",
+    "useAnotherCode": "Introducir otro código",
+    "approvedTitle": "Dispositivo conectado",
+    "approvedDescription": "Puedes volver a tu dispositivo. Terminará de iniciar sesión por sí solo.",
+    "deniedTitle": "Solicitud denegada",
+    "deniedDescription": "El dispositivo no obtuvo acceso a tu cuenta.",
+    "errors": {
+      "invalid": "Este código no es válido. Revísalo e inténtalo de nuevo.",
+      "expired": "Este código ha caducado. Vuelve a empezar en tu dispositivo para obtener uno nuevo.",
+      "processed": "Este código ya se ha usado. Vuelve a empezar en tu dispositivo si aún necesitas iniciar sesión.",
+      "otherAccount": "Otra cuenta está usando este código.",
+      "tooManyAttempts": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "captcha": {
+    "label": "Verificación de seguridad",
+    "required": "Completa primero la verificación de seguridad.",
+    "failed": "La verificación de seguridad ha fallado. Inténtalo de nuevo.",
+    "unavailable": "No se pudo cargar la verificación de seguridad. Comprueba tu conexión o desactiva los bloqueadores de contenido y vuelve a cargar la página."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Tu código de acceso a {brand}",
+      "preheader": "Usa este código para iniciar sesión. Caduca en {minutes} minutos.",
+      "heading": "Tu código de acceso",
+      "body": "Introduce este código en la página de inicio de sesión de {brand} para terminar de iniciar sesión.",
+      "note": "El código caduca en {minutes} minutos y solo funciona una vez.",
+      "footnote": "¿No has pedido un código? Ignora este correo: nadie puede iniciar sesión sin él. No lo compartas nunca con nadie."
+    }
   }
 }

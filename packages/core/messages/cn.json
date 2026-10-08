@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "请查收邮件中的验证链接。必须先验证邮箱后才能登录。",
       "passkey": "使用通行密钥登录",
       "passkeySubmitting": "等待通行密钥…",
+      "emailCode": "通过邮件发送登录验证码",
       "lastUsedBadge": "上次使用",
       "lastUsedHintEmail": "您上次使用邮箱和密码登录。",
       "lastUsedHintUsername": "您上次使用用户名和密码登录。",
       "lastUsedHintPasskey": "您上次使用通行密钥登录。",
+      "lastUsedHintEmailCode": "你上次使用邮件验证码登录。",
       "lastUsedHintOther": "您上次使用 {method} 登录。",
       "errors": {
         "emailNotVerified": "请先验证邮箱。我们已重新发送验证链接，请查收邮件。",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "此浏览器上已登录的账户将保持登录。"
+    },
+    "emailCode": {
+      "title": "使用验证码登录",
+      "description": "我们会向你账户的邮箱发送 6 位验证码。你可以在任何设备上查看，然后在此处输入。",
+      "emailLabel": "邮箱",
+      "emailPlaceholder": "you@example.com",
+      "send": "发送验证码",
+      "sending": "正在发送…",
+      "sentTitle": "请查收邮件",
+      "sent": "如果有账户使用 {email}，6 位验证码已发出。验证码将在 {minutes} 分钟后失效。",
+      "codeLabel": "登录验证码",
+      "verify": "登录",
+      "verifying": "正在登录…",
+      "newCode": "没有收到？重新发送验证码",
+      "usePassword": "改用密码登录",
+      "errors": {
+        "invalidEmail": "请输入有效的邮箱地址。",
+        "invalidCode": "验证码不正确。请检查后重试。",
+        "expired": "验证码已过期。请重新获取。",
+        "tooManyAttempts": "错误次数过多。请重新获取验证码。",
+        "rateLimited": "尝试次数过多。请等待一分钟后重试。",
+        "sendFailed": "无法发送验证码。请一分钟后重试。",
+        "signInFailed": "无法登录。请重试。"
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "双重身份验证",
+      "title": "双重身份验证",
+      "descriptionTotp": "请输入身份验证器应用中的 6 位验证码。",
+      "descriptionBackup": "请输入一个备用码。每个备用码只能使用一次。",
+      "codeLabel": "验证码",
+      "backupCodeLabel": "备用码",
+      "trustDevice": "30 天内信任此设备",
+      "trustDeviceHint": "在此设备上将不再要求输入验证码。请仅在您自己的设备上选择此项。",
+      "submit": "验证",
+      "submitting": "正在验证…",
+      "useBackupCode": "使用备用码",
+      "useAuthenticator": "使用身份验证器应用",
+      "backToLogin": "返回登录",
+      "expiredTitle": "重新登录",
+      "expiredDescription": "此次登录已过期，或输入错误验证码的次数过多。请使用密码重新登录。",
+      "errors": {
+        "invalidCode": "验证码无效。请输入应用中当前显示的验证码。",
+        "invalidBackupCode": "备用码无效或已被使用。",
+        "locked": "错误验证码过多。请在 15 分钟后重试。",
+        "rateLimited": "尝试次数过多。请稍等几秒后重试。",
+        "failed": "无法验证此验证码。请重试。"
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "姓名与资料信息",
       "email": "电子邮箱地址",
       "offline_access": "在您未主动使用应用时仍可访问"
+    },
+    "unverified": {
+      "title": "未经验证的应用",
+      "dynamic": "此应用是自行注册的，未经审核。只有在您信任它并且是您本人发起此次登录时才允许。",
+      "metadataDocument": "此应用通过发布在 {host} 上的文档标识自己，未经审核。只有在您信任它并且是您本人发起此次登录时才允许。",
+      "redirect": "如果允许，您将被转到 <strong>{host}</strong>。"
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "接受 {name} 访问令牌的 API(受保护资源),以及客户端可以为其请求的 scope。"
+        "description": "接受 {name} 访问令牌的 API(受保护资源):客户端可以请求的 scope、可以使用它们的应用,以及它们的令牌设置。"
       },
       "users": {
         "title": "用户",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "移除后将无法再使用此通行密钥登录。您可以随时重新添加。",
       "signInAgainToAdd": "为了安全，添加通行密钥需要最近登录过。请重新登录后再添加。",
       "signInAgain": "重新登录"
+    },
+    "twoFactor": {
+      "title": "双重身份验证",
+      "hint": "使用密码登录时，还需输入身份验证器应用中的验证码。",
+      "statusOn": "已开启",
+      "statusOff": "已关闭",
+      "enable": "开启",
+      "disable": "关闭",
+      "regenerate": "生成新的备用码",
+      "passwordLabel": "密码",
+      "passwordHint": "请输入密码以继续。",
+      "continue": "继续",
+      "cancel": "取消",
+      "done": "完成",
+      "doneAdmin": "前往管理控制台",
+      "setupTitle": "开启双重身份验证",
+      "scanTitle": "扫描二维码",
+      "scanHint": "使用 1Password、Google Authenticator 或 Microsoft Authenticator 等身份验证器应用扫描，然后输入显示的 6 位验证码。",
+      "qrAlt": "用于将此账户添加到身份验证器应用的二维码",
+      "manualKey": "无法扫描？请在应用中输入此密钥：",
+      "codeLabel": "6 位验证码",
+      "verify": "验证并开启",
+      "codesTitle": "保存备用码",
+      "codesHint": "如果丢失身份验证器应用，每个备用码可用于登录一次。请妥善保存：它们不会再次显示。",
+      "copy": "复制",
+      "copied": "已复制备用码",
+      "download": "下载",
+      "fileTitle": "{name} 备用码。每个备用码只能使用一次。",
+      "disableTitle": "关闭双重身份验证？",
+      "disableBody": "之后只需密码即可登录。身份验证器应用和备用码将失效。",
+      "regenerateTitle": "生成新的备用码？",
+      "regenerateBody": "当前的备用码将失效。请输入密码以继续。",
+      "enabled": "双重身份验证已开启",
+      "disabled": "双重身份验证已关闭",
+      "signInAgainToDisable": "为了您的安全，此操作需要最近登录。请重新登录后再试。",
+      "signInAgain": "重新登录",
+      "adminRequiredTitle": "请开启双重身份验证",
+      "adminRequiredBody": "管理员需要开启双重身份验证才能打开管理控制台。",
+      "adminRequiredLink": "立即设置",
+      "errors": {
+        "invalidPassword": "密码错误。",
+        "invalidCode": "验证码无效。请检查设备时间是否正确，然后重试。",
+        "rateLimited": "尝试次数过多。请稍等几秒后重试。",
+        "generic": "出错了，请重试。"
+      }
     },
     "organizations": {
       "title": "组织",
@@ -415,6 +517,13 @@
       "error": "出现问题，请重试。",
       "signInAgainToChange": "为了安全，关联账户需要最近登录过。请重新登录后再关联。",
       "signInAgain": "重新登录"
+    },
+    "accounts": {
+      "switchTo": "切换到",
+      "add": "添加其他账户",
+      "signOutOf": "退出 {email}",
+      "signOutAll": "退出所有账户",
+      "switchFailed": "无法切换账户，请重试。"
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "使用此账户继续前往应用，或使用其他账户登录。",
     "continueAs": "以 {name} 身份继续",
     "useAnother": "使用其他账户",
-    "error": "出了点问题，请重试。"
+    "error": "出了点问题，请重试。",
+    "descriptionMany": "选择用于继续访问应用的账户。"
+  },
+  "device": {
+    "title": "连接设备",
+    "description": "输入设备、电视或命令行中显示的代码。",
+    "codeLabel": "代码",
+    "continue": "继续",
+    "reviewTitle": "{name} 想要使用你的账户",
+    "reviewDescription": "仅当这次登录是你本人发起、且下方代码与设备上显示的一致时才批准。",
+    "codeOnDevice": "设备上的代码",
+    "noScopes": "对你账户的基本访问，不含特定权限。",
+    "signedInAs": "已登录为 {email}",
+    "switchAccount": "使用其他账户",
+    "deny": "拒绝",
+    "approve": "批准",
+    "useAnotherCode": "输入其他代码",
+    "approvedTitle": "设备已连接",
+    "approvedDescription": "你可以回到设备上，它会自动完成登录。",
+    "deniedTitle": "请求已拒绝",
+    "deniedDescription": "该设备未获得你账户的访问权限。",
+    "errors": {
+      "invalid": "此代码无效。请检查后重试。",
+      "expired": "此代码已过期。请在设备上重新开始以获取新代码。",
+      "processed": "此代码已被使用。如仍需登录，请在设备上重新开始。",
+      "otherAccount": "此代码正被其他账户使用。",
+      "tooManyAttempts": "尝试次数过多。请等待几分钟后重试。",
+      "failed": "出现问题。请重试。"
+    }
+  },
+  "captcha": {
+    "label": "安全验证",
+    "required": "请先完成安全验证。",
+    "failed": "安全验证失败。请重试。",
+    "unavailable": "无法加载安全验证。请检查网络连接或关闭内容拦截器，然后刷新页面。"
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "你的 {brand} 登录验证码",
+      "preheader": "使用此验证码登录。验证码将在 {minutes} 分钟后失效。",
+      "heading": "你的登录验证码",
+      "body": "在 {brand} 登录页面输入此验证码即可完成登录。",
+      "note": "验证码将在 {minutes} 分钟后失效，且只能使用一次。",
+      "footnote": "没有请求验证码？请忽略此邮件：没有验证码，任何人都无法登录。切勿将验证码告诉任何人。"
+    }
   }
 }

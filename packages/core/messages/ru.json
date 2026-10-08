@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Прислать код для входа на почту",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "В прошлый раз вы вошли с кодом из письма.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Аккаунты, уже вошедшие в этом браузере, останутся в системе."
+    },
+    "emailCode": {
+      "title": "Вход по коду",
+      "description": "Мы отправим 6-значный код на адрес вашей учётной записи. Откройте письмо на любом устройстве и введите код здесь.",
+      "emailLabel": "Эл. почта",
+      "emailPlaceholder": "you@example.com",
+      "send": "Отправить код",
+      "sending": "Отправка…",
+      "sentTitle": "Проверьте почту",
+      "sent": "Если адрес {email} привязан к учётной записи, на него отправлен 6-значный код. Он действует {minutes} минут.",
+      "codeLabel": "Код для входа",
+      "verify": "Войти",
+      "verifying": "Вход…",
+      "newCode": "Не пришёл? Отправить новый код",
+      "usePassword": "Войти с паролем",
+      "errors": {
+        "invalidEmail": "Введите корректный адрес эл. почты.",
+        "invalidCode": "Неверный код. Проверьте его и попробуйте ещё раз.",
+        "expired": "Срок действия кода истёк. Запросите новый.",
+        "tooManyAttempts": "Слишком много неверных кодов. Запросите новый.",
+        "rateLimited": "Слишком много попыток. Подождите минуту и попробуйте снова.",
+        "sendFailed": "Не удалось отправить код. Попробуйте через минуту.",
+        "signInFailed": "Не удалось войти. Попробуйте ещё раз."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Двухфакторная аутентификация",
+      "title": "Двухфакторная аутентификация",
+      "descriptionTotp": "Введите 6-значный код из приложения-аутентификатора.",
+      "descriptionBackup": "Введите один из резервных кодов. Каждый код действует один раз.",
+      "codeLabel": "Код",
+      "backupCodeLabel": "Резервный код",
+      "trustDevice": "Доверять этому устройству 30 дней",
+      "trustDeviceHint": "На этом устройстве код запрашиваться не будет. Выбирайте это только на своём устройстве.",
+      "submit": "Подтвердить",
+      "submitting": "Проверка…",
+      "useBackupCode": "Использовать резервный код",
+      "useAuthenticator": "Использовать приложение-аутентификатор",
+      "backToLogin": "Вернуться ко входу",
+      "expiredTitle": "Войдите снова",
+      "expiredDescription": "Срок этого входа истёк или было введено слишком много неверных кодов. Войдите снова с паролем.",
+      "errors": {
+        "invalidCode": "Код неверный. Введите текущий код из приложения.",
+        "invalidBackupCode": "Резервный код неверный или уже использован.",
+        "locked": "Слишком много неверных кодов. Повторите попытку через 15 минут.",
+        "rateLimited": "Слишком много попыток. Подождите несколько секунд и повторите.",
+        "failed": "Не удалось проверить код. Повторите попытку."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Непроверенное приложение",
+      "dynamic": "Это приложение зарегистрировалось само и не было проверено. Разрешайте доступ, только если доверяете ему и сами начали этот вход.",
+      "metadataDocument": "Это приложение представляется документом, опубликованным на {host}, и не было проверено. Разрешайте доступ, только если доверяете ему и сами начали этот вход.",
+      "redirect": "Если вы разрешите, вас перенаправят на <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "Ваши API (защищённые ресурсы), которые принимают токены доступа {name}, и scope, которые клиенты могут для них запрашивать."
+        "description": "Ваши API (защищённые ресурсы), которые принимают токены доступа {name}: scope, которые могут запрашивать клиенты, приложения, которым разрешён доступ, и настройки их токенов."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Двухфакторная аутентификация",
+      "hint": "При входе с паролем также вводите код из приложения-аутентификатора.",
+      "statusOn": "Включена",
+      "statusOff": "Выключена",
+      "enable": "Включить",
+      "disable": "Выключить",
+      "regenerate": "Новые резервные коды",
+      "passwordLabel": "Пароль",
+      "passwordHint": "Введите пароль, чтобы продолжить.",
+      "continue": "Продолжить",
+      "cancel": "Отмена",
+      "done": "Готово",
+      "doneAdmin": "Перейти в консоль администратора",
+      "setupTitle": "Включить двухфакторную аутентификацию",
+      "scanTitle": "Отсканируйте QR-код",
+      "scanHint": "Отсканируйте его приложением-аутентификатором, например 1Password, Google Authenticator или Microsoft Authenticator, затем введите показанный 6-значный код.",
+      "qrAlt": "QR-код для добавления этого аккаунта в приложение-аутентификатор",
+      "manualKey": "Не получается отсканировать? Введите этот ключ в приложении:",
+      "codeLabel": "6-значный код",
+      "verify": "Подтвердить и включить",
+      "codesTitle": "Сохраните резервные коды",
+      "codesHint": "Если вы потеряете приложение-аутентификатор, каждый код позволит войти один раз. Храните их в надёжном месте: больше они показаны не будут.",
+      "copy": "Копировать",
+      "copied": "Резервные коды скопированы",
+      "download": "Скачать",
+      "fileTitle": "Резервные коды {name}. Каждый код действует один раз.",
+      "disableTitle": "Выключить двухфакторную аутентификацию?",
+      "disableBody": "Вы будете входить только с паролем. Приложение-аутентификатор и резервные коды перестанут работать.",
+      "regenerateTitle": "Создать новые резервные коды?",
+      "regenerateBody": "Текущие резервные коды перестанут работать. Введите пароль, чтобы продолжить.",
+      "enabled": "Двухфакторная аутентификация включена",
+      "disabled": "Двухфакторная аутентификация выключена",
+      "signInAgainToDisable": "В целях безопасности для этого нужен недавний вход. Войдите снова и повторите попытку.",
+      "signInAgain": "Войти снова",
+      "adminRequiredTitle": "Включите двухфакторную аутентификацию",
+      "adminRequiredBody": "Администраторам нужна двухфакторная аутентификация, чтобы открыть консоль администратора.",
+      "adminRequiredLink": "Настроить",
+      "errors": {
+        "invalidPassword": "Неверный пароль.",
+        "invalidCode": "Код неверный. Проверьте, что время на устройстве установлено правильно, и повторите попытку.",
+        "rateLimited": "Слишком много попыток. Подождите несколько секунд и повторите.",
+        "generic": "Что-то пошло не так. Повторите попытку."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Переключиться на",
+      "add": "Добавить другой аккаунт",
+      "signOutOf": "Выйти из {email}",
+      "signOutAll": "Выйти из всех аккаунтов",
+      "switchFailed": "Не удалось сменить аккаунт. Попробуйте ещё раз."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Продолжите в приложении с этим аккаунтом или войдите с другим.",
     "continueAs": "Продолжить как {name}",
     "useAnother": "Использовать другой аккаунт",
-    "error": "Что-то пошло не так. Попробуйте ещё раз."
+    "error": "Что-то пошло не так. Попробуйте ещё раз.",
+    "descriptionMany": "Выберите аккаунт, с которым продолжить в приложении."
+  },
+  "device": {
+    "title": "Подключить устройство",
+    "description": "Введите код, показанный на устройстве, телевизоре или в командной строке.",
+    "codeLabel": "Код",
+    "continue": "Продолжить",
+    "reviewTitle": "{name} хочет использовать ваш аккаунт",
+    "reviewDescription": "Подтверждайте, только если вы сами начали этот вход и код ниже совпадает с кодом на устройстве.",
+    "codeOnDevice": "Код на устройстве",
+    "noScopes": "Базовый доступ к аккаунту без особых разрешений.",
+    "signedInAs": "Вы вошли как {email}",
+    "switchAccount": "Другой аккаунт",
+    "deny": "Отклонить",
+    "approve": "Подтвердить",
+    "useAnotherCode": "Ввести другой код",
+    "approvedTitle": "Устройство подключено",
+    "approvedDescription": "Можно вернуться к устройству. Оно завершит вход само.",
+    "deniedTitle": "Запрос отклонён",
+    "deniedDescription": "Устройство не получило доступ к вашему аккаунту.",
+    "errors": {
+      "invalid": "Этот код недействителен. Проверьте его и попробуйте снова.",
+      "expired": "Срок действия кода истёк. Начните заново на устройстве, чтобы получить новый.",
+      "processed": "Этот код уже использован. Начните заново на устройстве, если вам всё ещё нужно войти.",
+      "otherAccount": "Этот код использует другой аккаунт.",
+      "tooManyAttempts": "Слишком много попыток. Подождите несколько минут и попробуйте снова.",
+      "failed": "Что-то пошло не так. Попробуйте снова."
+    }
+  },
+  "captcha": {
+    "label": "Проверка безопасности",
+    "required": "Сначала пройдите проверку безопасности.",
+    "failed": "Проверка безопасности не пройдена. Попробуйте ещё раз.",
+    "unavailable": "Не удалось загрузить проверку безопасности. Проверьте подключение или отключите блокировщики контента и перезагрузите страницу."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Ваш код для входа в {brand}",
+      "preheader": "Используйте этот код для входа. Он действует {minutes} минут.",
+      "heading": "Ваш код для входа",
+      "body": "Введите этот код на странице входа {brand}, чтобы завершить вход.",
+      "note": "Код действует {minutes} минут и срабатывает только один раз.",
+      "footnote": "Не запрашивали код? Просто проигнорируйте это письмо: без кода войти никто не сможет. Никому его не сообщайте."
+    }
   }
 }

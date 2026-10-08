@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "أرسل لي رمز تسجيل الدخول بالبريد الإلكتروني",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "سجّلت الدخول آخر مرة باستخدام رمز أُرسل بالبريد الإلكتروني.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "تبقى الحسابات المسجّل دخولها في هذا المتصفح مسجّلة."
+    },
+    "emailCode": {
+      "title": "تسجيل الدخول باستخدام رمز",
+      "description": "سنرسل رمزًا من 6 أرقام إلى عنوان البريد الإلكتروني لحسابك. اقرأه على أي جهاز، ثم اكتبه هنا.",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "you@example.com",
+      "send": "إرسال الرمز",
+      "sending": "جارٍ الإرسال…",
+      "sentTitle": "تحقّق من بريدك الإلكتروني",
+      "sent": "إذا كان هناك حساب يستخدم {email}، فقد أُرسل إليه رمز من 6 أرقام. تنتهي صلاحيته بعد {minutes} دقائق.",
+      "codeLabel": "رمز تسجيل الدخول",
+      "verify": "تسجيل الدخول",
+      "verifying": "جارٍ تسجيل الدخول…",
+      "newCode": "لم يصلك؟ أرسل رمزًا جديدًا",
+      "usePassword": "استخدم كلمة المرور بدلًا من ذلك",
+      "errors": {
+        "invalidEmail": "أدخل عنوان بريد إلكتروني صالحًا.",
+        "invalidCode": "هذا الرمز غير صحيح. تحقّق منه وحاول مرة أخرى.",
+        "expired": "انتهت صلاحية هذا الرمز. اطلب رمزًا جديدًا.",
+        "tooManyAttempts": "عدد كبير جدًا من الرموز الخاطئة. اطلب رمزًا جديدًا.",
+        "rateLimited": "محاولات كثيرة جدًا. انتظر دقيقة وحاول مرة أخرى.",
+        "sendFailed": "تعذّر إرسال الرمز. حاول مرة أخرى بعد دقيقة.",
+        "signInFailed": "تعذّر تسجيل الدخول. حاول مرة أخرى."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "المصادقة الثنائية",
+      "title": "المصادقة الثنائية",
+      "descriptionTotp": "أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.",
+      "descriptionBackup": "أدخل أحد رموزك الاحتياطية. كل رمز يعمل مرة واحدة فقط.",
+      "codeLabel": "الرمز",
+      "backupCodeLabel": "رمز احتياطي",
+      "trustDevice": "الوثوق بهذا الجهاز لمدة 30 يومًا",
+      "trustDeviceHint": "لن يُطلب أي رمز على هذا الجهاز. اختر ذلك فقط على جهاز تملكه.",
+      "submit": "تحقق",
+      "submitting": "جارٍ التحقق…",
+      "useBackupCode": "استخدام رمز احتياطي",
+      "useAuthenticator": "استخدام تطبيق المصادقة",
+      "backToLogin": "العودة إلى تسجيل الدخول",
+      "expiredTitle": "سجّل الدخول مرة أخرى",
+      "expiredDescription": "انتهت صلاحية عملية تسجيل الدخول هذه أو أُدخلت رموز خاطئة كثيرة. سجّل الدخول بكلمة المرور مرة أخرى.",
+      "errors": {
+        "invalidCode": "هذا الرمز غير صالح. أدخل الرمز الحالي من التطبيق.",
+        "invalidBackupCode": "هذا الرمز الاحتياطي غير صالح أو سبق استخدامه.",
+        "locked": "رموز خاطئة كثيرة. حاول مرة أخرى بعد 15 دقيقة.",
+        "rateLimited": "محاولات كثيرة. انتظر بضع ثوانٍ ثم حاول مرة أخرى.",
+        "failed": "تعذّر التحقق من الرمز. حاول مرة أخرى."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "تطبيق غير موثّق",
+      "dynamic": "سجّل هذا التطبيق نفسه ولم تتم مراجعته. لا تسمح له إلا إذا كنت تثق به وبدأت تسجيل الدخول هذا بنفسك.",
+      "metadataDocument": "يعرّف هذا التطبيق نفسه بمستند منشور على {host} ولم تتم مراجعته. لا تسمح له إلا إذا كنت تثق به وبدأت تسجيل الدخول هذا بنفسك.",
+      "redirect": "إذا سمحت، فسيتم توجيهك إلى <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "واجهات API",
-        "description": "واجهات API الخاصة بك (الموارد المحمية) التي تقبل رموز الوصول من {name}، والنطاقات (scopes) التي يمكن للعملاء طلبها لها."
+        "description": "واجهات API الخاصة بك (الموارد المحمية) التي تقبل رموز الوصول من {name}: النطاقات (scopes) التي يمكن للعملاء طلبها، والتطبيقات التي يمكنها استخدامها، وإعدادات رموزها."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "المصادقة الثنائية",
+      "hint": "عند تسجيل الدخول بكلمة المرور، أدخل أيضًا رمزًا من تطبيق المصادقة.",
+      "statusOn": "مفعّلة",
+      "statusOff": "معطّلة",
+      "enable": "تفعيل",
+      "disable": "تعطيل",
+      "regenerate": "رموز احتياطية جديدة",
+      "passwordLabel": "كلمة المرور",
+      "passwordHint": "أدخل كلمة المرور للمتابعة.",
+      "continue": "متابعة",
+      "cancel": "إلغاء",
+      "done": "تم",
+      "doneAdmin": "الانتقال إلى لوحة الإدارة",
+      "setupTitle": "تفعيل المصادقة الثنائية",
+      "scanTitle": "امسح رمز QR",
+      "scanHint": "امسحه بتطبيق مصادقة مثل 1Password أو Google Authenticator أو Microsoft Authenticator، ثم أدخل الرمز المكوّن من 6 أرقام الذي يظهر.",
+      "qrAlt": "رمز QR لإضافة هذا الحساب إلى تطبيق المصادقة",
+      "manualKey": "لا يمكنك مسحه؟ أدخل هذا المفتاح في التطبيق:",
+      "codeLabel": "رمز من 6 أرقام",
+      "verify": "تحقق وفعّل",
+      "codesTitle": "احفظ رموزك الاحتياطية",
+      "codesHint": "إذا فقدت تطبيق المصادقة، يتيح لك كل رمز تسجيل الدخول مرة واحدة. احفظها في مكان آمن: لن تُعرض مرة أخرى.",
+      "copy": "نسخ",
+      "copied": "تم نسخ الرموز الاحتياطية",
+      "download": "تنزيل",
+      "fileTitle": "رموز {name} الاحتياطية. كل رمز يعمل مرة واحدة فقط.",
+      "disableTitle": "تعطيل المصادقة الثنائية؟",
+      "disableBody": "ستسجّل الدخول بكلمة المرور وحدها. سيتوقف تطبيق المصادقة والرموز الاحتياطية عن العمل.",
+      "regenerateTitle": "إنشاء رموز احتياطية جديدة؟",
+      "regenerateBody": "ستتوقف رموزك الاحتياطية الحالية عن العمل. أدخل كلمة المرور للمتابعة.",
+      "enabled": "تم تفعيل المصادقة الثنائية",
+      "disabled": "تم تعطيل المصادقة الثنائية",
+      "signInAgainToDisable": "لأمانك، يتطلب هذا تسجيل دخول حديثًا. سجّل الدخول مرة أخرى ثم حاول مجددًا.",
+      "signInAgain": "تسجيل الدخول مرة أخرى",
+      "adminRequiredTitle": "فعّل المصادقة الثنائية",
+      "adminRequiredBody": "يحتاج المسؤولون إلى المصادقة الثنائية لفتح لوحة الإدارة.",
+      "adminRequiredLink": "إعدادها الآن",
+      "errors": {
+        "invalidPassword": "كلمة المرور غير صحيحة.",
+        "invalidCode": "هذا الرمز غير صالح. تأكد من صحة ساعة جهازك ثم حاول مرة أخرى.",
+        "rateLimited": "محاولات كثيرة. انتظر بضع ثوانٍ ثم حاول مرة أخرى.",
+        "generic": "حدث خطأ ما. حاول مرة أخرى."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "التبديل إلى",
+      "add": "إضافة حساب آخر",
+      "signOutOf": "تسجيل الخروج من {email}",
+      "signOutAll": "تسجيل الخروج من كل الحسابات",
+      "switchFailed": "تعذّر تبديل الحساب. حاول مرة أخرى."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "تابع إلى التطبيق بهذا الحساب، أو سجّل الدخول بحساب آخر.",
     "continueAs": "المتابعة باسم {name}",
     "useAnother": "استخدام حساب آخر",
-    "error": "حدث خطأ ما. حاول مرة أخرى."
+    "error": "حدث خطأ ما. حاول مرة أخرى.",
+    "descriptionMany": "اختر الحساب الذي تتابع به إلى التطبيق."
+  },
+  "device": {
+    "title": "ربط جهاز",
+    "description": "أدخل الرمز المعروض على جهازك أو التلفاز أو سطر الأوامر.",
+    "codeLabel": "الرمز",
+    "continue": "متابعة",
+    "reviewTitle": "يريد {name} استخدام حسابك",
+    "reviewDescription": "وافق فقط إذا بدأت تسجيل الدخول هذا بنفسك وكان الرمز أدناه مطابقًا للرمز على جهازك.",
+    "codeOnDevice": "الرمز على جهازك",
+    "noScopes": "وصول أساسي إلى حسابك، دون أذونات محددة.",
+    "signedInAs": "تم تسجيل الدخول باسم {email}",
+    "switchAccount": "استخدام حساب آخر",
+    "deny": "رفض",
+    "approve": "موافقة",
+    "useAnotherCode": "إدخال رمز آخر",
+    "approvedTitle": "تم ربط الجهاز",
+    "approvedDescription": "يمكنك العودة إلى جهازك، وسيكمل تسجيل الدخول تلقائيًا.",
+    "deniedTitle": "تم رفض الطلب",
+    "deniedDescription": "لم يحصل الجهاز على وصول إلى حسابك.",
+    "errors": {
+      "invalid": "هذا الرمز غير صالح. تحقق منه وحاول مرة أخرى.",
+      "expired": "انتهت صلاحية هذا الرمز. ابدأ من جديد على جهازك للحصول على رمز جديد.",
+      "processed": "تم استخدام هذا الرمز بالفعل. ابدأ من جديد على جهازك إذا كنت لا تزال بحاجة إلى تسجيل الدخول.",
+      "otherAccount": "هذا الرمز مستخدم من حساب آخر.",
+      "tooManyAttempts": "محاولات كثيرة جدًا. انتظر بضع دقائق وحاول مرة أخرى.",
+      "failed": "حدث خطأ ما. حاول مرة أخرى."
+    }
+  },
+  "captcha": {
+    "label": "التحقق الأمني",
+    "required": "أكمل التحقق الأمني أولًا.",
+    "failed": "فشل التحقق الأمني. حاول مرة أخرى.",
+    "unavailable": "تعذّر تحميل التحقق الأمني. تحقّق من اتصالك أو أوقف أدوات حظر المحتوى، ثم أعد تحميل الصفحة."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "رمز تسجيل الدخول إلى {brand}",
+      "preheader": "استخدم هذا الرمز لتسجيل الدخول. تنتهي صلاحيته بعد {minutes} دقائق.",
+      "heading": "رمز تسجيل الدخول الخاص بك",
+      "body": "أدخل هذا الرمز في صفحة تسجيل الدخول إلى {brand} لإكمال تسجيل الدخول.",
+      "note": "تنتهي صلاحية الرمز بعد {minutes} دقائق ولا يعمل إلا مرة واحدة.",
+      "footnote": "لم تطلب رمزًا؟ تجاهل هذه الرسالة: لا يمكن لأحد تسجيل الدخول بدونه. لا تشاركه مع أي شخص أبدًا."
+    }
   }
 }

@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Mejla mig en inloggningskod",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "Du loggade senast in med en kod som skickades via e-post.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Konton som redan är inloggade i den här webbläsaren förblir inloggade."
+    },
+    "emailCode": {
+      "title": "Logga in med en kod",
+      "description": "Vi mejlar en 6-siffrig kod till e-postadressen för ditt konto. Läs den på valfri enhet och skriv in den här.",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "du@exempel.se",
+      "send": "Skicka kod",
+      "sending": "Skickar…",
+      "sentTitle": "Kolla din e-post",
+      "sent": "Om ett konto använder {email} är en 6-siffrig kod på väg. Den går ut om {minutes} minuter.",
+      "codeLabel": "Inloggningskod",
+      "verify": "Logga in",
+      "verifying": "Loggar in…",
+      "newCode": "Fick du ingen? Skicka en ny kod",
+      "usePassword": "Använd ditt lösenord i stället",
+      "errors": {
+        "invalidEmail": "Ange en giltig e-postadress.",
+        "invalidCode": "Koden stämmer inte. Kontrollera den och försök igen.",
+        "expired": "Koden har gått ut. Begär en ny.",
+        "tooManyAttempts": "För många felaktiga koder. Begär en ny.",
+        "rateLimited": "För många försök. Vänta en minut och försök igen.",
+        "sendFailed": "Det gick inte att skicka koden. Försök igen om en minut.",
+        "signInFailed": "Det gick inte att logga in. Försök igen."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Tvåfaktorsautentisering",
+      "title": "Tvåfaktorsautentisering",
+      "descriptionTotp": "Ange den 6-siffriga koden från din autentiseringsapp.",
+      "descriptionBackup": "Ange en av dina reservkoder. Varje kod fungerar en gång.",
+      "codeLabel": "Kod",
+      "backupCodeLabel": "Reservkod",
+      "trustDevice": "Lita på den här enheten i 30 dagar",
+      "trustDeviceHint": "Ingen kod efterfrågas på den här enheten. Välj detta bara på en enhet som du äger.",
+      "submit": "Verifiera",
+      "submitting": "Verifierar…",
+      "useBackupCode": "Använd en reservkod",
+      "useAuthenticator": "Använd din autentiseringsapp",
+      "backToLogin": "Tillbaka till inloggningen",
+      "expiredTitle": "Logga in igen",
+      "expiredDescription": "Den här inloggningen har gått ut eller fick för många felaktiga koder. Logga in med ditt lösenord igen.",
+      "errors": {
+        "invalidCode": "Koden är ogiltig. Ange den aktuella koden från din app.",
+        "invalidBackupCode": "Reservkoden är ogiltig eller har redan använts.",
+        "locked": "För många felaktiga koder. Försök igen om 15 minuter.",
+        "rateLimited": "För många försök. Vänta några sekunder och försök igen.",
+        "failed": "Det gick inte att verifiera koden. Försök igen."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "Overifierad app",
+      "dynamic": "Den här appen registrerade sig själv och har inte granskats. Tillåt den bara om du litar på den och själv startade den här inloggningen.",
+      "metadataDocument": "Den här appen identifierar sig med ett dokument på {host} och har inte granskats. Tillåt den bara om du litar på den och själv startade den här inloggningen.",
+      "redirect": "Om du tillåter skickas du till <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API:er",
-        "description": "Dina API:er (skyddade resurser) som tar emot åtkomsttoken från {name}, och de scopes som klienter kan begära för dem."
+        "description": "Dina API:er (skyddade resurser) som tar emot åtkomsttoken från {name}: de scopes som klienter kan begära, vilka applikationer som får använda dem och deras tokeninställningar."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Tvåfaktorsautentisering",
+      "hint": "När du loggar in med ditt lösenord anger du också en kod från en autentiseringsapp.",
+      "statusOn": "På",
+      "statusOff": "Av",
+      "enable": "Slå på",
+      "disable": "Stäng av",
+      "regenerate": "Nya reservkoder",
+      "passwordLabel": "Lösenord",
+      "passwordHint": "Ange ditt lösenord för att fortsätta.",
+      "continue": "Fortsätt",
+      "cancel": "Avbryt",
+      "done": "Klar",
+      "doneAdmin": "Gå till administrationskonsolen",
+      "setupTitle": "Slå på tvåfaktorsautentisering",
+      "scanTitle": "Skanna QR-koden",
+      "scanHint": "Skanna den med en autentiseringsapp som 1Password, Google Authenticator eller Microsoft Authenticator och ange sedan den 6-siffriga koden som visas.",
+      "qrAlt": "QR-kod för att lägga till kontot i en autentiseringsapp",
+      "manualKey": "Går det inte att skanna? Ange den här nyckeln i appen:",
+      "codeLabel": "6-siffrig kod",
+      "verify": "Verifiera och slå på",
+      "codesTitle": "Spara dina reservkoder",
+      "codesHint": "Om du förlorar din autentiseringsapp kan du logga in en gång med varje kod. Förvara dem säkert: de visas inte igen.",
+      "copy": "Kopiera",
+      "copied": "Reservkoderna har kopierats",
+      "download": "Ladda ned",
+      "fileTitle": "Reservkoder för {name}. Varje kod fungerar en gång.",
+      "disableTitle": "Stänga av tvåfaktorsautentisering?",
+      "disableBody": "Du loggar in med bara ditt lösenord. Din autentiseringsapp och dina reservkoder slutar fungera.",
+      "regenerateTitle": "Skapa nya reservkoder?",
+      "regenerateBody": "Dina nuvarande reservkoder slutar fungera. Ange ditt lösenord för att fortsätta.",
+      "enabled": "Tvåfaktorsautentisering är på",
+      "disabled": "Tvåfaktorsautentisering är av",
+      "signInAgainToDisable": "Av säkerhetsskäl krävs en nylig inloggning. Logga in igen och försök sedan på nytt.",
+      "signInAgain": "Logga in igen",
+      "adminRequiredTitle": "Slå på tvåfaktorsautentisering",
+      "adminRequiredBody": "Administratörer behöver tvåfaktorsautentisering för att öppna administrationskonsolen.",
+      "adminRequiredLink": "Konfigurera nu",
+      "errors": {
+        "invalidPassword": "Fel lösenord.",
+        "invalidCode": "Koden är ogiltig. Kontrollera att enhetens klocka går rätt och försök igen.",
+        "rateLimited": "För många försök. Vänta några sekunder och försök igen.",
+        "generic": "Något gick fel. Försök igen."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Byt till",
+      "add": "Lägg till ett annat konto",
+      "signOutOf": "Logga ut från {email}",
+      "signOutAll": "Logga ut från alla konton",
+      "switchFailed": "Det gick inte att byta konto. Försök igen."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Fortsätt till appen med det här kontot eller logga in med ett annat.",
     "continueAs": "Fortsätt som {name}",
     "useAnother": "Använd ett annat konto",
-    "error": "Något gick fel. Försök igen."
+    "error": "Något gick fel. Försök igen.",
+    "descriptionMany": "Välj kontot du vill fortsätta till appen med."
+  },
+  "device": {
+    "title": "Anslut en enhet",
+    "description": "Ange koden som visas på din enhet, tv eller kommandorad.",
+    "codeLabel": "Kod",
+    "continue": "Fortsätt",
+    "reviewTitle": "{name} vill använda ditt konto",
+    "reviewDescription": "Godkänn bara om du själv startade den här inloggningen och koden nedan stämmer med den på din enhet.",
+    "codeOnDevice": "Kod på din enhet",
+    "noScopes": "Grundläggande åtkomst till ditt konto, inga särskilda behörigheter.",
+    "signedInAs": "Inloggad som {email}",
+    "switchAccount": "Använd ett annat konto",
+    "deny": "Neka",
+    "approve": "Godkänn",
+    "useAnotherCode": "Ange en annan kod",
+    "approvedTitle": "Enheten är ansluten",
+    "approvedDescription": "Du kan gå tillbaka till din enhet. Den slutför inloggningen själv.",
+    "deniedTitle": "Begäran nekad",
+    "deniedDescription": "Enheten fick inte åtkomst till ditt konto.",
+    "errors": {
+      "invalid": "Koden är ogiltig. Kontrollera den och försök igen.",
+      "expired": "Koden har gått ut. Börja om på din enhet för att få en ny.",
+      "processed": "Koden har redan använts. Börja om på din enhet om du fortfarande behöver logga in.",
+      "otherAccount": "Koden används av ett annat konto.",
+      "tooManyAttempts": "För många försök. Vänta några minuter och försök igen.",
+      "failed": "Något gick fel. Försök igen."
+    }
+  },
+  "captcha": {
+    "label": "Säkerhetskontroll",
+    "required": "Slutför säkerhetskontrollen först.",
+    "failed": "Säkerhetskontrollen misslyckades. Försök igen.",
+    "unavailable": "Säkerhetskontrollen kunde inte laddas. Kontrollera anslutningen eller stäng av innehållsblockerare och ladda sedan om sidan."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Din inloggningskod för {brand}",
+      "preheader": "Använd den här koden för att logga in. Den går ut om {minutes} minuter.",
+      "heading": "Din inloggningskod",
+      "body": "Ange den här koden på inloggningssidan för {brand} för att slutföra inloggningen.",
+      "note": "Koden går ut om {minutes} minuter och fungerar bara en gång.",
+      "footnote": "Har du inte begärt någon kod? Ignorera det här mejlet: ingen kan logga in utan koden. Dela den aldrig med någon."
+    }
   }
 }

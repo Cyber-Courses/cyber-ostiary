@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "サインインコードをメールで受け取る",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "前回はメールで届いたコードでサインインしました。",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "このブラウザでサインイン済みのアカウントはそのまま維持されます。"
+    },
+    "emailCode": {
+      "title": "コードでサインイン",
+      "description": "アカウントのメールアドレスに 6 桁のコードを送信します。どのデバイスで確認してもかまいません。届いたコードをここに入力してください。",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "you@example.com",
+      "send": "コードを送信",
+      "sending": "送信中…",
+      "sentTitle": "メールを確認してください",
+      "sent": "{email} を使用するアカウントがあれば、6 桁のコードを送信しました。有効期限は {minutes} 分です。",
+      "codeLabel": "サインインコード",
+      "verify": "サインイン",
+      "verifying": "サインイン中…",
+      "newCode": "届きませんか？新しいコードを送信",
+      "usePassword": "パスワードでサインイン",
+      "errors": {
+        "invalidEmail": "有効なメールアドレスを入力してください。",
+        "invalidCode": "コードが正しくありません。確認してもう一度お試しください。",
+        "expired": "このコードは有効期限が切れています。新しいコードをリクエストしてください。",
+        "tooManyAttempts": "誤ったコードの入力が多すぎます。新しいコードをリクエストしてください。",
+        "rateLimited": "試行回数が多すぎます。1 分待ってからもう一度お試しください。",
+        "sendFailed": "コードを送信できませんでした。1 分後にもう一度お試しください。",
+        "signInFailed": "サインインできませんでした。もう一度お試しください。"
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "2段階認証",
+      "title": "2段階認証",
+      "descriptionTotp": "認証アプリに表示されている6桁のコードを入力してください。",
+      "descriptionBackup": "バックアップコードを1つ入力してください。各コードは1回だけ使えます。",
+      "codeLabel": "コード",
+      "backupCodeLabel": "バックアップコード",
+      "trustDevice": "このデバイスを30日間信頼する",
+      "trustDeviceHint": "このデバイスではコードを求められなくなります。自分のデバイスでのみ選択してください。",
+      "submit": "確認",
+      "submitting": "確認中…",
+      "useBackupCode": "バックアップコードを使う",
+      "useAuthenticator": "認証アプリを使う",
+      "backToLogin": "サインインに戻る",
+      "expiredTitle": "もう一度サインイン",
+      "expiredDescription": "このサインインは期限切れか、誤ったコードが多すぎました。パスワードでもう一度サインインしてください。",
+      "errors": {
+        "invalidCode": "コードが正しくありません。アプリに表示されている現在のコードを入力してください。",
+        "invalidBackupCode": "バックアップコードが正しくないか、すでに使用されています。",
+        "locked": "誤ったコードが多すぎます。15分後にもう一度お試しください。",
+        "rateLimited": "試行回数が多すぎます。数秒待ってからもう一度お試しください。",
+        "failed": "コードを確認できませんでした。もう一度お試しください。"
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "未確認のアプリ",
+      "dynamic": "このアプリは自身で登録されており、審査されていません。信頼でき、このサインインをご自身で開始した場合にのみ許可してください。",
+      "metadataDocument": "このアプリは {host} で公開されたドキュメントで自身を識別しており、審査されていません。信頼でき、このサインインをご自身で開始した場合にのみ許可してください。",
+      "redirect": "許可すると <strong>{host}</strong> に移動します。"
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "{name} のアクセストークンを受け付ける API(保護されたリソース)と、クライアントがそれらに要求できるスコープ。"
+        "description": "{name} のアクセストークンを受け付ける API(保護されたリソース):クライアントが要求できるスコープ、利用できるアプリケーション、トークンの設定。"
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "2段階認証",
+      "hint": "パスワードでサインインするときに、認証アプリのコードも入力します。",
+      "statusOn": "オン",
+      "statusOff": "オフ",
+      "enable": "オンにする",
+      "disable": "オフにする",
+      "regenerate": "新しいバックアップコード",
+      "passwordLabel": "パスワード",
+      "passwordHint": "続行するにはパスワードを入力してください。",
+      "continue": "続行",
+      "cancel": "キャンセル",
+      "done": "完了",
+      "doneAdmin": "管理コンソールへ移動",
+      "setupTitle": "2段階認証をオンにする",
+      "scanTitle": "QRコードをスキャン",
+      "scanHint": "1Password、Google Authenticator、Microsoft Authenticator などの認証アプリでスキャンし、表示された6桁のコードを入力してください。",
+      "qrAlt": "このアカウントを認証アプリに追加するためのQRコード",
+      "manualKey": "スキャンできない場合は、このキーをアプリに入力してください:",
+      "codeLabel": "6桁のコード",
+      "verify": "確認してオンにする",
+      "codesTitle": "バックアップコードを保存",
+      "codesHint": "認証アプリを紛失した場合、各コードで1回サインインできます。安全な場所に保管してください。再表示はされません。",
+      "copy": "コピー",
+      "copied": "バックアップコードをコピーしました",
+      "download": "ダウンロード",
+      "fileTitle": "{name} のバックアップコード。各コードは1回だけ使えます。",
+      "disableTitle": "2段階認証をオフにしますか?",
+      "disableBody": "パスワードだけでサインインするようになります。認証アプリとバックアップコードは使えなくなります。",
+      "regenerateTitle": "新しいバックアップコードを作成しますか?",
+      "regenerateBody": "現在のバックアップコードは使えなくなります。続行するにはパスワードを入力してください。",
+      "enabled": "2段階認証をオンにしました",
+      "disabled": "2段階認証をオフにしました",
+      "signInAgainToDisable": "セキュリティのため、最近のサインインが必要です。もう一度サインインしてから、再度お試しください。",
+      "signInAgain": "もう一度サインイン",
+      "adminRequiredTitle": "2段階認証をオンにしてください",
+      "adminRequiredBody": "管理者が管理コンソールを開くには2段階認証が必要です。",
+      "adminRequiredLink": "設定する",
+      "errors": {
+        "invalidPassword": "パスワードが正しくありません。",
+        "invalidCode": "コードが正しくありません。デバイスの時刻が正しいか確認して、もう一度お試しください。",
+        "rateLimited": "試行回数が多すぎます。数秒待ってからもう一度お試しください。",
+        "generic": "問題が発生しました。もう一度お試しください。"
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "切り替え先",
+      "add": "別のアカウントを追加",
+      "signOutOf": "{email} からサインアウト",
+      "signOutAll": "すべてのアカウントからサインアウト",
+      "switchFailed": "アカウントを切り替えられませんでした。もう一度お試しください。"
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "このアカウントでアプリに進むか、別のアカウントでサインインしてください。",
     "continueAs": "{name} として続行",
     "useAnother": "別のアカウントを使う",
-    "error": "問題が発生しました。もう一度お試しください。"
+    "error": "問題が発生しました。もう一度お試しください。",
+    "descriptionMany": "アプリに進むアカウントを選択してください。"
+  },
+  "device": {
+    "title": "デバイスを接続",
+    "description": "デバイス、テレビ、またはコマンドラインに表示されたコードを入力してください。",
+    "codeLabel": "コード",
+    "continue": "続行",
+    "reviewTitle": "{name} があなたのアカウントを使用しようとしています",
+    "reviewDescription": "このサインインを自分で開始し、下のコードがデバイスに表示されたものと一致する場合のみ承認してください。",
+    "codeOnDevice": "デバイスに表示されたコード",
+    "noScopes": "アカウントへの基本的なアクセス（特別な権限なし）。",
+    "signedInAs": "{email} としてサインイン中",
+    "switchAccount": "別のアカウントを使用",
+    "deny": "拒否",
+    "approve": "承認",
+    "useAnotherCode": "別のコードを入力",
+    "approvedTitle": "デバイスを接続しました",
+    "approvedDescription": "デバイスに戻ってください。サインインは自動的に完了します。",
+    "deniedTitle": "リクエストを拒否しました",
+    "deniedDescription": "デバイスはあなたのアカウントにアクセスできません。",
+    "errors": {
+      "invalid": "このコードは無効です。確認してもう一度お試しください。",
+      "expired": "このコードは期限切れです。デバイスでやり直して新しいコードを取得してください。",
+      "processed": "このコードは既に使用されています。サインインが必要な場合はデバイスでやり直してください。",
+      "otherAccount": "このコードは別のアカウントで使用されています。",
+      "tooManyAttempts": "試行回数が多すぎます。数分待ってからもう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    }
+  },
+  "captcha": {
+    "label": "セキュリティチェック",
+    "required": "先にセキュリティチェックを完了してください。",
+    "failed": "セキュリティチェックに失敗しました。もう一度お試しください。",
+    "unavailable": "セキュリティチェックを読み込めませんでした。接続を確認するか、コンテンツブロッカーを無効にしてからページを再読み込みしてください。"
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "{brand} のサインインコード",
+      "preheader": "このコードでサインインしてください。有効期限は {minutes} 分です。",
+      "heading": "サインインコード",
+      "body": "{brand} のサインインページでこのコードを入力して、サインインを完了してください。",
+      "note": "このコードの有効期限は {minutes} 分で、1 回のみ使用できます。",
+      "footnote": "コードをリクエストしていない場合は、このメールを無視してください。コードがなければ誰もサインインできません。コードは誰にも教えないでください。"
+    }
   }
 }

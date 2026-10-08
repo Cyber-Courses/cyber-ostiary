@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "이메일로 로그인 코드 받기",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "지난번에 이메일로 받은 코드로 로그인했습니다.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "이 브라우저에 이미 로그인된 계정은 로그인 상태로 유지됩니다."
+    },
+    "emailCode": {
+      "title": "코드로 로그인",
+      "description": "계정 이메일 주소로 6자리 코드를 보내드립니다. 어느 기기에서든 확인한 뒤 여기에 입력하세요.",
+      "emailLabel": "이메일",
+      "emailPlaceholder": "you@example.com",
+      "send": "코드 보내기",
+      "sending": "보내는 중…",
+      "sentTitle": "이메일을 확인하세요",
+      "sent": "{email} 주소를 사용하는 계정이 있으면 6자리 코드가 발송되었습니다. {minutes}분 후에 만료됩니다.",
+      "codeLabel": "로그인 코드",
+      "verify": "로그인",
+      "verifying": "로그인 중…",
+      "newCode": "받지 못하셨나요? 새 코드 보내기",
+      "usePassword": "비밀번호로 로그인",
+      "errors": {
+        "invalidEmail": "올바른 이메일 주소를 입력하세요.",
+        "invalidCode": "코드가 올바르지 않습니다. 확인 후 다시 시도하세요.",
+        "expired": "코드가 만료되었습니다. 새 코드를 요청하세요.",
+        "tooManyAttempts": "잘못된 코드를 너무 많이 입력했습니다. 새 코드를 요청하세요.",
+        "rateLimited": "시도 횟수가 너무 많습니다. 1분 후 다시 시도하세요.",
+        "sendFailed": "코드를 보낼 수 없습니다. 1분 후 다시 시도하세요.",
+        "signInFailed": "로그인할 수 없습니다. 다시 시도하세요."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "2단계 인증",
+      "title": "2단계 인증",
+      "descriptionTotp": "인증 앱에 표시된 6자리 코드를 입력하세요.",
+      "descriptionBackup": "백업 코드 중 하나를 입력하세요. 각 코드는 한 번만 사용할 수 있습니다.",
+      "codeLabel": "코드",
+      "backupCodeLabel": "백업 코드",
+      "trustDevice": "이 기기를 30일 동안 신뢰",
+      "trustDeviceHint": "이 기기에서는 코드를 묻지 않습니다. 본인 소유의 기기에서만 선택하세요.",
+      "submit": "확인",
+      "submitting": "확인 중…",
+      "useBackupCode": "백업 코드 사용",
+      "useAuthenticator": "인증 앱 사용",
+      "backToLogin": "로그인으로 돌아가기",
+      "expiredTitle": "다시 로그인",
+      "expiredDescription": "이 로그인이 만료되었거나 잘못된 코드를 너무 많이 입력했습니다. 비밀번호로 다시 로그인하세요.",
+      "errors": {
+        "invalidCode": "코드가 올바르지 않습니다. 앱에 표시된 현재 코드를 입력하세요.",
+        "invalidBackupCode": "백업 코드가 올바르지 않거나 이미 사용되었습니다.",
+        "locked": "잘못된 코드를 너무 많이 입력했습니다. 15분 후에 다시 시도하세요.",
+        "rateLimited": "시도 횟수가 너무 많습니다. 몇 초 후에 다시 시도하세요.",
+        "failed": "코드를 확인할 수 없습니다. 다시 시도하세요."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "확인되지 않은 앱",
+      "dynamic": "이 앱은 스스로 등록되었으며 검토되지 않았습니다. 신뢰할 수 있고 이 로그인을 직접 시작한 경우에만 허용하세요.",
+      "metadataDocument": "이 앱은 {host}에 게시된 문서로 자신을 식별하며 검토되지 않았습니다. 신뢰할 수 있고 이 로그인을 직접 시작한 경우에만 허용하세요.",
+      "redirect": "허용하면 <strong>{host}</strong>(으)로 이동합니다."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "{name} 액세스 토큰을 받는 API(보호된 리소스)와 클라이언트가 요청할 수 있는 스코프입니다."
+        "description": "{name} 액세스 토큰을 받는 API(보호된 리소스): 클라이언트가 요청할 수 있는 스코프, 사용할 수 있는 애플리케이션, 토큰 설정입니다."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "2단계 인증",
+      "hint": "비밀번호로 로그인할 때 인증 앱의 코드도 입력합니다.",
+      "statusOn": "켜짐",
+      "statusOff": "꺼짐",
+      "enable": "켜기",
+      "disable": "끄기",
+      "regenerate": "새 백업 코드",
+      "passwordLabel": "비밀번호",
+      "passwordHint": "계속하려면 비밀번호를 입력하세요.",
+      "continue": "계속",
+      "cancel": "취소",
+      "done": "완료",
+      "doneAdmin": "관리 콘솔로 이동",
+      "setupTitle": "2단계 인증 켜기",
+      "scanTitle": "QR 코드 스캔",
+      "scanHint": "1Password, Google Authenticator, Microsoft Authenticator 같은 인증 앱으로 스캔한 다음 표시된 6자리 코드를 입력하세요.",
+      "qrAlt": "이 계정을 인증 앱에 추가하기 위한 QR 코드",
+      "manualKey": "스캔할 수 없나요? 앱에 이 키를 입력하세요:",
+      "codeLabel": "6자리 코드",
+      "verify": "확인하고 켜기",
+      "codesTitle": "백업 코드 저장",
+      "codesHint": "인증 앱을 잃어버리면 각 코드로 한 번 로그인할 수 있습니다. 안전한 곳에 보관하세요. 다시 표시되지 않습니다.",
+      "copy": "복사",
+      "copied": "백업 코드를 복사했습니다",
+      "download": "다운로드",
+      "fileTitle": "{name} 백업 코드. 각 코드는 한 번만 사용할 수 있습니다.",
+      "disableTitle": "2단계 인증을 끄시겠습니까?",
+      "disableBody": "비밀번호만으로 로그인하게 됩니다. 인증 앱과 백업 코드는 더 이상 작동하지 않습니다.",
+      "regenerateTitle": "새 백업 코드를 만드시겠습니까?",
+      "regenerateBody": "현재 백업 코드는 더 이상 작동하지 않습니다. 계속하려면 비밀번호를 입력하세요.",
+      "enabled": "2단계 인증이 켜졌습니다",
+      "disabled": "2단계 인증이 꺼졌습니다",
+      "signInAgainToDisable": "보안을 위해 최근 로그인이 필요합니다. 다시 로그인한 후 다시 시도하세요.",
+      "signInAgain": "다시 로그인",
+      "adminRequiredTitle": "2단계 인증을 켜세요",
+      "adminRequiredBody": "관리자가 관리 콘솔을 열려면 2단계 인증이 필요합니다.",
+      "adminRequiredLink": "설정하기",
+      "errors": {
+        "invalidPassword": "비밀번호가 올바르지 않습니다.",
+        "invalidCode": "코드가 올바르지 않습니다. 기기의 시간이 정확한지 확인한 후 다시 시도하세요.",
+        "rateLimited": "시도 횟수가 너무 많습니다. 몇 초 후에 다시 시도하세요.",
+        "generic": "문제가 발생했습니다. 다시 시도하세요."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "전환",
+      "add": "다른 계정 추가",
+      "signOutOf": "{email}에서 로그아웃",
+      "signOutAll": "모든 계정에서 로그아웃",
+      "switchFailed": "계정을 전환하지 못했습니다. 다시 시도하세요."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "이 계정으로 앱을 계속 사용하거나 다른 계정으로 로그인하세요.",
     "continueAs": "{name}(으)로 계속",
     "useAnother": "다른 계정 사용",
-    "error": "문제가 발생했습니다. 다시 시도하세요."
+    "error": "문제가 발생했습니다. 다시 시도하세요.",
+    "descriptionMany": "앱에서 계속 사용할 계정을 선택하세요."
+  },
+  "device": {
+    "title": "기기 연결",
+    "description": "기기, TV 또는 명령줄에 표시된 코드를 입력하세요.",
+    "codeLabel": "코드",
+    "continue": "계속",
+    "reviewTitle": "{name}에서 계정을 사용하려고 합니다",
+    "reviewDescription": "직접 이 로그인을 시작했고 아래 코드가 기기에 표시된 코드와 같을 때만 승인하세요.",
+    "codeOnDevice": "기기에 표시된 코드",
+    "noScopes": "특정 권한 없이 계정에 대한 기본 접근.",
+    "signedInAs": "{email}(으)로 로그인됨",
+    "switchAccount": "다른 계정 사용",
+    "deny": "거부",
+    "approve": "승인",
+    "useAnotherCode": "다른 코드 입력",
+    "approvedTitle": "기기가 연결되었습니다",
+    "approvedDescription": "기기로 돌아가세요. 로그인이 자동으로 완료됩니다.",
+    "deniedTitle": "요청이 거부되었습니다",
+    "deniedDescription": "기기가 계정에 접근하지 못했습니다.",
+    "errors": {
+      "invalid": "유효하지 않은 코드입니다. 확인 후 다시 시도하세요.",
+      "expired": "코드가 만료되었습니다. 기기에서 다시 시작해 새 코드를 받으세요.",
+      "processed": "이미 사용된 코드입니다. 로그인이 필요하면 기기에서 다시 시작하세요.",
+      "otherAccount": "다른 계정에서 이 코드를 사용 중입니다.",
+      "tooManyAttempts": "시도 횟수가 너무 많습니다. 몇 분 후 다시 시도하세요.",
+      "failed": "문제가 발생했습니다. 다시 시도하세요."
+    }
+  },
+  "captcha": {
+    "label": "보안 확인",
+    "required": "먼저 보안 확인을 완료하세요.",
+    "failed": "보안 확인에 실패했습니다. 다시 시도하세요.",
+    "unavailable": "보안 확인을 불러올 수 없습니다. 연결을 확인하거나 콘텐츠 차단 기능을 끈 뒤 페이지를 새로고침하세요."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "{brand} 로그인 코드",
+      "preheader": "이 코드로 로그인하세요. {minutes}분 후에 만료됩니다.",
+      "heading": "로그인 코드",
+      "body": "{brand} 로그인 페이지에 이 코드를 입력하여 로그인을 완료하세요.",
+      "note": "이 코드는 {minutes}분 후에 만료되며 한 번만 사용할 수 있습니다.",
+      "footnote": "코드를 요청하지 않으셨나요? 이 이메일은 무시하셔도 됩니다. 코드 없이는 아무도 로그인할 수 없습니다. 코드는 누구와도 공유하지 마세요."
+    }
   }
 }

@@ -20,10 +20,12 @@
       "verifyEmailAfterSignup": "Check your inbox for a verification link. You must verify your email before signing in.",
       "passkey": "Sign in with passkey",
       "passkeySubmitting": "Waiting for passkey…",
+      "emailCode": "Inviami un codice di accesso via email",
       "lastUsedBadge": "Last used",
       "lastUsedHintEmail": "You last signed in with email and password.",
       "lastUsedHintUsername": "You last signed in with username and password.",
       "lastUsedHintPasskey": "You last signed in with a passkey.",
+      "lastUsedHintEmailCode": "L’ultima volta hai effettuato l’accesso con un codice ricevuto via email.",
       "lastUsedHintOther": "You last signed in with {method}.",
       "errors": {
         "emailNotVerified": "Please verify your email first. We sent you a new verification link, check your inbox.",
@@ -39,6 +41,55 @@
         "sent": "If an unverified account uses this address, a new link is on its way. Check your inbox and spam folder.",
         "invalidEmail": "Enter a valid email address.",
         "error": "Could not send the email. Try again in a minute."
+      },
+      "addAccountDescription": "Gli account già connessi su questo browser restano connessi."
+    },
+    "emailCode": {
+      "title": "Accedi con un codice",
+      "description": "Invieremo un codice di 6 cifre all’indirizzo del tuo account. Leggilo su qualsiasi dispositivo, poi inseriscilo qui.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@esempio.com",
+      "send": "Invia codice",
+      "sending": "Invio…",
+      "sentTitle": "Controlla la tua email",
+      "sent": "Se un account usa {email}, è in arrivo un codice di 6 cifre. Scade tra {minutes} minuti.",
+      "codeLabel": "Codice di accesso",
+      "verify": "Accedi",
+      "verifying": "Accesso in corso…",
+      "newCode": "Non l’hai ricevuto? Invia un nuovo codice",
+      "usePassword": "Usa la password",
+      "errors": {
+        "invalidEmail": "Inserisci un indirizzo email valido.",
+        "invalidCode": "Il codice non è corretto. Controllalo e riprova.",
+        "expired": "Questo codice è scaduto. Richiedine uno nuovo.",
+        "tooManyAttempts": "Troppi codici errati. Richiedine uno nuovo.",
+        "rateLimited": "Troppi tentativi. Attendi un minuto e riprova.",
+        "sendFailed": "Impossibile inviare il codice. Riprova tra un minuto.",
+        "signInFailed": "Impossibile accedere. Riprova."
+      }
+    },
+    "twoFactor": {
+      "metaTitle": "Autenticazione a due fattori",
+      "title": "Autenticazione a due fattori",
+      "descriptionTotp": "Inserisci il codice a 6 cifre della tua app di autenticazione.",
+      "descriptionBackup": "Inserisci uno dei tuoi codici di backup. Ogni codice funziona una sola volta.",
+      "codeLabel": "Codice",
+      "backupCodeLabel": "Codice di backup",
+      "trustDevice": "Considera attendibile questo dispositivo per 30 giorni",
+      "trustDeviceHint": "Su questo dispositivo non verrà chiesto alcun codice. Sceglilo solo su un dispositivo di tua proprietà.",
+      "submit": "Verifica",
+      "submitting": "Verifica in corso…",
+      "useBackupCode": "Usa un codice di backup",
+      "useAuthenticator": "Usa la tua app di autenticazione",
+      "backToLogin": "Torna all’accesso",
+      "expiredTitle": "Accedi di nuovo",
+      "expiredDescription": "Questo accesso è scaduto o ha ricevuto troppi codici errati. Accedi di nuovo con la tua password.",
+      "errors": {
+        "invalidCode": "Il codice non è valido. Inserisci il codice attuale della tua app.",
+        "invalidBackupCode": "Il codice di backup non è valido o è già stato usato.",
+        "locked": "Troppi codici errati. Riprova tra 15 minuti.",
+        "rateLimited": "Troppi tentativi. Attendi qualche secondo e riprova.",
+        "failed": "Impossibile verificare il codice. Riprova."
       }
     },
     "forgotPassword": {
@@ -149,6 +200,12 @@
       "profile": "Name and profile information",
       "email": "Email address",
       "offline_access": "Access when you are not actively using the application"
+    },
+    "unverified": {
+      "title": "App non verificata",
+      "dynamic": "Questa app si è registrata da sola e non è stata verificata. Consentila solo se ti fidi e se hai avviato tu questo accesso.",
+      "metadataDocument": "Questa app si identifica con un documento pubblicato su {host} e non è stata verificata. Consentila solo se ti fidi e se hai avviato tu questo accesso.",
+      "redirect": "Se consenti, verrai reindirizzato a <strong>{host}</strong>."
     }
   },
   "admin": {
@@ -208,7 +265,7 @@
       },
       "apis": {
         "title": "API",
-        "description": "Le tue API (risorse protette) che accettano i token di accesso di {name}, e gli scope che i client possono richiedere per esse."
+        "description": "Le tue API (risorse protette) che accettano i token di accesso di {name}: gli scope che i client possono richiedere, quali applicazioni possono usarle e le impostazioni dei loro token."
       },
       "users": {
         "title": "Users",
@@ -306,6 +363,51 @@
       "confirmRemoveBody": "You won’t be able to sign in with this passkey anymore. You can add a new one at any time.",
       "signInAgainToAdd": "For your security, adding a passkey needs a recent sign-in. Sign in again, then add it.",
       "signInAgain": "Sign in again"
+    },
+    "twoFactor": {
+      "title": "Autenticazione a due fattori",
+      "hint": "Quando accedi con la password, inserisci anche un codice da un’app di autenticazione.",
+      "statusOn": "Attiva",
+      "statusOff": "Non attiva",
+      "enable": "Attiva",
+      "disable": "Disattiva",
+      "regenerate": "Nuovi codici di backup",
+      "passwordLabel": "Password",
+      "passwordHint": "Inserisci la password per continuare.",
+      "continue": "Continua",
+      "cancel": "Annulla",
+      "done": "Fatto",
+      "doneAdmin": "Vai alla console di amministrazione",
+      "setupTitle": "Attiva l’autenticazione a due fattori",
+      "scanTitle": "Scansiona il codice QR",
+      "scanHint": "Scansionalo con un’app di autenticazione come 1Password, Google Authenticator o Microsoft Authenticator, poi inserisci il codice a 6 cifre che mostra.",
+      "qrAlt": "Codice QR per aggiungere questo account a un’app di autenticazione",
+      "manualKey": "Non riesci a scansionarlo? Inserisci questa chiave nella tua app:",
+      "codeLabel": "Codice a 6 cifre",
+      "verify": "Verifica e attiva",
+      "codesTitle": "Salva i codici di backup",
+      "codesHint": "Se perdi l’app di autenticazione, ogni codice ti permette di accedere una volta. Conservali in un posto sicuro: non verranno mostrati di nuovo.",
+      "copy": "Copia",
+      "copied": "Codici di backup copiati",
+      "download": "Scarica",
+      "fileTitle": "Codici di backup di {name}. Ogni codice funziona una sola volta.",
+      "disableTitle": "Disattivare l’autenticazione a due fattori?",
+      "disableBody": "Accederai solo con la password. L’app di autenticazione e i codici di backup smetteranno di funzionare.",
+      "regenerateTitle": "Creare nuovi codici di backup?",
+      "regenerateBody": "I codici di backup attuali smetteranno di funzionare. Inserisci la password per continuare.",
+      "enabled": "Autenticazione a due fattori attivata",
+      "disabled": "Autenticazione a due fattori disattivata",
+      "signInAgainToDisable": "Per sicurezza, serve un accesso recente. Accedi di nuovo, poi riprova.",
+      "signInAgain": "Accedi di nuovo",
+      "adminRequiredTitle": "Attiva l’autenticazione a due fattori",
+      "adminRequiredBody": "Gli amministratori devono usare l’autenticazione a due fattori per aprire la console di amministrazione.",
+      "adminRequiredLink": "Configurala",
+      "errors": {
+        "invalidPassword": "Password errata.",
+        "invalidCode": "Il codice non è valido. Controlla che l’orologio del dispositivo sia corretto e riprova.",
+        "rateLimited": "Troppi tentativi. Attendi qualche secondo e riprova.",
+        "generic": "Si è verificato un errore. Riprova."
+      }
     },
     "organizations": {
       "title": "Organizations",
@@ -415,6 +517,13 @@
       "error": "Something went wrong. Try again.",
       "signInAgainToChange": "For your security, connecting an account needs a recent sign-in. Sign in again, then connect it.",
       "signInAgain": "Sign in again"
+    },
+    "accounts": {
+      "switchTo": "Passa a",
+      "add": "Aggiungi un altro account",
+      "signOutOf": "Esci da {email}",
+      "signOutAll": "Esci da tutti gli account",
+      "switchFailed": "Impossibile cambiare account. Riprova."
     }
   },
   "acceptInvitation": {
@@ -496,6 +605,50 @@
     "description": "Continua nell'app con questo account o accedi con un altro.",
     "continueAs": "Continua come {name}",
     "useAnother": "Usa un altro account",
-    "error": "Qualcosa è andato storto. Riprova."
+    "error": "Qualcosa è andato storto. Riprova.",
+    "descriptionMany": "Scegli l'account con cui continuare verso l'app."
+  },
+  "device": {
+    "title": "Collega un dispositivo",
+    "description": "Inserisci il codice mostrato sul dispositivo, sulla TV o nella riga di comando.",
+    "codeLabel": "Codice",
+    "continue": "Continua",
+    "reviewTitle": "{name} vuole usare il tuo account",
+    "reviewDescription": "Approva solo se hai avviato tu questo accesso e il codice qui sotto corrisponde a quello sul dispositivo.",
+    "codeOnDevice": "Codice sul dispositivo",
+    "noScopes": "Accesso di base al tuo account, senza autorizzazioni specifiche.",
+    "signedInAs": "Accesso effettuato come {email}",
+    "switchAccount": "Usa un altro account",
+    "deny": "Rifiuta",
+    "approve": "Approva",
+    "useAnotherCode": "Inserisci un altro codice",
+    "approvedTitle": "Dispositivo collegato",
+    "approvedDescription": "Puoi tornare al dispositivo. Completerà l’accesso da solo.",
+    "deniedTitle": "Richiesta rifiutata",
+    "deniedDescription": "Il dispositivo non ha ottenuto l’accesso al tuo account.",
+    "errors": {
+      "invalid": "Questo codice non è valido. Controllalo e riprova.",
+      "expired": "Questo codice è scaduto. Ricomincia dal dispositivo per ottenerne uno nuovo.",
+      "processed": "Questo codice è già stato usato. Ricomincia dal dispositivo se devi ancora accedere.",
+      "otherAccount": "Questo codice è in uso da un altro account.",
+      "tooManyAttempts": "Troppi tentativi. Attendi qualche minuto e riprova.",
+      "failed": "Si è verificato un errore. Riprova."
+    }
+  },
+  "captcha": {
+    "label": "Controllo di sicurezza",
+    "required": "Completa prima il controllo di sicurezza.",
+    "failed": "Il controllo di sicurezza non è riuscito. Riprova.",
+    "unavailable": "Impossibile caricare il controllo di sicurezza. Controlla la connessione o disattiva i blocchi dei contenuti, poi ricarica la pagina."
+  },
+  "emails": {
+    "signInCode": {
+      "subject": "Il tuo codice di accesso a {brand}",
+      "preheader": "Usa questo codice per accedere. Scade tra {minutes} minuti.",
+      "heading": "Il tuo codice di accesso",
+      "body": "Inserisci questo codice nella pagina di accesso di {brand} per completare l’accesso.",
+      "note": "Il codice scade tra {minutes} minuti e funziona una sola volta.",
+      "footnote": "Non hai richiesto un codice? Ignora questa email: nessuno può accedere senza. Non condividerlo mai con nessuno."
+    }
   }
 }
