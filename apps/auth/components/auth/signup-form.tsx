@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
-import type { SocialProvider } from "@ostiary/core/lib/social-provider-meta"
+import type { SocialProviderOption } from "@ostiary/core/lib/social-provider-meta"
 import { SocialSignInButtons } from "@/components/auth/social-sign-in-buttons"
 import { toast } from "sonner"
 import { Button } from "@ostiary/core/components/ui/button"
@@ -25,13 +25,15 @@ import { Link, useRouter } from "@/i18n/navigation"
 import { authClient } from "@/lib/auth-client"
 import { useCaptcha } from "@/components/auth/captcha"
 import type { CaptchaConfig } from "@ostiary/core/lib/captcha-providers"
+import { rateLimitMessage } from "@ostiary/core/lib/rate-limit-message"
 
 export function SignupForm({
   socialProviders = [],
   captcha: captchaConfig = null,
   ...props
-}: React.ComponentProps<typeof Card> & { socialProviders?: SocialProvider[]; captcha?: CaptchaConfig | null }) {
+}: React.ComponentProps<typeof Card> & { socialProviders?: SocialProviderOption[]; captcha?: CaptchaConfig | null }) {
   const t = useTranslations("auth.signup")
+  const tLimit = useTranslations("rateLimit")
   const locale = useLocale()
   const router = useRouter()
   const [email, setEmail] = useState<string>("");
@@ -132,7 +134,7 @@ export function SignupForm({
           },
           onError(ctx) {
             const code = ctx.error.code
-            const captchaError = captcha.errorMessage(code)
+            const captchaError = captcha.errorMessage(code) ?? rateLimitMessage(ctx.error, tLimit)
             if (captchaError) {
               toast.error(captchaError)
               return

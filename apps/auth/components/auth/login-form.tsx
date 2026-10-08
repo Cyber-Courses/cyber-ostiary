@@ -22,7 +22,7 @@ import {
 } from "@ostiary/core/components/ui/field"
 import { Input } from "@ostiary/core/components/ui/input"
 import { Link } from "@/i18n/navigation"
-import type { SocialProvider } from "@ostiary/core/lib/social-provider-meta"
+import type { SocialProviderOption } from "@ostiary/core/lib/social-provider-meta"
 import { brand } from "@ostiary/core/lib/brand"
 import { SocialSignInButtons } from "@/components/auth/social-sign-in-buttons"
 import { authClient } from "@/lib/auth-client"
@@ -31,6 +31,7 @@ import { EmailCodeSignIn } from "@/components/auth/email-code-sign-in"
 import { useCaptcha } from "@/components/auth/captcha"
 import type { CaptchaConfig } from "@ostiary/core/lib/captcha-providers"
 import { safeCallbackURL } from "@/lib/safe-callback-url"
+import { rateLimitMessage } from "@ostiary/core/lib/rate-limit-message"
 
 /** Sign-in responses for accounts with two-factor authentication: no session yet. */
 function needsTwoFactor(data: unknown): boolean {
@@ -42,8 +43,9 @@ export function LoginForm({
   socialProviders = [],
   captcha: captchaConfig = null,
   ...props
-}: React.ComponentProps<"div"> & { socialProviders?: SocialProvider[]; captcha?: CaptchaConfig | null }) {
+}: React.ComponentProps<"div"> & { socialProviders?: SocialProviderOption[]; captcha?: CaptchaConfig | null }) {
   const t = useTranslations("auth.login")
+  const tLimit = useTranslations("rateLimit")
   const tSso = useTranslations("sso");
   const locale = useLocale()
   const searchParams = useSearchParams()
@@ -97,6 +99,11 @@ export function LoginForm({
   function handleSignInError(ctx: {
     error: { status?: number; code?: string; message?: string };
   }) {
+    const limited = rateLimitMessage(ctx.error, tLimit);
+    if (limited) {
+      toast.error(limited);
+      return;
+    }
     const status = ctx.error.status;
     const code = ctx.error.code;
     if (
@@ -212,7 +219,9 @@ export function LoginForm({
                     : lastUsedMethod === "email-otp"
                       ? t("lastUsedHintEmailCode")
                       : t("lastUsedHintOther", {
-                        method: formatLastUsedMethodLabel(lastUsedMethod),
+                        method:
+                          socialProviders.find((p) => p.id === lastUsedMethod)?.name ??
+                          formatLastUsedMethodLabel(lastUsedMethod),
                       })}
             </p>
           ) : null}
