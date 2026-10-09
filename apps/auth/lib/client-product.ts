@@ -32,6 +32,7 @@ export async function clientProduct(clientId: string | string[] | undefined): Pr
         uri: oauthClient.uri,
         clientDiscoveryId: oauthClient.clientDiscoveryId,
         metadata: oauthClient.metadata,
+        adminRegistered: oauthClient.adminRegistered,
         disabled: oauthClient.disabled,
       })
       .from(oauthClient)
