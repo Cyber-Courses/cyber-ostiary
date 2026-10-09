@@ -180,7 +180,8 @@
       "lastUsed": "Dernière utilisation",
       "otherProviders": "Autres moyens de se connecter",
       "error": "Connexion impossible avec ce compte. Réessayez ou utilisez une autre méthode.",
-      "notLinked": "Ce compte n’est pas encore relié à un compte {name}. Connectez-vous autrement, puis reliez-le depuis vos paramètres de sécurité."
+      "notLinked": "Ce compte n’est pas encore relié à un compte {name}. Connectez-vous autrement, puis reliez-le depuis vos paramètres de sécurité.",
+      "noEmail": "Ce compte n'a pas communiqué d'adresse e-mail. Réessayez plus tard ou connectez-vous autrement."
     }
   },
   "consent": {
@@ -205,7 +206,7 @@
       "openid": "Vérifier votre identité (OpenID Connect)",
       "profile": "Nom et informations de profil",
       "email": "Adresse e-mail",
-      "offline_access": "Accès lorsque vous n'utilisez pas activement l'application"
+      "offline_access": "Accès lorsque vous n’utilisez pas activement l’application"
     },
     "unverified": {
       "title": "Application non vérifiée",
@@ -237,6 +238,7 @@
       "signInProviders": "Fournisseurs de connexion",
       "webhooks": "Webhooks",
       "security": "Sécurité",
+      "usage": "Utilisation des applications",
       "audit": "Journal d’audit",
       "signingKeys": "Clés de signature"
     },
@@ -254,6 +256,7 @@
       "signInProviders": "Fournisseurs de connexion",
       "webhooks": "Webhooks",
       "security": "Sécurité",
+      "usage": "Utilisation des applications",
       "audit": "Journal d’audit",
       "signingKeys": "Clés de signature"
     },
@@ -276,7 +279,9 @@
       },
       "applications": {
         "title": "Applications",
-        "description": "Les clients OAuth qui connectent les utilisateurs avec {name} : URL de redirection, types d’autorisation, consentement et utilisation."
+        "description": "Les clients OAuth qui connectent les utilisateurs avec {name} : URL de redirection, types d’autorisation et consentement.",
+        "unusedHint": "{count, plural, one {# application n’a pas été utilisée} other {# applications n’ont pas été utilisées}} depuis 30 jours.",
+        "viewUsage": "Voir l’utilisation"
       },
       "apis": {
         "title": "API",
@@ -302,6 +307,10 @@
       "consent": {
         "title": "Consentements",
         "description": "Les autorisations accordées par les utilisateurs aux clients OAuth, avec les portées et leur date."
+      },
+      "usage": {
+        "title": "Utilisation des applications",
+        "description": "Les applications utilisées : jetons d’accès, utilisateurs et consentements par application sur les 30 derniers jours."
       },
       "audit": {
         "title": "Journal d’audit",
@@ -575,16 +584,20 @@
     },
     "apps": {
       "title": "Applications connectées",
-      "description": "Applications OAuth autorisées à accéder à votre compte.",
-      "empty": "Vous n’avez encore autorisé aucune application.",
-      "revokeAccess": "Révoquer l’accès",
-      "scopes": "Autorisations",
-      "loadError": "Impossible de charger vos autorisations.",
-      "revokeError": "Impossible de révoquer l’accès.",
-      "revoked": "Accès révoqué",
-      "none": "Aucun",
+      "description": "Les applications que vous avez autorisées à accéder à votre compte.",
+      "empty": "Vous n’avez encore connecté aucune application.",
+      "disconnect": "Déconnecter",
+      "disconnectApp": "Déconnecter {app}",
+      "permissions": "Autorisations",
+      "signInOnly": "Connexion uniquement",
+      "connectedOn": "Connectée le {date}",
+      "lastUsed": "Utilisée {time}",
+      "opensInNewTab": "(s’ouvre dans un nouvel onglet)",
+      "loadError": "Impossible de charger vos applications connectées.",
+      "revokeError": "Impossible de déconnecter l’application.",
+      "revoked": "Application déconnectée",
       "cancel": "Annuler",
-      "confirmRevokeTitle": "Révoquer l’accès de {app} ?",
+      "confirmRevokeTitle": "Déconnecter {app} ?",
       "confirmRevokeBody": "Cette application ne pourra plus accéder à votre compte tant que vous ne l’aurez pas de nouveau autorisée."
     },
     "apiKeys": {
