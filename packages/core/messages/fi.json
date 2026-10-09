@@ -181,7 +181,15 @@
       "otherProviders": "Muita kirjautumistapoja",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Tili ei jakanut sähköpostiosoitetta. Yritä myöhemmin uudelleen tai kirjaudu toisella tavalla."
+      "noEmail": "Tili ei jakanut sähköpostiosoitetta. Yritä myöhemmin uudelleen tai kirjaudu toisella tavalla.",
+      "signUpDisabled": "Tälle osoitteelle ei ole vielä tiliä, eikä tällä kirjautumistavalla voi luoda sellaista. Kirjaudu sisään toisella tavalla."
+    },
+    "app": {
+      "signIn": "Kirjaudu sisään jatkaaksesi palveluun <app>{name}</app>",
+      "signUp": "Luo tili jatkaaksesi palveluun <app>{name}</app>",
+      "continue": "Jatka palveluun <app>{name}</app>",
+      "unverified": "Vahvistamaton sovellus.",
+      "unverifiedHint": "{name} ei ole tarkistanut sitä: jatka vain, jos luotat siihen."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API-avaimet",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Tietosi"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API-avaimet",
+        "hide": "Piilota API-avaimet",
+        "title": "Organisaation {name} API-avaimet",
+        "description": "Organisaation omistamat avaimet sen skripteille ja palveluille. Ne toimivat edelleen, kun ne luonut jäsen lähtee. Vain omistajat ja ylläpitäjät näkevät ne.",
+        "empty": "Tällä organisaatiolla ei ole API-avaimia.",
+        "loadError": "Organisaation API-avaimia ei voitu ladata.",
+        "limit": "Tällä organisaatiolla on jo {max} avainta. Peruuta yksi luodaksesi uuden."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Istuntosi on päättynyt. Kirjaudu uudelleen.",
         "impersonating": "API-avaimia ei voi luoda, kun tarkastelet toisen henkilön tiliä.",
         "recentSignIn": "Turvallisuussyistä kirjaudu uudelleen luodaksesi API-avaimen.",
-        "failed": "API-avainta ei voitu luoda."
-      }
+        "failed": "API-avainta ei voitu luoda.",
+        "forbidden": "Vain tämän organisaation omistajat ja ylläpitäjät voivat hallita sen API-avaimia."
+      },
+      "createdBy": "luonut {name}",
+      "createdByDeleted": "luojan tili poistettu"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Kirjaudu ulos tililtä {email}",
       "signOutAll": "Kirjaudu ulos kaikilta tileiltä",
       "switchFailed": "Tilin vaihto epäonnistui. Yritä uudelleen."
+    },
+    "data": {
+      "exportTitle": "Vie tietosi",
+      "exportDescription": "Lataa JSON-tiedosto, jossa on kaikki, mitä tämä palvelu tallentaa tilistäsi: profiili, kirjautumistavat, pääsyavaimet, istunnot, yhdistetyt sovellukset, API-avaimet, organisaatiot ja toimintahistoria. Salasanoja, tokeneita, avaimia tai kaksivaiheisen tunnistautumisen salaisuuksia ei koskaan sisällytetä.",
+      "exportButton": "Lataa tietoni",
+      "exportDone": "Tietosi on ladattu.",
+      "exportErrors": {
+        "signedOut": "Istuntosi on päättynyt. Kirjaudu uudelleen.",
+        "impersonating": "Tietoja ei voi viedä, kun tarkastelet jonkun toisen tiliä.",
+        "recentSignIn": "Turvallisuussyistä kirjaudu uudelleen, jotta voit viedä tietosi.",
+        "rateLimited": "Olet vienyt tietosi useita kertoja viimeisen tunnin aikana. Yritä myöhemmin uudelleen.",
+        "failed": "Tietojesi vienti epäonnistui. Yritä uudelleen."
+      },
+      "signInAgain": "Kirjaudu uudelleen",
+      "deleteTitle": "Poista tili",
+      "deleteDescription": "Poista tilisi ja kaikki siihen liittyvä pysyvästi. Tätä ei voi kumota.",
+      "deleteButton": "Poista tilini",
+      "loadError": "Ei voitu tarkistaa, voiko tämän tilin poistaa.",
+      "blockers": {
+        "admin": {
+          "title": "Olet ylläpitäjä",
+          "body": "Pyydä ensin toista ylläpitäjää poistamaan ylläpitäjän roolisi. Näin palvelu ei koskaan jää ilman ylläpitäjää, ja muutoksesta jää merkintä."
+        },
+        "sole_owner": {
+          "title": "Olet organisaation ainoa omistaja",
+          "body": "Olet ainoa omistaja organisaatiossa {organizations}. Tee toisesta jäsenestä omistaja tai pyydä ylläpitäjää poistamaan organisaatio, ja palaa sitten tänne."
+        },
+        "scim": {
+          "title": "Tiliäsi hallinnoi organisaatiosi",
+          "body": "Yrityksesi käyttäjähakemisto loi tämän tilin ja loisi sen uudelleen. Pyydä sen sijaan IT-ylläpitäjääsi poistamaan sinut hakemistosta.",
+          "bodyNamed": "Organisaation {organizations} käyttäjähakemisto loi tämän tilin ja loisi sen uudelleen. Pyydä sen sijaan IT-ylläpitäjääsi poistamaan sinut hakemistosta."
+        }
+      },
+      "confirmTitle": "Poistetaanko tilisi?",
+      "confirmDescription": "Tätä ei voi kumota. Kun vahvistat poiston lähettämämme sähköpostin kautta:",
+      "consequences": {
+        "signIn": "Sinut kirjataan ulos kaikkialta, etkä voi enää kirjautua tällä tilillä.",
+        "apps": "Sovellukset, joihin olet kirjautunut tällä tilillä, menettävät pääsyn heti.",
+        "data": "Pääsyavaimesi, kaksivaiheisen tunnistautumisen asetukset, API-avaimet ja linkitetyt tilit poistetaan, ja poistut organisaatioistasi.",
+        "records": "Turvallisuussyistä säilytettävissä tiedoissa, kuten tarkastuslokissa, ei enää näy nimeäsi tai sähköpostiosoitettasi."
+      },
+      "exportFirst": "Haluatko ensin kopion? Lataa tietosi ennen kuin jatkat.",
+      "typeEmail": "Vahvista kirjoittamalla {email}",
+      "password": "Salasana",
+      "noPassword": "Tililläsi ei ole salasanaa: tuore kirjautumisesi vahvistaa, että kyse on sinusta.",
+      "signInFirst": "Tililläsi ei ole salasanaa, joten kirjaudu ensin uudelleen vahvistaaksesi, että kyse on sinusta.",
+      "sendLink": "Lähetä vahvistuslinkki sähköpostiini",
+      "cancel": "Peruuta",
+      "sentTitle": "Tarkista sähköpostisi",
+      "sentBody": "Lähetimme linkin osoitteeseen {email}. Avaa se {minutes} minuutin kuluessa selaimessa, jossa olet kirjautunut tälle tilille, ja vahvista poisto.",
+      "done": "Valmis",
+      "deleteErrors": {
+        "mismatch": "Sähköpostiosoite ei vastaa tätä tiliä.",
+        "password": "Anna salasanasi.",
+        "wrongPassword": "Salasana on väärä.",
+        "recentSignIn": "Turvallisuussyistä kirjaudu uudelleen ennen kuin poistat tilisi.",
+        "blocked": "Tätä tiliä ei voi vielä poistaa. Sulje tämä ikkuna nähdäksesi syyn.",
+        "impersonating": "Tiliä ei voi poistaa, kun ylläpitäjä tarkastelee sitä.",
+        "failed": "Poistoa ei voitu aloittaa. Yritä uudelleen."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Valitse tili",
@@ -798,6 +942,25 @@
       "failed": "Jokin meni vikaan. Yritä uudelleen."
     }
   },
+  "deleteAccount": {
+    "title": "Poista tilisi",
+    "description": "Pyysit tilin {email} poistamista. Kun vahvistat, se poistuu lopullisesti.",
+    "signedOut": "Kirjaudu tilille, jonka haluat poistaa, ja avaa linkki sitten uudelleen.",
+    "consequenceApps": "Sovellukset, joihin olet kirjautunut sillä, menettävät pääsyn heti.",
+    "consequenceSignIn": "Sinut kirjataan ulos kaikkialta, etkä voi enää kirjautua sillä.",
+    "consequenceUndo": "Tätä ei voi kumota.",
+    "confirm": "Poista tilini pysyvästi",
+    "keep": "Säilytä tilini",
+    "deletedTitle": "Tilisi on poistettu",
+    "deletedBody": "Kaikki siihen liittyvä on poistettu. Kiitos, että käytit palvelua {brand}.",
+    "toSignIn": "Siirry kirjautumiseen",
+    "errors": {
+      "missing": "Tämä linkki on puutteellinen. Avaa sähköpostissa oleva linkki uudelleen tai aloita alusta tilisivultasi.",
+      "invalid": "Tämä linkki on vanhentunut, jo käytetty tai lähetetty toiselle tilille. Tarkista, että olet kirjautunut tilille, jonka haluat poistaa, tai aloita alusta tilisivultasi.",
+      "blocked": "Tätä tiliä ei voi vielä poistaa. Avaa tilisivusi nähdäksesi, mitä sinun pitää tehdä ensin.",
+      "failed": "Tilin poistaminen epäonnistui. Yritä uudelleen."
+    }
+  },
   "captcha": {
     "label": "Turvatarkistus",
     "required": "Suorita ensin turvatarkistus.",
@@ -812,6 +975,16 @@
       "body": "Viimeistele kirjautuminen syöttämällä tämä koodi {brand}-kirjautumissivulle.",
       "note": "Koodi vanhenee {minutes} minuutissa ja toimii vain kerran.",
       "footnote": "Etkö pyytänyt koodia? Voit ohittaa tämän viestin: kukaan ei voi kirjautua ilman koodia. Älä koskaan kerro sitä kenellekään."
+    },
+    "deleteAccount": {
+      "subject": "Vahvista {brand}-tilisi poistaminen",
+      "preheader": "Joku pyysi {brand}-tilisi poistamista. Mitään ei tapahdu ennen kuin vahvistat.",
+      "heading": "Poistetaanko tilisi?",
+      "body": "{brand}-tilin {email} pysyvää poistamista on pyydetty. Jos haluat jatkaa, avaa alla oleva linkki selaimessa, jossa olet kirjautunut tälle tilille, ja vahvista.",
+      "consequences": "Sovellukset, joihin kirjaudut tällä tilillä, menettävät pääsyn, eikä tiliä voi palauttaa.",
+      "button": "Tarkista ja poista",
+      "note": "Linkki vanhenee {minutes} minuutissa ja toimii vain kerran.",
+      "footnote": "Etkö pyytänyt tätä? Voit ohittaa tämän viestin: tilisi pysyy ennallaan. Harkitse salasanasi vaihtamista, sillä pyyntö tuli kirjautuneesta istunnosta."
     }
   }
 }

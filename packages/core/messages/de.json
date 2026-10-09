@@ -181,7 +181,15 @@
       "otherProviders": "Weitere Anmeldemöglichkeiten",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Dieses Konto hat keine E-Mail-Adresse übermittelt. Versuche es später erneut oder melde dich anders an."
+      "noEmail": "Dieses Konto hat keine E-Mail-Adresse übermittelt. Versuche es später erneut oder melde dich anders an.",
+      "signUpDisabled": "Für diese Adresse gibt es noch kein Konto, und mit dieser Anmeldemethode kann keines erstellt werden. Melde dich auf andere Weise an."
+    },
+    "app": {
+      "signIn": "Melden Sie sich an, um zu <app>{name}</app> fortzufahren",
+      "signUp": "Erstellen Sie Ihr Konto, um zu <app>{name}</app> fortzufahren",
+      "continue": "Weiter zu <app>{name}</app>",
+      "unverified": "Nicht verifizierte App.",
+      "unverifiedHint": "{name} hat sie nicht geprüft: Fahren Sie nur fort, wenn Sie ihr vertrauen."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API-Schlüssel",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Ihre Daten"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API-Schlüssel",
+        "hide": "API-Schlüssel ausblenden",
+        "title": "API-Schlüssel von {name}",
+        "description": "Schlüssel im Besitz der Organisation, für ihre Skripte und Dienste. Sie bleiben gültig, wenn das Mitglied, das sie erstellt hat, die Organisation verlässt. Nur Inhaber und Admins sehen sie.",
+        "empty": "Diese Organisation hat keine API-Schlüssel.",
+        "loadError": "Die API-Schlüssel dieser Organisation konnten nicht geladen werden.",
+        "limit": "Diese Organisation hat bereits {max} Schlüssel. Widerrufen Sie einen, um einen neuen zu erstellen."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an.",
         "impersonating": "API-Schlüssel können nicht erstellt werden, während Sie das Konto einer anderen Person ansehen.",
         "recentSignIn": "Aus Sicherheitsgründen müssen Sie sich erneut anmelden, um einen API-Schlüssel zu erstellen.",
-        "failed": "Der API-Schlüssel konnte nicht erstellt werden."
-      }
+        "failed": "Der API-Schlüssel konnte nicht erstellt werden.",
+        "forbidden": "Nur Inhaber und Admins dieser Organisation können ihre API-Schlüssel verwalten."
+      },
+      "createdBy": "erstellt von {name}",
+      "createdByDeleted": "Konto des Erstellers gelöscht"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Von {email} abmelden",
       "signOutAll": "Von allen Konten abmelden",
       "switchFailed": "Kontowechsel fehlgeschlagen. Versuchen Sie es erneut."
+    },
+    "data": {
+      "exportTitle": "Daten exportieren",
+      "exportDescription": "Laden Sie eine JSON-Datei mit allem herunter, was dieser Dienst über Ihr Konto speichert: Profil, Anmeldemethoden, Passkeys, Sitzungen, verbundene Apps, API-Schlüssel, Organisationen und Aktivitätsverlauf. Passwörter, Tokens, Schlüssel und Geheimnisse der Zwei-Faktor-Authentifizierung sind nie enthalten.",
+      "exportButton": "Meine Daten herunterladen",
+      "exportDone": "Ihre Daten wurden heruntergeladen.",
+      "exportErrors": {
+        "signedOut": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an.",
+        "impersonating": "Daten können nicht exportiert werden, während Sie das Konto einer anderen Person ansehen.",
+        "recentSignIn": "Aus Sicherheitsgründen müssen Sie sich erneut anmelden, um Ihre Daten zu exportieren.",
+        "rateLimited": "Sie haben Ihre Daten in der letzten Stunde mehrmals exportiert. Versuchen Sie es später erneut.",
+        "failed": "Ihre Daten konnten nicht exportiert werden. Versuchen Sie es erneut."
+      },
+      "signInAgain": "Erneut anmelden",
+      "deleteTitle": "Konto löschen",
+      "deleteDescription": "Löschen Sie Ihr Konto und alles, was damit verknüpft ist, dauerhaft. Das kann nicht rückgängig gemacht werden.",
+      "deleteButton": "Mein Konto löschen",
+      "loadError": "Es konnte nicht geprüft werden, ob dieses Konto gelöscht werden kann.",
+      "blockers": {
+        "admin": {
+          "title": "Sie sind Administrator",
+          "body": "Bitten Sie zuerst einen anderen Administrator, Ihnen die Admin-Rolle zu entziehen. So bleibt der Dienst nie ohne Administrator, und die Änderung wird protokolliert."
+        },
+        "sole_owner": {
+          "title": "Sie sind der einzige Eigentümer einer Organisation",
+          "body": "Sie sind der einzige Eigentümer von {organizations}. Machen Sie ein anderes Mitglied zum Eigentümer oder bitten Sie einen Administrator, die Organisation zu löschen, und kommen Sie dann zurück."
+        },
+        "scim": {
+          "title": "Ihr Konto wird von Ihrer Organisation verwaltet",
+          "body": "Das Verzeichnis Ihres Unternehmens hat dieses Konto angelegt und würde es erneut anlegen. Bitten Sie stattdessen Ihren IT-Administrator, Sie aus dem Verzeichnis zu entfernen.",
+          "bodyNamed": "Das Verzeichnis von {organizations} hat dieses Konto angelegt und würde es erneut anlegen. Bitten Sie stattdessen Ihren IT-Administrator, Sie aus dem Verzeichnis zu entfernen."
+        }
+      },
+      "confirmTitle": "Konto löschen?",
+      "confirmDescription": "Das kann nicht rückgängig gemacht werden. Sobald Sie über die E-Mail bestätigen, die wir Ihnen senden:",
+      "consequences": {
+        "signIn": "Sie werden überall abgemeldet und können sich mit diesem Konto nicht mehr anmelden.",
+        "apps": "Apps, bei denen Sie sich mit diesem Konto angemeldet haben, verlieren sofort den Zugriff.",
+        "data": "Ihre Passkeys, Einstellungen zur Zwei-Faktor-Authentifizierung, API-Schlüssel und verknüpften Konten werden gelöscht, und Sie verlassen Ihre Organisationen.",
+        "records": "Aus Sicherheitsgründen aufbewahrte Einträge, etwa das Audit-Log, zeigen Ihren Namen und Ihre E-Mail-Adresse nicht mehr an."
+      },
+      "exportFirst": "Möchten Sie vorher eine Kopie? Laden Sie Ihre Daten herunter, bevor Sie fortfahren.",
+      "typeEmail": "Geben Sie zur Bestätigung {email} ein",
+      "password": "Passwort",
+      "noPassword": "Ihr Konto hat kein Passwort: Ihre kürzliche Anmeldung bestätigt, dass Sie es sind.",
+      "signInFirst": "Ihr Konto hat kein Passwort. Melden Sie sich daher zuerst erneut an, um zu bestätigen, dass Sie es sind.",
+      "sendLink": "Bestätigungslink per E-Mail senden",
+      "cancel": "Abbrechen",
+      "sentTitle": "Prüfen Sie Ihren Posteingang",
+      "sentBody": "Wir haben einen Link an {email} gesendet. Öffnen Sie ihn innerhalb von {minutes} Minuten in einem Browser, in dem Sie bei diesem Konto angemeldet sind, und bestätigen Sie die Löschung.",
+      "done": "Fertig",
+      "deleteErrors": {
+        "mismatch": "Die E-Mail-Adresse stimmt nicht mit diesem Konto überein.",
+        "password": "Geben Sie Ihr Passwort ein.",
+        "wrongPassword": "Das Passwort ist falsch.",
+        "recentSignIn": "Aus Sicherheitsgründen müssen Sie sich erneut anmelden, bevor Sie Ihr Konto löschen.",
+        "blocked": "Dieses Konto kann noch nicht gelöscht werden. Schließen Sie dieses Fenster, um den Grund zu sehen.",
+        "impersonating": "Ein Konto kann nicht gelöscht werden, während ein Administrator es ansieht.",
+        "failed": "Die Löschung konnte nicht gestartet werden. Versuchen Sie es erneut."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Konto auswählen",
@@ -798,6 +942,25 @@
       "failed": "Etwas ist schiefgelaufen. Versuche es erneut."
     }
   },
+  "deleteAccount": {
+    "title": "Konto löschen",
+    "description": "Sie haben die Löschung des Kontos {email} angefordert. Nach Ihrer Bestätigung ist es endgültig gelöscht.",
+    "signedOut": "Melden Sie sich bei dem Konto an, das Sie löschen möchten, und öffnen Sie den Link dann erneut.",
+    "consequenceApps": "Apps, bei denen Sie sich damit angemeldet haben, verlieren sofort den Zugriff.",
+    "consequenceSignIn": "Sie werden überall abgemeldet und können sich damit nicht mehr anmelden.",
+    "consequenceUndo": "Das kann nicht rückgängig gemacht werden.",
+    "confirm": "Mein Konto endgültig löschen",
+    "keep": "Konto behalten",
+    "deletedTitle": "Ihr Konto wurde gelöscht",
+    "deletedBody": "Alles, was damit verknüpft war, wurde entfernt. Danke, dass Sie {brand} genutzt haben.",
+    "toSignIn": "Zur Anmeldung",
+    "errors": {
+      "missing": "Dieser Link ist unvollständig. Öffnen Sie den Link aus der E-Mail erneut oder beginnen Sie auf Ihrer Kontoseite von vorn.",
+      "invalid": "Dieser Link ist abgelaufen, wurde bereits verwendet oder wurde für ein anderes Konto gesendet. Prüfen Sie, ob Sie bei dem Konto angemeldet sind, das Sie löschen möchten, oder beginnen Sie auf Ihrer Kontoseite von vorn.",
+      "blocked": "Dieses Konto kann noch nicht gelöscht werden. Öffnen Sie Ihre Kontoseite, um zu sehen, was Sie zuerst tun müssen.",
+      "failed": "Das Konto konnte nicht gelöscht werden. Versuchen Sie es erneut."
+    }
+  },
   "captcha": {
     "label": "Sicherheitsprüfung",
     "required": "Schließen Sie zuerst die Sicherheitsprüfung ab.",
@@ -812,6 +975,16 @@
       "body": "Geben Sie diesen Code auf der {brand}-Anmeldeseite ein, um die Anmeldung abzuschließen.",
       "note": "Der Code läuft in {minutes} Minuten ab und funktioniert nur einmal.",
       "footnote": "Sie haben keinen Code angefordert? Ignorieren Sie diese E-Mail: Ohne den Code kann sich niemand anmelden. Geben Sie ihn niemals weiter."
+    },
+    "deleteAccount": {
+      "subject": "Bestätigen Sie die Löschung Ihres {brand}-Kontos",
+      "preheader": "Jemand hat die Löschung Ihres {brand}-Kontos angefordert. Ohne Ihre Bestätigung passiert nichts.",
+      "heading": "Konto löschen?",
+      "body": "Es wurde angefordert, das {brand}-Konto {email} dauerhaft zu löschen. Um fortzufahren, öffnen Sie den Link unten in einem Browser, in dem Sie bei diesem Konto angemeldet sind, und bestätigen Sie.",
+      "consequences": "Apps, bei denen Sie sich mit diesem Konto anmelden, verlieren den Zugriff, und das Konto kann nicht wiederhergestellt werden.",
+      "button": "Prüfen und löschen",
+      "note": "Der Link läuft in {minutes} Minuten ab und funktioniert nur einmal.",
+      "footnote": "Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail: Ihr Konto bleibt unverändert. Ändern Sie am besten Ihr Passwort, da die Anfrage aus einer angemeldeten Sitzung kam."
     }
   }
 }

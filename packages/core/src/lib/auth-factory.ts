@@ -19,10 +19,13 @@ import {
     type JwtOptions,
     lastLoginMethod,
     multiSession,
+    oneTap,
     organization,
     username,
 } from "better-auth/plugins";
 import { twoFactor } from "better-auth/plugins/two-factor";
+import { createAccessControl } from "better-auth/plugins/access";
+import { adminAc, defaultStatements, memberAc, ownerAc } from "better-auth/plugins/organization/access";
 
 import { db } from "@ostiary/core/db/index";
 import * as schema from "@ostiary/core/db/schema";
@@ -44,6 +47,7 @@ import { brand } from "@ostiary/core/lib/brand";
 import { PUBLIC_ORGANIZATION_ID } from "@ostiary/core/lib/organization-public";
 import { getPasskeyWebAuthnOptions } from "@ostiary/core/lib/passkey-options";
 import { env } from "@ostiary/core/lib/env";
+import { e2eTestMode } from "@ostiary/core/lib/e2e-test-mode";
 import { ipAddressOptions, rateLimitOptions } from "@ostiary/core/lib/rate-limit";
 import { ENV_API_SCOPES, OIDC_SCOPES, syncProviderScopes } from "@ostiary/core/lib/oauth-scopes";
 import { syncSigningKeys } from "@ostiary/core/lib/signing-keys";
@@ -51,6 +55,7 @@ import { oauthResourceIdentifiers } from "@ostiary/core/lib/oauth-resources";
 import { withOpenApiLinks } from "@ostiary/core/lib/oauth-resource-access";
 import { withWebhookEvents } from "@ostiary/core/lib/webhooks/adapter";
 import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN } from "@ostiary/core/lib/oauth-resource-policy";
+import { SAML_CLOCK_SKEW_MS, samlResponseRejection } from "@ostiary/core/lib/saml";
 import {
     clientExists,
     clientRegistrationSource,
@@ -63,10 +68,22 @@ import {
     metadataDocumentHostAllowed,
     registrationRequestError,
 } from "@ostiary/core/lib/client-registration-policy";
-import { socialProvidersConfig, syncSocialProviders } from "@ostiary/core/lib/social-providers";
-import { KEY_RATE_LIMIT, API_KEY_NAME_MAX_LENGTH, MAX_LIFETIME_DAYS_LIMIT } from "@ostiary/core/lib/api-key-policy";
+import { googleOneTap, socialProvidersConfig, syncSocialProviders } from "@ostiary/core/lib/social-providers";
+import {
+    KEY_RATE_LIMIT,
+    API_KEY_NAME_MAX_LENGTH,
+    MAX_LIFETIME_DAYS_LIMIT,
+    ORGANIZATION_KEY_CONFIG_ID,
+    USER_KEY_CONFIG_ID,
+} from "@ostiary/core/lib/api-key-policy";
 import { deleteUserApiKeys } from "@ostiary/core/lib/api-keys";
 import { apiKeyVerification } from "@ostiary/core/lib/api-key-verification";
+import { ACCOUNT_DELETION_BLOCKED, accountDeletionBlockers } from "@ostiary/core/lib/account-data/blockers";
+import { DELETED_USER_LABEL, prepareUserErasure, type ErasureSummary } from "@ostiary/core/lib/account-data/erasure";
+import { ACCOUNT_DELETION_LINK_MINUTES } from "@ostiary/core/lib/account-data/limits";
+import { queueAccountDeletionEmail } from "@ostiary/core/lib/email/queue-account-deletion-email";
+import { emitWebhookEvents } from "@ostiary/core/lib/webhooks/outbox";
+import { makeEvent, memberSnapshot } from "@ostiary/core/lib/webhooks/events";
 import {
     SCIM_DEACTIVATED_MESSAGE,
     SCIM_DEACTIVATED_REASON,
@@ -154,6 +171,29 @@ const passwordSignInEvents = {
 } satisfies BetterAuthPlugin;
 
 /**
+ * SAML responses reach the ACS (and SLO, which stays off) from the identity provider. The
+ * plugin validates them; this refuses, before any XML parser runs, one that carries a DTD
+ * (XXE, entity expansion) or is not plain base64.
+ */
+const samlResponseGuard = {
+    id: "ostiary-saml-response-guard",
+    hooks: {
+        before: [
+            {
+                matcher: (ctx) => (ctx.path ?? "").startsWith("/sso/saml2/sp/"),
+                handler: createAuthMiddleware(async (ctx) => {
+                    const body = (ctx.body ?? {}) as Record<string, unknown>;
+                    const value = body.SAMLResponse ?? body.SAMLRequest;
+                    if (value === undefined && ctx.path?.startsWith("/sso/saml2/sp/metadata")) return;
+                    const rejection = samlResponseRejection(value);
+                    if (rejection) throw new APIError("BAD_REQUEST", { message: rejection, code: "SAML_RESPONSE_REJECTED" });
+                }),
+            },
+        ],
+    },
+} satisfies BetterAuthPlugin;
+
+/**
  * The email OTP plugin's endpoints other than sign-in codes. Email verification and password
  * reset keep their links, so these stay closed rather than becoming a second, unprotected way
  * to do the same thing (and to send email to any address).
@@ -174,7 +214,45 @@ const UNUSED_EMAIL_OTP_PATHS = [
  * switch, one registered API and its scopes, the maximum lifetime) and write the audit log.
  * The plugin's verification has no HTTP route; APIs use /api-key/verify (api-key-verification.ts).
  */
+/**
+ * Better Auth's default organization roles, unchanged, plus the API key plugin's `apiKey`
+ * resource: owners and admins manage the organization's keys, members do not.
+ */
+const organizationAc = createAccessControl({
+    ...defaultStatements,
+    apiKey: ["create", "read", "update", "delete"],
+});
+const organizationRoles = {
+    owner: organizationAc.newRole({ ...ownerAc.statements, apiKey: ["create", "read", "update", "delete"] }),
+    admin: organizationAc.newRole({ ...adminAc.statements, apiKey: ["create", "read", "update", "delete"] }),
+    member: organizationAc.newRole({ ...memberAc.statements }),
+};
+
 const API_KEY_PLUGIN_PATHS = ["/api-key/create", "/api-key/get", "/api-key/update", "/api-key/delete", "/api-key/list"];
+
+/**
+ * Better Auth's GET link that deletes the account when opened. Ostiary's email links to a page
+ * instead (apps/auth .../delete-account), where the signed-in person confirms with a POST to
+ * /delete-user carrying the token: a mail scanner opening links cannot delete anyone.
+ */
+const DELETE_USER_LINK_PATH = "/delete-user/callback";
+
+/**
+ * Memberships of accounts being deleted, read before the delete (the foreign key removes them)
+ * and sent as `organization.member.removed` once it is done. Keyed by account id.
+ */
+const pendingErasures = new Map<string, ErasureSummary["memberships"]>();
+
+/** Refuses a deletion while one of the blockers applies (admin, sole owner, SCIM). */
+async function assertAccountDeletable(userId: string) {
+    const blockers = await accountDeletionBlockers(db, userId);
+    if (blockers.length === 0) return;
+    throw new APIError("FORBIDDEN", {
+        message: "This account cannot be deleted yet. See the account page for what to do first.",
+        code: ACCOUNT_DELETION_BLOCKED,
+        blockers: blockers.map((b) => b.kind),
+    });
+}
 
 /** Prefix of new API keys. */
 const API_KEY_PREFIX = env.API_KEY_PREFIX ?? "ost_";
@@ -344,11 +422,12 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
         }),
     });
 
-    // API keys for the APIs registered in Ostiary, owned by users. Each key holds one API and
-    // some of its scopes in `permissions`. Never a session: `enableSessionForAPIKeys` stays off
-    // (the default), so a key sent to Ostiary itself (x-api-key or otherwise) signs nobody in,
-    // on the auth app as on the admin console.
-    const apiKeys = apiKey({
+    // API keys for the APIs registered in Ostiary, owned by users ("default" configuration) or
+    // by organizations ("organization": `referenceId` is the organization id). Each key holds one
+    // API and some of its scopes in `permissions`. Never a session: `enableSessionForAPIKeys`
+    // stays off (the default), so a key sent to Ostiary itself (x-api-key or otherwise) signs
+    // nobody in, on the auth app as on the admin console.
+    const apiKeyConfig = {
         enableSessionForAPIKeys: false,
         defaultPrefix: API_KEY_PREFIX,
         // 64 random letters after the prefix (the default), stored as a SHA-256 digest.
@@ -358,13 +437,19 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
         // Every key expires; the admin console sets the maximum (checked before creation).
         keyExpiration: { defaultExpiresIn: null, minExpiresIn: 1, maxExpiresIn: MAX_LIFETIME_DAYS_LIMIT },
         rateLimit: { enabled: true, timeWindow: KEY_RATE_LIMIT.timeWindowMs, maxRequests: KEY_RATE_LIMIT.maxRequests },
-    });
+    } as const;
+    const apiKeys = apiKey([
+        { ...apiKeyConfig, configId: USER_KEY_CONFIG_ID, references: "user" },
+        // The plugin checks the creator's organization role (`apiKey: ["create"]`, see
+        // organizationRoles) on top of Ostiary's own check in the dashboard action.
+        { ...apiKeyConfig, configId: ORGANIZATION_KEY_CONFIG_ID, references: "organization" },
+    ]);
 
     return betterAuth({
         baseURL,
         // Sign in with Apple returns with a form POST from Apple's origin.
         trustedOrigins: [...trustedOrigins, "https://appleid.apple.com"],
-        disabledPaths: [...UNUSED_EMAIL_OTP_PATHS, ...API_KEY_PLUGIN_PATHS],
+        disabledPaths: [...UNUSED_EMAIL_OTP_PATHS, ...API_KEY_PLUGIN_PATHS, DELETE_USER_LINK_PATH],
         // Per-IP limits counted in the database, shared by every serverless instance. Rules in
         // lib/rate-limit.ts; off in development unless RATE_LIMIT_ENABLED=true.
         rateLimit: rateLimitOptions(env),
@@ -421,6 +506,23 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                         });
                     },
                 },
+                // Every deletion (the person, an admin): erase what foreign keys leave behind
+                // (account-data/erasure.ts), then tell apps about the memberships that went with it.
+                delete: {
+                    before: async (deletedUser) => {
+                        const summary = await prepareUserErasure(db, deletedUser);
+                        pendingErasures.set(deletedUser.id, summary.memberships);
+                    },
+                    after: async (deletedUser) => {
+                        const memberships = pendingErasures.get(deletedUser.id) ?? [];
+                        pendingErasures.delete(deletedUser.id);
+                        // Nobody is told about joining the default Public workspace either.
+                        const removed = memberships.filter((m) => m.organizationId !== PUBLIC_ORGANIZATION_ID);
+                        await emitWebhookEvents(
+                            removed.map((m) => makeEvent("organization.member.removed", { member: memberSnapshot(m) })),
+                        );
+                    },
+                },
             },
             session: {
                 create: {
@@ -452,6 +554,10 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 await syncSigningKeys(jwtOptions);
                 // Sign-in providers enabled from the admin console, without a restart.
                 await syncSocialProviders(ctx.context);
+                // Google One Tap answers only while the admin console has it on (and Google too).
+                if (ctx.path === "/one-tap/callback" && !(await googleOneTap())) {
+                    throw new APIError("NOT_FOUND", { message: "Google One Tap is not enabled." });
+                }
                 if (env.REQUIRE_ADMIN_2FA === "true" && isAdminPath(ctx.path)) {
                     const current = await getSessionFromCtx(ctx);
                     if (current && adminNeedsTwoFactor(current.user as { role?: string | null; twoFactorEnabled?: boolean | null }, true)) {
@@ -497,6 +603,40 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                     if (current && Date.now() - signedInAt > RECENT_SIGN_IN_SECONDS * 1000) {
                         throw new APIError("FORBIDDEN", {
                             message: "Sign in again to add a new way to sign in.",
+                            code: "RECENT_SIGN_IN_REQUIRED",
+                        });
+                    }
+                    return;
+                }
+                if (ctx.path === "/delete-user") {
+                    // Self-service deletion. Step 1 (no token) sends the confirmation email; step 2
+                    // (the emailed token) deletes. Better Auth ties the token to the signed-in account.
+                    const current = await getSessionFromCtx(ctx);
+                    if (!current) return; // The endpoint answers 401.
+                    if (current.session.impersonatedBy) {
+                        throw new APIError("FORBIDDEN", {
+                            message: "An account cannot be deleted while an administrator is viewing it.",
+                            code: "IMPERSONATING",
+                        });
+                    }
+                    const body = (ctx.body ?? {}) as Bag;
+                    // Blockers are checked again on step 2 (beforeDelete), as things may change in between.
+                    if (typeof body.token === "string" && body.token) return;
+                    await assertAccountDeletable(current.user.id);
+                    // Re-enter the password when there is one (Better Auth checks it). Without one
+                    // (passkey, social, SSO, codes), the sign-in itself must be recent.
+                    if (typeof body.password === "string" && body.password) return;
+                    const credential = await ctx.context.internalAdapter.findCredentialAccount(current.user.id);
+                    if (credential?.password) {
+                        throw new APIError("FORBIDDEN", {
+                            message: "Enter your password to delete your account.",
+                            code: "PASSWORD_REQUIRED",
+                        });
+                    }
+                    const signedInAt = new Date(current.session.createdAt).getTime();
+                    if (Date.now() - signedInAt > RECENT_SIGN_IN_SECONDS * 1000) {
+                        throw new APIError("FORBIDDEN", {
+                            message: "Sign in again to delete your account.",
                             code: "RECENT_SIGN_IN_REQUIRED",
                         });
                     }
@@ -598,6 +738,28 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             storeSessionInDatabase: true,
         },
         user: {
+            // "Delete my account" on the dashboard: password or recent sign-in (hook above), then
+            // an emailed link to a confirmation page. Blockers in account-data/blockers.ts.
+            deleteUser: {
+                enabled: true,
+                deleteTokenExpiresIn: ACCOUNT_DELETION_LINK_MINUTES * 60,
+                sendDeleteAccountVerification: async ({ user, token }, request) => {
+                    const locale = emailLocale(request?.headers);
+                    const url = `${baseURL}/${locale}/delete-account?token=${encodeURIComponent(token)}`;
+                    await queueAccountDeletionEmail({ to: user.email, url, locale });
+                },
+                beforeDelete: async (user) => {
+                    await assertAccountDeletable(user.id);
+                },
+                afterDelete: async (user) => {
+                    // No email, name or IP: the entry outlives the person it is about.
+                    await recordAudit({
+                        actor: null,
+                        action: "user.self_delete",
+                        target: { type: "user", id: user.id, label: DELETED_USER_LABEL },
+                    });
+                },
+            },
             changeEmail: {
                 enabled: true,
                 // The current address must approve the change first, then the new address is
@@ -635,11 +797,14 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             lastLoginMethod({
                 customResolveMethod: (ctx) => {
                     if (ctx.path.includes("sign-in/username")) return "username";
+                    // A One Tap sign-in is a Google sign-in (the "last used" hint and button).
+                    if (ctx.path === "/one-tap/callback") return "google";
                     return null;
                 },
             }),
             username(),
-            haveIBeenPwned(),
+            // Skipped in end-to-end tests only (an external HTTP call), see lib/e2e-test-mode.ts.
+            haveIBeenPwned({ enabled: !e2eTestMode() }),
             // Authenticator app (TOTP) and backup codes. The second step applies to password
             // sign-ins (email or username) and emailed sign-in codes. Passkeys are already two factors; social and SSO
             // sign-ins rely on the identity provider's own checks. Must come before the OAuth
@@ -673,12 +838,23 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             }),
             // Optional: off unless CAPTCHA_PROVIDER, CAPTCHA_SITE_KEY and CAPTCHA_SECRET_KEY are set.
             ...(captchaOptions ? [captcha(captchaOptions)] : []),
+            // Google One Tap on the sign-in and sign-up pages, off unless turned on for Google in the
+            // admin console (see the before hook). No options here: the endpoint reads Google's
+            // client ID, `hd` and sign-up setting from `socialProviders.google` on each request,
+            // which syncSocialProviders keeps equal to the admin console's settings. It checks the
+            // ID token's signature (Google's keys), issuer, audience and age, then signs in like
+            // "Continue with Google": same account linking, no second factor, and a pending OAuth
+            // authorization resumes (the client sends the signed `oauth_query`).
+            oneTap(),
             passkey({
                 rpID: passkeyWebAuthn.rpID,
                 rpName: passkeyWebAuthn.rpName,
                 origin: passkeyWebAuthn.origin,
             }),
             organization({
+                // Better Auth's default roles, plus organization API keys for owners and admins.
+                ac: organizationAc,
+                roles: organizationRoles,
                 // Only platform admins can create organizations. The check runs on the
                 // server, so the UI is not the only gate.
                 allowUserToCreateOrganization: (user) =>
@@ -704,12 +880,27 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 expiresIn: "10m",
                 interval: "5s",
             }),
-            // Enterprise SSO (OIDC / SAML) per organization. Providers are managed from the admin app.
+            // Enterprise SSO (OIDC / SAML 2.0) per organization. Providers are managed from the admin app.
             // Only platform admins may register providers: a provider claims an email domain, so
             // letting any user register one would let them intercept that domain's SSO sign-ins.
+            samlResponseGuard,
             sso({
                 // A provider only takes sign-ins once its domain owner publishes a DNS TXT record.
                 domainVerification: { enabled: true, tokenPrefix: "cyber-auth" },
+                // SAML: SP-initiated only. Every response must answer an AuthnRequest this server sent
+                // (InResponseTo, single use, 5 minutes) and each assertion ID is accepted once. The
+                // plugin also checks the signature against the IdP's certificate (samlify refuses an
+                // unsigned response), the audience, the bearer Recipient and the Destination.
+                // Assertions must carry NotBefore/NotOnOrAfter, within a minute of clock drift, and
+                // SHA-1 / RSA1_5 / 3DES are refused (signature algorithms of POST responses by
+                // samlResponseGuard: the plugin only checks the Redirect binding's SigAlg).
+                saml: {
+                    enableInResponseToValidation: true,
+                    allowIdpInitiated: false,
+                    requireTimestamps: true,
+                    clockSkew: SAML_CLOCK_SKEW_MS,
+                    algorithms: { onDeprecated: "reject" },
+                },
                 providersLimit: (user) =>
                     userHasAdminRole((user as { role?: string | null }).role, ["admin"]) ? 100 : 0,
             }),

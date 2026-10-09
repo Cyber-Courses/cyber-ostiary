@@ -181,7 +181,15 @@
       "otherProviders": "साइन इन करने के और तरीके",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "इस खाते ने ईमेल पता साझा नहीं किया। बाद में फिर से कोशिश करें या किसी और तरीके से साइन इन करें।"
+      "noEmail": "इस खाते ने ईमेल पता साझा नहीं किया। बाद में फिर से कोशिश करें या किसी और तरीके से साइन इन करें।",
+      "signUpDisabled": "इस पते के लिए अभी कोई खाता नहीं है, और यह साइन-इन तरीका खाता नहीं बना सकता। किसी दूसरे तरीके से साइन इन करें।"
+    },
+    "app": {
+      "signIn": "<app>{name}</app> पर जारी रखने के लिए साइन इन करें",
+      "signUp": "<app>{name}</app> पर जारी रखने के लिए अपना खाता बनाएँ",
+      "continue": "<app>{name}</app> पर जारी रखें",
+      "unverified": "असत्यापित ऐप।",
+      "unverifiedHint": "{name} ने इसकी समीक्षा नहीं की है: केवल तभी जारी रखें जब आपको इस पर भरोसा हो।"
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API कुंजियाँ",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "आपका डेटा"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API कुंजियाँ",
+        "hide": "API कुंजियाँ छिपाएँ",
+        "title": "{name} की API कुंजियाँ",
+        "description": "संगठन के स्वामित्व वाली कुंजियाँ, उसकी स्क्रिप्ट और सेवाओं के लिए। इन्हें बनाने वाला सदस्य चला जाए तब भी ये काम करती रहती हैं। केवल स्वामी और व्यवस्थापक इन्हें देखते हैं।",
+        "empty": "इस संगठन के पास कोई API कुंजी नहीं है।",
+        "loadError": "इस संगठन की API कुंजियाँ लोड नहीं हो सकीं।",
+        "limit": "इस संगठन के पास पहले से {max} कुंजियाँ हैं। नई बनाने के लिए एक रद्द करें।"
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "आपका सेशन खत्म हो गया है। फिर से साइन इन करें।",
         "impersonating": "किसी और का खाता देखते समय API कुंजियाँ नहीं बनाई जा सकतीं।",
         "recentSignIn": "आपकी सुरक्षा के लिए, API कुंजी बनाने के लिए फिर से साइन इन करें।",
-        "failed": "API कुंजी नहीं बनाई जा सकी।"
-      }
+        "failed": "API कुंजी नहीं बनाई जा सकी।",
+        "forbidden": "केवल इस संगठन के स्वामी और व्यवस्थापक ही इसकी API कुंजियाँ प्रबंधित कर सकते हैं।"
+      },
+      "createdBy": "{name} द्वारा बनाई गई",
+      "createdByDeleted": "निर्माता का खाता हटा दिया गया"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "{email} से साइन आउट करें",
       "signOutAll": "सभी खातों से साइन आउट करें",
       "switchFailed": "खाता नहीं बदला जा सका। फिर से कोशिश करें।"
+    },
+    "data": {
+      "exportTitle": "अपना डेटा एक्सपोर्ट करें",
+      "exportDescription": "एक JSON फ़ाइल डाउनलोड करें जिसमें वह सब कुछ है जो यह सेवा आपके खाते के बारे में सहेजती है: प्रोफ़ाइल, साइन-इन के तरीके, पासकी, सेशन, कनेक्ट किए गए ऐप्लिकेशन, API कुंजियाँ, संगठन और गतिविधि इतिहास। पासवर्ड, टोकन, कुंजियाँ और टू-फ़ैक्टर ऑथेंटिकेशन सीक्रेट कभी शामिल नहीं किए जाते।",
+      "exportButton": "मेरा डेटा डाउनलोड करें",
+      "exportDone": "आपका डेटा डाउनलोड हो गया।",
+      "exportErrors": {
+        "signedOut": "आपका सेशन खत्म हो गया है। फिर से साइन इन करें।",
+        "impersonating": "किसी और का खाता देखते समय डेटा एक्सपोर्ट नहीं किया जा सकता।",
+        "recentSignIn": "आपकी सुरक्षा के लिए, अपना डेटा एक्सपोर्ट करने के लिए फिर से साइन इन करें।",
+        "rateLimited": "आपने पिछले एक घंटे में कई बार अपना डेटा एक्सपोर्ट किया है। कुछ देर बाद फिर से कोशिश करें।",
+        "failed": "आपका डेटा एक्सपोर्ट नहीं हो सका। फिर से कोशिश करें।"
+      },
+      "signInAgain": "फिर से साइन इन करें",
+      "deleteTitle": "खाता हटाएँ",
+      "deleteDescription": "अपना खाता और उससे जुड़ी हर चीज़ हमेशा के लिए हटाएँ। इसे पहले जैसा नहीं किया जा सकता।",
+      "deleteButton": "मेरा खाता हटाएँ",
+      "loadError": "यह जाँचा नहीं जा सका कि यह खाता हटाया जा सकता है या नहीं।",
+      "blockers": {
+        "admin": {
+          "title": "आप एडमिन हैं",
+          "body": "पहले किसी दूसरे एडमिन से अपनी एडमिन भूमिका हटाने को कहें। इससे सेवा कभी बिना एडमिन के नहीं रहती, और बदलाव का रिकॉर्ड भी रहता है।"
+        },
+        "sole_owner": {
+          "title": "आप किसी संगठन के इकलौते मालिक हैं",
+          "body": "आप {organizations} के इकलौते मालिक हैं। किसी दूसरे सदस्य को मालिक बनाएँ, या किसी एडमिन से संगठन हटाने को कहें, फिर वापस आएँ।"
+        },
+        "scim": {
+          "title": "आपका खाता आपका संगठन मैनेज करता है",
+          "body": "यह खाता आपकी कंपनी की डायरेक्टरी ने बनाया है और हटाने पर उसे फिर से बना देगी। इसके बजाय अपने IT एडमिन से आपको डायरेक्टरी से हटाने को कहें।",
+          "bodyNamed": "यह खाता {organizations} की डायरेक्टरी ने बनाया है और हटाने पर उसे फिर से बना देगी। इसके बजाय अपने IT एडमिन से आपको डायरेक्टरी से हटाने को कहें।"
+        }
+      },
+      "confirmTitle": "अपना खाता हटाएँ?",
+      "confirmDescription": "इसे पहले जैसा नहीं किया जा सकता। हमारे भेजे गए ईमेल से पुष्टि करने के बाद:",
+      "consequences": {
+        "signIn": "आप हर जगह से साइन आउट हो जाएँगे और इस खाते से फिर कभी साइन इन नहीं कर पाएँगे।",
+        "apps": "जिन ऐप्स में आपने इस खाते से साइन इन किया है, उनकी एक्सेस तुरंत खत्म हो जाएगी।",
+        "data": "आपकी पासकी, टू-फ़ैक्टर ऑथेंटिकेशन सेटिंग्स, API कुंजियाँ और लिंक किए गए खाते हटा दिए जाएँगे, और आप अपने संगठनों से निकल जाएँगे।",
+        "records": "सुरक्षा के लिए रखे गए रिकॉर्ड, जैसे ऑडिट लॉग, में अब आपका नाम या ईमेल पता नहीं दिखेगा।"
+      },
+      "exportFirst": "पहले एक कॉपी चाहिए? आगे बढ़ने से पहले अपना डेटा डाउनलोड करें।",
+      "typeEmail": "पुष्टि करने के लिए {email} टाइप करें",
+      "password": "पासवर्ड",
+      "noPassword": "आपके खाते में कोई पासवर्ड नहीं है: आपके हाल के साइन-इन से पुष्टि होती है कि यह आप ही हैं।",
+      "signInFirst": "आपके खाते में कोई पासवर्ड नहीं है, इसलिए यह पुष्टि करने के लिए कि यह आप ही हैं, पहले फिर से साइन इन करें।",
+      "sendLink": "पुष्टि का लिंक मुझे ईमेल करें",
+      "cancel": "रद्द करें",
+      "sentTitle": "अपना इनबॉक्स देखें",
+      "sentBody": "हमने {email} पर एक लिंक भेजा है। इसे {minutes} मिनट के भीतर ऐसे ब्राउज़र में खोलें जिसमें आप इस खाते से साइन इन हैं, और हटाने की पुष्टि करें।",
+      "done": "हो गया",
+      "deleteErrors": {
+        "mismatch": "यह ईमेल पता इस खाते से मेल नहीं खाता।",
+        "password": "अपना पासवर्ड दर्ज करें।",
+        "wrongPassword": "यह पासवर्ड सही नहीं है।",
+        "recentSignIn": "आपकी सुरक्षा के लिए, खाता हटाने से पहले फिर से साइन इन करें।",
+        "blocked": "यह खाता अभी हटाया नहीं जा सकता। कारण देखने के लिए यह विंडो बंद करें।",
+        "impersonating": "जब कोई एडमिन इस खाते को देख रहा हो, तब इसे हटाया नहीं जा सकता।",
+        "failed": "हटाना शुरू नहीं हो सका। फिर से कोशिश करें।"
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "खाता चुनें",
@@ -798,6 +942,25 @@
       "failed": "कुछ गलत हो गया। फिर से कोशिश करें।"
     }
   },
+  "deleteAccount": {
+    "title": "अपना खाता हटाएँ",
+    "description": "आपने {email} खाता हटाने का अनुरोध किया है। पुष्टि करते ही यह हमेशा के लिए हट जाएगा।",
+    "signedOut": "जिस खाते को हटाना है उससे साइन इन करें, फिर लिंक दोबारा खोलें।",
+    "consequenceApps": "जिन ऐप्स में आपने इससे साइन इन किया है, उनकी एक्सेस तुरंत खत्म हो जाएगी।",
+    "consequenceSignIn": "आप हर जगह से साइन आउट हो जाएँगे और इससे फिर कभी साइन इन नहीं कर पाएँगे।",
+    "consequenceUndo": "इसे पहले जैसा नहीं किया जा सकता।",
+    "confirm": "मेरा खाता हमेशा के लिए हटाएँ",
+    "keep": "मेरा खाता रखें",
+    "deletedTitle": "आपका खाता हटा दिया गया",
+    "deletedBody": "इससे जुड़ी हर चीज़ हटा दी गई है। {brand} का उपयोग करने के लिए धन्यवाद।",
+    "toSignIn": "साइन इन पर जाएँ",
+    "errors": {
+      "missing": "यह लिंक अधूरा है। ईमेल से लिंक दोबारा खोलें, या अपने खाते के पेज से फिर से शुरू करें।",
+      "invalid": "यह लिंक समाप्त हो चुका है, पहले ही इस्तेमाल हो चुका है, या किसी दूसरे खाते को भेजा गया था। जाँचें कि आप उसी खाते से साइन इन हैं जिसे हटाना है, या अपने खाते के पेज से फिर से शुरू करें।",
+      "blocked": "यह खाता अभी हटाया नहीं जा सकता। पहले क्या करना है, यह देखने के लिए अपने खाते का पेज खोलें।",
+      "failed": "खाता हटाया नहीं जा सका। फिर से कोशिश करें।"
+    }
+  },
   "captcha": {
     "label": "सुरक्षा जाँच",
     "required": "पहले सुरक्षा जाँच पूरी करें।",
@@ -812,6 +975,16 @@
       "body": "साइन इन पूरा करने के लिए {brand} के साइन-इन पेज पर यह कोड दर्ज करें।",
       "note": "यह कोड {minutes} मिनट में समाप्त हो जाएगा और केवल एक बार काम करता है।",
       "footnote": "आपने कोड नहीं माँगा? इस ईमेल को अनदेखा करें: इसके बिना कोई भी साइन इन नहीं कर सकता। इसे कभी किसी के साथ साझा न करें।"
+    },
+    "deleteAccount": {
+      "subject": "अपने {brand} खाते को हटाने की पुष्टि करें",
+      "preheader": "किसी ने आपका {brand} खाता हटाने का अनुरोध किया है। आपकी पुष्टि के बिना कुछ नहीं होगा।",
+      "heading": "अपना खाता हटाएँ?",
+      "body": "{brand} खाते {email} को हमेशा के लिए हटाने का अनुरोध किया गया है। आगे बढ़ने के लिए, नीचे दिया गया लिंक ऐसे ब्राउज़र में खोलें जिसमें आप इस खाते से साइन इन हैं, और पुष्टि करें।",
+      "consequences": "जिन ऐप्स में आप इस खाते से साइन इन करते हैं, उनकी एक्सेस खत्म हो जाएगी, और खाता वापस नहीं पाया जा सकेगा।",
+      "button": "देखें और हटाएँ",
+      "note": "यह लिंक {minutes} मिनट में समाप्त हो जाएगा और केवल एक बार काम करता है।",
+      "footnote": "अगर आपने यह अनुरोध नहीं किया, तो इस ईमेल को अनदेखा करें: आपका खाता जैसा है वैसा ही रहेगा। चूँकि अनुरोध एक साइन-इन किए गए सेशन से आया है, इसलिए अपना पासवर्ड बदलने पर विचार करें।"
     }
   }
 }

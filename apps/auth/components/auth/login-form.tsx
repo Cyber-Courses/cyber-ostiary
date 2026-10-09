@@ -25,6 +25,8 @@ import { Link } from "@/i18n/navigation"
 import type { SocialProviderOption } from "@ostiary/core/lib/social-provider-meta"
 import { brand } from "@ostiary/core/lib/brand"
 import { SocialSignInButtons } from "@/components/auth/social-sign-in-buttons"
+import { GoogleOneTap } from "@/components/auth/google-one-tap"
+import type { GoogleOneTapConfig } from "@ostiary/core/lib/social-provider-meta"
 import { authClient } from "@/lib/auth-client"
 import { ResendVerification } from "@/components/auth/resend-verification"
 import { EmailCodeSignIn } from "@/components/auth/email-code-sign-in"
@@ -32,6 +34,7 @@ import { useCaptcha } from "@/components/auth/captcha"
 import type { CaptchaConfig } from "@ostiary/core/lib/captcha-providers"
 import { safeCallbackURL } from "@/lib/safe-callback-url"
 import { rateLimitMessage } from "@ostiary/core/lib/rate-limit-message"
+import { withAppContext, type AppLink } from "@/lib/app-links"
 
 /** Sign-in responses for accounts with two-factor authentication: no session yet. */
 function needsTwoFactor(data: unknown): boolean {
@@ -42,8 +45,16 @@ export function LoginForm({
   className,
   socialProviders = [],
   captcha: captchaConfig = null,
+  oneTap = null,
+  appLink = null,
   ...props
-}: React.ComponentProps<"div"> & { socialProviders?: SocialProviderOption[]; captcha?: CaptchaConfig | null }) {
+}: React.ComponentProps<"div"> & {
+  socialProviders?: SocialProviderOption[]
+  captcha?: CaptchaConfig | null
+  oneTap?: GoogleOneTapConfig | null
+  /** Set during an app's sign-in: sign-up and password reset keep the app (see lib/app-links). */
+  appLink?: AppLink
+}) {
   const t = useTranslations("auth.login")
   const tLimit = useTranslations("rateLimit")
   const tSso = useTranslations("sso");
@@ -257,7 +268,7 @@ export function LoginForm({
                     {t("passwordLabel")}
                   </FieldLabel>
                   <Link
-                    href="/forgot-password"
+                    href={withAppContext("/forgot-password", appLink)}
                     className="max-w-[min(100%,14rem)] text-right text-xs text-muted-foreground underline-offset-4 hover:underline"
                   >
                     {t("forgotPasswordLink")}
@@ -323,18 +334,22 @@ export function LoginForm({
                   lastUsedMethod={lastUsedMethod}
                   disabled={isSubmitting || passkeySubmitting}
                 />
+                {/* Not when adding an account: someone is already signed in here. */}
+                <GoogleOneTap config={addingAccount ? null : oneTap} callbackURL={callbackURL} context="signin" />
                 {socialError ? (
                   <FieldDescription className="text-center text-destructive" role="alert">
                     {socialError === "account_not_linked"
                       ? tSocial("notLinked", { name: brand.name })
                       : socialError === "email_not_found"
                         ? tSocial("noEmail")
-                        : tSocial("error")}
+                        : socialError === "signup_disabled"
+                          ? tSocial("signUpDisabled")
+                          : tSocial("error")}
                   </FieldDescription>
                 ) : null}
                 <FieldDescription className="text-center">
                   {t("noAccount")}{" "}
-                  <Link href="/signup" className="underline-offset-4 hover:underline">
+                  <Link href={withAppContext("/signup", appLink)} className="underline-offset-4 hover:underline">
                     {t("signUpLink")}
                   </Link>
                 </FieldDescription>
