@@ -181,7 +181,15 @@
       "otherProviders": "Flere måder at logge ind på",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Kontoen delte ikke en e-mailadresse. Prøv igen senere, eller log ind på en anden måde."
+      "noEmail": "Kontoen delte ikke en e-mailadresse. Prøv igen senere, eller log ind på en anden måde.",
+      "signUpDisabled": "Der findes endnu ingen konto for den adresse, og denne loginmetode kan ikke oprette en. Log ind på en anden måde."
+    },
+    "app": {
+      "signIn": "Log ind for at fortsætte til <app>{name}</app>",
+      "signUp": "Opret din konto for at fortsætte til <app>{name}</app>",
+      "continue": "Fortsæt til <app>{name}</app>",
+      "unverified": "Ikke-verificeret app.",
+      "unverifiedHint": "{name} har ikke gennemgået den: fortsæt kun, hvis du stoler på den."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API-nøgler",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Dine data"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API-nøgler",
+        "hide": "Skjul API-nøgler",
+        "title": "API-nøgler for {name}",
+        "description": "Nøgler, som organisationen ejer, til dens scripts og tjenester. De virker stadig, når medlemmet, der oprettede dem, forlader organisationen. Kun ejere og administratorer kan se dem.",
+        "empty": "Denne organisation har ingen API-nøgler.",
+        "loadError": "Organisationens API-nøgler kunne ikke indlæses.",
+        "limit": "Denne organisation har allerede {max} nøgler. Tilbagekald en for at oprette en ny."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Din session er udløbet. Log ind igen.",
         "impersonating": "API-nøgler kan ikke oprettes, mens du ser en anden persons konto.",
         "recentSignIn": "Af hensyn til din sikkerhed skal du logge ind igen for at oprette en API-nøgle.",
-        "failed": "Kunne ikke oprette API-nøglen."
-      }
+        "failed": "Kunne ikke oprette API-nøglen.",
+        "forbidden": "Kun ejere og administratorer af denne organisation kan administrere dens API-nøgler."
+      },
+      "createdBy": "oprettet af {name}",
+      "createdByDeleted": "opretterens konto slettet"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Log ud af {email}",
       "signOutAll": "Log ud af alle konti",
       "switchFailed": "Kunne ikke skifte konto. Prøv igen."
+    },
+    "data": {
+      "exportTitle": "Eksportér dine data",
+      "exportDescription": "Download en JSON-fil med alt, hvad denne tjeneste gemmer om din konto: profil, loginmetoder, passkeys, sessioner, forbundne apps, API-nøgler, organisationer og aktivitetshistorik. Adgangskoder, tokens, nøgler og hemmeligheder til totrinsgodkendelse kommer aldrig med.",
+      "exportButton": "Download mine data",
+      "exportDone": "Dine data er downloadet.",
+      "exportErrors": {
+        "signedOut": "Din session er udløbet. Log ind igen.",
+        "impersonating": "Data kan ikke eksporteres, mens du ser en andens konto.",
+        "recentSignIn": "Af hensyn til din sikkerhed skal du logge ind igen for at eksportere dine data.",
+        "rateLimited": "Du har eksporteret dine data flere gange inden for den seneste time. Prøv igen senere.",
+        "failed": "Dine data kunne ikke eksporteres. Prøv igen."
+      },
+      "signInAgain": "Log ind igen",
+      "deleteTitle": "Slet konto",
+      "deleteDescription": "Slet din konto og alt, der er knyttet til den, permanent. Det kan ikke fortrydes.",
+      "deleteButton": "Slet min konto",
+      "loadError": "Det kunne ikke kontrolleres, om denne konto kan slettes.",
+      "blockers": {
+        "admin": {
+          "title": "Du er administrator",
+          "body": "Bed først en anden administrator om at fjerne din administratorrolle. Så står tjenesten aldrig uden en administrator, og ændringen bliver registreret."
+        },
+        "sole_owner": {
+          "title": "Du er den eneste ejer af en organisation",
+          "body": "Du er den eneste ejer af {organizations}. Gør et andet medlem til ejer, eller bed en administrator om at slette organisationen, og kom så tilbage."
+        },
+        "scim": {
+          "title": "Din konto administreres af din organisation",
+          "body": "Din virksomheds katalog har oprettet denne konto og ville oprette den igen. Bed i stedet din it-administrator om at fjerne dig fra kataloget.",
+          "bodyNamed": "Kataloget hos {organizations} har oprettet denne konto og ville oprette den igen. Bed i stedet din it-administrator om at fjerne dig fra kataloget."
+        }
+      },
+      "confirmTitle": "Slet din konto?",
+      "confirmDescription": "Det kan ikke fortrydes. Når du bekræfter via den e-mail, vi sender dig:",
+      "consequences": {
+        "signIn": "Bliver du logget ud overalt og kan ikke længere logge ind med denne konto.",
+        "apps": "Mister apps, du har logget ind på med denne konto, adgangen med det samme.",
+        "data": "Bliver dine passkeys, indstillinger for totrinsgodkendelse, API-nøgler og tilknyttede konti slettet, og du forlader dine organisationer.",
+        "records": "Viser optegnelser, der gemmes af sikkerhedshensyn, som f.eks. revisionsloggen, ikke længere dit navn eller din e-mailadresse."
+      },
+      "exportFirst": "Vil du have en kopi først? Download dine data, før du fortsætter.",
+      "typeEmail": "Skriv {email} for at bekræfte",
+      "password": "Adgangskode",
+      "noPassword": "Din konto har ingen adgangskode: dit nylige login bekræfter, at det er dig.",
+      "signInFirst": "Din konto har ingen adgangskode, så log ind igen først for at bekræfte, at det er dig.",
+      "sendLink": "Send mig bekræftelseslinket",
+      "cancel": "Annuller",
+      "sentTitle": "Tjek din indbakke",
+      "sentBody": "Vi har sendt et link til {email}. Åbn det inden for {minutes} minutter i en browser, hvor du er logget ind på denne konto, og bekræft for at slette den.",
+      "done": "Færdig",
+      "deleteErrors": {
+        "mismatch": "E-mailadressen passer ikke til denne konto.",
+        "password": "Indtast din adgangskode.",
+        "wrongPassword": "Adgangskoden er forkert.",
+        "recentSignIn": "Af hensyn til din sikkerhed skal du logge ind igen, før du sletter din konto.",
+        "blocked": "Denne konto kan ikke slettes endnu. Luk dette vindue for at se hvorfor.",
+        "impersonating": "En konto kan ikke slettes, mens en administrator ser den.",
+        "failed": "Sletningen kunne ikke startes. Prøv igen."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Vælg en konto",
@@ -798,6 +942,25 @@
       "failed": "Noget gik galt. Prøv igen."
     }
   },
+  "deleteAccount": {
+    "title": "Slet din konto",
+    "description": "Du har bedt om at slette kontoen {email}. Når du bekræfter, er den væk for altid.",
+    "signedOut": "Log ind på den konto, du vil slette, og åbn så linket igen.",
+    "consequenceApps": "Apps, du har logget ind på med den, mister adgangen med det samme.",
+    "consequenceSignIn": "Du bliver logget ud overalt og kan ikke logge ind med den igen.",
+    "consequenceUndo": "Det kan ikke fortrydes.",
+    "confirm": "Slet min konto permanent",
+    "keep": "Behold min konto",
+    "deletedTitle": "Din konto er slettet",
+    "deletedBody": "Alt, der var knyttet til den, er fjernet. Tak, fordi du brugte {brand}.",
+    "toSignIn": "Gå til login",
+    "errors": {
+      "missing": "Dette link er ufuldstændigt. Åbn linket fra e-mailen igen, eller start forfra fra din kontoside.",
+      "invalid": "Dette link er udløbet, allerede brugt eller sendt til en anden konto. Tjek, at du er logget ind på den konto, du vil slette, eller start forfra fra din kontoside.",
+      "blocked": "Denne konto kan ikke slettes endnu. Åbn din kontoside for at se, hvad du skal gøre først.",
+      "failed": "Kontoen kunne ikke slettes. Prøv igen."
+    }
+  },
   "captcha": {
     "label": "Sikkerhedstjek",
     "required": "Gennemfør sikkerhedstjekket først.",
@@ -812,6 +975,16 @@
       "body": "Indtast denne kode på loginsiden for {brand} for at fuldføre login.",
       "note": "Koden udløber om {minutes} minutter og virker kun én gang.",
       "footnote": "Har du ikke bedt om en kode? Ignorer denne e-mail: ingen kan logge ind uden koden. Del den aldrig med nogen."
+    },
+    "deleteAccount": {
+      "subject": "Bekræft sletningen af din {brand}-konto",
+      "preheader": "Nogen har bedt om at slette din {brand}-konto. Der sker intet, før du bekræfter.",
+      "heading": "Slet din konto?",
+      "body": "Der er anmodet om permanent sletning af {brand}-kontoen {email}. Hvis du vil fortsætte, skal du åbne linket nedenfor i en browser, hvor du er logget ind på denne konto, og bekræfte.",
+      "consequences": "Apps, du logger ind på med denne konto, mister adgangen, og kontoen kan ikke gendannes.",
+      "button": "Gennemse og slet",
+      "note": "Linket udløber om {minutes} minutter og virker kun én gang.",
+      "footnote": "Har du ikke bedt om dette? Ignorer denne e-mail: din konto forbliver, som den er. Overvej at skifte din adgangskode, da anmodningen kom fra en session, der var logget ind."
     }
   }
 }

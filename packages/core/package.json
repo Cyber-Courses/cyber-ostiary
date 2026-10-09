@@ -19,6 +19,7 @@
     "@better-auth/scim": "catalog:",
     "@better-auth/sso": "catalog:",
     "@cyber-courses/ui": "^0.2.0",
+    "@xmldom/xmldom": "catalog:",
     "better-auth": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
@@ -43,6 +44,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "catalog:",
     "@types/node": "catalog:",
     "@types/pg": "catalog:",
     "@types/react": "catalog:",

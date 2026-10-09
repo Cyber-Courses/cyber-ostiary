@@ -8,6 +8,103 @@ All notable changes are documented here. The format follows
 
 ### Added
 
+- **Your data: export and account deletion** (GDPR access, portability and erasure). A new
+  **Your data** section on the dashboard. **Download my data** returns one JSON file with the
+  profile, sign-in methods, passkeys, two-factor status, sessions, connected apps with consents
+  and token history, API keys, organizations, invitations, SSO and SCIM records, audit log
+  entries and sign-in events, and never a secret (no password hash, token, provider token,
+  two-factor secret, backup code, passkey key or API key); it needs a recent sign-in, is
+  limited to 3 an hour and is audited. Admins get **Export data** on the user's page.
+  **Delete my account** asks for the email address and the password (or a recent sign-in),
+  then emails a link (in the user's language) to a confirmation page; Better Auth's GET
+  callback is closed. Refused for admins (another admin demotes them first), the only owner of
+  an organization, accounts provisioned by SCIM, and during impersonation. Every deletion,
+  self-service or by an admin, also erases what foreign keys leave: audit log entries are kept
+  with the person's email, name and IPs replaced, sign-in events lose IP and identifier,
+  pending codes, invitations to the address and impersonation sessions are deleted, sent
+  webhook payloads are redacted, and console-registered apps and SSO providers are detached
+  instead of being deleted with their admin. `organization.member.removed` webhooks are sent
+  for the memberships that go with the account. Mapping of every table in the README. No
+  migration.
+
+- **Sign-in branding per application.** When people arrive from an app, the login, sign-up,
+  two-factor, email-code, password reset, consent, select-account and device screens say
+  "Sign in to continue to <app>" with its logo, tagline and accent color, and the side panel
+  can show its own headline and image. Set from the admin console (**Applications**, **Sign-in
+  branding**) with a live light/dark preview and WCAG contrast checks (button labels always
+  reach AA; text in the accent is adjusted per color scheme; a warning below 3:1 against the
+  card); optionally only some social providers (and One Tap with Google) on that app's
+  screens. Logos come from the app icon, an https URL fetched and cached by the server (SSRF
+  guard) or an upload; images are served from `/api/app-branding/<client_id>/<logo|panel>`
+  with a sandbox CSP. The app is only taken from Better Auth's signed authorization request
+  (signature and a signed `client_id` checked) or from a short-lived HMAC app context token
+  that carries it through sign-up, password reset and their email links; verifying a new
+  account or resetting a password now resumes the app's authorization instead of ending on
+  the dashboard. Self-registered clients never get custom branding: their name with an
+  "Unverified app" warning. Ostiary's mark stays on every screen. Stored in the new
+  `oauth_client_branding` table (migration `0012_app_branding`); changes are audited. Forks
+  can restyle what the accent reaches through `[data-app-brand="accent"]` in `globals.css`.
+- **End-to-end tests** (`e2e/`, Playwright 1.63 with Chromium) and an `e2e` CI job: both apps
+  built and started with `next start` against Postgres 17, plus a local mock server (a
+  GitLab-compatible OAuth provider and a webhook receiver). Covers APIs and scopes created in
+  the admin console, per-client API access, social providers turned on at runtime with a full
+  social sign-in, signing key rotation, sign-up with email verification, password and code
+  sign-ins, TOTP, the admin two-factor gate, rate limits, authorization code with PKCE and
+  consent, refresh, UserInfo, device flow, webhooks, API keys, Dynamic Client Registration
+  and per-app branding of the login page.
+  Test seam `E2E_TEST_MODE` (emails to a file, localhost webhooks, no Have I Been Pwned call),
+  honoured only on a loopback `http://` auth URL. See README, Testing.
+- **Organization API keys.** Owners and admins of an organization create, list and revoke
+  keys the organization owns, from the account dashboard (**Organizations**, **API keys**
+  under the organization); members do not see them. The key belongs to the organization, so
+  it keeps working when the member who created it leaves; `apikey.created_by` records them.
+  Same rules as personal keys (one API and its scopes, expiry within the admin maximum, shown
+  once, recent sign-in, no impersonation, no linked-only APIs), at most 50 per organization,
+  never for the Public workspace. Built on the plugin's own model: a second configuration
+  (`configId: "organization"`, `references: "organization"`, `referenceId` = organization
+  id), with the plugin's `apiKey` permission granted to the `owner` and `admin` roles (the
+  other organization permissions are Better Auth's defaults, unchanged). `POST
+  /api/auth/api-key/verify` now answers `ownerType` (`"user"` or `"organization"`), and
+  `organizationId` with `userId: null` for an organization's key; user keys keep `userId`.
+  Admin console: an **API keys** card on the organization's page, and organization keys on
+  the **API keys** page, both with revoke. Audit entries (`api_key.create`,
+  `api_key.revoke`) target the organization. Migration `0011_org_api_keys`: `reference_id`
+  loses its foreign key to `user`; generated `user_id` and `organization_id` columns carry
+  cascading foreign keys instead, so deleting an account still deletes its personal keys
+  and deleting an organization deletes its keys; `created_by` (set null when that account
+  is deleted). Strings in all 20 languages.
+- **Google One Tap** on the sign-in and sign-up pages, with Better Auth's `oneTap` plugin.
+  Turned on per provider in the admin console (**Sign-in providers** > Google > **Show
+  Google One Tap**, new `social_provider.one_tap` column, migration `0010_google_one_tap`),
+  only while Google is on. It uses Google's runtime settings from the console: before each
+  request, the providers' options are mirrored into Better Auth's `socialProviders`, which
+  is where the plugin reads the client ID, `hd` and the sign-up setting, so a change
+  applies within 30 seconds without a restart. `POST /api/auth/one-tap/callback` answers
+  404 while One Tap is off and is limited to 60 a minute per address. A One Tap sign-in
+  counts as Google for "last used", resumes a pending app authorization like other
+  sign-ins, and never auto-selects an account. Not shown to someone signed in, when
+  adding an account, or when the device last used another method; dismissed or
+  unsupported (no FedCM), nothing appears. The Content Security Policy allows
+  `accounts.google.com/gsi/` on the sign-in and sign-up pages only. Needs the auth app's
+  origin in the Google client's Authorized JavaScript origins.
+- Sign-in page: a social sign-in refused because the provider may not create accounts now
+  says so (`signup_disabled`), in all 20 languages.
+- **SAML 2.0 enterprise SSO**, next to OIDC, with Better Auth's `@better-auth/sso` plugin.
+  Admin console **SSO** page: an OIDC / SAML 2.0 switch; the IdP from a metadata URL
+  (fetched server-side with the webhook SSRF guard), pasted metadata XML or by hand (entity
+  ID, SSO URL, certificate); attribute mapping with presets for Okta, Entra ID, Google
+  Workspace and JumpCloud; **Require signed assertions** (on by default). The ACS URL, SP
+  entity ID and SP metadata URL are shown with copy buttons, with Okta and Entra ID setup
+  notes; providers show their certificate expiry and can be edited (new metadata after a
+  rotation, mapping, options, domain, organization), audited as `sso_provider.update`.
+  Same DNS domain verification as OIDC. Sign-in stays "Sign in with SSO" by email domain;
+  only SP-initiated sign-in is accepted (`InResponseTo` bound to a request from the last 5
+  minutes, used once; each assertion ID once). Assertions need `NotBefore`/`NotOnOrAfter`
+  (1 minute of clock skew). A guard in front of the ACS refuses responses with a DOCTYPE or
+  entity declarations and XML signatures using SHA-1 or unknown algorithms (the plugin only
+  checks the Redirect binding's `SigAlg`). IdP metadata with a DOCTYPE, several entities, no
+  HTTP-Redirect endpoint, no valid signing certificate or `WantAuthnRequestsSigned` is
+  refused. Failed SSO sign-ins return to the SSO page with an error. No migration.
 - **App icons.** Each OAuth application gets a real icon on the account dashboard, the
   consent screen and the admin console: its `logo_uri`, else the icon its site links to
   (`<link rel="icon">`, `apple-touch-icon`, largest `sizes` or SVG first, then
@@ -186,6 +283,14 @@ All notable changes are documented here. The format follows
 
 ### Fixed
 
+- **Client IP in the audit log and sign-in history behind proxies.** These took the
+  left-most `x-forwarded-for` value (whatever the client sent) and fell back to
+  `x-real-ip`, unlike rate limits and sessions. They now resolve the address the way
+  Better Auth does, with Better Auth's own function and the same `IP_ADDRESS_HEADERS` and
+  `TRUSTED_PROXIES`: a single-address `x-forwarded-for` by default (Vercel), or the
+  right-most address that is not a trusted proxy. A multi-address header without
+  `TRUSTED_PROXIES`, or `x-real-ip` not listed in `IP_ADDRESS_HEADERS`, now records no IP
+  instead of a spoofable one. IPv6 addresses are stored whole, in full form.
 - Admin console: registering or editing an OAuth application showed "Request failed"
   instead of the reason. Better Auth 1.7 puts it in `error_description`, which is now
   shown (for example, a confidential client with an `http://localhost` redirect URI).

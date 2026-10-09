@@ -181,7 +181,15 @@
       "otherProviders": "Fler sätt att logga in",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Kontot delade ingen e-postadress. Försök igen senare eller logga in på ett annat sätt."
+      "noEmail": "Kontot delade ingen e-postadress. Försök igen senare eller logga in på ett annat sätt.",
+      "signUpDisabled": "Det finns inget konto för den adressen än, och den här inloggningsmetoden kan inte skapa ett. Logga in på ett annat sätt."
+    },
+    "app": {
+      "signIn": "Logga in för att fortsätta till <app>{name}</app>",
+      "signUp": "Skapa ditt konto för att fortsätta till <app>{name}</app>",
+      "continue": "Fortsätt till <app>{name}</app>",
+      "unverified": "Overifierad app.",
+      "unverifiedHint": "{name} har inte granskat den: fortsätt bara om du litar på den."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API-nycklar",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Dina data"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API-nycklar",
+        "hide": "Dölj API-nycklar",
+        "title": "API-nycklar för {name}",
+        "description": "Nycklar som ägs av organisationen, för dess skript och tjänster. De fortsätter att fungera när medlemmen som skapade dem lämnar. Endast ägare och administratörer ser dem.",
+        "empty": "Den här organisationen har inga API-nycklar.",
+        "loadError": "Det gick inte att läsa in organisationens API-nycklar.",
+        "limit": "Den här organisationen har redan {max} nycklar. Återkalla en för att skapa en ny."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Din session har avslutats. Logga in igen.",
         "impersonating": "Det går inte att skapa API-nycklar medan du visar någon annans konto.",
         "recentSignIn": "Av säkerhetsskäl måste du logga in igen för att skapa en API-nyckel.",
-        "failed": "Det gick inte att skapa API-nyckeln."
-      }
+        "failed": "Det gick inte att skapa API-nyckeln.",
+        "forbidden": "Endast ägare och administratörer i den här organisationen kan hantera dess API-nycklar."
+      },
+      "createdBy": "skapad av {name}",
+      "createdByDeleted": "skaparens konto borttaget"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Logga ut från {email}",
       "signOutAll": "Logga ut från alla konton",
       "switchFailed": "Det gick inte att byta konto. Försök igen."
+    },
+    "data": {
+      "exportTitle": "Exportera dina data",
+      "exportDescription": "Ladda ned en JSON-fil med allt som den här tjänsten lagrar om ditt konto: profil, inloggningsmetoder, passkeys, sessioner, anslutna appar, API-nycklar, organisationer och aktivitetshistorik. Lösenord, tokens, nycklar och hemligheter för tvåfaktorsautentisering ingår aldrig.",
+      "exportButton": "Ladda ned mina data",
+      "exportDone": "Dina data har laddats ned.",
+      "exportErrors": {
+        "signedOut": "Din session har avslutats. Logga in igen.",
+        "impersonating": "Data kan inte exporteras medan du visar någon annans konto.",
+        "recentSignIn": "Av säkerhetsskäl behöver du logga in igen för att exportera dina data.",
+        "rateLimited": "Du har exporterat dina data flera gånger den senaste timmen. Försök igen senare.",
+        "failed": "Det gick inte att exportera dina data. Försök igen."
+      },
+      "signInAgain": "Logga in igen",
+      "deleteTitle": "Radera konto",
+      "deleteDescription": "Radera ditt konto och allt som är kopplat till det permanent. Det går inte att ångra.",
+      "deleteButton": "Radera mitt konto",
+      "loadError": "Det gick inte att kontrollera om kontot kan raderas.",
+      "blockers": {
+        "admin": {
+          "title": "Du är administratör",
+          "body": "Be först en annan administratör att ta bort din administratörsroll. Då står tjänsten aldrig utan administratör, och ändringen registreras."
+        },
+        "sole_owner": {
+          "title": "Du är enda ägare till en organisation",
+          "body": "Du är enda ägare till {organizations}. Gör en annan medlem till ägare, eller be en administratör att radera organisationen, och kom sedan tillbaka."
+        },
+        "scim": {
+          "title": "Ditt konto hanteras av din organisation",
+          "body": "Ditt företags katalog skapade det här kontot och skulle skapa det igen. Be i stället din IT-administratör att ta bort dig från katalogen.",
+          "bodyNamed": "Katalogen hos {organizations} skapade det här kontot och skulle skapa det igen. Be i stället din IT-administratör att ta bort dig från katalogen."
+        }
+      },
+      "confirmTitle": "Radera ditt konto?",
+      "confirmDescription": "Det går inte att ångra. När du bekräftar via mejlet vi skickar till dig:",
+      "consequences": {
+        "signIn": "Loggas du ut överallt och kan inte längre logga in med det här kontot.",
+        "apps": "Förlorar appar som du har loggat in i med det här kontot åtkomsten direkt.",
+        "data": "Raderas dina passkeys, inställningar för tvåfaktorsautentisering, API-nycklar och länkade konton, och du lämnar dina organisationer.",
+        "records": "Visar uppgifter som sparas av säkerhetsskäl, till exempel granskningsloggen, inte längre ditt namn eller din e-postadress."
+      },
+      "exportFirst": "Vill du ha en kopia först? Ladda ned dina data innan du fortsätter.",
+      "typeEmail": "Skriv {email} för att bekräfta",
+      "password": "Lösenord",
+      "noPassword": "Ditt konto har inget lösenord: din senaste inloggning bekräftar att det är du.",
+      "signInFirst": "Ditt konto har inget lösenord, så logga in igen först för att bekräfta att det är du.",
+      "sendLink": "Mejla mig bekräftelselänken",
+      "cancel": "Avbryt",
+      "sentTitle": "Kolla din inkorg",
+      "sentBody": "Vi har skickat en länk till {email}. Öppna den inom {minutes} minuter i en webbläsare där du är inloggad på det här kontot och bekräfta för att radera det.",
+      "done": "Klar",
+      "deleteErrors": {
+        "mismatch": "E-postadressen matchar inte det här kontot.",
+        "password": "Ange ditt lösenord.",
+        "wrongPassword": "Lösenordet är fel.",
+        "recentSignIn": "Av säkerhetsskäl behöver du logga in igen innan du raderar ditt konto.",
+        "blocked": "Kontot kan inte raderas än. Stäng det här fönstret för att se varför.",
+        "impersonating": "Ett konto kan inte raderas medan en administratör visar det.",
+        "failed": "Det gick inte att starta raderingen. Försök igen."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Välj ett konto",
@@ -798,6 +942,25 @@
       "failed": "Något gick fel. Försök igen."
     }
   },
+  "deleteAccount": {
+    "title": "Radera ditt konto",
+    "description": "Du har bett om att radera kontot {email}. När du bekräftar försvinner det för gott.",
+    "signedOut": "Logga in på kontot du vill radera och öppna sedan länken igen.",
+    "consequenceApps": "Appar som du har loggat in i med det förlorar åtkomsten direkt.",
+    "consequenceSignIn": "Du loggas ut överallt och kan inte logga in med det igen.",
+    "consequenceUndo": "Det går inte att ångra.",
+    "confirm": "Radera mitt konto permanent",
+    "keep": "Behåll mitt konto",
+    "deletedTitle": "Ditt konto har raderats",
+    "deletedBody": "Allt som var kopplat till det har tagits bort. Tack för att du använde {brand}.",
+    "toSignIn": "Gå till inloggningen",
+    "errors": {
+      "missing": "Länken är ofullständig. Öppna länken i mejlet igen eller börja om från din kontosida.",
+      "invalid": "Länken har gått ut, har redan använts eller skickades till ett annat konto. Kontrollera att du är inloggad på kontot du vill radera, eller börja om från din kontosida.",
+      "blocked": "Kontot kan inte raderas än. Öppna din kontosida för att se vad du behöver göra först.",
+      "failed": "Det gick inte att radera kontot. Försök igen."
+    }
+  },
   "captcha": {
     "label": "Säkerhetskontroll",
     "required": "Slutför säkerhetskontrollen först.",
@@ -812,6 +975,16 @@
       "body": "Ange den här koden på inloggningssidan för {brand} för att slutföra inloggningen.",
       "note": "Koden går ut om {minutes} minuter och fungerar bara en gång.",
       "footnote": "Har du inte begärt någon kod? Ignorera det här mejlet: ingen kan logga in utan koden. Dela den aldrig med någon."
+    },
+    "deleteAccount": {
+      "subject": "Bekräfta raderingen av ditt {brand}-konto",
+      "preheader": "Någon har bett om att radera ditt {brand}-konto. Inget händer förrän du bekräftar.",
+      "heading": "Radera ditt konto?",
+      "body": "Någon har begärt att {brand}-kontot {email} ska raderas permanent. Om du vill fortsätta öppnar du länken nedan i en webbläsare där du är inloggad på det här kontot och bekräftar.",
+      "consequences": "Appar som du loggar in i med det här kontot förlorar åtkomsten, och kontot kan inte återställas.",
+      "button": "Granska och radera",
+      "note": "Länken går ut om {minutes} minuter och fungerar bara en gång.",
+      "footnote": "Har du inte bett om det här? Ignorera det här mejlet: ditt konto förblir som det är. Överväg att byta lösenord, eftersom begäran kom från en inloggad session."
     }
   }
 }

@@ -181,7 +181,15 @@
       "otherProviders": "다른 로그인 방법",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "이 계정에서 이메일 주소를 공유하지 않았습니다. 나중에 다시 시도하거나 다른 방법으로 로그인하세요."
+      "noEmail": "이 계정에서 이메일 주소를 공유하지 않았습니다. 나중에 다시 시도하거나 다른 방법으로 로그인하세요.",
+      "signUpDisabled": "이 주소로 된 계정이 아직 없으며 이 로그인 방법으로는 계정을 만들 수 없습니다. 다른 방법으로 로그인하세요."
+    },
+    "app": {
+      "signIn": "로그인하고 <app>{name}</app>(으)로 계속",
+      "signUp": "계정을 만들고 <app>{name}</app>(으)로 계속",
+      "continue": "<app>{name}</app>(으)로 계속",
+      "unverified": "확인되지 않은 앱입니다.",
+      "unverifiedHint": "{name}에서 검토하지 않은 앱입니다. 신뢰하는 경우에만 계속하세요."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API 키",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "내 데이터"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "API 키",
+        "hide": "API 키 숨기기",
+        "title": "{name}의 API 키",
+        "description": "조직이 소유한 키로, 조직의 스크립트와 서비스용입니다. 키를 만든 멤버가 떠나도 계속 작동합니다. 소유자와 관리자만 볼 수 있습니다.",
+        "empty": "이 조직에는 API 키가 없습니다.",
+        "loadError": "이 조직의 API 키를 불러올 수 없습니다.",
+        "limit": "이 조직에는 이미 키가 {max}개 있습니다. 새로 만들려면 하나를 취소하세요."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "세션이 종료되었습니다. 다시 로그인하세요.",
         "impersonating": "다른 사람의 계정을 보는 중에는 API 키를 만들 수 없습니다.",
         "recentSignIn": "보안을 위해 API 키를 만들려면 다시 로그인하세요.",
-        "failed": "API 키를 만들지 못했습니다."
-      }
+        "failed": "API 키를 만들지 못했습니다.",
+        "forbidden": "이 조직의 API 키는 소유자와 관리자만 관리할 수 있습니다."
+      },
+      "createdBy": "만든 사람: {name}",
+      "createdByDeleted": "만든 사람의 계정 삭제됨"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "{email}에서 로그아웃",
       "signOutAll": "모든 계정에서 로그아웃",
       "switchFailed": "계정을 전환하지 못했습니다. 다시 시도하세요."
+    },
+    "data": {
+      "exportTitle": "데이터 내보내기",
+      "exportDescription": "이 서비스가 계정에 대해 저장하는 모든 정보를 JSON 파일로 다운로드합니다. 프로필, 로그인 방법, 패스키, 세션, 연결된 애플리케이션, API 키, 조직, 활동 기록이 포함됩니다. 비밀번호, 토큰, 키, 2단계 인증 비밀 값은 포함되지 않습니다.",
+      "exportButton": "내 데이터 다운로드",
+      "exportDone": "데이터를 다운로드했습니다.",
+      "exportErrors": {
+        "signedOut": "세션이 종료되었습니다. 다시 로그인하세요.",
+        "impersonating": "다른 사용자의 계정을 보는 중에는 데이터를 내보낼 수 없습니다.",
+        "recentSignIn": "보안을 위해 데이터를 내보내려면 다시 로그인하세요.",
+        "rateLimited": "지난 1시간 동안 데이터를 여러 번 내보냈습니다. 나중에 다시 시도하세요.",
+        "failed": "데이터를 내보낼 수 없습니다. 다시 시도하세요."
+      },
+      "signInAgain": "다시 로그인",
+      "deleteTitle": "계정 삭제",
+      "deleteDescription": "계정과 계정에 연결된 모든 데이터를 영구적으로 삭제합니다. 이 작업은 되돌릴 수 없습니다.",
+      "deleteButton": "내 계정 삭제",
+      "loadError": "이 계정을 삭제할 수 있는지 확인할 수 없습니다.",
+      "blockers": {
+        "admin": {
+          "title": "관리자 계정입니다",
+          "body": "먼저 다른 관리자에게 내 관리자 역할을 해제해 달라고 요청하세요. 이렇게 하면 서비스에 관리자가 항상 남아 있고 변경 내용도 기록됩니다."
+        },
+        "sole_owner": {
+          "title": "조직의 유일한 소유자입니다",
+          "body": "{organizations}의 유일한 소유자입니다. 다른 멤버를 소유자로 지정하거나 관리자에게 조직 삭제를 요청한 다음 다시 시도하세요."
+        },
+        "scim": {
+          "title": "조직에서 관리하는 계정입니다",
+          "body": "회사 디렉터리에서 이 계정을 만들었으므로 삭제해도 다시 만들어집니다. 대신 IT 관리자에게 디렉터리에서 삭제해 달라고 요청하세요.",
+          "bodyNamed": "{organizations}의 디렉터리에서 이 계정을 만들었으므로 삭제해도 다시 만들어집니다. 대신 IT 관리자에게 디렉터리에서 삭제해 달라고 요청하세요."
+        }
+      },
+      "confirmTitle": "계정을 삭제할까요?",
+      "confirmDescription": "이 작업은 되돌릴 수 없습니다. 보내 드리는 이메일에서 확인하면 다음과 같이 처리됩니다.",
+      "consequences": {
+        "signIn": "모든 기기에서 로그아웃되며 이 계정으로 더 이상 로그인할 수 없습니다.",
+        "apps": "이 계정으로 로그인한 앱은 즉시 접근 권한을 잃습니다.",
+        "data": "패스키, 2단계 인증 설정, API 키, 연결된 계정이 삭제되며 소속된 조직에서 나가게 됩니다.",
+        "records": "감사 로그처럼 보안을 위해 보관되는 기록에는 더 이상 이름이나 이메일 주소가 표시되지 않습니다."
+      },
+      "exportFirst": "사본이 필요하신가요? 계속하기 전에 데이터를 다운로드하세요.",
+      "typeEmail": "확인하려면 {email}을(를) 입력하세요",
+      "password": "비밀번호",
+      "noPassword": "이 계정에는 비밀번호가 없습니다. 최근 로그인으로 본인임이 확인되었습니다.",
+      "signInFirst": "이 계정에는 비밀번호가 없으므로 본인 확인을 위해 먼저 다시 로그인하세요.",
+      "sendLink": "확인 링크를 이메일로 받기",
+      "cancel": "취소",
+      "sentTitle": "받은편지함을 확인하세요",
+      "sentBody": "{email}(으)로 링크를 보냈습니다. {minutes}분 이내에 이 계정으로 로그인된 브라우저에서 링크를 열고 삭제를 확인하세요.",
+      "done": "완료",
+      "deleteErrors": {
+        "mismatch": "이메일 주소가 이 계정과 일치하지 않습니다.",
+        "password": "비밀번호를 입력하세요.",
+        "wrongPassword": "비밀번호가 올바르지 않습니다.",
+        "recentSignIn": "보안을 위해 계정을 삭제하기 전에 다시 로그인하세요.",
+        "blocked": "이 계정은 아직 삭제할 수 없습니다. 이 창을 닫으면 이유를 확인할 수 있습니다.",
+        "impersonating": "관리자가 보고 있는 동안에는 계정을 삭제할 수 없습니다.",
+        "failed": "삭제를 시작할 수 없습니다. 다시 시도하세요."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "계정 선택",
@@ -798,6 +942,25 @@
       "failed": "문제가 발생했습니다. 다시 시도하세요."
     }
   },
+  "deleteAccount": {
+    "title": "계정 삭제",
+    "description": "{email} 계정의 삭제를 요청하셨습니다. 확인하면 계정이 영구적으로 삭제됩니다.",
+    "signedOut": "삭제하려는 계정으로 로그인한 다음 링크를 다시 여세요.",
+    "consequenceApps": "이 계정으로 로그인한 앱은 즉시 접근 권한을 잃습니다.",
+    "consequenceSignIn": "모든 기기에서 로그아웃되며 이 계정으로 다시 로그인할 수 없습니다.",
+    "consequenceUndo": "이 작업은 되돌릴 수 없습니다.",
+    "confirm": "계정 영구 삭제",
+    "keep": "계정 유지",
+    "deletedTitle": "계정이 삭제되었습니다",
+    "deletedBody": "계정에 연결된 모든 데이터가 삭제되었습니다. {brand}을(를) 이용해 주셔서 감사합니다.",
+    "toSignIn": "로그인으로 이동",
+    "errors": {
+      "missing": "링크가 완전하지 않습니다. 이메일의 링크를 다시 열거나 계정 페이지에서 다시 시작하세요.",
+      "invalid": "이 링크는 만료되었거나, 이미 사용되었거나, 다른 계정으로 보낸 링크입니다. 삭제하려는 계정으로 로그인했는지 확인하거나 계정 페이지에서 다시 시작하세요.",
+      "blocked": "이 계정은 아직 삭제할 수 없습니다. 계정 페이지를 열어 먼저 해야 할 일을 확인하세요.",
+      "failed": "계정을 삭제할 수 없습니다. 다시 시도하세요."
+    }
+  },
   "captcha": {
     "label": "보안 확인",
     "required": "먼저 보안 확인을 완료하세요.",
@@ -812,6 +975,16 @@
       "body": "{brand} 로그인 페이지에 이 코드를 입력하여 로그인을 완료하세요.",
       "note": "이 코드는 {minutes}분 후에 만료되며 한 번만 사용할 수 있습니다.",
       "footnote": "코드를 요청하지 않으셨나요? 이 이메일은 무시하셔도 됩니다. 코드 없이는 아무도 로그인할 수 없습니다. 코드는 누구와도 공유하지 마세요."
+    },
+    "deleteAccount": {
+      "subject": "{brand} 계정 삭제 확인",
+      "preheader": "{brand} 계정 삭제 요청이 접수되었습니다. 확인하기 전까지는 아무것도 변경되지 않습니다.",
+      "heading": "계정을 삭제할까요?",
+      "body": "{brand} 계정 {email}을(를) 영구적으로 삭제해 달라는 요청이 있었습니다. 계속하려면 이 계정으로 로그인된 브라우저에서 아래 링크를 열고 삭제를 확인하세요.",
+      "consequences": "이 계정으로 로그인하는 앱은 접근 권한을 잃게 되며, 계정은 복구할 수 없습니다.",
+      "button": "확인 후 삭제",
+      "note": "이 링크는 {minutes}분 후에 만료되며 한 번만 사용할 수 있습니다.",
+      "footnote": "요청하지 않으셨다면 이 이메일은 무시하셔도 됩니다. 계정은 그대로 유지됩니다. 다만 로그인된 세션에서 요청이 전송되었으므로 비밀번호를 변경하는 것이 좋습니다."
     }
   }
 }

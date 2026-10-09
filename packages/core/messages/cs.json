@@ -181,7 +181,15 @@
       "otherProviders": "Další způsoby přihlášení",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Tento účet nesdílel e-mailovou adresu. Zkuste to později nebo se přihlaste jinak."
+      "noEmail": "Tento účet nesdílel e-mailovou adresu. Zkuste to později nebo se přihlaste jinak.",
+      "signUpDisabled": "Pro tuto adresu zatím neexistuje účet a tímto způsobem přihlášení ho nelze vytvořit. Přihlaste se jinak."
+    },
+    "app": {
+      "signIn": "Přihlaste se a pokračujte do <app>{name}</app>",
+      "signUp": "Vytvořte si účet a pokračujte do <app>{name}</app>",
+      "continue": "Pokračovat do <app>{name}</app>",
+      "unverified": "Neověřená aplikace.",
+      "unverifiedHint": "{name} ji nezkontroloval: pokračujte, jen pokud jí důvěřujete."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "API klíče",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Vaše data"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "Klíče API",
+        "hide": "Skrýt klíče API",
+        "title": "Klíče API organizace {name}",
+        "description": "Klíče vlastněné organizací pro její skripty a služby. Fungují dál, i když člen, který je vytvořil, odejde. Vidí je jen vlastníci a správci.",
+        "empty": "Tato organizace nemá žádné klíče API.",
+        "loadError": "Klíče API této organizace se nepodařilo načíst.",
+        "limit": "Tato organizace už má {max} klíčů. Zrušte jeden, abyste mohli vytvořit další."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Vaše relace skončila. Přihlaste se znovu.",
         "impersonating": "API klíče nelze vytvářet při prohlížení účtu jiné osoby.",
         "recentSignIn": "Z bezpečnostních důvodů se pro vytvoření API klíče přihlaste znovu.",
-        "failed": "API klíč se nepodařilo vytvořit."
-      }
+        "failed": "API klíč se nepodařilo vytvořit.",
+        "forbidden": "Klíče API této organizace mohou spravovat jen její vlastníci a správci."
+      },
+      "createdBy": "vytvořil(a) {name}",
+      "createdByDeleted": "účet autora smazán"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Odhlásit {email}",
       "signOutAll": "Odhlásit všechny účty",
       "switchFailed": "Účet se nepodařilo přepnout. Zkuste to znovu."
+    },
+    "data": {
+      "exportTitle": "Export vašich dat",
+      "exportDescription": "Stáhněte si soubor JSON se vším, co tato služba o vašem účtu uchovává: profil, způsoby přihlášení, přístupové klíče, relace, připojené aplikace, API klíče, organizace a historii aktivit. Hesla, tokeny, klíče a tajné klíče dvoufázového ověření nejsou nikdy zahrnuty.",
+      "exportButton": "Stáhnout moje data",
+      "exportDone": "Vaše data byla stažena.",
+      "exportErrors": {
+        "signedOut": "Vaše relace skončila. Přihlaste se znovu.",
+        "impersonating": "Při prohlížení cizího účtu nelze data exportovat.",
+        "recentSignIn": "Z bezpečnostních důvodů se před exportem dat přihlaste znovu.",
+        "rateLimited": "Za poslední hodinu jste svá data exportovali už několikrát. Zkuste to později.",
+        "failed": "Data se nepodařilo exportovat. Zkuste to znovu."
+      },
+      "signInAgain": "Přihlásit se znovu",
+      "deleteTitle": "Smazat účet",
+      "deleteDescription": "Trvale smažte svůj účet a vše, co je s ním propojené. Tuto akci nelze vrátit zpět.",
+      "deleteButton": "Smazat můj účet",
+      "loadError": "Nepodařilo se ověřit, zda lze tento účet smazat.",
+      "blockers": {
+        "admin": {
+          "title": "Jste správce",
+          "body": "Nejprve požádejte jiného správce, aby vám odebral roli správce. Služba tak nikdy nezůstane bez správce a změna bude zaznamenána."
+        },
+        "sole_owner": {
+          "title": "Jste jediným vlastníkem organizace",
+          "body": "Jste jediným vlastníkem: {organizations}. Udělejte vlastníkem jiného člena nebo požádejte správce o smazání organizace a pak se sem vraťte."
+        },
+        "scim": {
+          "title": "Váš účet spravuje vaše organizace",
+          "body": "Tento účet vytvořil firemní adresář a vytvořil by ho znovu. Požádejte raději svého IT správce, aby vás z adresáře odebral.",
+          "bodyNamed": "Tento účet vytvořil adresář organizace {organizations} a vytvořil by ho znovu. Požádejte raději svého IT správce, aby vás z adresáře odebral."
+        }
+      },
+      "confirmTitle": "Smazat váš účet?",
+      "confirmDescription": "Tuto akci nelze vrátit zpět. Jakmile ji potvrdíte v e-mailu, který vám pošleme:",
+      "consequences": {
+        "signIn": "Budete všude odhlášeni a k tomuto účtu se už nepřihlásíte.",
+        "apps": "Aplikace, do kterých se tímto účtem přihlašujete, okamžitě ztratí přístup.",
+        "data": "Vaše přístupové klíče, nastavení dvoufázového ověření, API klíče a propojené účty budou smazány a opustíte své organizace.",
+        "records": "Záznamy uchovávané kvůli zabezpečení, například protokol auditu, už nebudou zobrazovat vaše jméno ani e-mailovou adresu."
+      },
+      "exportFirst": "Chcete si nejdřív uložit kopii? Před pokračováním si stáhněte svá data.",
+      "typeEmail": "Pro potvrzení zadejte {email}",
+      "password": "Heslo",
+      "noPassword": "Váš účet nemá heslo: vaše nedávné přihlášení potvrzuje, že jste to vy.",
+      "signInFirst": "Váš účet nemá heslo, proto se nejprve znovu přihlaste a potvrďte, že jste to vy.",
+      "sendLink": "Poslat potvrzovací odkaz e-mailem",
+      "cancel": "Zrušit",
+      "sentTitle": "Zkontrolujte svou schránku",
+      "sentBody": "Poslali jsme odkaz na {email}. Otevřete ho do {minutes} minut v prohlížeči, ve kterém jste k tomuto účtu přihlášeni, a smazání potvrďte.",
+      "done": "Hotovo",
+      "deleteErrors": {
+        "mismatch": "E-mailová adresa neodpovídá tomuto účtu.",
+        "password": "Zadejte heslo.",
+        "wrongPassword": "Heslo není správné.",
+        "recentSignIn": "Z bezpečnostních důvodů se před smazáním účtu přihlaste znovu.",
+        "blocked": "Tento účet zatím nelze smazat. Zavřete toto okno a uvidíte proč.",
+        "impersonating": "Účet nelze smazat, když si ho prohlíží správce.",
+        "failed": "Mazání se nepodařilo zahájit. Zkuste to znovu."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Vyberte účet",
@@ -798,6 +942,25 @@
       "failed": "Něco se pokazilo. Zkuste to znovu."
     }
   },
+  "deleteAccount": {
+    "title": "Smazat váš účet",
+    "description": "Požádali jste o smazání účtu {email}. Po potvrzení bude nenávratně pryč.",
+    "signedOut": "Přihlaste se k účtu, který chcete smazat, a pak odkaz otevřete znovu.",
+    "consequenceApps": "Aplikace, do kterých se tímto účtem přihlašujete, okamžitě ztratí přístup.",
+    "consequenceSignIn": "Budete všude odhlášeni a už se k němu nepřihlásíte.",
+    "consequenceUndo": "Tuto akci nelze vrátit zpět.",
+    "confirm": "Trvale smazat můj účet",
+    "keep": "Ponechat můj účet",
+    "deletedTitle": "Váš účet byl smazán",
+    "deletedBody": "Vše, co s ním bylo propojené, bylo odstraněno. Děkujeme, že jste používali {brand}.",
+    "toSignIn": "Přejít na přihlášení",
+    "errors": {
+      "missing": "Tento odkaz je neúplný. Otevřete znovu odkaz z e-mailu nebo začněte znovu na stránce svého účtu.",
+      "invalid": "Platnost tohoto odkazu vypršela, odkaz už byl použit nebo byl poslán k jinému účtu. Zkontrolujte, že jste přihlášeni k účtu, který chcete smazat, nebo začněte znovu na stránce svého účtu.",
+      "blocked": "Tento účet zatím nelze smazat. Na stránce svého účtu zjistíte, co je potřeba udělat nejdřív.",
+      "failed": "Účet se nepodařilo smazat. Zkuste to znovu."
+    }
+  },
   "captcha": {
     "label": "Bezpečnostní kontrola",
     "required": "Nejprve dokončete bezpečnostní kontrolu.",
@@ -812,6 +975,16 @@
       "body": "Zadejte tento kód na přihlašovací stránce {brand} a dokončete přihlášení.",
       "note": "Platnost kódu vyprší za {minutes} minut a lze ho použít jen jednou.",
       "footnote": "Nežádali jste o kód? Tento e-mail ignorujte: bez kódu se nikdo nepřihlásí. Nikdy ho nikomu nesdělujte."
+    },
+    "deleteAccount": {
+      "subject": "Potvrďte smazání svého účtu {brand}",
+      "preheader": "Někdo požádal o smazání vašeho účtu {brand}. Dokud to nepotvrdíte, nic se nestane.",
+      "heading": "Smazat váš účet?",
+      "body": "Byla podána žádost o trvalé smazání účtu {brand} {email}. Chcete-li pokračovat, otevřete níže uvedený odkaz v prohlížeči, ve kterém jste k tomuto účtu přihlášeni, a potvrďte to.",
+      "consequences": "Aplikace, do kterých se tímto účtem přihlašujete, ztratí přístup a účet nebude možné obnovit.",
+      "button": "Zkontrolovat a smazat",
+      "note": "Platnost odkazu vyprší za {minutes} minut a lze ho použít jen jednou.",
+      "footnote": "Pokud jste o to nežádali, tento e-mail ignorujte: váš účet zůstane beze změny. Zvažte změnu hesla, protože žádost přišla z přihlášené relace."
     }
   }
 }

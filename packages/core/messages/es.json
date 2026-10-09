@@ -181,7 +181,15 @@
       "otherProviders": "Más formas de iniciar sesión",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "Esa cuenta no compartió una dirección de correo. Inténtalo más tarde o inicia sesión de otra forma."
+      "noEmail": "Esa cuenta no compartió una dirección de correo. Inténtalo más tarde o inicia sesión de otra forma.",
+      "signUpDisabled": "Todavía no hay ninguna cuenta para esa dirección y este método de inicio de sesión no puede crearla. Inicia sesión de otra forma."
+    },
+    "app": {
+      "signIn": "Inicia sesión para continuar en <app>{name}</app>",
+      "signUp": "Crea tu cuenta para continuar en <app>{name}</app>",
+      "continue": "Continuar en <app>{name}</app>",
+      "unverified": "Aplicación no verificada.",
+      "unverifiedHint": "{name} no la ha revisado: continúa solo si confías en ella."
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "Claves de API",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "Tus datos"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "Claves de API",
+        "hide": "Ocultar claves de API",
+        "title": "Claves de API de {name}",
+        "description": "Claves propiedad de la organización, para sus scripts y servicios. Siguen funcionando cuando el miembro que las creó se va. Solo los propietarios y administradores las ven.",
+        "empty": "Esta organización no tiene claves de API.",
+        "loadError": "No se pudieron cargar las claves de API de esta organización.",
+        "limit": "Esta organización ya tiene {max} claves. Revoca una para crear otra."
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "Tu sesión ha terminado. Vuelve a iniciar sesión.",
         "impersonating": "No se pueden crear claves de API mientras ves la cuenta de otra persona.",
         "recentSignIn": "Por seguridad, vuelve a iniciar sesión para crear una clave de API.",
-        "failed": "No se pudo crear la clave de API."
-      }
+        "failed": "No se pudo crear la clave de API.",
+        "forbidden": "Solo los propietarios y administradores de esta organización pueden gestionar sus claves de API."
+      },
+      "createdBy": "creada por {name}",
+      "createdByDeleted": "cuenta del creador eliminada"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "Cerrar sesión de {email}",
       "signOutAll": "Cerrar sesión en todas las cuentas",
       "switchFailed": "No se pudo cambiar de cuenta. Inténtalo de nuevo."
+    },
+    "data": {
+      "exportTitle": "Exportar tus datos",
+      "exportDescription": "Descarga un archivo JSON con todo lo que este servicio guarda sobre tu cuenta: perfil, métodos de inicio de sesión, llaves de acceso, sesiones, aplicaciones conectadas, claves de API, organizaciones e historial de actividad. Nunca se incluyen contraseñas, tokens, claves ni secretos de la autenticación en dos pasos.",
+      "exportButton": "Descargar mis datos",
+      "exportDone": "Tus datos se han descargado.",
+      "exportErrors": {
+        "signedOut": "Tu sesión ha terminado. Vuelve a iniciar sesión.",
+        "impersonating": "No se pueden exportar datos mientras ves la cuenta de otra persona.",
+        "recentSignIn": "Por seguridad, vuelve a iniciar sesión para exportar tus datos.",
+        "rateLimited": "Has exportado tus datos varias veces en la última hora. Inténtalo más tarde.",
+        "failed": "No se han podido exportar tus datos. Inténtalo de nuevo."
+      },
+      "signInAgain": "Volver a iniciar sesión",
+      "deleteTitle": "Eliminar cuenta",
+      "deleteDescription": "Elimina de forma permanente tu cuenta y todo lo vinculado a ella. No se puede deshacer.",
+      "deleteButton": "Eliminar mi cuenta",
+      "loadError": "No se ha podido comprobar si esta cuenta se puede eliminar.",
+      "blockers": {
+        "admin": {
+          "title": "Eres administrador",
+          "body": "Primero pide a otro administrador que te quite el rol de administrador. Así el servicio nunca se queda sin administrador y el cambio queda registrado."
+        },
+        "sole_owner": {
+          "title": "Eres el único propietario de una organización",
+          "body": "Eres el único propietario de {organizations}. Haz propietario a otro miembro o pide a un administrador que elimine la organización, y luego vuelve."
+        },
+        "scim": {
+          "title": "Tu organización gestiona tu cuenta",
+          "body": "El directorio de tu empresa creó esta cuenta y la volvería a crear. Pide a tu administrador de TI que te quite del directorio.",
+          "bodyNamed": "El directorio de {organizations} creó esta cuenta y la volvería a crear. Pide a tu administrador de TI que te quite del directorio."
+        }
+      },
+      "confirmTitle": "¿Eliminar tu cuenta?",
+      "confirmDescription": "No se puede deshacer. Cuando lo confirmes desde el correo que te enviaremos:",
+      "consequences": {
+        "signIn": "Se cerrará tu sesión en todas partes y ya no podrás iniciar sesión con esta cuenta.",
+        "apps": "Las aplicaciones en las que iniciaste sesión con esta cuenta pierden el acceso de inmediato.",
+        "data": "Se eliminan tus llaves de acceso, la configuración de la autenticación en dos pasos, tus claves de API y tus cuentas vinculadas, y sales de tus organizaciones.",
+        "records": "Los registros que se conservan por seguridad, como el registro de auditoría, ya no muestran tu nombre ni tu dirección de correo."
+      },
+      "exportFirst": "¿Quieres una copia antes? Descarga tus datos antes de continuar.",
+      "typeEmail": "Escribe {email} para confirmar",
+      "password": "Contraseña",
+      "noPassword": "Tu cuenta no tiene contraseña: tu inicio de sesión reciente confirma que eres tú.",
+      "signInFirst": "Tu cuenta no tiene contraseña, así que primero vuelve a iniciar sesión para confirmar que eres tú.",
+      "sendLink": "Enviarme el enlace de confirmación",
+      "cancel": "Cancelar",
+      "sentTitle": "Revisa tu correo",
+      "sentBody": "Hemos enviado un enlace a {email}. Ábrelo en los próximos {minutes} minutos, en un navegador donde hayas iniciado sesión con esta cuenta, y confirma para eliminarla.",
+      "done": "Listo",
+      "deleteErrors": {
+        "mismatch": "La dirección de correo no coincide con esta cuenta.",
+        "password": "Introduce tu contraseña.",
+        "wrongPassword": "La contraseña no es correcta.",
+        "recentSignIn": "Por seguridad, vuelve a iniciar sesión antes de eliminar tu cuenta.",
+        "blocked": "Esta cuenta aún no se puede eliminar. Cierra esta ventana para ver el motivo.",
+        "impersonating": "No se puede eliminar una cuenta mientras un administrador la está viendo.",
+        "failed": "No se ha podido iniciar la eliminación. Inténtalo de nuevo."
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "Elige una cuenta",
@@ -798,6 +942,25 @@
       "failed": "Algo salió mal. Inténtalo de nuevo."
     }
   },
+  "deleteAccount": {
+    "title": "Eliminar tu cuenta",
+    "description": "Has pedido eliminar la cuenta {email}. Cuando lo confirmes, se eliminará para siempre.",
+    "signedOut": "Inicia sesión con la cuenta que quieres eliminar y vuelve a abrir el enlace.",
+    "consequenceApps": "Las aplicaciones en las que iniciaste sesión con ella pierden el acceso de inmediato.",
+    "consequenceSignIn": "Se cerrará tu sesión en todas partes y no podrás volver a iniciar sesión con ella.",
+    "consequenceUndo": "No se puede deshacer.",
+    "confirm": "Eliminar mi cuenta para siempre",
+    "keep": "Conservar mi cuenta",
+    "deletedTitle": "Tu cuenta se ha eliminado",
+    "deletedBody": "Se ha eliminado todo lo vinculado a ella. Gracias por usar {brand}.",
+    "toSignIn": "Ir al inicio de sesión",
+    "errors": {
+      "missing": "Este enlace está incompleto. Vuelve a abrir el enlace del correo o empieza de nuevo desde la página de tu cuenta.",
+      "invalid": "Este enlace ha caducado, ya se ha usado o se envió a otra cuenta. Comprueba que has iniciado sesión con la cuenta que quieres eliminar o empieza de nuevo desde la página de tu cuenta.",
+      "blocked": "Esta cuenta aún no se puede eliminar. Abre la página de tu cuenta para ver qué hacer primero.",
+      "failed": "No se ha podido eliminar la cuenta. Inténtalo de nuevo."
+    }
+  },
   "captcha": {
     "label": "Verificación de seguridad",
     "required": "Completa primero la verificación de seguridad.",
@@ -812,6 +975,16 @@
       "body": "Introduce este código en la página de inicio de sesión de {brand} para terminar de iniciar sesión.",
       "note": "El código caduca en {minutes} minutos y solo funciona una vez.",
       "footnote": "¿No has pedido un código? Ignora este correo: nadie puede iniciar sesión sin él. No lo compartas nunca con nadie."
+    },
+    "deleteAccount": {
+      "subject": "Confirma la eliminación de tu cuenta de {brand}",
+      "preheader": "Alguien ha pedido eliminar tu cuenta de {brand}. No pasará nada hasta que lo confirmes.",
+      "heading": "¿Eliminar tu cuenta?",
+      "body": "Se ha solicitado eliminar de forma permanente la cuenta de {brand} {email}. Para continuar, abre el enlace de abajo en un navegador donde hayas iniciado sesión con esta cuenta y confirma.",
+      "consequences": "Las aplicaciones en las que inicias sesión con esta cuenta perderán el acceso y la cuenta no se podrá recuperar.",
+      "button": "Revisar y eliminar",
+      "note": "El enlace caduca en {minutes} minutos y solo funciona una vez.",
+      "footnote": "Si no lo has pedido tú, ignora este correo: tu cuenta se queda como está. Te recomendamos cambiar tu contraseña, ya que la solicitud vino de una sesión iniciada."
     }
   }
 }

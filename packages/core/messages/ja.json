@@ -181,7 +181,15 @@
       "otherProviders": "その他のサインイン方法",
       "error": "Could not sign in with that account. Try again or use another method.",
       "notLinked": "That account isn't connected to a {name} account yet. Sign in another way, then connect it from your security settings.",
-      "noEmail": "このアカウントからメールアドレスが共有されませんでした。後でもう一度お試しいただくか、別の方法でサインインしてください。"
+      "noEmail": "このアカウントからメールアドレスが共有されませんでした。後でもう一度お試しいただくか、別の方法でサインインしてください。",
+      "signUpDisabled": "このアドレスのアカウントはまだなく、このサインイン方法では作成できません。別の方法でサインインしてください。"
+    },
+    "app": {
+      "signIn": "サインインして <app>{name}</app> に進む",
+      "signUp": "アカウントを作成して <app>{name}</app> に進む",
+      "continue": "<app>{name}</app> に進む",
+      "unverified": "未確認のアプリです。",
+      "unverifiedHint": "{name} はこのアプリを審査していません。信頼できる場合のみ続行してください。"
     }
   },
   "consent": {
@@ -393,7 +401,8 @@
       "apiKeys": "APIキー",
       "admin": "Admin",
       "marketingHome": "About",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "data": "あなたのデータ"
     },
     "profile": {
       "title": "Profile",
@@ -543,7 +552,16 @@
       "deleted": "Organization deleted",
       "deleteError": "Could not delete the organization.",
       "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone."
+      "confirmDeleteBody": "This removes the organization, its {count, plural, one {# membership} other {# memberships}} and pending invitations. Member accounts stay. This cannot be undone.",
+      "apiKeys": {
+        "show": "APIキー",
+        "hide": "APIキーを隠す",
+        "title": "{name} の APIキー",
+        "description": "組織が所有するキーで、組織のスクリプトやサービス用です。作成したメンバーが抜けても有効なままです。オーナーと管理者のみが表示できます。",
+        "empty": "この組織には APIキーがありません。",
+        "loadError": "この組織の APIキーを読み込めませんでした。",
+        "limit": "この組織にはすでに {max} 個のキーがあります。新しく作成するには、いずれかを取り消してください。"
+      }
     },
     "security": {
       "title": "Security",
@@ -650,8 +668,11 @@
         "signedOut": "セッションが終了しました。もう一度サインインしてください。",
         "impersonating": "他のユーザーのアカウントを表示している間は、APIキーを作成できません。",
         "recentSignIn": "セキュリティのため、APIキーを作成するにはもう一度サインインしてください。",
-        "failed": "APIキーを作成できませんでした。"
-      }
+        "failed": "APIキーを作成できませんでした。",
+        "forbidden": "この組織の API キーを管理できるのはオーナーと管理者のみです。"
+      },
+      "createdBy": "作成者: {name}",
+      "createdByDeleted": "作成者のアカウントは削除済み"
     },
     "accountMenu": "Account menu",
     "connectedAccounts": {
@@ -676,6 +697,66 @@
       "signOutOf": "{email} からサインアウト",
       "signOutAll": "すべてのアカウントからサインアウト",
       "switchFailed": "アカウントを切り替えられませんでした。もう一度お試しください。"
+    },
+    "data": {
+      "exportTitle": "データのエクスポート",
+      "exportDescription": "このサービスがあなたのアカウントについて保存しているすべての情報を JSON ファイルでダウンロードします。プロフィール、サインイン方法、パスキー、セッション、連携中のアプリ、APIキー、組織、アクティビティ履歴が含まれます。パスワード、トークン、キー、2段階認証のシークレットは含まれません。",
+      "exportButton": "データをダウンロード",
+      "exportDone": "データをダウンロードしました。",
+      "exportErrors": {
+        "signedOut": "セッションが終了しました。もう一度サインインしてください。",
+        "impersonating": "他のユーザーのアカウントを表示している間は、データをエクスポートできません。",
+        "recentSignIn": "セキュリティのため、データをエクスポートするにはもう一度サインインしてください。",
+        "rateLimited": "過去 1 時間にデータのエクスポートが何度も行われました。しばらくしてからもう一度お試しください。",
+        "failed": "データをエクスポートできませんでした。もう一度お試しください。"
+      },
+      "signInAgain": "もう一度サインイン",
+      "deleteTitle": "アカウントの削除",
+      "deleteDescription": "アカウントと、それに関連するすべてのデータを完全に削除します。この操作は元に戻せません。",
+      "deleteButton": "アカウントを削除",
+      "loadError": "このアカウントを削除できるかどうかを確認できませんでした。",
+      "blockers": {
+        "admin": {
+          "title": "あなたは管理者です",
+          "body": "先に、別の管理者に依頼してあなたの管理者ロールを外してもらってください。これにより、サービスに管理者が必ず残り、変更の記録も残ります。"
+        },
+        "sole_owner": {
+          "title": "あなたは組織の唯一のオーナーです",
+          "body": "あなたは {organizations} の唯一のオーナーです。別のメンバーをオーナーにするか、管理者に組織の削除を依頼してから、もう一度お試しください。"
+        },
+        "scim": {
+          "title": "このアカウントは組織によって管理されています",
+          "body": "このアカウントは会社のディレクトリによって作成されたため、削除しても再作成されます。代わりに、IT 管理者にディレクトリからの削除を依頼してください。",
+          "bodyNamed": "このアカウントは {organizations} のディレクトリによって作成されたため、削除しても再作成されます。代わりに、IT 管理者にディレクトリからの削除を依頼してください。"
+        }
+      },
+      "confirmTitle": "アカウントを削除しますか？",
+      "confirmDescription": "この操作は元に戻せません。送信されるメールから確認すると、次のようになります。",
+      "consequences": {
+        "signIn": "すべてのデバイスからサインアウトされ、このアカウントではサインインできなくなります。",
+        "apps": "このアカウントでサインインしたアプリは、すぐにアクセスできなくなります。",
+        "data": "パスキー、2段階認証の設定、APIキー、リンク済みのアカウントが削除され、所属している組織から外れます。",
+        "records": "監査ログなど、セキュリティのために保持される記録には、あなたの名前やメールアドレスが表示されなくなります。"
+      },
+      "exportFirst": "先にコピーを保存しますか？続行する前にデータをダウンロードしてください。",
+      "typeEmail": "確認のため {email} と入力してください",
+      "password": "パスワード",
+      "noPassword": "このアカウントにはパスワードがありません。最近のサインインで本人確認が完了しています。",
+      "signInFirst": "このアカウントにはパスワードがありません。本人確認のため、先にもう一度サインインしてください。",
+      "sendLink": "確認リンクをメールで送信",
+      "cancel": "キャンセル",
+      "sentTitle": "メールを確認してください",
+      "sentBody": "{email} にリンクを送信しました。{minutes} 分以内に、このアカウントでサインインしているブラウザでリンクを開き、削除を確定してください。",
+      "done": "完了",
+      "deleteErrors": {
+        "mismatch": "メールアドレスがこのアカウントと一致しません。",
+        "password": "パスワードを入力してください。",
+        "wrongPassword": "パスワードが正しくありません。",
+        "recentSignIn": "セキュリティのため、アカウントを削除する前にもう一度サインインしてください。",
+        "blocked": "このアカウントはまだ削除できません。このウィンドウを閉じると理由を確認できます。",
+        "impersonating": "管理者が表示している間は、アカウントを削除できません。",
+        "failed": "削除を開始できませんでした。もう一度お試しください。"
+      }
     }
   },
   "acceptInvitation": {
@@ -737,7 +818,7 @@
   },
   "sso": {
     "title": "Single sign-on",
-    "description": "Connect your organization's identity provider (OIDC) so members can sign in with their work account.",
+    "description": "Connect your organization's identity provider (OIDC or SAML 2.0) so members can sign in with their work account.",
     "registerTitle": "Register a provider",
     "registerDescription": "Your identity provider must redirect back to the callback URL shown below.",
     "providerId": "Provider ID",
@@ -761,7 +842,70 @@
     "signInEmail": "Work email",
     "signInSubmit": "Continue",
     "signInError": "Could not start single sign-on for this address.",
-    "signInLink": "Sign in with SSO"
+    "signInLink": "Sign in with SSO",
+    "signInFailed": "Single sign-on did not complete. Try again, or ask your administrator to check the identity provider settings.",
+    "saml": {
+      "protocol": "Protocol",
+      "registerDescription": "The identity provider posts signed SAML assertions to the ACS URL below. Sign-in starts from Ostiary (SP-initiated).",
+      "idpSource": "Identity provider configuration",
+      "sourceUrl": "Metadata URL",
+      "sourceXml": "Paste metadata XML",
+      "sourceManual": "Enter manually",
+      "metadataUrl": "IdP metadata URL",
+      "metadataUrlHint": "The server fetches it once when you save. After a certificate rotation, fetch it again from Edit.",
+      "metadataXml": "IdP metadata XML",
+      "metadataXmlHint": "The EntityDescriptor your identity provider exports.",
+      "idpEntityId": "IdP entity ID (issuer)",
+      "ssoUrl": "IdP single sign-on URL",
+      "ssoUrlHint": "The URL for the HTTP-Redirect binding.",
+      "certificate": "IdP signing certificate",
+      "certificateHint": "PEM (-----BEGIN CERTIFICATE-----) or its base64 body.",
+      "mappingTitle": "Attribute mapping",
+      "mappingPreset": "Preset",
+      "preset_okta": "Okta",
+      "preset_entra": "Microsoft Entra ID",
+      "preset_google": "Google Workspace",
+      "preset_jumpcloud": "JumpCloud",
+      "preset_custom": "Custom",
+      "attrEmail": "Email attribute",
+      "attrName": "Display name attribute",
+      "attrFirstName": "First name attribute",
+      "attrLastName": "Last name attribute",
+      "mappingHint": "First and last name are used when the identity provider sends them, otherwise the display name. The user ID is the assertion's NameID: configure a persistent identifier.",
+      "wantAssertionsSigned": "Require signed assertions",
+      "wantAssertionsSignedHint": "Recommended. When off, the whole response must still be signed: unsigned responses are always refused.",
+      "requestSigningNote": "Ostiary does not sign authentication requests: leave request signing off in the identity provider.",
+      "spTitle": "Values to enter in your identity provider",
+      "acsUrl": "ACS URL (single sign-on URL, reply URL)",
+      "spEntityId": "SP entity ID (audience URI, identifier)",
+      "spMetadataUrl": "SP metadata URL",
+      "copy": "Copy",
+      "copied": "Copied",
+      "setupTitle": "Setup notes",
+      "oktaStep1": "In the Okta admin console: Applications, Create App Integration, SAML 2.0.",
+      "oktaStep2": "Single sign-on URL: the ACS URL. Audience URI (SP Entity ID): the SP entity ID. Name ID format: Persistent. Application username: Email.",
+      "oktaStep3": "Attribute statements: email = user.email, firstName = user.firstName, lastName = user.lastName (the Okta preset).",
+      "oktaStep4": "Assign people, then copy the metadata URL from the Sign On tab into Ostiary.",
+      "entraStep1": "In Microsoft Entra ID: Enterprise applications, New application, Create your own application (non-gallery), then Single sign-on, SAML.",
+      "entraStep2": "Basic SAML configuration: Identifier (Entity ID) = the SP entity ID, Reply URL = the ACS URL.",
+      "entraStep3": "Keep the default claims (the Entra ID preset). The default signing option, Sign SAML assertion, works.",
+      "entraStep4": "Assign users and groups, then copy the App Federation Metadata URL into Ostiary.",
+      "spInitiatedNote": "Only sign-in started from Ostiary is supported. Point app tiles in the identity provider's portal to {url}.",
+      "spDetails": "SP details",
+      "detailsTitle": "{id}: SAML settings",
+      "detailsDescription": "Enter these values in the identity provider.",
+      "assertionsSignedOn": "Signed assertions are required.",
+      "assertionsSignedOff": "Signed responses are required (assertions may be unsigned).",
+      "certExpires": "Signing certificate valid until {date}",
+      "certExpired": "The signing certificate has expired: sign-ins will fail until the IdP metadata is updated.",
+      "editTitle": "Edit {id}",
+      "editDescription": "Changing the domain means it must be verified again. The SP entity ID and ACS URL stay the same.",
+      "replaceIdp": "Replace the identity provider configuration (new metadata or certificate)",
+      "updated": "Provider updated",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    }
   },
   "selectAccount": {
     "title": "アカウントを選択",
@@ -798,6 +942,25 @@
       "failed": "問題が発生しました。もう一度お試しください。"
     }
   },
+  "deleteAccount": {
+    "title": "アカウントの削除",
+    "description": "アカウント {email} の削除がリクエストされました。確定すると、アカウントは完全に削除されます。",
+    "signedOut": "削除したいアカウントでサインインしてから、もう一度リンクを開いてください。",
+    "consequenceApps": "このアカウントでサインインしたアプリは、すぐにアクセスできなくなります。",
+    "consequenceSignIn": "すべてのデバイスからサインアウトされ、今後このアカウントではサインインできなくなります。",
+    "consequenceUndo": "この操作は元に戻せません。",
+    "confirm": "アカウントを完全に削除",
+    "keep": "アカウントを残す",
+    "deletedTitle": "アカウントを削除しました",
+    "deletedBody": "アカウントに関連するすべてのデータを削除しました。{brand} をご利用いただき、ありがとうございました。",
+    "toSignIn": "サインインへ",
+    "errors": {
+      "missing": "このリンクは不完全です。メールのリンクをもう一度開くか、アカウントページからやり直してください。",
+      "invalid": "このリンクは期限切れか、使用済みか、別のアカウントに送信されたものです。削除したいアカウントでサインインしているか確認するか、アカウントページからやり直してください。",
+      "blocked": "このアカウントはまだ削除できません。アカウントページを開いて、先に必要な対応を確認してください。",
+      "failed": "アカウントを削除できませんでした。もう一度お試しください。"
+    }
+  },
   "captcha": {
     "label": "セキュリティチェック",
     "required": "先にセキュリティチェックを完了してください。",
@@ -812,6 +975,16 @@
       "body": "{brand} のサインインページでこのコードを入力して、サインインを完了してください。",
       "note": "このコードの有効期限は {minutes} 分で、1 回のみ使用できます。",
       "footnote": "コードをリクエストしていない場合は、このメールを無視してください。コードがなければ誰もサインインできません。コードは誰にも教えないでください。"
+    },
+    "deleteAccount": {
+      "subject": "{brand} アカウントの削除の確認",
+      "preheader": "{brand} アカウントの削除がリクエストされました。確定するまで何も変わりません。",
+      "heading": "アカウントを削除しますか？",
+      "body": "{brand} アカウント {email} を完全に削除するリクエストがありました。続行するには、このアカウントでサインインしているブラウザで下のリンクを開き、削除を確定してください。",
+      "consequences": "このアカウントでサインインしているアプリはアクセスできなくなり、アカウントは復元できません。",
+      "button": "確認して削除",
+      "note": "このリンクの有効期限は {minutes} 分で、1 回のみ使用できます。",
+      "footnote": "このリクエストに心当たりがない場合は、このメールを無視してください。アカウントはそのまま残ります。ただし、リクエストはサインイン中のセッションから送信されているため、パスワードの変更をご検討ください。"
     }
   }
 }
