@@ -30,7 +30,7 @@ Keep this list short: anything that is not branding belongs upstream.
 | `apps/auth/components/dashboard/dashboard-shell.tsx`, `apps/admin/components/admin/admin-header.tsx` | Glass headers with the Preferences button |
 | `apps/auth/lib/og.tsx`, `apps/auth/assets/fonts/` | Social card in the Cyber style, Newsreader and Geist `.woff` |
 | `apps/auth/public/logo.*` | Generated from `brand.ts` with `pnpm --filter @ostiary/auth brand:assets` |
-| `.npmrc`, `apps/*/vercel.json` | `@cyber-courses/ui` from GitHub Packages (`NPM_TOKEN`) |
+| `.npmrc`, `apps/*/vercel.json` | `@cyber-courses/ui` from GitHub Packages (`NPM_TOKEN`); webhook retries every 5 minutes (Pro plan) |
 | `packages/core/src/lib/auth-factory.ts`, `apps/admin/app/[locale]/(console)/sso/actions.ts` | SSO domain verification prefix `cyber-auth`, so existing DNS records stay valid |
 
 The design rules live in `DESIGN.md`.
