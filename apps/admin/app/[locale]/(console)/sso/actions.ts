@@ -3,9 +3,11 @@
 import { randomBytes } from "node:crypto";
 import { resolveTxt } from "node:dns/promises";
 import { and, eq, gt } from "drizzle-orm";
+import { getTranslations } from "next-intl/server";
 
 import { db } from "@ostiary/core/db/index";
 import { organization, ssoProvider, verification } from "@ostiary/core/db/schema";
+import { isStrictSsoDomain, parseSsoDomain } from "@ostiary/core/lib/security/sso-domain";
 import { adminActor } from "@/lib/admin-audit";
 
 /*
@@ -17,13 +19,7 @@ import { adminActor } from "@/lib/admin-audit";
 type Result = { ok: true } | { ok: false; error: string };
 const verificationIdentifier = (providerId: string) => `_cyber-auth-${providerId}`;
 
-function hostnameOf(domain: string): string | null {
-  try {
-    return new URL(domain.includes("://") ? domain : `https://${domain}`).hostname || null;
-  } catch {
-    return null;
-  }
-}
+const errors = () => getTranslations("sso.errors");
 
 export async function updateSsoProvider(
   providerId: string,
@@ -31,21 +27,22 @@ export async function updateSsoProvider(
 ): Promise<Result> {
   const { audit } = await adminActor();
   const [current] = await db.select().from(ssoProvider).where(eq(ssoProvider.providerId, providerId));
-  if (!current) return { ok: false, error: "Provider not found." };
+  if (!current) return { ok: false, error: (await errors())("providerNotFound") };
   const issuer = input.issuer.trim();
-  const domain = input.domain.trim().toLowerCase();
+  // The same parser as /sso/register and sign-in (sso-domain.ts): one plain hostname.
+  const domain = parseSsoDomain(input.domain);
   try {
     new URL(issuer);
   } catch {
-    return { ok: false, error: "The issuer must be a URL." };
+    return { ok: false, error: (await errors())("issuerNotUrl") };
   }
-  if (!hostnameOf(domain)) return { ok: false, error: "Enter an email domain, e.g. acme.com." };
+  if (!domain) return { ok: false, error: (await errors())("invalidDomain") };
   if (input.organizationId) {
     const [org] = await db.select({ id: organization.id }).from(organization).where(eq(organization.id, input.organizationId));
-    if (!org) return { ok: false, error: "Organization not found." };
+    if (!org) return { ok: false, error: (await errors())("organizationNotFound") };
   }
   // A SAML provider's issuer is its SP entity ID, which the IdP is configured with.
-  if (current.samlConfig && issuer !== current.issuer) return { ok: false, error: "The SP entity ID of a SAML provider cannot be changed." };
+  if (current.samlConfig && issuer !== current.issuer) return { ok: false, error: (await errors())("samlIssuerLocked") };
   const domainChanged = domain !== current.domain;
   await db
     .update(ssoProvider)
@@ -63,7 +60,7 @@ export async function updateSsoProvider(
 export async function deleteSsoProvider(providerId: string): Promise<Result> {
   const { audit } = await adminActor();
   const deleted = await db.delete(ssoProvider).where(eq(ssoProvider.providerId, providerId)).returning({ domain: ssoProvider.domain });
-  if (deleted.length === 0) return { ok: false, error: "Provider not found." };
+  if (deleted.length === 0) return { ok: false, error: (await errors())("providerNotFound") };
   await db.delete(verification).where(eq(verification.identifier, verificationIdentifier(providerId)));
   await audit({ action: "sso_provider.delete", target: { type: "sso_provider", id: providerId, label: providerId }, metadata: { domain: deleted[0]!.domain } });
   return { ok: true };
@@ -75,9 +72,10 @@ export async function getDomainVerificationRecord(
 ): Promise<{ ok: true; name: string; value: string } | { ok: false; error: string }> {
   await adminActor();
   const [provider] = await db.select().from(ssoProvider).where(eq(ssoProvider.providerId, providerId));
-  if (!provider) return { ok: false, error: "Provider not found." };
-  const hostname = hostnameOf(provider.domain);
-  if (!hostname) return { ok: false, error: "The provider's domain is not valid." };
+  if (!provider) return { ok: false, error: (await errors())("providerNotFound") };
+  // The record is published under exactly the domain the plugin matches at sign-in.
+  if (!isStrictSsoDomain(provider.domain)) return { ok: false, error: (await errors())("invalidProviderDomain") };
+  const hostname = provider.domain;
   const identifier = verificationIdentifier(providerId);
   const [active] = await db
     .select()
@@ -109,7 +107,7 @@ export async function checkDomainVerification(providerId: string): Promise<Resul
     // NXDOMAIN or no TXT record yet
   }
   if (!found.some((txt) => txt.includes(record.value))) {
-    return { ok: false, error: "The TXT record was not found yet. DNS changes can take a few minutes to appear." };
+    return { ok: false, error: (await errors())("txtRecordNotFound") };
   }
   await db.update(ssoProvider).set({ domainVerified: true }).where(eq(ssoProvider.providerId, providerId));
   await db.delete(verification).where(eq(verification.identifier, verificationIdentifier(providerId)));
