@@ -30,6 +30,7 @@ function headerTitleKey(
   | "signInProviders"
   | "security"
   | "audit"
+  | "usage"
   | "signingKeys"
   | "fallback" {
   // Detail pages (/users/<id>, /organizations/<id>, /webhooks/<id>) take their section's crumb.
@@ -59,6 +60,8 @@ function headerTitleKey(
       return "security";
     case "/audit":
       return "audit";
+    case "/usage":
+      return "usage";
     case "/signing-keys":
       return "signingKeys";
     default:
