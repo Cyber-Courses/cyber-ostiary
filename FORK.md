@@ -23,10 +23,10 @@ Keep this list short: anything that is not branding belongs upstream.
 | `packages/core/src/components/layout/preferences.tsx`, `preferences-menu-items.tsx` | One Preferences button; Dark, Black and Light themes |
 | `packages/core/src/lib/email/layout.ts` | Email colors and system font |
 | `packages/core/messages/*.json` | `auth.screen` copy, preferences, 404 strings |
-| `apps/*/app/[locale]/layout.tsx`, `apps/*/app/providers.tsx` | Newsreader, Geist and Geist Mono; `data-product="library"` (silver); next-themes Dark, Black, Light |
+| `packages/core/src/components/layout/locale-layout.tsx`, `packages/core/src/components/providers.tsx` | Newsreader, Geist and Geist Mono; `data-product="library"` (silver); next-themes Dark, Black, Light. The apps' `[locale]/layout.tsx` stay Ostiary's thin wrappers, except the auth one's dark `themeColor` |
 | `apps/auth/components/auth/auth-screen.tsx`, `apps/auth/app/globals.css` | The lit family front door and the per-product tint |
 | `apps/auth/lib/client-product.ts` + login, signup, consent and select-account pages | Tint for admin-registered Cyber clients (visual only); a Cyber product's screen keeps the family look, so Ostiary's per-app branding (`app`) applies to every other app |
-| `apps/auth/components/layout/status-screen.tsx`, `app/[locale]/not-found.tsx`, `[...rest]`, `error.tsx`, `loading.tsx` | Status pages |
+| `apps/auth/components/layout/status-screen.tsx`, `app/[locale]/not-found.tsx`, `[...rest]`, `error.tsx`, `loading.tsx` | Status pages (the auth app keeps its own `error.tsx` and `loading.tsx`; the admin console uses `packages/core/src/components/layout/locale-error.tsx`, with a Newsreader heading) |
 | `apps/auth/components/dashboard/dashboard-shell.tsx`, `apps/admin/components/admin/admin-header.tsx` | Glass headers with the Preferences button |
 | `apps/auth/lib/og.tsx`, `apps/auth/assets/fonts/` | Social card in the Cyber style, Newsreader and Geist `.woff` |
 | `apps/auth/public/logo.*` | Generated from `brand.ts` with `pnpm --filter @ostiary/auth brand:assets` |
