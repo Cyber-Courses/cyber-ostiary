@@ -19,6 +19,7 @@
     "@better-auth/scim": "catalog:",
     "@better-auth/sso": "catalog:",
     "@cyber-courses/ui": "^0.2.0",
+    "@vercel/analytics": "catalog:",
     "@xmldom/xmldom": "catalog:",
     "better-auth": "catalog:",
     "class-variance-authority": "catalog:",
