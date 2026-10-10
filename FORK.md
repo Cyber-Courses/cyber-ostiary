@@ -31,7 +31,7 @@ Keep this list short: anything that is not branding belongs upstream.
 | `apps/auth/lib/og.tsx`, `apps/auth/assets/fonts/` | Social card in the Cyber style, Newsreader and Geist `.woff` |
 | `apps/auth/public/logo.*` | Generated from `brand.ts` with `pnpm --filter @ostiary/auth brand:assets` |
 | `.npmrc`, `apps/*/vercel.json` | `@cyber-courses/ui` from GitHub Packages (`NPM_TOKEN`); webhook retries every 5 minutes (Pro plan) |
-| `packages/core/src/lib/auth-factory.ts`, `apps/admin/app/[locale]/(console)/sso/actions.ts` | SSO domain verification prefix `cyber-auth`, so existing DNS records stay valid |
+| `packages/core/src/lib/security/sso-domain.ts` | SSO domain verification prefix `cyber-auth` (`SSO_DOMAIN_TOKEN_PREFIX`), so existing DNS records stay valid |
 | `apps/auth/app/[locale]/star/`, `apps/auth/app/api/star/`, `apps/auth/components/auth/star-flow.tsx`, `apps/auth/lib/github-star.ts`, `packages/core/src/lib/github-star.ts` (+ test), the `star` messages | One-click star of a Cyber repository, see below. `auth-screen.tsx` takes a `panel` for it |
 
 The design rules live in `DESIGN.md`.
