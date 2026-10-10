@@ -3,7 +3,7 @@ import { clientProduct } from "@/lib/client-product";
 import { captchaConfig } from "@ostiary/core/lib/captcha";
 import { SignupForm } from "@/components/auth/signup-form";
 import { authScreenApp } from "@/lib/app-context";
-import { appShowsProvider, appSocialProviders } from "@/lib/app-links";
+import { appLinkOf, appShowsProvider, appSocialProviders } from "@/lib/app-links";
 import { enabledSocialProviders, googleOneTap } from "@ostiary/core/lib/social-providers";
 
 // Providers enabled from the admin console are read at request time.
@@ -25,12 +25,12 @@ export default async function Page({
   const product = await clientProduct(app?.clientId ?? (await searchParams).client_id);
   return (
     <AuthScreen locale={locale} product={product} app={app} appIntent="signUp">
-        <SignupForm
-          socialProviders={appSocialProviders(providers, app)}
-          captcha={captchaConfig()}
-          oneTap={oneTap}
-          appLink={app ? { token: app.token, resumePath: app.resumePath } : null}
-        />
+      <SignupForm
+        socialProviders={appSocialProviders(providers, app)}
+        captcha={captchaConfig()}
+        oneTap={oneTap}
+        appLink={appLinkOf(app)}
+      />
     </AuthScreen>
   );
 }

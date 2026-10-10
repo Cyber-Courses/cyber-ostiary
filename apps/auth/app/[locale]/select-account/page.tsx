@@ -1,13 +1,10 @@
 import { Suspense } from "react";
 
+import { AuthFormFallback } from "@/components/auth/auth-form-fallback";
 import { AuthScreen } from "@/components/auth/auth-screen";
 import { clientProduct } from "@/lib/client-product";
 import { SelectAccountForm } from "@/components/auth/select-account-form";
 import { authScreenApp } from "@/lib/app-context";
-
-function SelectAccountFallback() {
-  return <div className="h-64 w-full max-w-md animate-pulse rounded-xl bg-muted/60" />;
-}
 
 export default async function SelectAccountPage({
   params,
@@ -22,7 +19,7 @@ export default async function SelectAccountPage({
   const product = await clientProduct(app?.clientId ?? (await searchParams).client_id);
   return (
     <AuthScreen locale={locale} product={product} app={app} appIntent="continue">
-      <Suspense fallback={<SelectAccountFallback />}>
+      <Suspense fallback={<AuthFormFallback height="h-64" />}>
         <SelectAccountForm />
       </Suspense>
     </AuthScreen>
