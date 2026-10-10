@@ -2645,5 +2645,65 @@
       "note": "Bağlantının süresi {minutes} dakika içinde dolar ve yalnızca bir kez çalışır.",
       "footnote": "Bunu siz istemediyseniz bu e-postayı yok sayın: hesabınız olduğu gibi kalır. İstek, giriş yapılmış bir oturumdan geldiği için parolanızı değiştirmeyi düşünün."
     }
+  },
+  "star": {
+    "metaTitle": "GitHub'da yıldız ver",
+    "eyebrow": "Projeyi destekle",
+    "panelTitle": "<product>{name}</product> projesini destekle",
+    "panelTitlePlain": "<accent>Açık kaynağı</accent> destekle",
+    "panelLead": "GitHub'daki bir yıldız, projeyi daha fazla kişinin bulmasına yardımcı olur. Asla otomatik değildir: yalnızca düğmeye tıkladığınızda verilir ve hiçbir şeyin kilidini açmaz.",
+    "repoStars": "{count, plural, one {# yıldız} other {# yıldız}}",
+    "openOnGitHub": "GitHub'da aç",
+    "back": "{name} sitesine dön",
+    "signedOut": {
+      "title": "{repo} deposuna yıldız vermek için oturum açın",
+      "description": "Önce Cyber hesabınızla oturum açın. Bir sonraki adımda yıldızı kendiniz onaylayacaksınız.",
+      "signIn": "Devam etmek için oturum açın"
+    },
+    "connect": {
+      "title": "GitHub hesabınızı bağlayın",
+      "description": "Yıldız kendi GitHub hesabınızdan verilir, bu yüzden Cyber Auth'un bir kez bağlanması gerekir.",
+      "button": "GitHub'ı bağla"
+    },
+    "grant": {
+      "title": "Cyber Auth'tan yıldız vermeye izin verin",
+      "description": "GitHub hesabınız bağlı, ancak bir depoya yıldız vermek için gereken izin yok.",
+      "button": "GitHub'da izin ver"
+    },
+    "scope": {
+      "title": "GitHub neden herkese açık depolara erişim istiyor",
+      "body": "Yıldız vermek için GitHub'ın public_repo izni gerekir. Cyber Auth bunu yalnızca tek bir şey için kullanır: bu sayfadaki yıldız düğmesine tıkladığınızda bir Cyber projesine yıldız vermek. Bu izni GitHub ayarlarınızda Applications bölümünden istediğiniz zaman geri alabilirsiniz."
+    },
+    "confirm": {
+      "title": "Bu depoya yıldız verilsin mi?",
+      "description": "GitHub hesabınızdan yıldız eklemek için onaylayın. Yıldızı GitHub'da istediğiniz zaman kaldırabilirsiniz.",
+      "button": "{repo} deposuna yıldız ver",
+      "note": "Yıldız vermek isteğe bağlıdır ve hiçbir erişim ya da ödül sağlamaz. Yalnızca başkalarının projeyi keşfetmesine yardımcı olur."
+    },
+    "already": {
+      "title": "{repo} deposuna zaten yıldız verdiniz",
+      "description": "Desteğiniz için teşekkürler. Yapılacak başka bir şey yok."
+    },
+    "success": {
+      "title": "Yıldız için teşekkürler",
+      "description": "{repo} artık GitHub hesabınızdan bir yıldıza sahip."
+    },
+    "unavailable": {
+      "title": "GitHub'da {repo} deposuna yıldız ver",
+      "description": "Tek tıkla yıldız şu anda kullanılamıyor. Depoya doğrudan GitHub'da yıldız verebilirsiniz."
+    },
+    "notAllowed": {
+      "title": "Bu depoya buradan yıldız verilemez",
+      "description": "Cyber Auth üzerinden yalnızca Cyber projelerine yıldız verilebilir."
+    },
+    "errors": {
+      "generic": "Depoya yıldız verilemedi. Biraz sonra yeniden deneyin.",
+      "needsPermission": "İzin eksik olduğu için GitHub yıldızı reddetti. İzni verin ve yeniden deneyin.",
+      "rateLimited": "Çok fazla deneme. Birkaç dakika sonra yeniden deneyin.",
+      "notLinked": "Önce GitHub hesabınızı bağlayın.",
+      "signInAgain": "Güvenliğiniz için GitHub'ı bağlamadan önce yeniden oturum açın.",
+      "signInAgainButton": "Yeniden oturum aç",
+      "linkFailed": "GitHub bağlanmadı. Yeniden deneyin veya depoya doğrudan GitHub'da yıldız verin."
+    }
   }
 }

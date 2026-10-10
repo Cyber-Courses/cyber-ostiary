@@ -2645,5 +2645,65 @@
       "note": "The link expires in {minutes} minutes and works only once.",
       "footnote": "If you didn't ask for this, ignore this email: your account stays as it is. Consider changing your password, since the request came from a signed-in session."
     }
+  },
+  "star": {
+    "metaTitle": "Star on GitHub",
+    "eyebrow": "Support the project",
+    "panelTitle": "Support <product>{name}</product>",
+    "panelTitlePlain": "Support <accent>open source</accent>",
+    "panelLead": "A star on GitHub helps more people find the project. It is never automatic: it happens only when you click the button, and it unlocks nothing.",
+    "repoStars": "{count, plural, one {# star} other {# stars}}",
+    "openOnGitHub": "Open on GitHub",
+    "back": "Back to {name}",
+    "signedOut": {
+      "title": "Sign in to star {repo}",
+      "description": "Sign in with your Cyber account first. You will confirm the star yourself on the next step.",
+      "signIn": "Sign in to continue"
+    },
+    "connect": {
+      "title": "Connect your GitHub account",
+      "description": "The star comes from your own GitHub account, so Cyber Auth needs to be connected to it once.",
+      "button": "Connect GitHub"
+    },
+    "grant": {
+      "title": "Allow starring from Cyber Auth",
+      "description": "Your GitHub account is connected, but without the permission needed to star a repository.",
+      "button": "Grant the permission on GitHub"
+    },
+    "scope": {
+      "title": "Why GitHub asks for public repository access",
+      "body": "Starring needs the GitHub permission public_repo. Cyber Auth uses it for one thing only: starring a Cyber project when you click the star button on this page. You can revoke it at any time in your GitHub settings, under Applications."
+    },
+    "confirm": {
+      "title": "Star this repository?",
+      "description": "Confirm to add a star from your GitHub account. You can remove it on GitHub at any time.",
+      "button": "Star {repo}",
+      "note": "Starring is optional and gives no access or reward. It simply helps others discover the project."
+    },
+    "already": {
+      "title": "You already starred {repo}",
+      "description": "Thank you for your support. There is nothing more to do."
+    },
+    "success": {
+      "title": "Thank you for the star",
+      "description": "{repo} is now starred from your GitHub account."
+    },
+    "unavailable": {
+      "title": "Star {repo} on GitHub",
+      "description": "One-click starring is not available right now. You can star the repository directly on GitHub."
+    },
+    "notAllowed": {
+      "title": "This repository cannot be starred here",
+      "description": "Only Cyber projects can be starred from Cyber Auth."
+    },
+    "errors": {
+      "generic": "Could not star the repository. Try again in a moment.",
+      "needsPermission": "GitHub refused the star because the permission is missing. Grant it, then try again.",
+      "rateLimited": "Too many attempts. Try again in a few minutes.",
+      "notLinked": "Connect your GitHub account first.",
+      "signInAgain": "For your security, sign in again before connecting GitHub.",
+      "signInAgainButton": "Sign in again",
+      "linkFailed": "GitHub was not connected. Try again, or star the repository directly on GitHub."
+    }
   }
 }

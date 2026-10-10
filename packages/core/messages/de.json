@@ -2645,5 +2645,65 @@
       "note": "Der Link läuft in {minutes} Minuten ab und funktioniert nur einmal.",
       "footnote": "Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail: Ihr Konto bleibt unverändert. Ändern Sie am besten Ihr Passwort, da die Anfrage aus einer angemeldeten Sitzung kam."
     }
+  },
+  "star": {
+    "metaTitle": "Auf GitHub mit Stern markieren",
+    "eyebrow": "Projekt unterstützen",
+    "panelTitle": "Unterstütze <product>{name}</product>",
+    "panelTitlePlain": "Unterstütze <accent>Open Source</accent>",
+    "panelLead": "Ein Stern auf GitHub hilft mehr Menschen, das Projekt zu finden. Er wird nie automatisch vergeben: nur wenn du auf die Schaltfläche klickst, und er schaltet nichts frei.",
+    "repoStars": "{count, plural, one {# Stern} other {# Sterne}}",
+    "openOnGitHub": "Auf GitHub öffnen",
+    "back": "Zurück zu {name}",
+    "signedOut": {
+      "title": "Anmelden, um {repo} einen Stern zu geben",
+      "description": "Melde dich zuerst mit deinem Cyber-Konto an. Im nächsten Schritt bestätigst du den Stern selbst.",
+      "signIn": "Anmelden und fortfahren"
+    },
+    "connect": {
+      "title": "Verbinde dein GitHub-Konto",
+      "description": "Der Stern kommt von deinem eigenen GitHub-Konto, deshalb muss Cyber Auth einmal damit verbunden werden.",
+      "button": "GitHub verbinden"
+    },
+    "grant": {
+      "title": "Sterne über Cyber Auth erlauben",
+      "description": "Dein GitHub-Konto ist verbunden, aber ohne die Berechtigung, ein Repository mit einem Stern zu markieren.",
+      "button": "Berechtigung auf GitHub erteilen"
+    },
+    "scope": {
+      "title": "Warum GitHub Zugriff auf öffentliche Repositorys verlangt",
+      "body": "Für einen Stern braucht es die GitHub-Berechtigung public_repo. Cyber Auth nutzt sie nur für eines: einem Cyber-Projekt einen Stern zu geben, wenn du auf dieser Seite auf die Schaltfläche klickst. Du kannst sie jederzeit in deinen GitHub-Einstellungen unter Applications widerrufen."
+    },
+    "confirm": {
+      "title": "Diesem Repository einen Stern geben?",
+      "description": "Bestätige, um von deinem GitHub-Konto aus einen Stern zu vergeben. Du kannst ihn auf GitHub jederzeit wieder entfernen.",
+      "button": "{repo} einen Stern geben",
+      "note": "Der Stern ist freiwillig und bringt weder Zugang noch Belohnung. Er hilft nur anderen, das Projekt zu entdecken."
+    },
+    "already": {
+      "title": "Du hast {repo} bereits einen Stern gegeben",
+      "description": "Danke für deine Unterstützung. Es gibt nichts weiter zu tun."
+    },
+    "success": {
+      "title": "Danke für den Stern",
+      "description": "{repo} hat jetzt einen Stern von deinem GitHub-Konto."
+    },
+    "unavailable": {
+      "title": "{repo} auf GitHub einen Stern geben",
+      "description": "Der Stern mit einem Klick ist gerade nicht verfügbar. Du kannst dem Repository direkt auf GitHub einen Stern geben."
+    },
+    "notAllowed": {
+      "title": "Dieses Repository kann hier keinen Stern erhalten",
+      "description": "Nur Cyber-Projekte können über Cyber Auth einen Stern erhalten."
+    },
+    "errors": {
+      "generic": "Der Stern konnte nicht vergeben werden. Versuche es gleich noch einmal.",
+      "needsPermission": "GitHub hat den Stern abgelehnt, weil die Berechtigung fehlt. Erteile sie und versuche es erneut.",
+      "rateLimited": "Zu viele Versuche. Versuche es in ein paar Minuten erneut.",
+      "notLinked": "Verbinde zuerst dein GitHub-Konto.",
+      "signInAgain": "Melde dich zu deiner Sicherheit erneut an, bevor du GitHub verbindest.",
+      "signInAgainButton": "Erneut anmelden",
+      "linkFailed": "GitHub wurde nicht verbunden. Versuche es erneut oder gib dem Repository direkt auf GitHub einen Stern."
+    }
   }
 }

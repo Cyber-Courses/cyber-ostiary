@@ -2645,5 +2645,65 @@
       "note": "Le lien expire dans {minutes} minutes et ne fonctionne qu’une seule fois.",
       "footnote": "Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail : votre compte reste inchangé. Pensez à changer votre mot de passe, car la demande provient d’une session connectée."
     }
+  },
+  "star": {
+    "metaTitle": "Étoile sur GitHub",
+    "eyebrow": "Soutenir le projet",
+    "panelTitle": "Soutenez <product>{name}</product>",
+    "panelTitlePlain": "Soutenez <accent>l'open source</accent>",
+    "panelLead": "Une étoile sur GitHub aide davantage de personnes à découvrir le projet. Rien n'est automatique : l'étoile n'est ajoutée que lorsque vous cliquez sur le bouton, et elle ne débloque rien.",
+    "repoStars": "{count, plural, one {# étoile} other {# étoiles}}",
+    "openOnGitHub": "Ouvrir sur GitHub",
+    "back": "Retour à {name}",
+    "signedOut": {
+      "title": "Connectez-vous pour mettre une étoile à {repo}",
+      "description": "Connectez-vous d'abord avec votre compte Cyber. Vous confirmerez vous-même l'étoile à l'étape suivante.",
+      "signIn": "Se connecter pour continuer"
+    },
+    "connect": {
+      "title": "Connectez votre compte GitHub",
+      "description": "L'étoile vient de votre propre compte GitHub : Cyber Auth doit donc y être connecté une fois.",
+      "button": "Connecter GitHub"
+    },
+    "grant": {
+      "title": "Autoriser les étoiles depuis Cyber Auth",
+      "description": "Votre compte GitHub est connecté, mais sans la permission nécessaire pour mettre une étoile à un dépôt.",
+      "button": "Accorder la permission sur GitHub"
+    },
+    "scope": {
+      "title": "Pourquoi GitHub demande l'accès aux dépôts publics",
+      "body": "Mettre une étoile nécessite la permission GitHub public_repo. Cyber Auth ne l'utilise que pour une seule chose : mettre une étoile à un projet Cyber quand vous cliquez sur le bouton de cette page. Vous pouvez la révoquer à tout moment dans vos paramètres GitHub, rubrique Applications."
+    },
+    "confirm": {
+      "title": "Mettre une étoile à ce dépôt ?",
+      "description": "Confirmez pour ajouter une étoile depuis votre compte GitHub. Vous pourrez la retirer sur GitHub à tout moment.",
+      "button": "Mettre une étoile à {repo}",
+      "note": "L'étoile est facultative et ne donne aucun accès ni aucune récompense. Elle aide simplement d'autres personnes à découvrir le projet."
+    },
+    "already": {
+      "title": "Vous avez déjà mis une étoile à {repo}",
+      "description": "Merci pour votre soutien. Il n'y a rien d'autre à faire."
+    },
+    "success": {
+      "title": "Merci pour l'étoile",
+      "description": "{repo} a maintenant une étoile de votre compte GitHub."
+    },
+    "unavailable": {
+      "title": "Mettre une étoile à {repo} sur GitHub",
+      "description": "L'étoile en un clic n'est pas disponible pour le moment. Vous pouvez mettre une étoile au dépôt directement sur GitHub."
+    },
+    "notAllowed": {
+      "title": "Ce dépôt ne peut pas recevoir d'étoile ici",
+      "description": "Seuls les projets Cyber peuvent recevoir une étoile depuis Cyber Auth."
+    },
+    "errors": {
+      "generic": "Impossible de mettre une étoile au dépôt. Réessayez dans un instant.",
+      "needsPermission": "GitHub a refusé l'étoile car la permission manque. Accordez-la, puis réessayez.",
+      "rateLimited": "Trop de tentatives. Réessayez dans quelques minutes.",
+      "notLinked": "Connectez d'abord votre compte GitHub.",
+      "signInAgain": "Pour votre sécurité, reconnectez-vous avant de connecter GitHub.",
+      "signInAgainButton": "Se reconnecter",
+      "linkFailed": "GitHub n'a pas été connecté. Réessayez, ou mettez une étoile au dépôt directement sur GitHub."
+    }
   }
 }

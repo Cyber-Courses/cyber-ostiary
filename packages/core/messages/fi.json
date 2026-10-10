@@ -2645,5 +2645,65 @@
       "note": "Linkki vanhenee {minutes} minuutissa ja toimii vain kerran.",
       "footnote": "Etkö pyytänyt tätä? Voit ohittaa tämän viestin: tilisi pysyy ennallaan. Harkitse salasanasi vaihtamista, sillä pyyntö tuli kirjautuneesta istunnosta."
     }
+  },
+  "star": {
+    "metaTitle": "Anna tähti GitHubissa",
+    "eyebrow": "Tue projektia",
+    "panelTitle": "Tue <product>{name}</product>-palvelua",
+    "panelTitlePlain": "Tue <accent>avointa lähdekoodia</accent>",
+    "panelLead": "Tähti GitHubissa auttaa useampia löytämään projektin. Sitä ei koskaan anneta automaattisesti: vain kun napsautat painiketta, eikä se avaa mitään.",
+    "repoStars": "{count, plural, one {# tähti} other {# tähteä}}",
+    "openOnGitHub": "Avaa GitHubissa",
+    "back": "Takaisin: {name}",
+    "signedOut": {
+      "title": "Kirjaudu sisään antaaksesi tähden: {repo}",
+      "description": "Kirjaudu ensin Cyber-tililläsi. Seuraavassa vaiheessa vahvistat tähden itse.",
+      "signIn": "Kirjaudu ja jatka"
+    },
+    "connect": {
+      "title": "Yhdistä GitHub-tilisi",
+      "description": "Tähti annetaan omalta GitHub-tililtäsi, joten Cyber Auth on yhdistettävä siihen kerran.",
+      "button": "Yhdistä GitHub"
+    },
+    "grant": {
+      "title": "Salli tähdet Cyber Authista",
+      "description": "GitHub-tilisi on yhdistetty, mutta ilman lupaa, jota tähden antaminen repositoriolle vaatii.",
+      "button": "Myönnä lupa GitHubissa"
+    },
+    "scope": {
+      "title": "Miksi GitHub pyytää pääsyä julkisiin repositorioihin",
+      "body": "Tähden antaminen vaatii GitHubin public_repo-luvan. Cyber Auth käyttää sitä vain yhteen asiaan: tähden antamiseen Cyber-projektille, kun napsautat tämän sivun painiketta. Voit perua luvan milloin tahansa GitHubin asetuksissa kohdassa Applications."
+    },
+    "confirm": {
+      "title": "Annetaanko tälle repositoriolle tähti?",
+      "description": "Vahvista lisätäksesi tähden GitHub-tililtäsi. Voit poistaa sen GitHubissa milloin tahansa.",
+      "button": "Anna tähti: {repo}",
+      "note": "Tähti on vapaaehtoinen eikä anna mitään pääsyä tai palkintoa. Se vain auttaa muita löytämään projektin."
+    },
+    "already": {
+      "title": "Olet jo antanut tähden: {repo}",
+      "description": "Kiitos tuestasi. Muuta ei tarvitse tehdä."
+    },
+    "success": {
+      "title": "Kiitos tähdestä",
+      "description": "{repo} on nyt saanut tähden GitHub-tililtäsi."
+    },
+    "unavailable": {
+      "title": "Anna tähti GitHubissa: {repo}",
+      "description": "Tähti yhdellä napsautuksella ei ole juuri nyt käytettävissä. Voit antaa repositoriolle tähden suoraan GitHubissa."
+    },
+    "notAllowed": {
+      "title": "Tälle repositoriolle ei voi antaa tähteä täällä",
+      "description": "Cyber Authista voi antaa tähden vain Cyber-projekteille."
+    },
+    "errors": {
+      "generic": "Tähden antaminen epäonnistui. Yritä hetken päästä uudelleen.",
+      "needsPermission": "GitHub hylkäsi tähden, koska lupa puuttuu. Myönnä se ja yritä uudelleen.",
+      "rateLimited": "Liian monta yritystä. Yritä muutaman minuutin päästä uudelleen.",
+      "notLinked": "Yhdistä ensin GitHub-tilisi.",
+      "signInAgain": "Kirjaudu turvallisuutesi vuoksi uudelleen ennen GitHubin yhdistämistä.",
+      "signInAgainButton": "Kirjaudu uudelleen",
+      "linkFailed": "GitHubia ei yhdistetty. Yritä uudelleen tai anna repositoriolle tähti suoraan GitHubissa."
+    }
   }
 }

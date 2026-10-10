@@ -2645,5 +2645,65 @@
       "note": "Platnost odkazu vyprší za {minutes} minut a lze ho použít jen jednou.",
       "footnote": "Pokud jste o to nežádali, tento e-mail ignorujte: váš účet zůstane beze změny. Zvažte změnu hesla, protože žádost přišla z přihlášené relace."
     }
+  },
+  "star": {
+    "metaTitle": "Dát hvězdu na GitHubu",
+    "eyebrow": "Podpořte projekt",
+    "panelTitle": "Podpořte <product>{name}</product>",
+    "panelTitlePlain": "Podpořte <accent>open source</accent>",
+    "panelLead": "Hvězda na GitHubu pomáhá dalším lidem projekt najít. Nikdy se nepřidává automaticky: jen když kliknete na tlačítko, a nic neodemyká.",
+    "repoStars": "{count, plural, one {# hvězda} few {# hvězdy} many {# hvězdy} other {# hvězd}}",
+    "openOnGitHub": "Otevřít na GitHubu",
+    "back": "Zpět na {name}",
+    "signedOut": {
+      "title": "Přihlaste se a dejte hvězdu {repo}",
+      "description": "Nejprve se přihlaste svým účtem Cyber. V dalším kroku hvězdu sami potvrdíte.",
+      "signIn": "Přihlásit se a pokračovat"
+    },
+    "connect": {
+      "title": "Propojte svůj účet GitHub",
+      "description": "Hvězda pochází z vašeho vlastního účtu GitHub, proto je potřeba Cyber Auth s ním jednou propojit.",
+      "button": "Propojit GitHub"
+    },
+    "grant": {
+      "title": "Povolit hvězdy z Cyber Auth",
+      "description": "Váš účet GitHub je propojený, ale bez oprávnění potřebného k udělení hvězdy repozitáři.",
+      "button": "Udělit oprávnění na GitHubu"
+    },
+    "scope": {
+      "title": "Proč GitHub žádá o přístup k veřejným repozitářům",
+      "body": "Udělení hvězdy vyžaduje oprávnění GitHub public_repo. Cyber Auth ho používá jen k jedné věci: udělit hvězdu projektu Cyber, když kliknete na tlačítko na této stránce. Kdykoli ho můžete odvolat v nastavení GitHubu v části Applications."
+    },
+    "confirm": {
+      "title": "Dát tomuto repozitáři hvězdu?",
+      "description": "Potvrďte pro přidání hvězdy z vašeho účtu GitHub. Na GitHubu ji můžete kdykoli odebrat.",
+      "button": "Dát hvězdu {repo}",
+      "note": "Hvězda je dobrovolná a nedává žádný přístup ani odměnu. Jen pomáhá ostatním projekt objevit."
+    },
+    "already": {
+      "title": "{repo} už jste hvězdu dali",
+      "description": "Děkujeme za podporu. Už není potřeba nic dělat."
+    },
+    "success": {
+      "title": "Děkujeme za hvězdu",
+      "description": "{repo} má nyní hvězdu z vašeho účtu GitHub."
+    },
+    "unavailable": {
+      "title": "Dát hvězdu {repo} na GitHubu",
+      "description": "Hvězda jedním kliknutím teď není dostupná. Repozitáři můžete dát hvězdu přímo na GitHubu."
+    },
+    "notAllowed": {
+      "title": "Tomuto repozitáři zde nelze dát hvězdu",
+      "description": "Z Cyber Auth lze dávat hvězdy jen projektům Cyber."
+    },
+    "errors": {
+      "generic": "Hvězdu se nepodařilo udělit. Zkuste to za chvíli znovu.",
+      "needsPermission": "GitHub hvězdu odmítl, protože chybí oprávnění. Udělte ho a zkuste to znovu.",
+      "rateLimited": "Příliš mnoho pokusů. Zkuste to za pár minut znovu.",
+      "notLinked": "Nejprve propojte svůj účet GitHub.",
+      "signInAgain": "Kvůli zabezpečení se před propojením GitHubu znovu přihlaste.",
+      "signInAgainButton": "Znovu se přihlásit",
+      "linkFailed": "GitHub se nepropojil. Zkuste to znovu, nebo dejte repozitáři hvězdu přímo na GitHubu."
+    }
   }
 }
