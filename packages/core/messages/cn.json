@@ -2647,5 +2647,65 @@
       "note": "此链接将在 {minutes} 分钟后失效，且只能使用一次。",
       "footnote": "如果这不是你本人的操作，请忽略此邮件：你的账户将保持不变。由于该请求来自一个已登录的会话，建议你修改密码。"
     }
+  },
+  "star": {
+    "metaTitle": "在 GitHub 上加星",
+    "eyebrow": "支持项目",
+    "panelTitle": "支持 <product>{name}</product>",
+    "panelTitlePlain": "支持<accent>开源</accent>",
+    "panelLead": "在 GitHub 上加星能帮助更多人发现这个项目。这绝不会自动发生：只有在你点击按钮时才会加星，而且加星不会解锁任何内容。",
+    "repoStars": "{count, plural, other {# 颗星}}",
+    "openOnGitHub": "在 GitHub 上打开",
+    "back": "返回 {name}",
+    "signedOut": {
+      "title": "登录后为 {repo} 加星",
+      "description": "请先使用你的 Cyber 账户登录。下一步将由你亲自确认加星。",
+      "signIn": "登录以继续"
+    },
+    "connect": {
+      "title": "关联你的 GitHub 账户",
+      "description": "星标来自你自己的 GitHub 账户，因此 Cyber Auth 需要与它关联一次。",
+      "button": "关联 GitHub"
+    },
+    "grant": {
+      "title": "允许从 Cyber Auth 加星",
+      "description": "你的 GitHub 账户已关联，但缺少为仓库加星所需的权限。",
+      "button": "在 GitHub 上授予权限"
+    },
+    "scope": {
+      "title": "为什么 GitHub 要求访问公开仓库",
+      "body": "加星需要 GitHub 的 public_repo 权限。Cyber Auth 只将它用于一件事：当你在此页面点击加星按钮时，为 Cyber 项目加星。你可以随时在 GitHub 设置的“Applications”中撤销它。"
+    },
+    "confirm": {
+      "title": "为这个仓库加星？",
+      "description": "确认后将从你的 GitHub 账户添加一颗星。你可以随时在 GitHub 上取消。",
+      "button": "为 {repo} 加星",
+      "note": "加星是可选的，不会带来任何访问权限或奖励。它只是帮助其他人发现这个项目。"
+    },
+    "already": {
+      "title": "你已经为 {repo} 加过星",
+      "description": "感谢你的支持。无需再做任何操作。"
+    },
+    "success": {
+      "title": "感谢你的星标",
+      "description": "{repo} 现已从你的 GitHub 账户加星。"
+    },
+    "unavailable": {
+      "title": "在 GitHub 上为 {repo} 加星",
+      "description": "一键加星暂时不可用。你可以直接在 GitHub 上为该仓库加星。"
+    },
+    "notAllowed": {
+      "title": "无法在此为该仓库加星",
+      "description": "只有 Cyber 项目可以从 Cyber Auth 加星。"
+    },
+    "errors": {
+      "generic": "无法为仓库加星。请稍后再试。",
+      "needsPermission": "GitHub 因缺少权限而拒绝了加星。请授予权限后重试。",
+      "rateLimited": "尝试次数过多。请几分钟后再试。",
+      "notLinked": "请先关联你的 GitHub 账户。",
+      "signInAgain": "为了你的安全，关联 GitHub 前请重新登录。",
+      "signInAgainButton": "重新登录",
+      "linkFailed": "GitHub 未能关联。请重试，或直接在 GitHub 上为该仓库加星。"
+    }
   }
 }

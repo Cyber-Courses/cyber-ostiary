@@ -2647,5 +2647,65 @@
       "note": "O link expira em {minutes} minutos e só funciona uma vez.",
       "footnote": "Se não foi você quem pediu, ignore este e-mail: sua conta continua como está. Considere alterar sua senha, já que o pedido veio de uma sessão conectada."
     }
+  },
+  "star": {
+    "metaTitle": "Dar uma estrela no GitHub",
+    "eyebrow": "Apoie o projeto",
+    "panelTitle": "Apoie o <product>{name}</product>",
+    "panelTitlePlain": "Apoie o <accent>código aberto</accent>",
+    "panelLead": "Uma estrela no GitHub ajuda mais pessoas a encontrar o projeto. Nunca é automática: só acontece quando você clica no botão, e não desbloqueia nada.",
+    "repoStars": "{count, plural, one {# estrela} other {# estrelas}}",
+    "openOnGitHub": "Abrir no GitHub",
+    "back": "Voltar para {name}",
+    "signedOut": {
+      "title": "Entre para dar uma estrela a {repo}",
+      "description": "Entre primeiro com sua conta Cyber. Na próxima etapa, você mesmo confirmará a estrela.",
+      "signIn": "Entrar para continuar"
+    },
+    "connect": {
+      "title": "Conecte sua conta do GitHub",
+      "description": "A estrela vem da sua própria conta do GitHub, então o Cyber Auth precisa se conectar a ela uma vez.",
+      "button": "Conectar GitHub"
+    },
+    "grant": {
+      "title": "Permitir estrelas pelo Cyber Auth",
+      "description": "Sua conta do GitHub está conectada, mas sem a permissão necessária para dar estrela a um repositório.",
+      "button": "Conceder a permissão no GitHub"
+    },
+    "scope": {
+      "title": "Por que o GitHub pede acesso a repositórios públicos",
+      "body": "Dar uma estrela exige a permissão do GitHub public_repo. O Cyber Auth a usa para uma única coisa: dar uma estrela a um projeto Cyber quando você clica no botão desta página. Você pode revogá-la a qualquer momento nas configurações do GitHub, em Applications."
+    },
+    "confirm": {
+      "title": "Dar uma estrela a este repositório?",
+      "description": "Confirme para adicionar uma estrela pela sua conta do GitHub. Você pode removê-la no GitHub a qualquer momento.",
+      "button": "Dar uma estrela a {repo}",
+      "note": "A estrela é opcional e não dá nenhum acesso nem recompensa. Ela apenas ajuda outras pessoas a descobrir o projeto."
+    },
+    "already": {
+      "title": "Você já deu uma estrela a {repo}",
+      "description": "Obrigado pelo seu apoio. Não há mais nada a fazer."
+    },
+    "success": {
+      "title": "Obrigado pela estrela",
+      "description": "{repo} agora tem uma estrela da sua conta do GitHub."
+    },
+    "unavailable": {
+      "title": "Dar uma estrela a {repo} no GitHub",
+      "description": "A estrela com um clique não está disponível agora. Você pode dar uma estrela ao repositório diretamente no GitHub."
+    },
+    "notAllowed": {
+      "title": "Este repositório não pode receber estrela aqui",
+      "description": "Somente projetos Cyber podem receber estrela pelo Cyber Auth."
+    },
+    "errors": {
+      "generic": "Não foi possível dar a estrela ao repositório. Tente novamente em instantes.",
+      "needsPermission": "O GitHub recusou a estrela porque falta a permissão. Conceda-a e tente novamente.",
+      "rateLimited": "Tentativas demais. Tente novamente em alguns minutos.",
+      "notLinked": "Conecte primeiro sua conta do GitHub.",
+      "signInAgain": "Para sua segurança, entre novamente antes de conectar o GitHub.",
+      "signInAgainButton": "Entrar novamente",
+      "linkFailed": "O GitHub não foi conectado. Tente novamente ou dê uma estrela ao repositório diretamente no GitHub."
+    }
   }
 }

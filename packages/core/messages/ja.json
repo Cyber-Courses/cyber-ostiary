@@ -2647,5 +2647,65 @@
       "note": "このリンクの有効期限は {minutes} 分で、1 回のみ使用できます。",
       "footnote": "このリクエストに心当たりがない場合は、このメールを無視してください。アカウントはそのまま残ります。ただし、リクエストはサインイン中のセッションから送信されているため、パスワードの変更をご検討ください。"
     }
+  },
+  "star": {
+    "metaTitle": "GitHub でスターを付ける",
+    "eyebrow": "プロジェクトを応援",
+    "panelTitle": "<product>{name}</product> を応援",
+    "panelTitlePlain": "<accent>オープンソース</accent>を応援",
+    "panelLead": "GitHub のスターは、より多くの人がプロジェクトを見つける助けになります。自動で付くことはなく、ボタンをクリックしたときだけ付きます。スターで何かが解放されることもありません。",
+    "repoStars": "{count, plural, other {# 個のスター}}",
+    "openOnGitHub": "GitHub で開く",
+    "back": "{name} に戻る",
+    "signedOut": {
+      "title": "サインインして {repo} にスターを付ける",
+      "description": "まず Cyber アカウントでサインインしてください。次のステップでスターをご自身で確認します。",
+      "signIn": "サインインして続ける"
+    },
+    "connect": {
+      "title": "GitHub アカウントを連携",
+      "description": "スターはご自身の GitHub アカウントから付けられるため、Cyber Auth との連携が一度必要です。",
+      "button": "GitHub を連携"
+    },
+    "grant": {
+      "title": "Cyber Auth からのスターを許可",
+      "description": "GitHub アカウントは連携済みですが、リポジトリにスターを付けるための権限がありません。",
+      "button": "GitHub で権限を付与"
+    },
+    "scope": {
+      "title": "GitHub が公開リポジトリへのアクセスを求める理由",
+      "body": "スターを付けるには GitHub の public_repo 権限が必要です。Cyber Auth はこれを一つの目的にだけ使います。このページでスターボタンをクリックしたときに Cyber プロジェクトにスターを付けることです。GitHub の設定の Applications からいつでも取り消せます。"
+    },
+    "confirm": {
+      "title": "このリポジトリにスターを付けますか？",
+      "description": "確認すると、あなたの GitHub アカウントからスターが付きます。GitHub でいつでも外せます。",
+      "button": "{repo} にスターを付ける",
+      "note": "スターは任意で、アクセス権や特典は一切ありません。ほかの人がプロジェクトを見つける助けになるだけです。"
+    },
+    "already": {
+      "title": "{repo} にはすでにスターを付けています",
+      "description": "応援ありがとうございます。これ以上の操作は不要です。"
+    },
+    "success": {
+      "title": "スターをありがとうございます",
+      "description": "{repo} にあなたの GitHub アカウントからスターが付きました。"
+    },
+    "unavailable": {
+      "title": "GitHub で {repo} にスターを付ける",
+      "description": "ワンクリックのスターは現在利用できません。GitHub で直接リポジトリにスターを付けられます。"
+    },
+    "notAllowed": {
+      "title": "このリポジトリにはここからスターを付けられません",
+      "description": "Cyber Auth からスターを付けられるのは Cyber のプロジェクトだけです。"
+    },
+    "errors": {
+      "generic": "スターを付けられませんでした。少し待ってからもう一度お試しください。",
+      "needsPermission": "権限が不足しているため GitHub がスターを拒否しました。権限を付与してから再度お試しください。",
+      "rateLimited": "試行回数が多すぎます。数分後にもう一度お試しください。",
+      "notLinked": "まず GitHub アカウントを連携してください。",
+      "signInAgain": "安全のため、GitHub を連携する前にもう一度サインインしてください。",
+      "signInAgainButton": "もう一度サインイン",
+      "linkFailed": "GitHub を連携できませんでした。もう一度試すか、GitHub で直接リポジトリにスターを付けてください。"
+    }
   }
 }

@@ -9,7 +9,7 @@ import type { AuthScreenApp } from "@ostiary/core/lib/app-branding/store";
 import { AppBrandHeader, type AppBrandIntent } from "@/components/auth/app-brand-header";
 
 /** "Cyber Library" with its last word in the jewel italic. */
-function ProductName({ name }: { name: string }) {
+export function ProductName({ name }: { name: string }) {
   const i = name.lastIndexOf(" ");
   if (i < 0) return <em>{name}</em>;
   return (
@@ -48,6 +48,9 @@ function PanelImage({ src }: { src: string }) {
  * Ostiary's per-app treatment instead: the app header above the form, its accent through
  * `[data-app-brand]`, and its headline and image in the side panel. The Cyber Key, wordmark
  * and footer always stay, so people can tell where they are typing their password.
+ *
+ * `panel` replaces the side panel's eyebrow, headline and lead (the star page, which is not a
+ * sign-in). The product tint and mark stay.
  */
 export async function AuthScreen({
   children,
@@ -55,6 +58,7 @@ export async function AuthScreen({
   product = null,
   app: appContext = null,
   appIntent = "continue",
+  panel = null,
 }: {
   children: ReactNode;
   locale: string;
@@ -62,6 +66,8 @@ export async function AuthScreen({
   app?: AuthScreenApp | null;
   /** Wording of the app header; "none" applies the colors only (the consent card names the app). */
   appIntent?: AppBrandIntent | "none";
+  /** Side panel copy for a screen that is not a sign-in. */
+  panel?: { eyebrow: ReactNode; title: ReactNode; lead: ReactNode } | null;
 }) {
   const t = await getTranslations({ locale, namespace: "auth.screen" });
   const productName = product ? cyberProducts[product].name : null;
@@ -84,9 +90,11 @@ export async function AuthScreen({
         </div>
         <div className="relative max-w-md">
           {product ? <GlassMark product={product} size={7.5} /> : <GlassKey className="size-32" />}
-          <p className="cy-eyebrow mt-10">{t("eyebrow")}</p>
+          <p className="cy-eyebrow mt-10">{panel ? panel.eyebrow : t("eyebrow")}</p>
           <h1 data-testid={panelText ? "app-panel-text" : undefined} className="mt-4 text-4xl text-pretty xl:text-5xl">
-            {panelText ? (
+            {panel ? (
+              panel.title
+            ) : panelText ? (
               <bdi>{panelText}</bdi>
             ) : productName
               ? t.rich("continueTo", {
@@ -97,7 +105,7 @@ export async function AuthScreen({
           </h1>
           {panelText ? null : (
             <p className="mt-5 text-pretty leading-relaxed text-muted-foreground">
-              {productName ? t("continueLead") : t("subhead", { name: brand.name })}
+              {panel ? panel.lead : productName ? t("continueLead") : t("subhead", { name: brand.name })}
             </p>
           )}
           <FamilyChips className="mt-8" />
@@ -119,7 +127,7 @@ export async function AuthScreen({
             data-app-brand={accent ? "accent" : app ? "plain" : undefined}
             style={accent ? (accent as CSSProperties) : undefined}
           >
-            {product && productName ? (
+            {product && productName && !panel ? (
               <p className="mb-5 flex items-center justify-center gap-2 text-sm text-muted-foreground lg:hidden">
                 <Mark product={product} size={1.1} aria-hidden />
                 {t("continueShort", { name: productName })}
