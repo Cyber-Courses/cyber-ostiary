@@ -117,17 +117,6 @@ export function ConsentForm({
     [t],
   );
 
-  const scopeDescription = useCallback(
-    (scope: string) => {
-      const key = `scopes.${scope}`;
-      if (t.has(key)) {
-        return t(key);
-      }
-      return null;
-    },
-    [t],
-  );
-
   if (!clientId) {
     return (
       <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -244,9 +233,9 @@ export function ConsentForm({
                         <span className="font-mono text-xs text-foreground">
                           {scope}
                         </span>
-                        {scopeDescription(scope) ? (
+                        {t.has(`scopes.${scope}`) ? (
                           <p className="mt-1 text-muted-foreground">
-                            {scopeDescription(scope)}
+                            {t(`scopes.${scope}`)}
                           </p>
                         ) : null}
                       </li>
