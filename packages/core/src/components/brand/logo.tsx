@@ -8,7 +8,7 @@ import { cn } from "@ostiary/core/lib/utils";
  * over a deep base. Geometry lives in `lib/brand.ts` (shared with the favicon and social
  * images); colors follow the `--key-top` / `--key-base` tokens, so it reads in every mode.
  */
-export function LogoMark({ className }: { className?: string }) {
+function LogoMark({ className }: { className?: string }) {
   return (
     <svg viewBox={keyMark.viewBox} aria-hidden className={cn("h-6 w-7 shrink-0", className)}>
       <path d={keyMark.path} transform={`translate(0 ${keyMark.baseOffset})`} className="fill-[var(--key-base)]" />

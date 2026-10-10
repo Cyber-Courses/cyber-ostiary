@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 import { brand, glassKeySvg, logoMarkSvg } from "@ostiary/core/lib/brand";
+import { getBaseURL } from "@ostiary/core/lib/url";
 
 /**
  * Open Graph / Twitter card for Cyber Auth, in the Cyber design system layout shared by the
@@ -34,7 +35,7 @@ function titleWords(title: string, accent: string) {
     .map((text) => ({ text, em: Boolean(em) && text.toLowerCase().replace(/[.,!?]$/, "") === em }));
 }
 
-export async function renderOgImage({ title, description, host }: { title: string; description: string; host: string }) {
+async function renderOgImage({ title, description, host }: { title: string; description: string; host: string }) {
   const [serif, serifItalic, sans, sansSemibold, mono] = await fontsPromise;
   const c = brand.colors;
   const words = titleWords(title, brand.taglineAccent);
@@ -141,4 +142,13 @@ export async function renderOgImage({ title, description, host }: { title: strin
       ],
     },
   );
+}
+
+/** The site's card: the brand tagline and description, with the host it is served from. */
+export function renderBrandOgImage() {
+  return renderOgImage({
+    title: brand.tagline,
+    description: brand.description,
+    host: new URL(getBaseURL()).host.replace(/^www\./, ""),
+  });
 }

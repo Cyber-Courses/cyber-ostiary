@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { AuthFormFallback } from "@/components/auth/auth-form-fallback";
+import { RequestedScopes } from "@/components/auth/requested-scopes";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@ostiary/core/components/ui/button";
@@ -17,6 +18,7 @@ import {
   CardTitle,
 } from "@ostiary/core/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@ostiary/core/components/ui/field";
+import { AppIcon } from "@ostiary/core/components/app-icon";
 import { Input } from "@ostiary/core/components/ui/input";
 import { formatUserCode, normalizeUserCode, USER_CODE_LENGTH } from "@ostiary/core/lib/device-code";
 import { rateLimitMessage } from "@ostiary/core/lib/rate-limit-message";
@@ -25,7 +27,6 @@ type PublicClient = {
   client_id: string;
   client_name?: string;
   client_uri?: string;
-  logo_uri?: string;
 };
 
 /** `GET /device`: client and scopes are only returned to the user the code is bound to. */
@@ -63,7 +64,6 @@ function errorKey(error: { status?: number; error?: unknown; error_description?:
  */
 export function DeviceForm() {
   const t = useTranslations("device");
-  const tConsent = useTranslations("consent");
   const tLimit = useTranslations("rateLimit");
   const locale = useLocale();
   const router = useRouter();
@@ -237,24 +237,9 @@ export function DeviceForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-4">
         <div className="flex items-start gap-4">
-          {client?.logo_uri ? (
-            // OAuth `logo_uri` can point to any HTTPS URL from client registration.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={client.logo_uri}
-              alt=""
-              width={48}
-              height={48}
-              className="size-12 shrink-0 rounded-md border border-border object-cover"
-            />
-          ) : (
-            <span
-              aria-hidden
-              className="flex size-12 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-lg font-semibold"
-            >
-              {displayName.slice(0, 1).toUpperCase()}
-            </span>
-          )}
+          {/* Through Ostiary (see /api/app-icon), like the consent screen: the app's site doesn't
+              learn who is signing in. */}
+          <AppIcon name={displayName} src={request.client_id ? `/api/app-icon/${encodeURIComponent(request.client_id)}` : null} size={48} />
           <div className="min-w-0 flex-1 space-y-1">
             <CardTitle className="text-xl leading-snug break-words">
               {t("reviewTitle", { name: displayName })}
@@ -271,23 +256,7 @@ export function DeviceForm() {
           </span>
         </div>
 
-        <div>
-          <h3 className="mb-2 text-sm font-medium">{tConsent("requestedAccess")}</h3>
-          {scopes.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{t("noScopes")}</p>
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {scopes.map((scope) => (
-                <li key={scope} className="rounded-md border border-border bg-muted/30 px-3 py-2">
-                  <span className="font-mono text-xs text-foreground">{scope}</span>
-                  {tConsent.has(`scopes.${scope}`) ? (
-                    <p className="mt-1 text-muted-foreground">{tConsent(`scopes.${scope}`)}</p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <RequestedScopes scopes={scopes} emptyText={t("noScopes")} />
 
         {user ? (
           <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm">
