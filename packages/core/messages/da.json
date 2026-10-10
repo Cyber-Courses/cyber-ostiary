@@ -2647,5 +2647,65 @@
       "note": "Linket udløber om {minutes} minutter og virker kun én gang.",
       "footnote": "Har du ikke bedt om dette? Ignorer denne e-mail: din konto forbliver, som den er. Overvej at skifte din adgangskode, da anmodningen kom fra en session, der var logget ind."
     }
+  },
+  "star": {
+    "metaTitle": "Giv en stjerne på GitHub",
+    "eyebrow": "Støt projektet",
+    "panelTitle": "Støt <product>{name}</product>",
+    "panelTitlePlain": "Støt <accent>open source</accent>",
+    "panelLead": "En stjerne på GitHub hjælper flere med at finde projektet. Den gives aldrig automatisk: kun når du klikker på knappen, og den låser ikke noget op.",
+    "repoStars": "{count, plural, one {# stjerne} other {# stjerner}}",
+    "openOnGitHub": "Åbn på GitHub",
+    "back": "Tilbage til {name}",
+    "signedOut": {
+      "title": "Log ind for at give {repo} en stjerne",
+      "description": "Log først ind med din Cyber-konto. I næste trin bekræfter du selv stjernen.",
+      "signIn": "Log ind for at fortsætte"
+    },
+    "connect": {
+      "title": "Forbind din GitHub-konto",
+      "description": "Stjernen kommer fra din egen GitHub-konto, så Cyber Auth skal forbindes til den én gang.",
+      "button": "Forbind GitHub"
+    },
+    "grant": {
+      "title": "Tillad stjerner fra Cyber Auth",
+      "description": "Din GitHub-konto er forbundet, men uden den tilladelse, der skal til for at give et repository en stjerne.",
+      "button": "Giv tilladelsen på GitHub"
+    },
+    "scope": {
+      "title": "Hvorfor GitHub beder om adgang til offentlige repositories",
+      "body": "At give en stjerne kræver GitHub-tilladelsen public_repo. Cyber Auth bruger den til én ting: at give et Cyber-projekt en stjerne, når du klikker på knappen på denne side. Du kan når som helst tilbagekalde den i dine GitHub-indstillinger under Applications."
+    },
+    "confirm": {
+      "title": "Giv dette repository en stjerne?",
+      "description": "Bekræft for at tilføje en stjerne fra din GitHub-konto. Du kan fjerne den på GitHub når som helst.",
+      "button": "Giv {repo} en stjerne",
+      "note": "En stjerne er frivillig og giver ingen adgang eller belønning. Den hjælper bare andre med at opdage projektet."
+    },
+    "already": {
+      "title": "Du har allerede givet {repo} en stjerne",
+      "description": "Tak for din støtte. Der er ikke mere at gøre."
+    },
+    "success": {
+      "title": "Tak for stjernen",
+      "description": "{repo} har nu en stjerne fra din GitHub-konto."
+    },
+    "unavailable": {
+      "title": "Giv {repo} en stjerne på GitHub",
+      "description": "Stjerne med ét klik er ikke tilgængelig lige nu. Du kan give repositoryet en stjerne direkte på GitHub."
+    },
+    "notAllowed": {
+      "title": "Dette repository kan ikke få en stjerne her",
+      "description": "Kun Cyber-projekter kan få en stjerne fra Cyber Auth."
+    },
+    "errors": {
+      "generic": "Kunne ikke give repositoryet en stjerne. Prøv igen om et øjeblik.",
+      "needsPermission": "GitHub afviste stjernen, fordi tilladelsen mangler. Giv den, og prøv igen.",
+      "rateLimited": "For mange forsøg. Prøv igen om et par minutter.",
+      "notLinked": "Forbind først din GitHub-konto.",
+      "signInAgain": "Log ind igen af hensyn til din sikkerhed, før du forbinder GitHub.",
+      "signInAgainButton": "Log ind igen",
+      "linkFailed": "GitHub blev ikke forbundet. Prøv igen, eller giv repositoryet en stjerne direkte på GitHub."
+    }
   }
 }

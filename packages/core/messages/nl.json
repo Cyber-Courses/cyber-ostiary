@@ -2647,5 +2647,65 @@
       "note": "De link verloopt over {minutes} minuten en werkt maar één keer.",
       "footnote": "Heb je dit niet aangevraagd? Negeer dan deze e-mail: je account blijft zoals het is. Overweeg wel je wachtwoord te wijzigen, want het verzoek kwam vanuit een ingelogde sessie."
     }
+  },
+  "star": {
+    "metaTitle": "Ster geven op GitHub",
+    "eyebrow": "Steun het project",
+    "panelTitle": "Steun <product>{name}</product>",
+    "panelTitlePlain": "Steun <accent>open source</accent>",
+    "panelLead": "Een ster op GitHub helpt meer mensen het project te vinden. Het gebeurt nooit automatisch: alleen als je op de knop klikt, en het ontgrendelt niets.",
+    "repoStars": "{count, plural, one {# ster} other {# sterren}}",
+    "openOnGitHub": "Openen op GitHub",
+    "back": "Terug naar {name}",
+    "signedOut": {
+      "title": "Log in om {repo} een ster te geven",
+      "description": "Log eerst in met je Cyber-account. In de volgende stap bevestig je de ster zelf.",
+      "signIn": "Inloggen om door te gaan"
+    },
+    "connect": {
+      "title": "Koppel je GitHub-account",
+      "description": "De ster komt van je eigen GitHub-account, dus Cyber Auth moet er één keer aan gekoppeld worden.",
+      "button": "GitHub koppelen"
+    },
+    "grant": {
+      "title": "Sterren via Cyber Auth toestaan",
+      "description": "Je GitHub-account is gekoppeld, maar zonder de toestemming om een repository een ster te geven.",
+      "button": "Toestemming geven op GitHub"
+    },
+    "scope": {
+      "title": "Waarom GitHub om toegang tot openbare repositories vraagt",
+      "body": "Een ster geven vereist de GitHub-toestemming public_repo. Cyber Auth gebruikt die voor één ding: een Cyber-project een ster geven wanneer je op deze pagina op de knop klikt. Je kunt de toestemming altijd intrekken in je GitHub-instellingen, onder Applications."
+    },
+    "confirm": {
+      "title": "Deze repository een ster geven?",
+      "description": "Bevestig om een ster toe te voegen vanuit je GitHub-account. Je kunt hem op GitHub altijd weer verwijderen.",
+      "button": "{repo} een ster geven",
+      "note": "Een ster is vrijwillig en geeft geen toegang of beloning. Het helpt anderen alleen het project te ontdekken."
+    },
+    "already": {
+      "title": "Je hebt {repo} al een ster gegeven",
+      "description": "Bedankt voor je steun. Er is verder niets te doen."
+    },
+    "success": {
+      "title": "Bedankt voor de ster",
+      "description": "{repo} heeft nu een ster van je GitHub-account."
+    },
+    "unavailable": {
+      "title": "{repo} een ster geven op GitHub",
+      "description": "Een ster met één klik is nu niet beschikbaar. Je kunt de repository direct op GitHub een ster geven."
+    },
+    "notAllowed": {
+      "title": "Deze repository kan hier geen ster krijgen",
+      "description": "Alleen Cyber-projecten kunnen via Cyber Auth een ster krijgen."
+    },
+    "errors": {
+      "generic": "De ster kon niet worden gegeven. Probeer het zo meteen opnieuw.",
+      "needsPermission": "GitHub weigerde de ster omdat de toestemming ontbreekt. Geef die en probeer het opnieuw.",
+      "rateLimited": "Te veel pogingen. Probeer het over een paar minuten opnieuw.",
+      "notLinked": "Koppel eerst je GitHub-account.",
+      "signInAgain": "Log voor je veiligheid opnieuw in voordat je GitHub koppelt.",
+      "signInAgainButton": "Opnieuw inloggen",
+      "linkFailed": "GitHub is niet gekoppeld. Probeer het opnieuw of geef de repository direct op GitHub een ster."
+    }
   }
 }

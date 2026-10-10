@@ -2647,5 +2647,65 @@
       "note": "Il link scade tra {minutes} minuti e funziona una sola volta.",
       "footnote": "Se non l’hai richiesto tu, ignora questa email: il tuo account resta com’è. Valuta di cambiare la password, perché la richiesta proviene da una sessione con accesso effettuato."
     }
+  },
+  "star": {
+    "metaTitle": "Aggiungi una stella su GitHub",
+    "eyebrow": "Sostieni il progetto",
+    "panelTitle": "Sostieni <product>{name}</product>",
+    "panelTitlePlain": "Sostieni <accent>l'open source</accent>",
+    "panelLead": "Una stella su GitHub aiuta più persone a trovare il progetto. Non è mai automatica: viene aggiunta solo quando fai clic sul pulsante e non sblocca nulla.",
+    "repoStars": "{count, plural, one {# stella} other {# stelle}}",
+    "openOnGitHub": "Apri su GitHub",
+    "back": "Torna a {name}",
+    "signedOut": {
+      "title": "Accedi per aggiungere una stella a {repo}",
+      "description": "Accedi prima con il tuo account Cyber. Al passaggio successivo confermerai tu stesso la stella.",
+      "signIn": "Accedi per continuare"
+    },
+    "connect": {
+      "title": "Collega il tuo account GitHub",
+      "description": "La stella arriva dal tuo account GitHub, quindi Cyber Auth deve esservi collegato una volta.",
+      "button": "Collega GitHub"
+    },
+    "grant": {
+      "title": "Consenti le stelle da Cyber Auth",
+      "description": "Il tuo account GitHub è collegato, ma senza il permesso necessario per aggiungere una stella a un repository.",
+      "button": "Concedi il permesso su GitHub"
+    },
+    "scope": {
+      "title": "Perché GitHub chiede l'accesso ai repository pubblici",
+      "body": "Per aggiungere una stella serve il permesso GitHub public_repo. Cyber Auth lo usa per una sola cosa: aggiungere una stella a un progetto Cyber quando fai clic sul pulsante di questa pagina. Puoi revocarlo in qualsiasi momento nelle impostazioni di GitHub, sotto Applications."
+    },
+    "confirm": {
+      "title": "Aggiungere una stella a questo repository?",
+      "description": "Conferma per aggiungere una stella dal tuo account GitHub. Puoi rimuoverla su GitHub in qualsiasi momento.",
+      "button": "Aggiungi una stella a {repo}",
+      "note": "La stella è facoltativa e non dà alcun accesso né ricompensa. Aiuta solo altre persone a scoprire il progetto."
+    },
+    "already": {
+      "title": "Hai già aggiunto una stella a {repo}",
+      "description": "Grazie per il tuo sostegno. Non c'è altro da fare."
+    },
+    "success": {
+      "title": "Grazie per la stella",
+      "description": "{repo} ora ha una stella dal tuo account GitHub."
+    },
+    "unavailable": {
+      "title": "Aggiungi una stella a {repo} su GitHub",
+      "description": "La stella con un clic non è disponibile al momento. Puoi aggiungere una stella al repository direttamente su GitHub."
+    },
+    "notAllowed": {
+      "title": "Questo repository non può ricevere una stella qui",
+      "description": "Solo i progetti Cyber possono ricevere una stella da Cyber Auth."
+    },
+    "errors": {
+      "generic": "Impossibile aggiungere la stella al repository. Riprova tra un momento.",
+      "needsPermission": "GitHub ha rifiutato la stella perché manca il permesso. Concedilo e riprova.",
+      "rateLimited": "Troppi tentativi. Riprova tra qualche minuto.",
+      "notLinked": "Collega prima il tuo account GitHub.",
+      "signInAgain": "Per sicurezza, accedi di nuovo prima di collegare GitHub.",
+      "signInAgainButton": "Accedi di nuovo",
+      "linkFailed": "GitHub non è stato collegato. Riprova oppure aggiungi una stella al repository direttamente su GitHub."
+    }
   }
 }

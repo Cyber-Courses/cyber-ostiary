@@ -2647,5 +2647,65 @@
       "note": "Link wygaśnie za {minutes} minut i działa tylko raz.",
       "footnote": "Jeśli to nie Ty, zignoruj tę wiadomość: Twoje konto pozostanie bez zmian. Rozważ zmianę hasła, ponieważ prośba została wysłana z zalogowanej sesji."
     }
+  },
+  "star": {
+    "metaTitle": "Daj gwiazdkę na GitHubie",
+    "eyebrow": "Wesprzyj projekt",
+    "panelTitle": "Wesprzyj <product>{name}</product>",
+    "panelTitlePlain": "Wesprzyj <accent>open source</accent>",
+    "panelLead": "Gwiazdka na GitHubie pomaga większej liczbie osób znaleźć projekt. Nigdy nie jest dodawana automatycznie: tylko gdy klikniesz przycisk, i niczego nie odblokowuje.",
+    "repoStars": "{count, plural, one {# gwiazdka} few {# gwiazdki} many {# gwiazdek} other {# gwiazdki}}",
+    "openOnGitHub": "Otwórz na GitHubie",
+    "back": "Wróć do {name}",
+    "signedOut": {
+      "title": "Zaloguj się, aby dać gwiazdkę {repo}",
+      "description": "Najpierw zaloguj się kontem Cyber. W następnym kroku sam potwierdzisz gwiazdkę.",
+      "signIn": "Zaloguj się, aby kontynuować"
+    },
+    "connect": {
+      "title": "Połącz konto GitHub",
+      "description": "Gwiazdka pochodzi z Twojego własnego konta GitHub, więc Cyber Auth musi zostać z nim raz połączony.",
+      "button": "Połącz GitHub"
+    },
+    "grant": {
+      "title": "Zezwól na gwiazdki z Cyber Auth",
+      "description": "Twoje konto GitHub jest połączone, ale bez uprawnienia potrzebnego do dania gwiazdki repozytorium.",
+      "button": "Nadaj uprawnienie na GitHubie"
+    },
+    "scope": {
+      "title": "Dlaczego GitHub prosi o dostęp do publicznych repozytoriów",
+      "body": "Dawanie gwiazdki wymaga uprawnienia GitHub public_repo. Cyber Auth używa go tylko do jednego: dania gwiazdki projektowi Cyber, gdy klikniesz przycisk na tej stronie. Możesz je w każdej chwili cofnąć w ustawieniach GitHub, w sekcji Applications."
+    },
+    "confirm": {
+      "title": "Dać gwiazdkę temu repozytorium?",
+      "description": "Potwierdź, aby dodać gwiazdkę ze swojego konta GitHub. W każdej chwili możesz ją usunąć na GitHubie.",
+      "button": "Daj gwiazdkę {repo}",
+      "note": "Gwiazdka jest dobrowolna i nie daje żadnego dostępu ani nagrody. Po prostu pomaga innym odkryć projekt."
+    },
+    "already": {
+      "title": "Już dałeś gwiazdkę {repo}",
+      "description": "Dziękujemy za wsparcie. Nie trzeba nic więcej robić."
+    },
+    "success": {
+      "title": "Dziękujemy za gwiazdkę",
+      "description": "{repo} ma teraz gwiazdkę z Twojego konta GitHub."
+    },
+    "unavailable": {
+      "title": "Daj gwiazdkę {repo} na GitHubie",
+      "description": "Gwiazdka jednym kliknięciem jest teraz niedostępna. Możesz dać gwiazdkę repozytorium bezpośrednio na GitHubie."
+    },
+    "notAllowed": {
+      "title": "Temu repozytorium nie można tu dać gwiazdki",
+      "description": "Tylko projekty Cyber mogą otrzymać gwiazdkę z Cyber Auth."
+    },
+    "errors": {
+      "generic": "Nie udało się dać gwiazdki. Spróbuj ponownie za chwilę.",
+      "needsPermission": "GitHub odrzucił gwiazdkę, bo brakuje uprawnienia. Nadaj je i spróbuj ponownie.",
+      "rateLimited": "Zbyt wiele prób. Spróbuj ponownie za kilka minut.",
+      "notLinked": "Najpierw połącz konto GitHub.",
+      "signInAgain": "Ze względów bezpieczeństwa zaloguj się ponownie przed połączeniem GitHub.",
+      "signInAgainButton": "Zaloguj się ponownie",
+      "linkFailed": "GitHub nie został połączony. Spróbuj ponownie albo daj gwiazdkę repozytorium bezpośrednio na GitHubie."
+    }
   }
 }

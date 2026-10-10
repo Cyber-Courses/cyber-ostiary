@@ -32,6 +32,7 @@ Keep this list short: anything that is not branding belongs upstream.
 | `apps/auth/public/logo.*` | Generated from `brand.ts` with `pnpm --filter @ostiary/auth brand:assets` |
 | `.npmrc`, `apps/*/vercel.json` | `@cyber-courses/ui` from GitHub Packages (`NPM_TOKEN`); webhook retries every 5 minutes (Pro plan) |
 | `packages/core/src/lib/auth-factory.ts`, `apps/admin/app/[locale]/(console)/sso/actions.ts` | SSO domain verification prefix `cyber-auth`, so existing DNS records stay valid |
+| `apps/auth/app/[locale]/star/`, `apps/auth/app/api/star/`, `apps/auth/components/auth/star-flow.tsx`, `apps/auth/lib/github-star.ts`, `packages/core/src/lib/github-star.ts` (+ test), the `star` messages | One-click star of a Cyber repository, see below. `auth-screen.tsx` takes a `panel` for it |
 
 The design rules live in `DESIGN.md`.
 
@@ -42,3 +43,51 @@ Besides Ostiary's variables, Cyber Auth sets:
 - `OAUTH_API_SCOPES=labs:publish,leads:write` (CyberBackend scopes). APIs and their scopes can
   now be managed in the admin console (APIs). Once these scopes are declared on their API
   there, this variable can be removed.
+
+## One-click star
+
+Readers of a Cyber site can star a Cyber repository on GitHub through Cyber Auth:
+
+```
+https://www.cyberauth.co/<locale>/star?repo=Cyber-Courses/Cyber-Library&return=<page on a Cyber site>
+```
+
+1. Signed out: "Sign in to continue" (back to this page afterwards), or the plain GitHub link.
+2. GitHub not connected, or connected without `public_repo`: "Connect GitHub" links the account
+   with that extra scope only (`linkSocial`, needs a sign-in from the last 10 minutes like every
+   connection). The card says why the scope is needed. Sign-in with GitHub keeps the default
+   scopes (`read:user`, `user:email`).
+3. A confirmation card with the repository's name, description and stars, and a
+   "Star Cyber-Courses/Cyber-Library" button. Nothing is starred before that click: not on load,
+   not on sign-in, not on the way back from GitHub.
+4. The click posts to `/api/star`, which checks the origin, the session, the repository against
+   the allowlist, a CSRF token bound to the session and the repository, and a rate limit (5 per
+   member per 10 minutes, in the `rate_limit` table). It asks GitHub whether the repository is
+   already starred (`GET /user/starred/{owner}/{repo}`), stars it otherwise (`PUT`), and logs
+   `[star] user=... repo=... outcome=...` plus an audit entry `github.star`. The token is never
+   logged or returned.
+5. "Thank you" (or "already starred") and "Back to Cyber Library".
+
+Starring is optional and unlocks nothing (GitHub Acceptable Use Policies). `return` is followed
+only to `https://` on cyberlibrary.com, cyberctf.org, cybercourses.com, cyberbench.app or
+cyberexperts.io (apex or `www.`); otherwise the page shows no back button. Without GitHub sign-in
+configured, the page shows the plain "Open on GitHub" link instead.
+
+### Setup (once)
+
+1. GitHub, Cyber-Courses organization, Settings, Developer settings, OAuth Apps, New OAuth App
+   (or reuse the one behind "Continue with GitHub"):
+   - Homepage URL: `https://www.cyberauth.co`
+   - Authorization callback URL: `https://www.cyberauth.co/api/auth/callback/github`
+2. Vercel, project `cyber-auth`, Settings, Environment Variables (Production and Preview):
+   - `GITHUB_CLIENT_ID` = the OAuth App's client ID
+   - `GITHUB_CLIENT_SECRET` = a client secret generated on that page
+   - `STAR_PROJECT_REPOS` = `Cyber-Courses/Cyber-Library` (comma-separated `owner/repo`; that is
+     also the default)
+   Set the two GitHub variables on the admin project too, so the console shows the provider.
+   GitHub can also be configured in the admin console (Sign-in providers) instead of the two
+   variables; the star page works with either.
+3. Redeploy `cyber-auth`.
+
+Local tests: with `E2E_TEST_MODE=true` and a loopback `AUTH_APP_URL`, `E2E_GITHUB_API_URL`
+points the GitHub API calls at a mock.

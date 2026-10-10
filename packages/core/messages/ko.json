@@ -2647,5 +2647,65 @@
       "note": "이 링크는 {minutes}분 후에 만료되며 한 번만 사용할 수 있습니다.",
       "footnote": "요청하지 않으셨다면 이 이메일은 무시하셔도 됩니다. 계정은 그대로 유지됩니다. 다만 로그인된 세션에서 요청이 전송되었으므로 비밀번호를 변경하는 것이 좋습니다."
     }
+  },
+  "star": {
+    "metaTitle": "GitHub에서 스타 주기",
+    "eyebrow": "프로젝트 응원하기",
+    "panelTitle": "<product>{name}</product> 응원하기",
+    "panelTitlePlain": "<accent>오픈 소스</accent> 응원하기",
+    "panelLead": "GitHub 스타는 더 많은 사람이 프로젝트를 찾는 데 도움이 됩니다. 자동으로 주어지지 않으며 버튼을 클릭할 때만 주어지고, 아무것도 잠금 해제하지 않습니다.",
+    "repoStars": "{count, plural, other {스타 #개}}",
+    "openOnGitHub": "GitHub에서 열기",
+    "back": "{name}(으)로 돌아가기",
+    "signedOut": {
+      "title": "로그인하고 {repo}에 스타 주기",
+      "description": "먼저 Cyber 계정으로 로그인하세요. 다음 단계에서 직접 스타를 확인합니다.",
+      "signIn": "로그인하고 계속"
+    },
+    "connect": {
+      "title": "GitHub 계정 연결",
+      "description": "스타는 본인의 GitHub 계정에서 주어지므로 Cyber Auth를 한 번 연결해야 합니다.",
+      "button": "GitHub 연결"
+    },
+    "grant": {
+      "title": "Cyber Auth에서 스타 허용",
+      "description": "GitHub 계정은 연결되어 있지만 저장소에 스타를 줄 권한이 없습니다.",
+      "button": "GitHub에서 권한 부여"
+    },
+    "scope": {
+      "title": "GitHub가 공개 저장소 접근을 요청하는 이유",
+      "body": "스타를 주려면 GitHub의 public_repo 권한이 필요합니다. Cyber Auth는 이 권한을 한 가지 용도로만 사용합니다. 이 페이지에서 스타 버튼을 클릭할 때 Cyber 프로젝트에 스타를 주는 것입니다. GitHub 설정의 Applications에서 언제든지 취소할 수 있습니다."
+    },
+    "confirm": {
+      "title": "이 저장소에 스타를 줄까요?",
+      "description": "확인하면 GitHub 계정에서 스타가 추가됩니다. GitHub에서 언제든지 제거할 수 있습니다.",
+      "button": "{repo}에 스타 주기",
+      "note": "스타는 선택 사항이며 어떤 접근 권한이나 보상도 주지 않습니다. 다른 사람이 프로젝트를 발견하도록 도울 뿐입니다."
+    },
+    "already": {
+      "title": "이미 {repo}에 스타를 주었습니다",
+      "description": "응원해 주셔서 감사합니다. 더 할 일은 없습니다."
+    },
+    "success": {
+      "title": "스타를 주셔서 감사합니다",
+      "description": "이제 {repo}에 GitHub 계정의 스타가 추가되었습니다."
+    },
+    "unavailable": {
+      "title": "GitHub에서 {repo}에 스타 주기",
+      "description": "원클릭 스타는 지금 사용할 수 없습니다. GitHub에서 직접 저장소에 스타를 줄 수 있습니다."
+    },
+    "notAllowed": {
+      "title": "이 저장소에는 여기서 스타를 줄 수 없습니다",
+      "description": "Cyber Auth에서는 Cyber 프로젝트에만 스타를 줄 수 있습니다."
+    },
+    "errors": {
+      "generic": "스타를 주지 못했습니다. 잠시 후 다시 시도하세요.",
+      "needsPermission": "권한이 없어 GitHub가 스타를 거부했습니다. 권한을 부여한 뒤 다시 시도하세요.",
+      "rateLimited": "시도 횟수가 너무 많습니다. 몇 분 후 다시 시도하세요.",
+      "notLinked": "먼저 GitHub 계정을 연결하세요.",
+      "signInAgain": "보안을 위해 GitHub를 연결하기 전에 다시 로그인하세요.",
+      "signInAgainButton": "다시 로그인",
+      "linkFailed": "GitHub가 연결되지 않았습니다. 다시 시도하거나 GitHub에서 직접 저장소에 스타를 주세요."
+    }
   }
 }

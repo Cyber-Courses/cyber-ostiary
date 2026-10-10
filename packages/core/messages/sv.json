@@ -2647,5 +2647,65 @@
       "note": "Länken går ut om {minutes} minuter och fungerar bara en gång.",
       "footnote": "Har du inte bett om det här? Ignorera det här mejlet: ditt konto förblir som det är. Överväg att byta lösenord, eftersom begäran kom från en inloggad session."
     }
+  },
+  "star": {
+    "metaTitle": "Stjärnmärk på GitHub",
+    "eyebrow": "Stöd projektet",
+    "panelTitle": "Stöd <product>{name}</product>",
+    "panelTitlePlain": "Stöd <accent>öppen källkod</accent>",
+    "panelLead": "En stjärna på GitHub hjälper fler att hitta projektet. Den ges aldrig automatiskt: bara när du klickar på knappen, och den låser inte upp något.",
+    "repoStars": "{count, plural, one {# stjärna} other {# stjärnor}}",
+    "openOnGitHub": "Öppna på GitHub",
+    "back": "Tillbaka till {name}",
+    "signedOut": {
+      "title": "Logga in för att stjärnmärka {repo}",
+      "description": "Logga först in med ditt Cyber-konto. I nästa steg bekräftar du stjärnan själv.",
+      "signIn": "Logga in för att fortsätta"
+    },
+    "connect": {
+      "title": "Anslut ditt GitHub-konto",
+      "description": "Stjärnan kommer från ditt eget GitHub-konto, så Cyber Auth behöver anslutas till det en gång.",
+      "button": "Anslut GitHub"
+    },
+    "grant": {
+      "title": "Tillåt stjärnor från Cyber Auth",
+      "description": "Ditt GitHub-konto är anslutet, men utan behörigheten som krävs för att stjärnmärka ett repository.",
+      "button": "Ge behörigheten på GitHub"
+    },
+    "scope": {
+      "title": "Varför GitHub ber om åtkomst till publika repositories",
+      "body": "Att stjärnmärka kräver GitHub-behörigheten public_repo. Cyber Auth använder den till en enda sak: att stjärnmärka ett Cyber-projekt när du klickar på knappen på den här sidan. Du kan återkalla den när som helst i dina GitHub-inställningar, under Applications."
+    },
+    "confirm": {
+      "title": "Stjärnmärka det här repositoryt?",
+      "description": "Bekräfta för att lägga till en stjärna från ditt GitHub-konto. Du kan ta bort den på GitHub när som helst.",
+      "button": "Stjärnmärk {repo}",
+      "note": "Att stjärnmärka är frivilligt och ger ingen åtkomst eller belöning. Det hjälper bara andra att upptäcka projektet."
+    },
+    "already": {
+      "title": "Du har redan stjärnmärkt {repo}",
+      "description": "Tack för ditt stöd. Det finns inget mer att göra."
+    },
+    "success": {
+      "title": "Tack för stjärnan",
+      "description": "{repo} är nu stjärnmärkt från ditt GitHub-konto."
+    },
+    "unavailable": {
+      "title": "Stjärnmärk {repo} på GitHub",
+      "description": "Stjärnmärkning med ett klick är inte tillgänglig just nu. Du kan stjärnmärka repositoryt direkt på GitHub."
+    },
+    "notAllowed": {
+      "title": "Det här repositoryt kan inte stjärnmärkas här",
+      "description": "Bara Cyber-projekt kan stjärnmärkas från Cyber Auth."
+    },
+    "errors": {
+      "generic": "Det gick inte att stjärnmärka repositoryt. Försök igen om en stund.",
+      "needsPermission": "GitHub nekade stjärnan eftersom behörigheten saknas. Ge den och försök igen.",
+      "rateLimited": "För många försök. Försök igen om några minuter.",
+      "notLinked": "Anslut först ditt GitHub-konto.",
+      "signInAgain": "Logga in igen för din säkerhet innan du ansluter GitHub.",
+      "signInAgainButton": "Logga in igen",
+      "linkFailed": "GitHub anslöts inte. Försök igen eller stjärnmärk repositoryt direkt på GitHub."
+    }
   }
 }
