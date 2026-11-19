@@ -6,12 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+# Cyber fork: GITHUB_TOKEN reads the private @cyber-courses/ui package (.npmrc uses NPM_TOKEN).
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   quality:
     runs-on: ubuntu-latest
     env:
       RESEND_API_KEY: re_ci_placeholder_not_used_at_build_time
       RESEND_FROM: "Ostiary <onboarding@resend.dev>"
+      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -73,6 +79,7 @@ jobs:
     # Everything else comes from e2e/.env.test (dummy values only).
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/ostiary_e2e
+      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
