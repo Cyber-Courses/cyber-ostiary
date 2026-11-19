@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { Providers } from "@ostiary/core/components/providers";
+import { EngagedEvent } from "@ostiary/core/components/engaged-event";
 import { VercelAnalytics } from "@ostiary/core/components/vercel-analytics";
 import { APP_TIME_ZONE } from "@ostiary/core/i18n/constants";
 import { getHtmlLang, isRtlLocale } from "@ostiary/core/i18n/locale-html";
@@ -104,7 +105,12 @@ export async function LocaleLayout({ children, params }: Props) {
         >
           <Providers nonce={nonce}>{children}</Providers>
         </NextIntlClientProvider>
-        {env.VERCEL_ANALYTICS === "true" ? <VercelAnalytics /> : null}
+        {env.VERCEL_ANALYTICS === "true" ? (
+          <>
+            <VercelAnalytics />
+            <EngagedEvent />
+          </>
+        ) : null}
       </body>
     </html>
   );
