@@ -1,18 +1,19 @@
 import { randomUUID } from "node:crypto";
 import type { BetterAuthOptions } from "better-auth";
+import { APIError } from "better-auth/api";
 import { and, eq } from "drizzle-orm";
 
 import { db } from "@ostiary/core/db/index";
 import * as schema from "@ostiary/core/db/schema";
 import { recordAudit } from "@ostiary/core/lib/audit";
 import { clientIp, recordAuthEvent } from "@ostiary/core/lib/auth-events";
-import { adminOnSignUp, adminOnVerification, parseAdminEmails } from "@ostiary/core/lib/admin/admin-emails";
-import { revokeUserOAuthTokens } from "@ostiary/core/lib/security/oauth-token-revocation";
+import { adminOnSignUp, adminOnVerification, fromIdentityProvider, parseAdminEmails } from "@ostiary/core/lib/admin/admin-emails";
+import { emailAliasTaken } from "@ostiary/core/lib/security/email-aliases";
+import { revokeUserAccess } from "@ostiary/core/lib/security/user-access-revocation";
 import { isExternalSignInPath } from "@ostiary/core/lib/security/external-sign-in";
 import { PUBLIC_ORGANIZATION_ID } from "@ostiary/core/lib/organization-public";
 import { env } from "@ostiary/core/lib/env";
-import { deleteUserApiKeys } from "@ostiary/core/lib/api-keys";
-import { prepareUserErasure, type ErasureSummary } from "@ostiary/core/lib/account-data/erasure";
+import { completeUserErasure, prepareUserErasure, type ErasurePlan } from "@ostiary/core/lib/account-data/erasure";
 import { emitWebhookEvents } from "@ostiary/core/lib/webhooks/outbox";
 import { makeEvent, memberSnapshot } from "@ostiary/core/lib/webhooks/events";
 import { auditActor } from "@ostiary/core/lib/auth-hooks/audit-hook";
@@ -22,10 +23,20 @@ import { TWO_STEP_SIGN_IN_PATHS } from "@ostiary/core/lib/auth-hooks/sign-in-plu
 const adminEmails = parseAdminEmails(env.ADMIN_EMAILS);
 
 /**
- * Memberships of accounts being deleted, read before the delete (the foreign key removes them)
- * and sent as `organization.member.removed` once it is done. Keyed by account id.
+ * Erasure plans of accounts being deleted, read before the delete (see account-data/erasure.ts)
+ * and carried out once it is done. Keyed by account id. A plan whose delete failed is never
+ * picked up: it is dropped after PLAN_TTL_MS so the map cannot grow.
  */
-const pendingErasures = new Map<string, ErasureSummary["memberships"]>();
+const pendingErasures = new Map<string, { plan: ErasurePlan; at: number }>();
+const PLAN_TTL_MS = 10 * 60_000;
+
+function rememberErasure(userId: string, plan: ErasurePlan) {
+    const now = Date.now();
+    for (const [id, entry] of pendingErasures) {
+        if (now - entry.at > PLAN_TTL_MS) pendingErasures.delete(id);
+    }
+    pendingErasures.set(userId, { plan, at: now });
+}
 
 /** Gives the admin role to an ADMIN_EMAILS account that has just proven its address. */
 async function promoteVerifiedAdmin(user: { id: string; email: string }, ipAddress: string | null) {
@@ -45,25 +56,15 @@ async function promoteVerifiedAdmin(user: { id: string; email: string }, ipAddre
 }
 
 /**
- * Ends the OAuth access and refresh tokens apps hold for an account. Sessions are deleted by
- * Better Auth itself (ban, password reset); a ban also deletes API keys (user update hook).
+ * EMAIL_DEDUP: a self-service account whose address reaches an existing account's inbox
+ * (john.doe@gmail.com and johndoe+x@gmail.com) is refused. A 403 here makes a password sign-up
+ * answer as it does for a taken address, without saying so. Accounts an admin, an SSO provider
+ * or SCIM creates, and server calls without a request, are not checked.
  */
-export async function revokeAppAccess(
-    user: { id: string; email: string },
-    reason: "banned" | "password_reset",
-    actor: { id: string; email: string } | null,
-    ipAddress: string | null,
-) {
-    const tokens = await revokeUserOAuthTokens(db, user.id);
-    if (tokens.accessTokens + tokens.refreshTokens > 0) {
-        await recordAudit({
-            actor,
-            action: "oauth_token.revoke_all",
-            target: { type: "user", id: user.id, label: user.email },
-            metadata: { reason, ...tokens },
-            ipAddress,
-        });
-    }
+async function refuseEmailAlias(email: string, path: string | undefined) {
+    if (!path || path.startsWith("/admin/") || fromIdentityProvider(path)) return;
+    if (!(await emailAliasTaken(db, email, env.EMAIL_DEDUP))) return;
+    throw new APIError("FORBIDDEN", { message: "An account already uses this email address.", code: "EMAIL_ALIAS_TAKEN" });
 }
 
 /** Better Auth's database hooks: admin promotion, the Public organization, bans, deletions and sign-in events. */
@@ -72,6 +73,7 @@ export function databaseHooks() {
         user: {
             create: {
                 before: async (newUser, context) => {
+                    await refuseEmailAlias(newUser.email, context?.path);
                     // Only with an address the provider verified, never through SSO or SCIM. A
                     // password sign-up is promoted when its address is verified (update hook).
                     if (!adminOnSignUp(newUser, context?.path, adminEmails)) return;
@@ -107,30 +109,22 @@ export function databaseHooks() {
                         await promoteVerifiedAdmin(updatedUser, ipAddress);
                     }
                     if (!updatedUser.banned) return;
-                    const actor = auditActor(context?.context.session?.user);
                     // Apps lose access too: refresh tokens stop working, as with SCIM deactivation.
-                    await revokeAppAccess(updatedUser, "banned", actor, ipAddress);
-                    const revoked = await deleteUserApiKeys(updatedUser.id);
-                    if (revoked === 0) return;
-                    await recordAudit({
-                        actor,
-                        action: "api_key.revoke_all",
-                        target: { type: "user", id: updatedUser.id, label: updatedUser.email },
-                        metadata: { reason: "banned", keys: revoked },
-                        ipAddress,
-                    });
+                    await revokeUserAccess(updatedUser, "banned", auditActor(context?.context.session?.user), ipAddress);
                 },
             },
             // Every deletion (the person, an admin): erase what foreign keys leave behind
             // (account-data/erasure.ts), then tell apps about the memberships that went with it.
+            // Erasure happens after the delete, so a delete that fails erases nothing.
             delete: {
                 before: async (deletedUser) => {
-                    const summary = await prepareUserErasure(db, deletedUser);
-                    pendingErasures.set(deletedUser.id, summary.memberships);
+                    rememberErasure(deletedUser.id, await prepareUserErasure(db, deletedUser));
                 },
                 after: async (deletedUser) => {
-                    const memberships = pendingErasures.get(deletedUser.id) ?? [];
+                    const pending = pendingErasures.get(deletedUser.id);
                     pendingErasures.delete(deletedUser.id);
+                    const plan = pending?.plan ?? (await prepareUserErasure(db, deletedUser));
+                    const { memberships } = await completeUserErasure(db, deletedUser, plan);
                     // Nobody is told about joining the default Public workspace either.
                     const removed = memberships.filter((m) => m.organizationId !== PUBLIC_ORGANIZATION_ID);
                     await emitWebhookEvents(
