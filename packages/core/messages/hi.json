@@ -482,6 +482,45 @@
             "noAccount": "खाता नहीं है? <link>खाता बनाएँ</link>"
           }
         },
+        "claims": {
+          "title": "टोकन claims",
+          "description": "<app>{client}</app> को मिलने वाले टोकन में जोड़े जाने वाले कस्टम claims. हर मान या तो तय होता है या साइन-इन किए गए उपयोगकर्ता से पढ़ा जाता है; कोई कोड नहीं चलता.",
+          "empty": "अभी कोई कस्टम claim नहीं है.",
+          "claimNumber": "Claim {number}",
+          "add": "Claim जोड़ें",
+          "remove": "Claim {number} हटाएँ",
+          "name": "Claim का नाम",
+          "nameHint": "https://example.com/tenant जैसे नेमस्पेस वाले नाम मानक claims से नहीं टकराते. आरक्षित claims (iss, sub, aud, exp, scope, role, email, name…) सेट नहीं किए जा सकते.",
+          "source": "मान का स्रोत",
+          "sourceText": "टेक्स्ट",
+          "sourceJson": "JSON",
+          "sourceAttribute": "उपयोगकर्ता विशेषता",
+          "value": "मान",
+          "attribute": "विशेषता",
+          "tokens": "टोकन",
+          "tokenId": "ID टोकन",
+          "tokenAccess": "ऐक्सेस टोकन",
+          "tokenUserinfo": "UserInfo",
+          "limits": "प्रति ऐप्लिकेशन अधिकतम {max} claims, कुल {kilobytes} KB.",
+          "precedence": "मशीन-से-मशीन टोकन (client credentials) को केवल तय मान मिलते हैं. किसी API के ऐक्सेस टोकन में, उसी नाम वाले claim पर API के अपने कस्टम claims को प्राथमिकता मिलती है.",
+          "previewTitle": "पूर्वावलोकन",
+          "previewHint": "एक उदाहरण उपयोगकर्ता के लिए: {username}, भूमिका {role}, सक्रिय संगठन {organization}.",
+          "previewMachine": "ऐक्सेस टोकन, client credentials (कोई उपयोगकर्ता नहीं)",
+          "previewEmpty": "कोई कस्टम claim नहीं",
+          "jsonInvalid": "\"{name}\" का मान मान्य JSON नहीं है.",
+          "save": "Claims सहेजें",
+          "saved": "टोकन claims सहेजे गए",
+          "attributes": {
+            "user_role": "प्लेटफ़ॉर्म भूमिका",
+            "user_email_verified": "ईमेल सत्यापित",
+            "user_username": "उपयोगकर्ता नाम",
+            "user_two_factor_enabled": "दो-चरणीय सत्यापन चालू",
+            "organization_id": "सक्रिय संगठन की ID",
+            "organization_slug": "सक्रिय संगठन का slug",
+            "organization_role": "सक्रिय संगठन में भूमिका",
+            "organizations": "संगठन सदस्यताएँ"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "चुनें कि कौन क्लाइंट रजिस्टर कर सकता है।",
@@ -505,6 +544,11 @@
             "faintOnLight": "हल्के कार्ड पर एक्सेंट फीका है: बटन मुश्किल से उभरेंगे।",
             "faintOnDark": "गहरे कार्ड पर एक्सेंट फीका है: बटन मुश्किल से उभरेंगे।",
             "saveFailed": "ब्रांडिंग सहेजी नहीं जा सकी।"
+          },
+          "claims": {
+            "clientGone": "यह ऐप्लिकेशन अब मौजूद नहीं है.",
+            "selfRegistered": "स्वयं पंजीकृत क्लाइंट के कस्टम claims नहीं हो सकते.",
+            "saveFailed": "Claims सहेजे नहीं जा सके."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "नाम, रीडायरेक्ट URI, डिवाइस साइन-इन और सहमति छोड़ना",
           "branding": "साइन-इन ब्रांडिंग",
           "brandingHint": "इस ऐप की साइन-इन स्क्रीन का लोगो, एक्सेंट रंग और शब्द",
+          "claims": "टोकन claims",
+          "claimsHint": "इस ऐप के ID टोकन, ऐक्सेस टोकन और UserInfo में कस्टम claims",
           "rotateSecret": "सीक्रेट रोटेट करें",
           "rotateHintPublic": "सार्वजनिक क्लाइंट का कोई सीक्रेट नहीं होता",
           "rotateHintDisabled": "पहले क्लाइंट सक्षम करें",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "साइड पैनल इमेज खाली है।",
           "panelImageTooLarge": "साइड पैनल इमेज 1 MB या उससे छोटी होनी चाहिए।",
           "panelImageType": "साइड पैनल इमेज PNG, JPEG, WebP या AVIF होनी चाहिए।"
+        },
+        "claimsErrors": {
+          "invalid": "Claims अपेक्षित प्रारूप में नहीं हैं.",
+          "nameMissing": "हर claim के लिए नाम दर्ज करें.",
+          "tooMany": "एक ऐप्लिकेशन में अधिकतम {max} कस्टम claims हो सकते हैं.",
+          "tooLarge": "कस्टम claims बहुत बड़े हैं (अधिकतम {kilobytes} KB): ये हर टोकन में जोड़े जाते हैं.",
+          "nameInvalid": "\"{name}\" मान्य claim नाम नहीं है: केवल अक्षर, अंक और _ . : / - का उपयोग करें, और शुरुआत अक्षर या _ से करें.",
+          "nameReserved": "\"{name}\" एक आरक्षित claim है: इसे सर्वर सेट करता है.",
+          "nameDuplicate": "Claim \"{name}\" दो बार परिभाषित है.",
+          "noTokens": "Claim \"{name}\" के लिए कम से कम एक टोकन चुनें.",
+          "valueInvalid": "\"{name}\" का मान टेक्स्ट, संख्या, true या false, या JSON array या object होना चाहिए (null नहीं, अधिकतम 4 स्तर).",
+          "attributeUnknown": "Claim \"{name}\" एक अज्ञात विशेषता का उपयोग करता है."
         },
         "cleanup": {
           "trigger": "अप्रयुक्त डुप्लिकेट हटाएँ",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "नाम या ईमेल से खोजें…",
           "searchLabel": "उपयोगकर्ता खोजें",
           "rolePlaceholder": "भूमिका",
+          "exportCsv": "CSV एक्सपोर्ट करें",
+          "exportCsvHint": "मौजूदा खोज और फ़िल्टर से मेल खाने वाले उपयोगकर्ताओं को CSV फ़ाइल के रूप में डाउनलोड करें",
           "roleAll": "सभी भूमिकाएँ",
           "roleAdmin": "एडमिन",
           "roleUser": "उपयोगकर्ता",
@@ -1408,7 +1468,8 @@
           "previous": "पिछला",
           "next": "अगला",
           "pageOf": "पेज {page} / {pages}",
-          "poweredBy": "<link>Better Auth admin plugin</link> के <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> और संबंधित मेथड द्वारा संचालित। आपको एडमिन के रूप में साइन इन होना चाहिए।"
+          "poweredBy": "<link>Better Auth admin plugin</link> के <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> और संबंधित मेथड द्वारा संचालित। आपको एडमिन के रूप में साइन इन होना चाहिए।",
+          "import": "उपयोगकर्ता आयात करें"
         },
         "status": {
           "banned": "प्रतिबंधित",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "उपयोगकर्ता आयात करें",
+        "description": "Auth0 या किसी CSV फ़ाइल से खाते लाएँ। कुछ भी लिखे जाने से पहले एक ड्राई रन दिखाता है कि क्या होगा।",
+        "fileTitle": "फ़ाइलें",
+        "limits": "हर आयात में अधिकतम {size} MB और {count} उपयोगकर्ता। बड़े एक्सपोर्ट को कई फ़ाइलों में बाँटें।",
+        "format": "फ़ॉर्मैट",
+        "formatAuth0": "Auth0 उपयोगकर्ता एक्सपोर्ट (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "उपयोगकर्ता फ़ाइल",
+        "usersFileHelpAuth0": "Auth0 के उपयोगकर्ता एक्सपोर्ट जॉब से बनी फ़ाइल: हर पंक्ति में एक JSON ऑब्जेक्ट, या एक JSON ऐरे।",
+        "usersFileHelpCsv": "एक हेडर पंक्ति, फिर हर पंक्ति में एक उपयोगकर्ता। कॉलम: <code>email</code> (आवश्यक), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt)।",
+        "hashesFile": "पासवर्ड हैश एक्सपोर्ट (वैकल्पिक)",
+        "hashesFileHelp": "Auth0 सपोर्ट अनुरोध पर जो bcrypt हैश देता है, वे पहले ID से और फिर ईमेल से उपयोगकर्ताओं से मिलाए जाते हैं। जिन उपयोगकर्ताओं का हैश नहीं है, वे ईमेल से मिले कोड से साइन इन करते हैं या पासवर्ड रीसेट करते हैं।",
+        "allowAdmin": "एडमिन भूमिका की अनुमति दें",
+        "allowAdminHelp": "जिन पंक्तियों में <code>role</code> का मान <code>admin</code> है, वे तब तक अस्वीकार होती हैं जब तक यह चालू न हो।",
+        "notice": "आयात किए गए उपयोगकर्ताओं को कोई ईमेल नहीं जाता, और मौजूदा खाते कभी नहीं बदले जाते। सोशल लॉगिन, MFA और पासकी आयात नहीं होते: उपयोगकर्ता उन्हें फिर से सेट करते हैं।",
+        "check": "ड्राई रन चलाएँ",
+        "checking": "जाँच हो रही है…",
+        "dryRunTitle": "ड्राई रन",
+        "dryRunDescription": "{rows, plural, one {# पंक्ति पढ़ी गई।} other {# पंक्तियाँ पढ़ी गईं।}} अभी कुछ भी नहीं लिखा गया है: पुष्टि करने पर फ़ाइलें फिर से जाँची जाती हैं।",
+        "counts": {
+          "toCreate": "बनाए जाएँगे",
+          "skippedExisting": "छोड़े गए: ईमेल पहले से इस्तेमाल में",
+          "skippedAlias": "छोड़े गए: मौजूदा ईमेल का उपनाम",
+          "invalid": "अमान्य पंक्तियाँ"
+        },
+        "details": "बनाए जाने वाले उपयोगकर्ताओं में: {withPassword} पासवर्ड के साथ, {admins} एडमिन, {blocked} ब्लॉक किए गए (प्रतिबंधित के रूप में आयात)।",
+        "errorsTitle": "आयात न होने वाली पंक्तियाँ ({total} में से पहली {shown})",
+        "columns": {
+          "row": "पंक्ति",
+          "email": "ईमेल",
+          "reason": "कारण"
+        },
+        "confirm": "{count, plural, one {# उपयोगकर्ता आयात करें} other {# उपयोगकर्ता आयात करें}}",
+        "importing": "आयात हो रहा है…",
+        "done": "{count, plural, one {# उपयोगकर्ता आयात हुआ।} other {# उपयोगकर्ता आयात हुए।}}",
+        "doneConflicts": "{count, plural, one {# पंक्ति छोड़ी गई} other {# पंक्तियाँ छोड़ी गईं}}: ड्राई रन के बाद किसी दूसरे खाते ने वह ईमेल पता या उपयोगकर्ता नाम ले लिया।",
+        "partial": "आयात {created} उपयोगकर्ताओं के बाद रुक गया, {count} पंक्तियाँ नहीं लिखी गईं। इसे फिर से चलाएँ: पहले से आयात हुए उपयोगकर्ता छोड़ दिए जाते हैं।",
+        "viewUsers": "उपयोगकर्ता देखें",
+        "noFile": "आयात करने के लिए एक फ़ाइल चुनें।",
+        "changed": "ड्राई रन के बाद फ़ाइलें या विकल्प बदल गए हैं। ड्राई रन फिर से चलाएँ।",
+        "reasons": {
+          "invalidRecord": "मान्य रिकॉर्ड नहीं",
+          "missingEmail": "कोई ईमेल पता नहीं",
+          "invalidEmail": "अमान्य ईमेल पता",
+          "invalidName": "अमान्य नाम (बहुत लंबा, या कंट्रोल कैरेक्टर)",
+          "invalidUsername": "अमान्य उपयोगकर्ता नाम (3 से 30 अक्षर, अंक, _ या .)",
+          "invalidEmailVerified": "emailVerified न true है न false",
+          "invalidRole": "भूमिका न user है न admin",
+          "adminNotAllowed": "इस आयात में एडमिन भूमिका की अनुमति नहीं",
+          "unsupportedHash": "पासवर्ड हैश bcrypt नहीं है",
+          "bcryptCost": "bcrypt कॉस्ट 4 से 14 के बाहर",
+          "duplicateInFile": "किसी पिछली पंक्ति वाला ही ईमेल पता (या इनबॉक्स)",
+          "usernameTaken": "उपयोगकर्ता नाम पहले से लिया हुआ है"
+        },
+        "fileErrors": {
+          "empty": "फ़ाइल में कोई उपयोगकर्ता नहीं है।",
+          "tooLarge": "फ़ाइलें {size} MB से बड़ी हैं। एक्सपोर्ट को कई फ़ाइलों में बाँटें।",
+          "tooManyUsers": "फ़ाइल में {count} से ज़्यादा उपयोगकर्ता हैं। एक्सपोर्ट को कई फ़ाइलों में बाँटें।",
+          "invalidJson": "फ़ाइल मान्य JSON नहीं है: हर पंक्ति में एक ऑब्जेक्ट, या एक ऐरे अपेक्षित है।",
+          "csvMissingEmail": "CSV फ़ाइल में email कॉलम नहीं है।",
+          "csvUnknownColumn": "अज्ञात CSV कॉलम “{column}”। केवल प्रलेखित कॉलम पढ़े जाते हैं: इसे हटाएँ।",
+          "csvDuplicateColumn": "CSV कॉलम “{column}” दो बार आता है।",
+          "csvUnbalancedQuotes": "CSV फ़ाइल में एक उद्धरण चिह्न है जो कभी बंद नहीं होता।",
+          "invalidHashFile": "पासवर्ड हैश एक्सपोर्ट मान्य JSON नहीं है।"
+        }
+      },
       "consent": {
         "title": "सहमति",
         "description": "लोगों ने OAuth क्लाइंट को जो अनुमतियाँ दी हैं, उनके scope और वे कब दी गईं।",
@@ -1660,7 +1788,9 @@
             "impersonate": "उपयोगकर्ता के रूप में साइन इन किया",
             "reset_two_factor": "टू-फ़ैक्टर ऑथेंटिकेशन रीसेट किया",
             "export_data": "खाता डेटा एक्सपोर्ट किया",
-            "self_delete": "अपना खाता हटाया"
+            "self_delete": "अपना खाता हटाया",
+            "export_csv": "उपयोगकर्ताओं को CSV में एक्सपोर्ट किया",
+            "import": "उपयोगकर्ता आयात किए"
           },
           "oauth_client": {
             "create": "OAuth क्लाइंट रजिस्टर किया",
@@ -1672,6 +1802,7 @@
             "enable": "OAuth क्लाइंट सक्षम किया",
             "branding_update": "साइन-इन ब्रांडिंग बदली",
             "branding_reset": "साइन-इन ब्रांडिंग रीसेट की",
+            "claims_update": "टोकन claims बदले",
             "remove_duplicates": "डुप्लिकेट OAuth क्लाइंट हटाए"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "वेबहुक सीक्रेट फिर से बनाया",
             "test": "वेबहुक टेस्ट इवेंट भेजा",
             "redeliver": "वेबहुक इवेंट फिर से डिलीवर किया"
+          },
+          "audit_log": {
+            "export_csv": "ऑडिट लॉग को CSV में एक्सपोर्ट किया"
           }
         },
         "actorPlaceholder": "कार्य करने वाले से खोजें (ईमेल)…",
         "actorLabel": "कर्ता से खोजें",
+        "exportCsv": "CSV एक्सपोर्ट करें",
+        "exportCsvHint": "मौजूदा फ़िल्टर और खोज से मेल खाने वाली सभी प्रविष्टियों को CSV फ़ाइल के रूप में डाउनलोड करें",
         "pagesLabel": "ऑडिट लॉग के पेज",
         "newest": "नवीनतम प्रविष्टियाँ",
         "older": "पुरानी प्रविष्टियाँ"

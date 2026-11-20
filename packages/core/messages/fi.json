@@ -482,6 +482,45 @@
             "noAccount": "Eikö sinulla ole tiliä? <link>Luo tili</link>"
           }
         },
+        "claims": {
+          "title": "Tokenien claimit",
+          "description": "Omat claimit, jotka lisätään tokeneihin, joita <app>{client}</app> saa. Jokainen arvo on kiinteä tai luetaan kirjautuneelta käyttäjältä; mitään koodia ei suoriteta.",
+          "empty": "Ei vielä omia claimeja.",
+          "claimNumber": "Claim {number}",
+          "add": "Lisää claim",
+          "remove": "Poista claim {number}",
+          "name": "Claimin nimi",
+          "nameHint": "Nimiavaruudelliset nimet, kuten https://example.com/tenant, eivät törmää vakioclaimeihin. Varattuja claimeja (iss, sub, aud, exp, scope, role, email, name…) ei voi asettaa.",
+          "source": "Arvon lähde",
+          "sourceText": "Teksti",
+          "sourceJson": "JSON",
+          "sourceAttribute": "Käyttäjän ominaisuus",
+          "value": "Arvo",
+          "attribute": "Ominaisuus",
+          "tokens": "Tokenit",
+          "tokenId": "ID-token",
+          "tokenAccess": "Käyttötoken",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Enintään {max} claimia sovellusta kohden, yhteensä {kilobytes} kt.",
+          "precedence": "Koneelta koneelle -tokenit (client credentials) saavat vain kiinteät arvot. API:n käyttötokeneissa API:n omat claimit voittavat samannimisen claimin.",
+          "previewTitle": "Esikatselu",
+          "previewHint": "Esimerkkikäyttäjälle: {username}, rooli {role}, aktiivinen organisaatio {organization}.",
+          "previewMachine": "Käyttötoken, client credentials (ei käyttäjää)",
+          "previewEmpty": "Ei omia claimeja",
+          "jsonInvalid": "Claimin ”{name}” arvo ei ole kelvollista JSONia.",
+          "save": "Tallenna claimit",
+          "saved": "Tokenien claimit tallennettu",
+          "attributes": {
+            "user_role": "Alustan rooli",
+            "user_email_verified": "Sähköposti vahvistettu",
+            "user_username": "Käyttäjänimi",
+            "user_two_factor_enabled": "Kaksivaiheinen tunnistautuminen käytössä",
+            "organization_id": "Aktiivisen organisaation tunnus",
+            "organization_slug": "Aktiivisen organisaation slug",
+            "organization_role": "Rooli aktiivisessa organisaatiossa",
+            "organizations": "Organisaatiojäsenyydet"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Valitse, kuka voi rekisteröidä asiakkaita.",
@@ -505,6 +544,11 @@
             "faintOnLight": "Korostusväri on haalea vaalealla kortilla: painikkeet erottuvat tuskin.",
             "faintOnDark": "Korostusväri on haalea tummalla kortilla: painikkeet erottuvat tuskin.",
             "saveFailed": "Brändäystä ei voitu tallentaa."
+          },
+          "claims": {
+            "clientGone": "Tätä sovellusta ei ole enää.",
+            "selfRegistered": "Itse rekisteröityneillä asiakkailla ei voi olla omia claimeja.",
+            "saveFailed": "Claimeja ei voitu tallentaa."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Nimi, uudelleenohjausosoitteet, laitekirjautuminen ja suostumuksen ohitus",
           "branding": "Kirjautumisen brändäys",
           "brandingHint": "Tämän sovelluksen kirjautumisnäkymien logo, korostusväri ja tekstit",
+          "claims": "Tokenien claimit",
+          "claimsHint": "Omat claimit tämän sovelluksen ID-tokenissa, käyttötokenissa ja UserInfossa",
           "rotateSecret": "Vaihda salaisuus",
           "rotateHintPublic": "Julkisilla asiakkailla ei ole salaisuutta",
           "rotateHintDisabled": "Ota asiakas ensin käyttöön",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "Sivupaneelin kuva on tyhjä.",
           "panelImageTooLarge": "Sivupaneelin kuvan on oltava enintään 1 Mt.",
           "panelImageType": "Sivupaneelin kuvan on oltava PNG-, JPEG-, WebP- tai AVIF-kuva."
+        },
+        "claimsErrors": {
+          "invalid": "Claimit eivät ole odotetussa muodossa.",
+          "nameMissing": "Anna jokaiselle claimille nimi.",
+          "tooMany": "Sovelluksella voi olla enintään {max} omaa claimia.",
+          "tooLarge": "Omat claimit ovat liian suuret (enintään {kilobytes} kt): ne lisätään jokaiseen tokeniin.",
+          "nameInvalid": "”{name}” ei ole kelvollinen claimin nimi: vain kirjaimia, numeroita ja _ . : / -, ja alussa kirjain tai _.",
+          "nameReserved": "”{name}” on varattu claim: palvelin asettaa sen.",
+          "nameDuplicate": "Claim ”{name}” on määritetty kahdesti.",
+          "noTokens": "Valitse vähintään yksi token claimille ”{name}”.",
+          "valueInvalid": "Claimin ”{name}” arvon on oltava tekstiä, luku, true tai false tai JSON-taulukko tai -objekti (ei null-arvoa, enintään 4 tasoa).",
+          "attributeUnknown": "Claim ”{name}” käyttää tuntematonta ominaisuutta."
         },
         "cleanup": {
           "trigger": "Poista käyttämättömät kaksoiskappaleet",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Hae nimellä tai sähköpostilla…",
           "searchLabel": "Hae käyttäjiä",
           "rolePlaceholder": "Rooli",
+          "exportCsv": "Vie CSV",
+          "exportCsvHint": "Lataa nykyistä hakua ja suodatinta vastaavat käyttäjät CSV-tiedostona",
           "roleAll": "Kaikki roolit",
           "roleAdmin": "Ylläpitäjä",
           "roleUser": "Käyttäjä",
@@ -1408,7 +1468,8 @@
           "previous": "Edellinen",
           "next": "Seuraava",
           "pageOf": "Sivu {page} / {pages}",
-          "poweredBy": "Toteutettu <link>Better Auth admin -lisäosan</link> metodeilla <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> ja muilla vastaavilla. Sinun on oltava kirjautunut ylläpitäjänä."
+          "poweredBy": "Toteutettu <link>Better Auth admin -lisäosan</link> metodeilla <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> ja muilla vastaavilla. Sinun on oltava kirjautunut ylläpitäjänä.",
+          "import": "Tuo käyttäjiä"
         },
         "status": {
           "banned": "Estetty",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Tuo käyttäjiä",
+        "description": "Siirrä tilit Auth0:sta tai CSV-tiedostosta. Koeajo näyttää, mitä tapahtuu, ennen kuin mitään kirjoitetaan.",
+        "fileTitle": "Tiedostot",
+        "limits": "Enintään {size} Mt ja {count} käyttäjää tuontia kohden. Jaa suuremmat viennit useaan tiedostoon.",
+        "format": "Muoto",
+        "formatAuth0": "Auth0:n käyttäjävienti (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "Käyttäjätiedosto",
+        "usersFileHelpAuth0": "Auth0:n käyttäjävientityön tuottama tiedosto: yksi JSON-objekti riviä kohden tai JSON-taulukko.",
+        "usersFileHelpCsv": "Otsikkorivi ja sen jälkeen yksi käyttäjä riviä kohden. Sarakkeet: <code>email</code> (pakollinen), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Salasanatiivisteiden vienti (valinnainen)",
+        "hashesFileHelp": "bcrypt-tiivisteet, jotka Auth0:n tuki toimittaa pyynnöstä, yhdistettynä käyttäjiin tunnisteen ja muuten sähköpostin perusteella. Käyttäjät ilman tiivistettä kirjautuvat sähköpostitse saadulla koodilla tai vaihtavat salasanansa.",
+        "allowAdmin": "Salli admin-rooli",
+        "allowAdminHelp": "Rivit, joiden <code>role</code> on <code>admin</code>, hylätään, ellei tämä ole päällä.",
+        "notice": "Tuoduille käyttäjille ei lähetetä sähköpostia, eikä olemassa olevia tilejä koskaan muuteta. Sosiaalisia kirjautumisia, MFA:ta ja pääsyavaimia ei tuoda: käyttäjät ottavat ne uudelleen käyttöön.",
+        "check": "Suorita koeajo",
+        "checking": "Tarkistetaan…",
+        "dryRunTitle": "Koeajo",
+        "dryRunDescription": "{rows, plural, one {# rivi luettu.} other {# riviä luettu.}} Mitään ei ole vielä kirjoitettu: tiedostot tarkistetaan uudelleen, kun vahvistat.",
+        "counts": {
+          "toCreate": "Luodaan",
+          "skippedExisting": "Ohitettu: sähköposti on jo käytössä",
+          "skippedAlias": "Ohitettu: olemassa olevan sähköpostin alias",
+          "invalid": "Virheelliset rivit"
+        },
+        "details": "Luotavista käyttäjistä: {withPassword} salasanalla, {admins} ylläpitäjää, {blocked} estettyä (pysyvät estettyinä).",
+        "errorsTitle": "Rivit, joita ei tuoda (ensimmäiset {shown}/{total})",
+        "columns": {
+          "row": "Rivi",
+          "email": "Sähköposti",
+          "reason": "Syy"
+        },
+        "confirm": "Tuo {count, plural, one {# käyttäjä} other {# käyttäjää}}",
+        "importing": "Tuodaan…",
+        "done": "{count, plural, one {# käyttäjä tuotu.} other {# käyttäjää tuotu.}}",
+        "doneConflicts": "{count, plural, one {# rivi ohitettiin} other {# riviä ohitettiin}}: toinen tili otti sähköpostiosoitteen tai käyttäjänimen koeajon jälkeen.",
+        "partial": "Tuonti pysähtyi {created} käyttäjän jälkeen, {count} riviä jäi kirjoittamatta. Suorita se uudelleen: jo tuodut käyttäjät ohitetaan.",
+        "viewUsers": "Näytä käyttäjät",
+        "noFile": "Valitse tuotava tiedosto.",
+        "changed": "Tiedostot tai asetukset ovat muuttuneet koeajon jälkeen. Suorita koeajo uudelleen.",
+        "reasons": {
+          "invalidRecord": "Ei kelvollinen tietue",
+          "missingEmail": "Ei sähköpostiosoitetta",
+          "invalidEmail": "Virheellinen sähköpostiosoite",
+          "invalidName": "Virheellinen nimi (liian pitkä tai ohjausmerkkejä)",
+          "invalidUsername": "Virheellinen käyttäjänimi (3–30 kirjainta, numeroa, _ tai .)",
+          "invalidEmailVerified": "emailVerified ei ole true eikä false",
+          "invalidRole": "Rooli ei ole user eikä admin",
+          "adminNotAllowed": "Admin-roolia ei sallita tässä tuonnissa",
+          "unsupportedHash": "Salasanatiiviste ei ole bcrypt",
+          "bcryptCost": "bcrypt-kustannus ei ole välillä 4–14",
+          "duplicateInFile": "Sama sähköpostiosoite (tai postilaatikko) kuin aiemmalla rivillä",
+          "usernameTaken": "Käyttäjänimi on jo varattu"
+        },
+        "fileErrors": {
+          "empty": "Tiedostossa ei ole käyttäjiä.",
+          "tooLarge": "Tiedostot ovat suurempia kuin {size} Mt. Jaa vienti useaan tiedostoon.",
+          "tooManyUsers": "Tiedostossa on yli {count} käyttäjää. Jaa vienti useaan tiedostoon.",
+          "invalidJson": "Tiedosto ei ole kelvollista JSONia: odotetaan yhtä objektia riviä kohden tai taulukkoa.",
+          "csvMissingEmail": "CSV-tiedostossa ei ole email-saraketta.",
+          "csvUnknownColumn": "Tuntematon CSV-sarake ”{column}”. Vain dokumentoidut sarakkeet luetaan: poista se.",
+          "csvDuplicateColumn": "CSV-sarake ”{column}” esiintyy kahdesti.",
+          "csvUnbalancedQuotes": "CSV-tiedostossa on lainausmerkki, jota ei koskaan suljeta.",
+          "invalidHashFile": "Salasanatiivisteiden vienti ei ole kelvollista JSONia."
+        }
+      },
       "consent": {
         "title": "Suostumukset",
         "description": "Käyttöoikeudet, jotka ihmiset ovat myöntäneet OAuth-asiakkaille, sekä scopet ja myöntämisajankohdat.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Kirjautui käyttäjänä",
             "reset_two_factor": "Nollasi kaksivaiheisen tunnistautumisen",
             "export_data": "Vei tilin tiedot",
-            "self_delete": "Poisti oman tilinsä"
+            "self_delete": "Poisti oman tilinsä",
+            "export_csv": "Vei käyttäjät CSV-muodossa",
+            "import": "Toi käyttäjiä"
           },
           "oauth_client": {
             "create": "Rekisteröi OAuth-asiakkaan",
@@ -1672,6 +1802,7 @@
             "enable": "Otti OAuth-asiakkaan käyttöön",
             "branding_update": "Muutti kirjautumisen brändäystä",
             "branding_reset": "Palautti kirjautumisen brändäyksen",
+            "claims_update": "Tokenien claimit muutettu",
             "remove_duplicates": "Poisti OAuth-asiakkaiden kaksoiskappaleet"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Loi webhookin salaisuuden uudelleen",
             "test": "Lähetti webhookin testitapahtuman",
             "redeliver": "Toimitti webhook-tapahtuman uudelleen"
+          },
+          "audit_log": {
+            "export_csv": "Vei tarkastuslokin CSV-muodossa"
           }
         },
         "actorPlaceholder": "Hae tekijän mukaan (sähköposti)…",
         "actorLabel": "Hae tekijän mukaan",
+        "exportCsv": "Vie CSV",
+        "exportCsvHint": "Lataa kaikki nykyistä suodatinta ja hakua vastaavat merkinnät CSV-tiedostona",
         "pagesLabel": "Tarkastuslokin sivut",
         "newest": "Uusimmat merkinnät",
         "older": "Vanhemmat merkinnät"

@@ -482,6 +482,45 @@
             "noAccount": "Ingen konto? <link>Opret en</link>"
           }
         },
+        "claims": {
+          "title": "Token-claims",
+          "description": "Egne claims, der føjes til de tokens, <app>{client}</app> modtager. Hver værdi er fast eller læses fra den loggede bruger; der køres ingen kode.",
+          "empty": "Ingen egne claims endnu.",
+          "claimNumber": "Claim {number}",
+          "add": "Tilføj claim",
+          "remove": "Fjern claim {number}",
+          "name": "Claimnavn",
+          "nameHint": "Navne med navnerum som https://example.com/tenant undgår konflikter med standard-claims. Reserverede claims (iss, sub, aud, exp, scope, role, email, name…) kan ikke sættes.",
+          "source": "Værdi fra",
+          "sourceText": "Tekst",
+          "sourceJson": "JSON",
+          "sourceAttribute": "Brugerattribut",
+          "value": "Værdi",
+          "attribute": "Attribut",
+          "tokens": "Tokens",
+          "tokenId": "ID-token",
+          "tokenAccess": "Adgangstoken",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Op til {max} claims pr. applikation, {kilobytes} KB i alt.",
+          "precedence": "Maskine-til-maskine-tokens (client credentials) får kun de faste værdier. I en API's adgangstokens vinder API'ets egne claims over et claim med samme navn.",
+          "previewTitle": "Forhåndsvisning",
+          "previewHint": "For en eksempelbruger: {username}, rolle {role}, aktiv organisation {organization}.",
+          "previewMachine": "Adgangstoken, client credentials (ingen bruger)",
+          "previewEmpty": "Ingen egne claims",
+          "jsonInvalid": "Værdien af “{name}” er ikke gyldig JSON.",
+          "save": "Gem claims",
+          "saved": "Token-claims gemt",
+          "attributes": {
+            "user_role": "Platformsrolle",
+            "user_email_verified": "E-mail bekræftet",
+            "user_username": "Brugernavn",
+            "user_two_factor_enabled": "Totrinsbekræftelse slået til",
+            "organization_id": "ID på den aktive organisation",
+            "organization_slug": "Slug på den aktive organisation",
+            "organization_role": "Rolle i den aktive organisation",
+            "organizations": "Medlemskaber af organisationer"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Vælg, hvem der må registrere klienter.",
@@ -505,6 +544,11 @@
             "faintOnLight": "Accentfarven er svag på det lyse kort: knapperne vil knap skille sig ud.",
             "faintOnDark": "Accentfarven er svag på det mørke kort: knapperne vil knap skille sig ud.",
             "saveFailed": "Brandingen kunne ikke gemmes."
+          },
+          "claims": {
+            "clientGone": "Denne applikation findes ikke længere.",
+            "selfRegistered": "Selvregistrerede klienter kan ikke have egne claims.",
+            "saveFailed": "Claims kunne ikke gemmes."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Navn, redirect-URI'er, enhedslogin og spring samtykke over",
           "branding": "Login-branding",
           "brandingHint": "Logo, accentfarve og tekster på loginskærmene for denne app",
+          "claims": "Token-claims",
+          "claimsHint": "Egne claims i appens ID-token, adgangstoken og UserInfo",
           "rotateSecret": "Rotér hemmelighed",
           "rotateHintPublic": "Offentlige klienter har ingen hemmelighed",
           "rotateHintDisabled": "Aktivér klienten først",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "Billedet til sidepanelet er tomt.",
           "panelImageTooLarge": "Billedet til sidepanelet må højst være 1 MB.",
           "panelImageType": "Billedet til sidepanelet skal være et PNG-, JPEG-, WebP- eller AVIF-billede."
+        },
+        "claimsErrors": {
+          "invalid": "Claims har ikke det forventede format.",
+          "nameMissing": "Angiv et navn for hvert claim.",
+          "tooMany": "En applikation kan højst have {max} egne claims.",
+          "tooLarge": "De egne claims er for store (højst {kilobytes} KB): de føjes til hvert token.",
+          "nameInvalid": "“{name}” er ikke et gyldigt claimnavn: kun bogstaver, tal og _ . : / -, og det skal starte med et bogstav eller _.",
+          "nameReserved": "“{name}” er et reserveret claim: serveren sætter det.",
+          "nameDuplicate": "Claimet “{name}” er defineret to gange.",
+          "noTokens": "Vælg mindst ét token til claimet “{name}”.",
+          "valueInvalid": "Værdien af “{name}” skal være tekst, et tal, true eller false eller et JSON-array eller -objekt (ingen null, højst 4 niveauer).",
+          "attributeUnknown": "Claimet “{name}” bruger en ukendt attribut."
         },
         "cleanup": {
           "trigger": "Fjern ubrugte dubletter",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Søg efter navn eller e-mail…",
           "searchLabel": "Søg efter brugere",
           "rolePlaceholder": "Rolle",
+          "exportCsv": "Eksportér CSV",
+          "exportCsvHint": "Download brugerne, der matcher den aktuelle søgning og det aktuelle filter, som en CSV-fil",
           "roleAll": "Alle roller",
           "roleAdmin": "Administrator",
           "roleUser": "Bruger",
@@ -1408,7 +1468,8 @@
           "previous": "Forrige",
           "next": "Næste",
           "pageOf": "Side {page} / {pages}",
-          "poweredBy": "Drevet af <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> og relaterede metoder fra <link>Better Auth admin-pluginet</link>. Du skal være logget ind som administrator."
+          "poweredBy": "Drevet af <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> og relaterede metoder fra <link>Better Auth admin-pluginet</link>. Du skal være logget ind som administrator.",
+          "import": "Importér brugere"
         },
         "status": {
           "banned": "Udelukket",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Importér brugere",
+        "description": "Flyt konti over fra Auth0 eller en CSV-fil. En prøvekørsel viser, hvad der sker, før noget skrives.",
+        "fileTitle": "Filer",
+        "limits": "Op til {size} MB og {count} brugere pr. import. Del større eksporter op i flere filer.",
+        "format": "Format",
+        "formatAuth0": "Brugereksport fra Auth0 (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "Brugerfil",
+        "usersFileHelpAuth0": "Filen fra Auth0’s job til brugereksport: ét JSON-objekt pr. linje eller et JSON-array.",
+        "usersFileHelpCsv": "En overskriftslinje, derefter én bruger pr. linje. Kolonner: <code>email</code> (påkrævet), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Eksport af adgangskode-hashes (valgfri)",
+        "hashesFileHelp": "De bcrypt-hashes, som Auth0’s support udleverer på anmodning, knyttet til brugere via ID og ellers via e-mail. Brugere uden hash logger ind med en kode pr. e-mail eller nulstiller deres adgangskode.",
+        "allowAdmin": "Tillad admin-rollen",
+        "allowAdminHelp": "Linjer, hvor <code>role</code> er <code>admin</code>, afvises, medmindre dette er slået til.",
+        "notice": "Importerede brugere får ingen e-mail, og eksisterende konti ændres aldrig. Sociale logins, MFA og passkeys importeres ikke: brugerne sætter dem op igen.",
+        "check": "Kør prøvekørsel",
+        "checking": "Kontrollerer…",
+        "dryRunTitle": "Prøvekørsel",
+        "dryRunDescription": "{rows, plural, one {# linje læst.} other {# linjer læst.}} Intet er skrevet endnu: filerne kontrolleres igen, når du bekræfter.",
+        "counts": {
+          "toCreate": "Oprettes",
+          "skippedExisting": "Sprunget over: e-mail er allerede i brug",
+          "skippedAlias": "Sprunget over: alias for en eksisterende e-mail",
+          "invalid": "Ugyldige linjer"
+        },
+        "details": "Af de brugere, der oprettes: {withPassword} med adgangskode, {admins} administratorer, {blocked} blokerede (importeres som udelukkede).",
+        "errorsTitle": "Linjer, der ikke importeres (første {shown} af {total})",
+        "columns": {
+          "row": "Linje",
+          "email": "E-mail",
+          "reason": "Årsag"
+        },
+        "confirm": "Importér {count, plural, one {# bruger} other {# brugere}}",
+        "importing": "Importerer…",
+        "done": "{count, plural, one {# bruger importeret.} other {# brugere importeret.}}",
+        "doneConflicts": "{count, plural, one {# linje blev sprunget over} other {# linjer blev sprunget over}}: en anden konto tog e-mailadressen eller brugernavnet efter prøvekørslen.",
+        "partial": "Importen stoppede efter {created} brugere, {count} linjer blev ikke skrevet. Kør den igen: allerede importerede brugere springes over.",
+        "viewUsers": "Vis brugere",
+        "noFile": "Vælg en fil at importere.",
+        "changed": "Filerne eller indstillingerne er ændret siden prøvekørslen. Kør prøvekørslen igen.",
+        "reasons": {
+          "invalidRecord": "Ikke en gyldig post",
+          "missingEmail": "Ingen e-mailadresse",
+          "invalidEmail": "Ugyldig e-mailadresse",
+          "invalidName": "Ugyldigt navn (for langt eller kontroltegn)",
+          "invalidUsername": "Ugyldigt brugernavn (3 til 30 bogstaver, cifre, _ eller .)",
+          "invalidEmailVerified": "emailVerified er hverken true eller false",
+          "invalidRole": "Rollen er hverken user eller admin",
+          "adminNotAllowed": "Admin-rollen er ikke tilladt i denne import",
+          "unsupportedHash": "Adgangskode-hashen er ikke bcrypt",
+          "bcryptCost": "bcrypt-omkostning uden for 4 til 14",
+          "duplicateInFile": "Samme e-mailadresse (eller indbakke) som en tidligere linje",
+          "usernameTaken": "Brugernavnet er allerede taget"
+        },
+        "fileErrors": {
+          "empty": "Filen indeholder ingen brugere.",
+          "tooLarge": "Filerne er større end {size} MB. Del eksporten op i flere filer.",
+          "tooManyUsers": "Filen har mere end {count} brugere. Del eksporten op i flere filer.",
+          "invalidJson": "Filen er ikke gyldig JSON: der forventes ét objekt pr. linje eller et array.",
+          "csvMissingEmail": "CSV-filen har ingen email-kolonne.",
+          "csvUnknownColumn": "Ukendt CSV-kolonne “{column}”. Kun de dokumenterede kolonner læses: fjern den.",
+          "csvDuplicateColumn": "CSV-kolonnen “{column}” optræder to gange.",
+          "csvUnbalancedQuotes": "CSV-filen har et anførselstegn, der aldrig lukkes.",
+          "invalidHashFile": "Eksporten af adgangskode-hashes er ikke gyldig JSON."
+        }
+      },
       "consent": {
         "title": "Samtykke",
         "description": "Tilladelser, som personer har givet OAuth-klienter, med deres scopes og tidspunktet, de blev givet.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Loggede ind som bruger",
             "reset_two_factor": "Nulstillede totrinsgodkendelse",
             "export_data": "Eksporterede kontodata",
-            "self_delete": "Slettede sin egen konto"
+            "self_delete": "Slettede sin egen konto",
+            "export_csv": "Eksporterede brugere til CSV",
+            "import": "Importerede brugere"
           },
           "oauth_client": {
             "create": "Registrerede OAuth-klient",
@@ -1672,6 +1802,7 @@
             "enable": "Aktiverede OAuth-klient",
             "branding_update": "Ændrede login-branding",
             "branding_reset": "Nulstillede login-branding",
+            "claims_update": "Token-claims ændret",
             "remove_duplicates": "Fjernede duplikerede OAuth-klienter"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Genererede ny webhook-hemmelighed",
             "test": "Sendte webhook-testhændelse",
             "redeliver": "Leverede webhook-hændelse igen"
+          },
+          "audit_log": {
+            "export_csv": "Eksporterede revisionsloggen til CSV"
           }
         },
         "actorPlaceholder": "Søg efter hvem der handlede (e-mail)…",
         "actorLabel": "Søg efter udfører",
+        "exportCsv": "Eksportér CSV",
+        "exportCsvHint": "Download alle poster, der matcher det aktuelle filter og den aktuelle søgning, som en CSV-fil",
         "pagesLabel": "Sider i revisionsloggen",
         "newest": "Nyeste poster",
         "older": "Ældre poster"

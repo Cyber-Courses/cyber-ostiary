@@ -482,6 +482,45 @@
             "noAccount": "没有账户？<link>立即创建</link>"
           }
         },
+        "claims": {
+          "title": "令牌声明",
+          "description": "添加到 <app>{client}</app> 所获令牌中的自定义声明。每个值都是固定值，或读取自已登录的用户；不会运行任何代码。",
+          "empty": "暂无自定义声明。",
+          "claimNumber": "声明 {number}",
+          "add": "添加声明",
+          "remove": "删除声明 {number}",
+          "name": "声明名称",
+          "nameHint": "带命名空间的名称（如 https://example.com/tenant）可避免与标准声明冲突。保留声明（iss、sub、aud、exp、scope、role、email、name 等）无法设置。",
+          "source": "值来源",
+          "sourceText": "文本",
+          "sourceJson": "JSON",
+          "sourceAttribute": "用户属性",
+          "value": "值",
+          "attribute": "属性",
+          "tokens": "令牌",
+          "tokenId": "ID 令牌",
+          "tokenAccess": "访问令牌",
+          "tokenUserinfo": "UserInfo",
+          "limits": "每个应用最多 {max} 个声明，总计不超过 {kilobytes} KB。",
+          "precedence": "机器对机器令牌（client credentials）只包含固定值。在某个 API 的访问令牌中，该 API 自己的自定义声明优先于同名声明。",
+          "previewTitle": "预览",
+          "previewHint": "以示例用户为例：{username}，角色 {role}，当前组织 {organization}。",
+          "previewMachine": "访问令牌，client credentials（无用户）",
+          "previewEmpty": "无自定义声明",
+          "jsonInvalid": "“{name}”的值不是有效的 JSON。",
+          "save": "保存声明",
+          "saved": "令牌声明已保存",
+          "attributes": {
+            "user_role": "平台角色",
+            "user_email_verified": "邮箱已验证",
+            "user_username": "用户名",
+            "user_two_factor_enabled": "已启用双重验证",
+            "organization_id": "当前组织 ID",
+            "organization_slug": "当前组织标识（slug）",
+            "organization_role": "在当前组织中的角色",
+            "organizations": "所属组织"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "请选择谁可以注册客户端。",
@@ -505,6 +544,11 @@
             "faintOnLight": "强调色在浅色卡片上过淡：按钮几乎不显眼。",
             "faintOnDark": "强调色在深色卡片上过淡：按钮几乎不显眼。",
             "saveFailed": "无法保存品牌设置。"
+          },
+          "claims": {
+            "clientGone": "此应用已不存在。",
+            "selfRegistered": "自行注册的客户端不能设置自定义声明。",
+            "saveFailed": "无法保存声明。"
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "名称、重定向 URI、设备登录和跳过同意",
           "branding": "登录品牌",
           "brandingHint": "此应用登录页面的标志、强调色和文案",
+          "claims": "令牌声明",
+          "claimsHint": "此应用的 ID 令牌、访问令牌和 UserInfo 中的自定义声明",
           "rotateSecret": "轮换密钥",
           "rotateHintPublic": "公开客户端没有密钥",
           "rotateHintDisabled": "请先启用客户端",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "侧边面板图片为空。",
           "panelImageTooLarge": "侧边面板图片不能超过 1 MB。",
           "panelImageType": "侧边面板图片必须是 PNG、JPEG、WebP 或 AVIF 图片。"
+        },
+        "claimsErrors": {
+          "invalid": "声明的格式不符合要求。",
+          "nameMissing": "请为每个声明输入名称。",
+          "tooMany": "一个应用最多可有 {max} 个自定义声明。",
+          "tooLarge": "自定义声明过大（最多 {kilobytes} KB）：它们会添加到每个令牌中。",
+          "nameInvalid": "“{name}”不是有效的声明名称：只能使用字母、数字和 _ . : / -，并以字母或 _ 开头。",
+          "nameReserved": "“{name}”是保留声明：由服务器设置。",
+          "nameDuplicate": "声明“{name}”被定义了两次。",
+          "noTokens": "请为声明“{name}”至少选择一个令牌。",
+          "valueInvalid": "“{name}”的值必须是文本、数字、true 或 false，或 JSON 数组或对象（不能为 null，最多 4 层）。",
+          "attributeUnknown": "声明“{name}”使用了未知属性。"
         },
         "cleanup": {
           "trigger": "移除未使用的重复项",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "按名称或邮箱搜索…",
           "searchLabel": "搜索用户",
           "rolePlaceholder": "角色",
+          "exportCsv": "导出 CSV",
+          "exportCsvHint": "将符合当前搜索和筛选条件的用户下载为 CSV 文件",
           "roleAll": "所有角色",
           "roleAdmin": "管理员",
           "roleUser": "用户",
@@ -1408,7 +1468,8 @@
           "previous": "上一页",
           "next": "下一页",
           "pageOf": "第 {page} / {pages} 页",
-          "poweredBy": "基于 <link>Better Auth admin 插件</link>的 <code>listUsers</code>、<code>createUser</code>、<code>setRole</code>、<code>updateUser</code>、<code>setUserPassword</code> 等方法。你必须以管理员身份登录。"
+          "poweredBy": "基于 <link>Better Auth admin 插件</link>的 <code>listUsers</code>、<code>createUser</code>、<code>setRole</code>、<code>updateUser</code>、<code>setUserPassword</code> 等方法。你必须以管理员身份登录。",
+          "import": "导入用户"
         },
         "status": {
           "banned": "已封禁",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "导入用户",
+        "description": "从 Auth0 或 CSV 文件迁移账户。在写入任何内容之前，试运行会先展示将发生的情况。",
+        "fileTitle": "文件",
+        "limits": "每次导入最多 {size} MB、{count} 个用户。较大的导出请拆分为多个文件。",
+        "format": "格式",
+        "formatAuth0": "Auth0 用户导出（JSON）",
+        "formatCsv": "CSV",
+        "usersFile": "用户文件",
+        "usersFileHelpAuth0": "Auth0 用户导出任务生成的文件：每行一个 JSON 对象，或一个 JSON 数组。",
+        "usersFileHelpCsv": "一行表头，之后每行一个用户。列：<code>email</code>（必填）、<code>name</code>、<code>username</code>、<code>emailVerified</code>、<code>role</code>、<code>passwordHash</code>（bcrypt）。",
+        "hashesFile": "密码哈希导出（可选）",
+        "hashesFileHelp": "Auth0 支持团队应要求提供的 bcrypt 哈希，先按 ID、再按邮箱与用户匹配。没有哈希的用户可通过邮件收到的验证码登录，或重置密码。",
+        "allowAdmin": "允许 admin 角色",
+        "allowAdminHelp": "除非开启此项，否则 <code>role</code> 为 <code>admin</code> 的行会被拒绝。",
+        "notice": "导入的用户不会收到任何邮件，现有账户也绝不会被修改。社交登录、MFA 和通行密钥不会被导入：用户需要重新设置。",
+        "check": "开始试运行",
+        "checking": "正在检查…",
+        "dryRunTitle": "试运行",
+        "dryRunDescription": "{rows, plural, other {已读取 # 行。}}尚未写入任何内容：确认时会再次检查文件。",
+        "counts": {
+          "toCreate": "将创建",
+          "skippedExisting": "已跳过：邮箱已被使用",
+          "skippedAlias": "已跳过：现有邮箱的别名",
+          "invalid": "无效行"
+        },
+        "details": "将创建的用户中：{withPassword} 个有密码，{admins} 个管理员，{blocked} 个已封禁（导入后保持封禁）。",
+        "errorsTitle": "不会导入的行（共 {total} 行，显示前 {shown} 行）",
+        "columns": {
+          "row": "行",
+          "email": "邮箱",
+          "reason": "原因"
+        },
+        "confirm": "{count, plural, other {导入 # 个用户}}",
+        "importing": "正在导入…",
+        "done": "{count, plural, other {已导入 # 个用户。}}",
+        "doneConflicts": "{count, plural, other {已跳过 # 行}}：试运行之后，其他账户占用了该邮箱地址或用户名。",
+        "partial": "导入在 {created} 个用户之后停止，有 {count} 行未写入。请重新运行：已导入的用户会被跳过。",
+        "viewUsers": "查看用户",
+        "noFile": "请选择要导入的文件。",
+        "changed": "试运行之后文件或选项已更改。请重新试运行。",
+        "reasons": {
+          "invalidRecord": "不是有效记录",
+          "missingEmail": "没有邮箱地址",
+          "invalidEmail": "邮箱地址无效",
+          "invalidName": "名称无效（过长或包含控制字符）",
+          "invalidUsername": "用户名无效（3 到 30 个字母、数字、_ 或 .）",
+          "invalidEmailVerified": "emailVerified 既不是 true 也不是 false",
+          "invalidRole": "角色既不是 user 也不是 admin",
+          "adminNotAllowed": "本次导入不允许 admin 角色",
+          "unsupportedHash": "密码哈希不是 bcrypt",
+          "bcryptCost": "bcrypt 成本不在 4 到 14 之间",
+          "duplicateInFile": "与前面某行的邮箱地址（或收件箱）相同",
+          "usernameTaken": "用户名已被占用"
+        },
+        "fileErrors": {
+          "empty": "文件中没有用户。",
+          "tooLarge": "文件超过 {size} MB。请将导出拆分为多个文件。",
+          "tooManyUsers": "文件中的用户超过 {count} 个。请将导出拆分为多个文件。",
+          "invalidJson": "文件不是有效的 JSON：应为每行一个对象，或一个数组。",
+          "csvMissingEmail": "CSV 文件没有 email 列。",
+          "csvUnknownColumn": "未知的 CSV 列“{column}”。只会读取文档中列出的列：请删除它。",
+          "csvDuplicateColumn": "CSV 列“{column}”出现了两次。",
+          "csvUnbalancedQuotes": "CSV 文件中有未闭合的引号。",
+          "invalidHashFile": "密码哈希导出不是有效的 JSON。"
+        }
+      },
       "consent": {
         "title": "授权记录",
         "description": "用户授予 OAuth 客户端的权限，包括范围和授予时间。",
@@ -1660,7 +1788,9 @@
             "impersonate": "模拟了用户",
             "reset_two_factor": "重置了双重身份验证",
             "export_data": "导出了账户数据",
-            "self_delete": "删除了自己的账户"
+            "self_delete": "删除了自己的账户",
+            "export_csv": "将用户导出为 CSV",
+            "import": "导入了用户"
           },
           "oauth_client": {
             "create": "注册了 OAuth 客户端",
@@ -1672,6 +1802,7 @@
             "enable": "启用了 OAuth 客户端",
             "branding_update": "更改了登录品牌",
             "branding_reset": "重置了登录品牌",
+            "claims_update": "更改了令牌声明",
             "remove_duplicates": "移除了重复的 OAuth 客户端"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "重新生成了 Webhook 密钥",
             "test": "发送了 Webhook 测试事件",
             "redeliver": "重新投递了 Webhook 事件"
+          },
+          "audit_log": {
+            "export_csv": "将审计日志导出为 CSV"
           }
         },
         "actorPlaceholder": "按操作者（邮箱）搜索…",
         "actorLabel": "按操作者搜索",
+        "exportCsv": "导出 CSV",
+        "exportCsvHint": "将符合当前筛选和搜索条件的所有条目下载为 CSV 文件",
         "pagesLabel": "审计日志分页",
         "newest": "最新记录",
         "older": "更早的记录"

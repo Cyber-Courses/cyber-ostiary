@@ -2,17 +2,20 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import { UploadIcon } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 import { AdminCreateUserDialog } from "@/components/admin/users/admin-create-user-dialog";
 import { AdminUserRowActions } from "@/components/admin/users/admin-user-row-actions";
 import { ListSearch, TableMessageRow, TablePagination } from "@/components/admin/common/admin-table";
+import { ExportCsvButton } from "@/components/admin/common/export-csv-button";
 import { useListParams } from "@/components/admin/common/use-list-params";
 import { usePagination } from "@/components/admin/common/use-pagination";
 import { ExternalLink } from "@/components/admin/common/external-link";
 import { formatShortDate } from "@/components/admin/common/page-header";
 import { Badge } from "@ostiary/core/components/ui/badge";
+import { Button } from "@ostiary/core/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -49,10 +52,13 @@ export function AdminUsersPanel({
   users,
   total,
   currentUserId,
+  exportHref,
 }: {
   users: ListUser[];
   total: number;
   currentUserId: string;
+  /** The CSV export of the users matching the URL's filters. */
+  exportHref: string;
 }) {
   const t = useTranslations("admin.pages.users");
   const tc = useTranslations("admin.common");
@@ -86,6 +92,13 @@ export function AdminUsersPanel({
               <SelectItem value="user">{t("list.roleUser")}</SelectItem>
             </SelectContent>
           </Select>
+          <ExportCsvButton href={exportHref} label={t("list.exportCsv")} title={t("list.exportCsvHint")} />
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/users/import">
+              <UploadIcon aria-hidden />
+              {t("list.import")}
+            </Link>
+          </Button>
           <AdminCreateUserDialog onCreated={refresh} />
         </div>
       </div>

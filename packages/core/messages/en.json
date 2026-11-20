@@ -482,6 +482,45 @@
             "noAccount": "No account? <link>Create one</link>"
           }
         },
+        "claims": {
+          "title": "Token claims",
+          "description": "Custom claims added to the tokens <app>{client}</app> receives. Each value is fixed or read from the signed-in user; no code runs.",
+          "empty": "No custom claims yet.",
+          "claimNumber": "Claim {number}",
+          "add": "Add claim",
+          "remove": "Remove claim {number}",
+          "name": "Claim name",
+          "nameHint": "Namespaced names such as https://example.com/tenant avoid clashes with standard claims. Reserved claims (iss, sub, aud, exp, scope, role, email, name…) cannot be set.",
+          "source": "Value from",
+          "sourceText": "Text",
+          "sourceJson": "JSON",
+          "sourceAttribute": "User attribute",
+          "value": "Value",
+          "attribute": "Attribute",
+          "tokens": "Tokens",
+          "tokenId": "ID token",
+          "tokenAccess": "Access token",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Up to {max} claims per application, {kilobytes} KB in all.",
+          "precedence": "Machine-to-machine tokens (client credentials) get the fixed values only. In an API's access tokens, the API's own custom claims win over a claim with the same name.",
+          "previewTitle": "Preview",
+          "previewHint": "For an example user: {username}, role {role}, active organization {organization}.",
+          "previewMachine": "Access token, client credentials (no user)",
+          "previewEmpty": "No custom claims",
+          "jsonInvalid": "The value of \"{name}\" is not valid JSON.",
+          "save": "Save claims",
+          "saved": "Token claims saved",
+          "attributes": {
+            "user_role": "Platform role",
+            "user_email_verified": "Email verified",
+            "user_username": "Username",
+            "user_two_factor_enabled": "Two-factor enabled",
+            "organization_id": "Active organization ID",
+            "organization_slug": "Active organization slug",
+            "organization_role": "Role in the active organization",
+            "organizations": "Organization memberships"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Choose who may register clients.",
@@ -505,6 +544,11 @@
             "faintOnLight": "The accent is faint on the light card: buttons will barely stand out.",
             "faintOnDark": "The accent is faint on the dark card: buttons will barely stand out.",
             "saveFailed": "Could not save the branding."
+          },
+          "claims": {
+            "clientGone": "This application no longer exists.",
+            "selfRegistered": "Self-registered clients cannot have custom claims.",
+            "saveFailed": "Could not save the claims."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Name, redirect URIs, device sign-in and skip consent",
           "branding": "Sign-in branding",
           "brandingHint": "Logo, accent color and wording of the sign-in screens for this app",
+          "claims": "Token claims",
+          "claimsHint": "Custom claims in this app's ID token, access token and UserInfo",
           "rotateSecret": "Rotate secret",
           "rotateHintPublic": "Public clients have no secret",
           "rotateHintDisabled": "Enable the client first",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "The side panel image is empty.",
           "panelImageTooLarge": "The side panel image must be 1 MB or smaller.",
           "panelImageType": "The side panel image must be a PNG, JPEG, WebP or AVIF image."
+        },
+        "claimsErrors": {
+          "invalid": "The claims are not in the expected format.",
+          "nameMissing": "Enter a name for each claim.",
+          "tooMany": "An application can have at most {max} custom claims.",
+          "tooLarge": "The custom claims are too large ({kilobytes} KB at most): they are added to every token.",
+          "nameInvalid": "\"{name}\" is not a valid claim name: use letters, digits and _ . : / -, starting with a letter or _.",
+          "nameReserved": "\"{name}\" is a reserved claim: the server sets it.",
+          "nameDuplicate": "The claim \"{name}\" is defined twice.",
+          "noTokens": "Choose at least one token for the claim \"{name}\".",
+          "valueInvalid": "The value of \"{name}\" must be text, a number, true or false, or a JSON array or object (no null, 4 levels deep at most).",
+          "attributeUnknown": "The claim \"{name}\" uses an unknown attribute."
         },
         "cleanup": {
           "trigger": "Remove unused duplicates",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Search by name or email…",
           "searchLabel": "Search users",
           "rolePlaceholder": "Role",
+          "exportCsv": "Export CSV",
+          "exportCsvHint": "Download the users matching the current search and filter as a CSV file",
           "roleAll": "All roles",
           "roleAdmin": "Admin",
           "roleUser": "User",
@@ -1408,7 +1468,8 @@
           "previous": "Previous",
           "next": "Next",
           "pageOf": "Page {page} / {pages}",
-          "poweredBy": "Powered by <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code>, and related methods from the <link>Better Auth admin plugin</link>. You must be signed in as an admin."
+          "poweredBy": "Powered by <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code>, and related methods from the <link>Better Auth admin plugin</link>. You must be signed in as an admin.",
+          "import": "Import users"
         },
         "status": {
           "banned": "Banned",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Import users",
+        "description": "Bring accounts over from Auth0 or a CSV file. A dry run shows what will happen before anything is written.",
+        "fileTitle": "Files",
+        "limits": "Up to {size} MB and {count} users per import. Split larger exports into several files.",
+        "format": "Format",
+        "formatAuth0": "Auth0 user export (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "User file",
+        "usersFileHelpAuth0": "The file written by Auth0’s user export job: one JSON object per line, or a JSON array.",
+        "usersFileHelpCsv": "A header row, then one user per row. Columns: <code>email</code> (required), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Password hash export (optional)",
+        "hashesFileHelp": "The bcrypt hashes Auth0 support provides on request, matched to users by ID, then by email. Users without a hash sign in with an emailed code or reset their password.",
+        "allowAdmin": "Allow the admin role",
+        "allowAdminHelp": "Rows whose <code>role</code> is <code>admin</code> are refused unless this is on.",
+        "notice": "Imported users get no email, and existing accounts are never changed. Social logins, MFA and passkeys are not imported: users set them up again.",
+        "check": "Run dry run",
+        "checking": "Checking…",
+        "dryRunTitle": "Dry run",
+        "dryRunDescription": "{rows, plural, one {# row read.} other {# rows read.}} Nothing has been written yet: the files are checked again when you confirm.",
+        "counts": {
+          "toCreate": "To create",
+          "skippedExisting": "Skipped: email already used",
+          "skippedAlias": "Skipped: alias of an existing email",
+          "invalid": "Invalid rows"
+        },
+        "details": "Of the users to create: {withPassword} with a password, {admins} admins, {blocked} blocked (imported as banned).",
+        "errorsTitle": "Rows not imported (first {shown} of {total})",
+        "columns": {
+          "row": "Row",
+          "email": "Email",
+          "reason": "Reason"
+        },
+        "confirm": "Import {count, plural, one {# user} other {# users}}",
+        "importing": "Importing…",
+        "done": "{count, plural, one {# user imported.} other {# users imported.}}",
+        "doneConflicts": "{count, plural, one {# row was skipped} other {# rows were skipped}}: another account took the email address or username after the dry run.",
+        "partial": "The import stopped after {created} users, {count} rows were not written. Run it again: users already imported are skipped.",
+        "viewUsers": "View users",
+        "noFile": "Choose a file to import.",
+        "changed": "The files or options changed since the dry run. Run the dry run again.",
+        "reasons": {
+          "invalidRecord": "Not a valid record",
+          "missingEmail": "No email address",
+          "invalidEmail": "Invalid email address",
+          "invalidName": "Invalid name (too long, or control characters)",
+          "invalidUsername": "Invalid username (3 to 30 letters, digits, _ or .)",
+          "invalidEmailVerified": "emailVerified is neither true nor false",
+          "invalidRole": "Role is neither user nor admin",
+          "adminNotAllowed": "Admin role not allowed in this import",
+          "unsupportedHash": "Password hash is not bcrypt",
+          "bcryptCost": "bcrypt cost outside 4 to 14",
+          "duplicateInFile": "Same email address (or inbox) as an earlier row",
+          "usernameTaken": "Username already taken"
+        },
+        "fileErrors": {
+          "empty": "The file has no users.",
+          "tooLarge": "The files are larger than {size} MB. Split the export into several files.",
+          "tooManyUsers": "The file has more than {count} users. Split the export into several files.",
+          "invalidJson": "The file is not valid JSON: expected one object per line, or an array.",
+          "csvMissingEmail": "The CSV file has no email column.",
+          "csvUnknownColumn": "Unknown CSV column “{column}”. Only the documented columns are read: remove it.",
+          "csvDuplicateColumn": "The CSV column “{column}” appears twice.",
+          "csvUnbalancedQuotes": "The CSV file has a quote that is never closed.",
+          "invalidHashFile": "The password hash export is not valid JSON."
+        }
+      },
       "consent": {
         "title": "Consent",
         "description": "Permissions people have granted to OAuth clients, with the scopes and when they were given.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Impersonated user",
             "reset_two_factor": "Reset two-factor authentication",
             "export_data": "Exported account data",
-            "self_delete": "Deleted their own account"
+            "self_delete": "Deleted their own account",
+            "export_csv": "Exported users to CSV",
+            "import": "Imported users"
           },
           "oauth_client": {
             "create": "Registered OAuth client",
@@ -1672,6 +1802,7 @@
             "enable": "Enabled OAuth client",
             "branding_update": "Changed sign-in branding",
             "branding_reset": "Reset sign-in branding",
+            "claims_update": "Changed token claims",
             "remove_duplicates": "Removed duplicate OAuth clients"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Regenerated webhook secret",
             "test": "Sent webhook test event",
             "redeliver": "Redelivered webhook event"
+          },
+          "audit_log": {
+            "export_csv": "Exported audit log to CSV"
           }
         },
         "actorPlaceholder": "Search by who acted (email)…",
         "actorLabel": "Search by actor",
+        "exportCsv": "Export CSV",
+        "exportCsvHint": "Download every entry matching the current filter and search as a CSV file",
         "pagesLabel": "Audit log pages",
         "newest": "Newest entries",
         "older": "Older entries"

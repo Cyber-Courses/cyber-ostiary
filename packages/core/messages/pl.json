@@ -482,6 +482,45 @@
             "noAccount": "Nie masz konta? <link>Utwórz je</link>"
           }
         },
+        "claims": {
+          "title": "Claimy tokenów",
+          "description": "Własne claimy dodawane do tokenów, które otrzymuje <app>{client}</app>. Każda wartość jest stała albo odczytywana z zalogowanego użytkownika; żaden kod nie jest uruchamiany.",
+          "empty": "Brak własnych claimów.",
+          "claimNumber": "Claim {number}",
+          "add": "Dodaj claim",
+          "remove": "Usuń claim {number}",
+          "name": "Nazwa claimu",
+          "nameHint": "Nazwy z przestrzenią nazw, np. https://example.com/tenant, nie kolidują ze standardowymi claimami. Zarezerwowanych claimów (iss, sub, aud, exp, scope, role, email, name…) nie można ustawić.",
+          "source": "Wartość z",
+          "sourceText": "Tekst",
+          "sourceJson": "JSON",
+          "sourceAttribute": "Atrybut użytkownika",
+          "value": "Wartość",
+          "attribute": "Atrybut",
+          "tokens": "Tokeny",
+          "tokenId": "Token ID",
+          "tokenAccess": "Token dostępu",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Do {max} claimów na aplikację, łącznie {kilobytes} KB.",
+          "precedence": "Tokeny maszyna–maszyna (client credentials) dostają tylko stałe wartości. W tokenach dostępu API własne claimy API mają pierwszeństwo przed claimem o tej samej nazwie.",
+          "previewTitle": "Podgląd",
+          "previewHint": "Dla przykładowego użytkownika: {username}, rola {role}, aktywna organizacja {organization}.",
+          "previewMachine": "Token dostępu, client credentials (bez użytkownika)",
+          "previewEmpty": "Brak własnych claimów",
+          "jsonInvalid": "Wartość „{name}” nie jest poprawnym JSON-em.",
+          "save": "Zapisz claimy",
+          "saved": "Claimy tokenów zapisane",
+          "attributes": {
+            "user_role": "Rola na platformie",
+            "user_email_verified": "E-mail zweryfikowany",
+            "user_username": "Nazwa użytkownika",
+            "user_two_factor_enabled": "Weryfikacja dwuetapowa włączona",
+            "organization_id": "ID aktywnej organizacji",
+            "organization_slug": "Slug aktywnej organizacji",
+            "organization_role": "Rola w aktywnej organizacji",
+            "organizations": "Członkostwa w organizacjach"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Wybierz, kto może rejestrować klientów.",
@@ -505,6 +544,11 @@
             "faintOnLight": "Akcent jest słabo widoczny na jasnej karcie: przyciski będą się ledwo wyróżniać.",
             "faintOnDark": "Akcent jest słabo widoczny na ciemnej karcie: przyciski będą się ledwo wyróżniać.",
             "saveFailed": "Nie udało się zapisać wyglądu."
+          },
+          "claims": {
+            "clientGone": "Ta aplikacja już nie istnieje.",
+            "selfRegistered": "Samodzielnie zarejestrowani klienci nie mogą mieć własnych claimów.",
+            "saveFailed": "Nie udało się zapisać claimów."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Nazwa, URI przekierowania, logowanie na urządzeniu i pomijanie zgody",
           "branding": "Wygląd logowania",
           "brandingHint": "Logo, kolor akcentu i teksty ekranów logowania tej aplikacji",
+          "claims": "Claimy tokenów",
+          "claimsHint": "Własne claimy w tokenie ID, tokenie dostępu i UserInfo tej aplikacji",
           "rotateSecret": "Zmień sekret",
           "rotateHintPublic": "Klienci publiczni nie mają sekretu",
           "rotateHintDisabled": "Najpierw włącz klienta",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "Obraz panelu bocznego jest pusty.",
           "panelImageTooLarge": "Obraz panelu bocznego może mieć najwyżej 1 MB.",
           "panelImageType": "Obraz panelu bocznego musi być w formacie PNG, JPEG, WebP lub AVIF."
+        },
+        "claimsErrors": {
+          "invalid": "Claimy nie mają oczekiwanego formatu.",
+          "nameMissing": "Podaj nazwę każdego claimu.",
+          "tooMany": "Aplikacja może mieć najwyżej {max} własnych claimów.",
+          "tooLarge": "Własne claimy są za duże (najwyżej {kilobytes} KB): są dodawane do każdego tokenu.",
+          "nameInvalid": "„{name}” nie jest poprawną nazwą claimu: tylko litery, cyfry i _ . : / -, zaczynając od litery lub _.",
+          "nameReserved": "„{name}” to zarezerwowany claim: ustawia go serwer.",
+          "nameDuplicate": "Claim „{name}” jest zdefiniowany dwa razy.",
+          "noTokens": "Wybierz co najmniej jeden token dla claimu „{name}”.",
+          "valueInvalid": "Wartość „{name}” musi być tekstem, liczbą, true lub false albo tablicą lub obiektem JSON (bez null, najwyżej 4 poziomy).",
+          "attributeUnknown": "Claim „{name}” używa nieznanego atrybutu."
         },
         "cleanup": {
           "trigger": "Usuń nieużywane duplikaty",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Szukaj po nazwie lub adresie e-mail…",
           "searchLabel": "Szukaj użytkowników",
           "rolePlaceholder": "Rola",
+          "exportCsv": "Eksportuj CSV",
+          "exportCsvHint": "Pobierz użytkowników pasujących do bieżącego wyszukiwania i filtra jako plik CSV",
           "roleAll": "Wszystkie role",
           "roleAdmin": "Administrator",
           "roleUser": "Użytkownik",
@@ -1408,7 +1468,8 @@
           "previous": "Poprzednia",
           "next": "Następna",
           "pageOf": "Strona {page} / {pages}",
-          "poweredBy": "Korzysta z <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> i powiązanych metod <link>wtyczki admin Better Auth</link>. Musisz być zalogowany jako administrator."
+          "poweredBy": "Korzysta z <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> i powiązanych metod <link>wtyczki admin Better Auth</link>. Musisz być zalogowany jako administrator.",
+          "import": "Importuj użytkowników"
         },
         "status": {
           "banned": "Zablokowany",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Importuj użytkowników",
+        "description": "Przenieś konta z Auth0 lub z pliku CSV. Próbny przebieg pokazuje, co się stanie, zanim cokolwiek zostanie zapisane.",
+        "fileTitle": "Pliki",
+        "limits": "Do {size} MB i {count} użytkowników na import. Większe eksporty podziel na kilka plików.",
+        "format": "Format",
+        "formatAuth0": "Eksport użytkowników Auth0 (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "Plik użytkowników",
+        "usersFileHelpAuth0": "Plik utworzony przez zadanie eksportu użytkowników w Auth0: jeden obiekt JSON w wierszu lub tablica JSON.",
+        "usersFileHelpCsv": "Wiersz nagłówka, potem jeden użytkownik w wierszu. Kolumny: <code>email</code> (wymagana), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Eksport skrótów haseł (opcjonalny)",
+        "hashesFileHelp": "Skróty bcrypt udostępniane na prośbę przez wsparcie Auth0, dopasowywane do użytkowników po ID, a następnie po adresie e-mail. Użytkownicy bez skrótu logują się kodem wysłanym e-mailem lub resetują hasło.",
+        "allowAdmin": "Zezwól na rolę admin",
+        "allowAdminHelp": "Wiersze, w których <code>role</code> to <code>admin</code>, są odrzucane, jeśli ta opcja jest wyłączona.",
+        "notice": "Zaimportowani użytkownicy nie dostają żadnego e-maila, a istniejące konta nigdy nie są zmieniane. Logowania społecznościowe, MFA i klucze dostępu nie są importowane: użytkownicy konfigurują je ponownie.",
+        "check": "Uruchom próbny przebieg",
+        "checking": "Sprawdzanie…",
+        "dryRunTitle": "Próbny przebieg",
+        "dryRunDescription": "{rows, plural, one {Odczytano # wiersz.} few {Odczytano # wiersze.} many {Odczytano # wierszy.} other {Odczytano # wiersza.}} Nic jeszcze nie zapisano: pliki zostaną ponownie sprawdzone po potwierdzeniu.",
+        "counts": {
+          "toCreate": "Do utworzenia",
+          "skippedExisting": "Pominięte: e-mail już używany",
+          "skippedAlias": "Pominięte: alias istniejącego e-maila",
+          "invalid": "Nieprawidłowe wiersze"
+        },
+        "details": "Spośród użytkowników do utworzenia: z hasłem {withPassword}, administratorów {admins}, zablokowanych {blocked} (pozostaną zablokowani).",
+        "errorsTitle": "Wiersze, które nie zostaną zaimportowane (pierwsze {shown} z {total})",
+        "columns": {
+          "row": "Wiersz",
+          "email": "E-mail",
+          "reason": "Powód"
+        },
+        "confirm": "Importuj {count, plural, one {# użytkownika} few {# użytkowników} many {# użytkowników} other {# użytkownika}}",
+        "importing": "Importowanie…",
+        "done": "{count, plural, one {Zaimportowano # użytkownika.} few {Zaimportowano # użytkowników.} many {Zaimportowano # użytkowników.} other {Zaimportowano # użytkownika.}}",
+        "doneConflicts": "{count, plural, one {Pominięto # wiersz} few {Pominięto # wiersze} many {Pominięto # wierszy} other {Pominięto # wiersza}}: inne konto zajęło adres e-mail lub nazwę użytkownika po próbnym przebiegu.",
+        "partial": "Import zatrzymał się po {created} użytkownikach, nie zapisano wierszy: {count}. Uruchom go ponownie: już zaimportowani użytkownicy są pomijani.",
+        "viewUsers": "Pokaż użytkowników",
+        "noFile": "Wybierz plik do zaimportowania.",
+        "changed": "Pliki lub opcje zmieniły się od próbnego przebiegu. Uruchom próbny przebieg ponownie.",
+        "reasons": {
+          "invalidRecord": "Nieprawidłowy rekord",
+          "missingEmail": "Brak adresu e-mail",
+          "invalidEmail": "Nieprawidłowy adres e-mail",
+          "invalidName": "Nieprawidłowa nazwa (za długa lub ze znakami sterującymi)",
+          "invalidUsername": "Nieprawidłowa nazwa użytkownika (od 3 do 30 liter, cyfr, _ lub .)",
+          "invalidEmailVerified": "emailVerified nie jest ani true, ani false",
+          "invalidRole": "Rola nie jest ani user, ani admin",
+          "adminNotAllowed": "Rola admin niedozwolona w tym imporcie",
+          "unsupportedHash": "Skrót hasła nie jest w formacie bcrypt",
+          "bcryptCost": "Koszt bcrypt poza zakresem od 4 do 14",
+          "duplicateInFile": "Ten sam adres e-mail (lub skrzynka) co we wcześniejszym wierszu",
+          "usernameTaken": "Nazwa użytkownika jest już zajęta"
+        },
+        "fileErrors": {
+          "empty": "Plik nie zawiera użytkowników.",
+          "tooLarge": "Pliki są większe niż {size} MB. Podziel eksport na kilka plików.",
+          "tooManyUsers": "Plik zawiera więcej niż {count} użytkowników. Podziel eksport na kilka plików.",
+          "invalidJson": "Plik nie jest prawidłowym JSON-em: oczekiwano jednego obiektu w wierszu lub tablicy.",
+          "csvMissingEmail": "Plik CSV nie ma kolumny email.",
+          "csvUnknownColumn": "Nieznana kolumna CSV „{column}”. Odczytywane są tylko udokumentowane kolumny: usuń ją.",
+          "csvDuplicateColumn": "Kolumna CSV „{column}” występuje dwa razy.",
+          "csvUnbalancedQuotes": "Plik CSV zawiera cudzysłów, który nigdy nie jest zamknięty.",
+          "invalidHashFile": "Eksport skrótów haseł nie jest prawidłowym JSON-em."
+        }
+      },
       "consent": {
         "title": "Zgody",
         "description": "Uprawnienia przyznane przez użytkowników klientom OAuth, wraz ze scope'ami i datą udzielenia.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Zalogowano się jako użytkownik",
             "reset_two_factor": "Zresetowano uwierzytelnianie dwuskładnikowe",
             "export_data": "Wyeksportowano dane konta",
-            "self_delete": "Użytkownik usunął własne konto"
+            "self_delete": "Użytkownik usunął własne konto",
+            "export_csv": "Wyeksportowano użytkowników do CSV",
+            "import": "Zaimportowano użytkowników"
           },
           "oauth_client": {
             "create": "Zarejestrowano klienta OAuth",
@@ -1672,6 +1802,7 @@
             "enable": "Włączono klienta OAuth",
             "branding_update": "Zmieniono wygląd logowania",
             "branding_reset": "Zresetowano wygląd logowania",
+            "claims_update": "Zmieniono claimy tokenów",
             "remove_duplicates": "Usunięto zduplikowanych klientów OAuth"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Wygenerowano nowy sekret webhooka",
             "test": "Wysłano testowe zdarzenie webhooka",
             "redeliver": "Ponownie dostarczono zdarzenie webhooka"
+          },
+          "audit_log": {
+            "export_csv": "Wyeksportowano dziennik audytu do CSV"
           }
         },
         "actorPlaceholder": "Szukaj po wykonawcy (e-mail)…",
         "actorLabel": "Szukaj po wykonawcy",
+        "exportCsv": "Eksportuj CSV",
+        "exportCsvHint": "Pobierz wszystkie wpisy pasujące do bieżącego filtra i wyszukiwania jako plik CSV",
         "pagesLabel": "Strony dziennika audytu",
         "newest": "Najnowsze wpisy",
         "older": "Starsze wpisy"

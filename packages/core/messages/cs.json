@@ -482,6 +482,45 @@
             "noAccount": "Nemáte účet? <link>Vytvořte si ho</link>"
           }
         },
+        "claims": {
+          "title": "Claimy tokenů",
+          "description": "Vlastní claimy přidávané do tokenů, které dostává <app>{client}</app>. Každá hodnota je pevná nebo se čte z přihlášeného uživatele; nespouští se žádný kód.",
+          "empty": "Zatím žádné vlastní claimy.",
+          "claimNumber": "Claim {number}",
+          "add": "Přidat claim",
+          "remove": "Odebrat claim {number}",
+          "name": "Název claimu",
+          "nameHint": "Názvy s jmenným prostorem, např. https://example.com/tenant, nekolidují se standardními claimy. Rezervované claimy (iss, sub, aud, exp, scope, role, email, name…) nelze nastavit.",
+          "source": "Hodnota z",
+          "sourceText": "Text",
+          "sourceJson": "JSON",
+          "sourceAttribute": "Atribut uživatele",
+          "value": "Hodnota",
+          "attribute": "Atribut",
+          "tokens": "Tokeny",
+          "tokenId": "ID token",
+          "tokenAccess": "Přístupový token",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Nejvýše {max} claimů na aplikaci, celkem {kilobytes} KB.",
+          "precedence": "Tokeny stroj–stroj (client credentials) dostávají jen pevné hodnoty. V přístupových tokenech API mají vlastní claimy API přednost před claimem se stejným názvem.",
+          "previewTitle": "Náhled",
+          "previewHint": "Pro ukázkového uživatele: {username}, role {role}, aktivní organizace {organization}.",
+          "previewMachine": "Přístupový token, client credentials (bez uživatele)",
+          "previewEmpty": "Žádné vlastní claimy",
+          "jsonInvalid": "Hodnota „{name}“ není platný JSON.",
+          "save": "Uložit claimy",
+          "saved": "Claimy tokenů uloženy",
+          "attributes": {
+            "user_role": "Role na platformě",
+            "user_email_verified": "E-mail ověřen",
+            "user_username": "Uživatelské jméno",
+            "user_two_factor_enabled": "Dvoufázové ověření zapnuto",
+            "organization_id": "ID aktivní organizace",
+            "organization_slug": "Slug aktivní organizace",
+            "organization_role": "Role v aktivní organizaci",
+            "organizations": "Členství v organizacích"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Zvolte, kdo smí registrovat klienty.",
@@ -505,6 +544,11 @@
             "faintOnLight": "Barva zvýraznění je na světlé kartě slabá: tlačítka téměř nevyniknou.",
             "faintOnDark": "Barva zvýraznění je na tmavé kartě slabá: tlačítka téměř nevyniknou.",
             "saveFailed": "Vzhled se nepodařilo uložit."
+          },
+          "claims": {
+            "clientGone": "Tato aplikace už neexistuje.",
+            "selfRegistered": "Samostatně registrovaní klienti nemohou mít vlastní claimy.",
+            "saveFailed": "Claimy se nepodařilo uložit."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Název, URI přesměrování, přihlášení zařízení a přeskočení souhlasu",
           "branding": "Vzhled přihlášení",
           "brandingHint": "Logo, barva zvýraznění a texty přihlašovacích obrazovek této aplikace",
+          "claims": "Claimy tokenů",
+          "claimsHint": "Vlastní claimy v ID tokenu, přístupovém tokenu a UserInfo této aplikace",
           "rotateSecret": "Otočit tajný klíč",
           "rotateHintPublic": "Veřejní klienti nemají tajný klíč",
           "rotateHintDisabled": "Nejprve klienta zapněte",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "Obrázek bočního panelu je prázdný.",
           "panelImageTooLarge": "Obrázek bočního panelu může mít nejvýše 1 MB.",
           "panelImageType": "Obrázek bočního panelu musí být PNG, JPEG, WebP nebo AVIF."
+        },
+        "claimsErrors": {
+          "invalid": "Claimy nemají očekávaný formát.",
+          "nameMissing": "Zadejte název každého claimu.",
+          "tooMany": "Aplikace může mít nejvýše {max} vlastních claimů.",
+          "tooLarge": "Vlastní claimy jsou příliš velké (nejvýše {kilobytes} KB): přidávají se do každého tokenu.",
+          "nameInvalid": "„{name}“ není platný název claimu: jen písmena, číslice a _ . : / -, na začátku písmeno nebo _.",
+          "nameReserved": "„{name}“ je rezervovaný claim: nastavuje ho server.",
+          "nameDuplicate": "Claim „{name}“ je definován dvakrát.",
+          "noTokens": "Vyberte aspoň jeden token pro claim „{name}“.",
+          "valueInvalid": "Hodnota „{name}“ musí být text, číslo, true nebo false, nebo pole či objekt JSON (bez null, nejvýše 4 úrovně).",
+          "attributeUnknown": "Claim „{name}“ používá neznámý atribut."
         },
         "cleanup": {
           "trigger": "Odebrat nepoužívané duplicity",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Hledat podle jména nebo e-mailu…",
           "searchLabel": "Hledat uživatele",
           "rolePlaceholder": "Role",
+          "exportCsv": "Exportovat CSV",
+          "exportCsvHint": "Stáhnout uživatele odpovídající aktuálnímu hledání a filtru jako soubor CSV",
           "roleAll": "Všechny role",
           "roleAdmin": "Administrátor",
           "roleUser": "Uživatel",
@@ -1408,7 +1468,8 @@
           "previous": "Předchozí",
           "next": "Další",
           "pageOf": "Stránka {page} / {pages}",
-          "poweredBy": "Využívá <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> a související metody z <link>pluginu Better Auth admin</link>. Musíte být přihlášeni jako administrátor."
+          "poweredBy": "Využívá <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> a související metody z <link>pluginu Better Auth admin</link>. Musíte být přihlášeni jako administrátor.",
+          "import": "Importovat uživatele"
         },
         "status": {
           "banned": "Zablokován",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Importovat uživatele",
+        "description": "Převeďte účty z Auth0 nebo ze souboru CSV. Zkušební běh ukáže, co se stane, ještě než se cokoli zapíše.",
+        "fileTitle": "Soubory",
+        "limits": "Až {size} MB a {count} uživatelů na jeden import. Větší exporty rozdělte do více souborů.",
+        "format": "Formát",
+        "formatAuth0": "Export uživatelů z Auth0 (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "Soubor s uživateli",
+        "usersFileHelpAuth0": "Soubor z úlohy exportu uživatelů v Auth0: jeden objekt JSON na řádek, nebo pole JSON.",
+        "usersFileHelpCsv": "Řádek záhlaví, pak jeden uživatel na řádek. Sloupce: <code>email</code> (povinný), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Export hashů hesel (volitelný)",
+        "hashesFileHelp": "Hashe bcrypt, které na vyžádání poskytuje podpora Auth0, přiřazené k uživatelům podle ID, jinak podle e-mailu. Uživatelé bez hashe se přihlásí kódem z e-mailu nebo si obnoví heslo.",
+        "allowAdmin": "Povolit roli admin",
+        "allowAdminHelp": "Řádky, kde je <code>role</code> rovno <code>admin</code>, se odmítnou, pokud tato volba není zapnutá.",
+        "notice": "Importovaní uživatelé nedostanou žádný e-mail a existující účty se nikdy nemění. Sociální přihlášení, MFA a přístupové klíče se neimportují: uživatelé si je nastaví znovu.",
+        "check": "Spustit zkušební běh",
+        "checking": "Kontrola…",
+        "dryRunTitle": "Zkušební běh",
+        "dryRunDescription": "{rows, plural, one {Načten # řádek.} few {Načteny # řádky.} many {Načteno # řádku.} other {Načteno # řádků.}} Zatím se nic nezapsalo: soubory se po potvrzení zkontrolují znovu.",
+        "counts": {
+          "toCreate": "K vytvoření",
+          "skippedExisting": "Přeskočeno: e-mail už je použitý",
+          "skippedAlias": "Přeskočeno: alias existujícího e-mailu",
+          "invalid": "Neplatné řádky"
+        },
+        "details": "Z uživatelů k vytvoření: s heslem {withPassword}, administrátorů {admins}, zablokovaných {blocked} (zůstanou zablokovaní).",
+        "errorsTitle": "Neimportované řádky (prvních {shown} z {total})",
+        "columns": {
+          "row": "Řádek",
+          "email": "E-mail",
+          "reason": "Důvod"
+        },
+        "confirm": "Importovat {count, plural, one {# uživatele} few {# uživatele} many {# uživatele} other {# uživatelů}}",
+        "importing": "Importování…",
+        "done": "{count, plural, one {Importován # uživatel.} few {Importováni # uživatelé.} many {Importováno # uživatele.} other {Importováno # uživatelů.}}",
+        "doneConflicts": "{count, plural, one {Přeskočen # řádek} few {Přeskočeny # řádky} many {Přeskočeno # řádku} other {Přeskočeno # řádků}}: jiný účet po zkušebním běhu obsadil e-mailovou adresu nebo uživatelské jméno.",
+        "partial": "Import se zastavil po {created} uživatelích, nezapsané řádky: {count}. Spusťte ho znovu: již importovaní uživatelé se přeskočí.",
+        "viewUsers": "Zobrazit uživatele",
+        "noFile": "Vyberte soubor k importu.",
+        "changed": "Soubory nebo volby se od zkušebního běhu změnily. Spusťte zkušební běh znovu.",
+        "reasons": {
+          "invalidRecord": "Neplatný záznam",
+          "missingEmail": "Chybí e-mailová adresa",
+          "invalidEmail": "Neplatná e-mailová adresa",
+          "invalidName": "Neplatné jméno (příliš dlouhé nebo s řídicími znaky)",
+          "invalidUsername": "Neplatné uživatelské jméno (3 až 30 písmen, číslic, _ nebo .)",
+          "invalidEmailVerified": "emailVerified není true ani false",
+          "invalidRole": "Role není user ani admin",
+          "adminNotAllowed": "Role admin není v tomto importu povolena",
+          "unsupportedHash": "Hash hesla není bcrypt",
+          "bcryptCost": "Náročnost bcrypt mimo rozsah 4 až 14",
+          "duplicateInFile": "Stejná e-mailová adresa (nebo schránka) jako na dřívějším řádku",
+          "usernameTaken": "Uživatelské jméno je už obsazené"
+        },
+        "fileErrors": {
+          "empty": "Soubor neobsahuje žádné uživatele.",
+          "tooLarge": "Soubory jsou větší než {size} MB. Rozdělte export do více souborů.",
+          "tooManyUsers": "Soubor obsahuje více než {count} uživatelů. Rozdělte export do více souborů.",
+          "invalidJson": "Soubor není platný JSON: očekává se jeden objekt na řádek, nebo pole.",
+          "csvMissingEmail": "Soubor CSV nemá sloupec email.",
+          "csvUnknownColumn": "Neznámý sloupec CSV „{column}“. Čtou se jen zdokumentované sloupce: odstraňte ho.",
+          "csvDuplicateColumn": "Sloupec CSV „{column}“ se vyskytuje dvakrát.",
+          "csvUnbalancedQuotes": "Soubor CSV obsahuje uvozovky, které se nikdy neuzavřou.",
+          "invalidHashFile": "Export hashů hesel není platný JSON."
+        }
+      },
       "consent": {
         "title": "Souhlasy",
         "description": "Oprávnění, která lidé udělili klientům OAuth, včetně scopů a data udělení.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Přihlášení za uživatele",
             "reset_two_factor": "Reset dvoufázového ověření",
             "export_data": "Export dat účtu",
-            "self_delete": "Smazání vlastního účtu"
+            "self_delete": "Smazání vlastního účtu",
+            "export_csv": "Export uživatelů do CSV",
+            "import": "Import uživatelů"
           },
           "oauth_client": {
             "create": "Registrace klienta OAuth",
@@ -1672,6 +1802,7 @@
             "enable": "Zapnutí klienta OAuth",
             "branding_update": "Změna vzhledu přihlášení",
             "branding_reset": "Obnovení vzhledu přihlášení",
+            "claims_update": "Změněny claimy tokenů",
             "remove_duplicates": "Odebrání duplicitních klientů OAuth"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Nový tajný klíč webhooku",
             "test": "Odeslání testovací události webhooku",
             "redeliver": "Opětovné doručení události webhooku"
+          },
+          "audit_log": {
+            "export_csv": "Export auditního protokolu do CSV"
           }
         },
         "actorPlaceholder": "Hledat podle toho, kdo akci provedl (e-mail)…",
         "actorLabel": "Hledat podle autora",
+        "exportCsv": "Exportovat CSV",
+        "exportCsvHint": "Stáhnout všechny záznamy odpovídající aktuálnímu filtru a hledání jako soubor CSV",
         "pagesLabel": "Stránky protokolu auditu",
         "newest": "Nejnovější záznamy",
         "older": "Starší záznamy"

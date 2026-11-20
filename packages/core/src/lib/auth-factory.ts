@@ -56,6 +56,7 @@ import { withApiScopeBinding, withOpenApiLinks } from "@ostiary/core/lib/oauth-r
 import { CLIENT_MANAGEMENT_HTTP_PATHS, oauthClientGuard } from "@ostiary/core/lib/oauth-client-guard";
 import { withWebhookEvents } from "@ostiary/core/lib/webhooks/adapter";
 import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN } from "@ostiary/core/lib/oauth-resource-policy";
+import { clientClaimsExtension } from "@ostiary/core/lib/client-claims/extension";
 import { SAML_CLOCK_SKEW_MS, samlResponseRejection } from "@ostiary/core/lib/saml";
 import {
     clientExists,
@@ -90,6 +91,7 @@ import {
 import { auditRequests } from "@ostiary/core/lib/auth-hooks/audit-hook";
 import { adminEmailChangeUnverifies } from "@ostiary/core/lib/auth-hooks/admin-email-change";
 import { databaseHooks } from "@ostiary/core/lib/auth-hooks/database-hooks";
+import { importedPasswordVerifier, replaceImportedHash } from "@ostiary/core/lib/user-import/password-hash";
 import { revokeUserAccess } from "@ostiary/core/lib/security/user-access-revocation";
 import {
     assertAccountDeletable,
@@ -377,6 +379,10 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
                 ? { email: user.email, email_verified: Boolean(user.emailVerified) }
                 : {}),
         }),
+        // Each application's custom claims, set from the admin console (lib/client-claims). An
+        // extension, not the options above: those are not told which client the token is for.
+        // syncClientRegistration keeps it when it adds or removes the metadata document one.
+        extensions: [clientClaimsExtension()],
     });
 
     // API keys for the APIs registered in Ostiary, owned by users ("default" configuration) or
@@ -517,6 +523,12 @@ export function createAuth({ baseURL, trustedOrigins, cookieDomain }: AuthFactor
             },
             sendResetPassword: async ({ user, url }) => {
                 queuePasswordResetEmail({ to: user.email, url });
+            },
+            // New passwords are hashed with Better Auth's default (scrypt). Accounts brought in by
+            // a user import may still hold a bcrypt hash: it is checked with bcrypt and replaced by
+            // a scrypt hash at the first successful sign-in (lib/user-import/password-hash.ts).
+            password: {
+                verify: importedPasswordVerifier(replaceImportedHash(db)),
             },
         },
         plugins: [

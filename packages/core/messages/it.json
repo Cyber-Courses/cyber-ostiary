@@ -482,6 +482,45 @@
             "noAccount": "Non hai un account? <link>Creane uno</link>"
           }
         },
+        "claims": {
+          "title": "Claim dei token",
+          "description": "Claim personalizzati aggiunti ai token che riceve <app>{client}</app>. Ogni valore è fisso o letto dall’utente che ha effettuato l’accesso; non viene eseguito alcun codice.",
+          "empty": "Ancora nessun claim personalizzato.",
+          "claimNumber": "Claim {number}",
+          "add": "Aggiungi claim",
+          "remove": "Rimuovi il claim {number}",
+          "name": "Nome del claim",
+          "nameHint": "Nomi con namespace come https://example.com/tenant evitano conflitti con i claim standard. I claim riservati (iss, sub, aud, exp, scope, role, email, name…) non possono essere impostati.",
+          "source": "Valore da",
+          "sourceText": "Testo",
+          "sourceJson": "JSON",
+          "sourceAttribute": "Attributo dell’utente",
+          "value": "Valore",
+          "attribute": "Attributo",
+          "tokens": "Token",
+          "tokenId": "Token ID",
+          "tokenAccess": "Token di accesso",
+          "tokenUserinfo": "UserInfo",
+          "limits": "Fino a {max} claim per applicazione, {kilobytes} KB in tutto.",
+          "precedence": "I token machine-to-machine (client credentials) ricevono solo i valori fissi. Nei token di accesso di un’API, i claim personalizzati dell’API prevalgono su un claim con lo stesso nome.",
+          "previewTitle": "Anteprima",
+          "previewHint": "Per un utente di esempio: {username}, ruolo {role}, organizzazione attiva {organization}.",
+          "previewMachine": "Token di accesso, client credentials (senza utente)",
+          "previewEmpty": "Nessun claim personalizzato",
+          "jsonInvalid": "Il valore di “{name}” non è un JSON valido.",
+          "save": "Salva i claim",
+          "saved": "Claim dei token salvati",
+          "attributes": {
+            "user_role": "Ruolo sulla piattaforma",
+            "user_email_verified": "Email verificata",
+            "user_username": "Nome utente",
+            "user_two_factor_enabled": "Verifica in due passaggi attiva",
+            "organization_id": "ID dell’organizzazione attiva",
+            "organization_slug": "Slug dell’organizzazione attiva",
+            "organization_role": "Ruolo nell’organizzazione attiva",
+            "organizations": "Appartenenza alle organizzazioni"
+          }
+        },
         "actions": {
           "registration": {
             "chooseMode": "Scegli chi può registrare client.",
@@ -505,6 +544,11 @@
             "faintOnLight": "Il colore di accento è tenue sulla scheda chiara: i pulsanti risalteranno appena.",
             "faintOnDark": "Il colore di accento è tenue sulla scheda scura: i pulsanti risalteranno appena.",
             "saveFailed": "Impossibile salvare la personalizzazione."
+          },
+          "claims": {
+            "clientGone": "Questa applicazione non esiste più.",
+            "selfRegistered": "I client autoregistrati non possono avere claim personalizzati.",
+            "saveFailed": "Impossibile salvare i claim."
           }
         },
         "register": {
@@ -547,6 +591,8 @@
           "editHint": "Nome, URI di reindirizzamento, accesso da dispositivo e salto del consenso",
           "branding": "Personalizzazione dell’accesso",
           "brandingHint": "Logo, colore di accento e testi delle schermate di accesso per questa app",
+          "claims": "Claim dei token",
+          "claimsHint": "Claim personalizzati nel token ID, nel token di accesso e in UserInfo di questa app",
           "rotateSecret": "Ruota secret",
           "rotateHintPublic": "I client pubblici non hanno un secret",
           "rotateHintDisabled": "Prima attiva il client",
@@ -616,6 +662,18 @@
           "panelImageEmpty": "L’immagine del pannello laterale è vuota.",
           "panelImageTooLarge": "L’immagine del pannello laterale deve pesare al massimo 1 MB.",
           "panelImageType": "L’immagine del pannello laterale deve essere un’immagine PNG, JPEG, WebP o AVIF."
+        },
+        "claimsErrors": {
+          "invalid": "I claim non sono nel formato previsto.",
+          "nameMissing": "Inserisci un nome per ogni claim.",
+          "tooMany": "Un’applicazione può avere al massimo {max} claim personalizzati.",
+          "tooLarge": "I claim personalizzati sono troppo grandi (al massimo {kilobytes} KB): vengono aggiunti a ogni token.",
+          "nameInvalid": "“{name}” non è un nome di claim valido: solo lettere, cifre e _ . : / -, iniziando con una lettera o _.",
+          "nameReserved": "“{name}” è un claim riservato: lo imposta il server.",
+          "nameDuplicate": "Il claim “{name}” è definito due volte.",
+          "noTokens": "Scegli almeno un token per il claim “{name}”.",
+          "valueInvalid": "Il valore di “{name}” deve essere un testo, un numero, true o false, o un array o oggetto JSON (niente null, al massimo 4 livelli).",
+          "attributeUnknown": "Il claim “{name}” usa un attributo sconosciuto."
         },
         "cleanup": {
           "trigger": "Rimuovi duplicati inutilizzati",
@@ -1391,6 +1449,8 @@
           "searchPlaceholder": "Cerca per nome o email…",
           "searchLabel": "Cerca utenti",
           "rolePlaceholder": "Ruolo",
+          "exportCsv": "Esporta CSV",
+          "exportCsvHint": "Scarica gli utenti che corrispondono alla ricerca e al filtro attuali come file CSV",
           "roleAll": "Tutti i ruoli",
           "roleAdmin": "Amministratore",
           "roleUser": "Utente",
@@ -1408,7 +1468,8 @@
           "previous": "Precedente",
           "next": "Successiva",
           "pageOf": "Pagina {page} / {pages}",
-          "poweredBy": "Basato su <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> e metodi correlati del <link>plugin admin di Better Auth</link>. Devi aver effettuato l’accesso come amministratore."
+          "poweredBy": "Basato su <code>listUsers</code>, <code>createUser</code>, <code>setRole</code>, <code>updateUser</code>, <code>setUserPassword</code> e metodi correlati del <link>plugin admin di Better Auth</link>. Devi aver effettuato l’accesso come amministratore.",
+          "import": "Importa utenti"
         },
         "status": {
           "banned": "Bannato",
@@ -1552,6 +1613,73 @@
           }
         }
       },
+      "userImport": {
+        "title": "Importa utenti",
+        "description": "Porta gli account da Auth0 o da un file CSV. Una prova a secco mostra cosa succederà prima di scrivere qualsiasi cosa.",
+        "fileTitle": "File",
+        "limits": "Fino a {size} MB e {count} utenti per importazione. Dividi le esportazioni più grandi in più file.",
+        "format": "Formato",
+        "formatAuth0": "Esportazione utenti Auth0 (JSON)",
+        "formatCsv": "CSV",
+        "usersFile": "File degli utenti",
+        "usersFileHelpAuth0": "Il file prodotto dal job di esportazione utenti di Auth0: un oggetto JSON per riga oppure un array JSON.",
+        "usersFileHelpCsv": "Una riga di intestazione, poi un utente per riga. Colonne: <code>email</code> (obbligatoria), <code>name</code>, <code>username</code>, <code>emailVerified</code>, <code>role</code>, <code>passwordHash</code> (bcrypt).",
+        "hashesFile": "Esportazione degli hash delle password (facoltativa)",
+        "hashesFileHelp": "Gli hash bcrypt che il supporto Auth0 fornisce su richiesta, associati agli utenti per ID, altrimenti per email. Gli utenti senza hash accedono con un codice inviato via email o reimpostano la password.",
+        "allowAdmin": "Consenti il ruolo admin",
+        "allowAdminHelp": "Le righe con <code>role</code> uguale a <code>admin</code> vengono rifiutate se questa opzione non è attiva.",
+        "notice": "Gli utenti importati non ricevono email e gli account esistenti non vengono mai modificati. Accessi social, MFA e passkey non vengono importati: gli utenti li configurano di nuovo.",
+        "check": "Esegui prova a secco",
+        "checking": "Verifica…",
+        "dryRunTitle": "Prova a secco",
+        "dryRunDescription": "{rows, plural, one {# riga letta.} other {# righe lette.}} Non è stato ancora scritto nulla: i file vengono ricontrollati alla conferma.",
+        "counts": {
+          "toCreate": "Da creare",
+          "skippedExisting": "Saltati: email già in uso",
+          "skippedAlias": "Saltati: alias di un’email esistente",
+          "invalid": "Righe non valide"
+        },
+        "details": "Tra gli utenti da creare: {withPassword} con password, {admins} admin, {blocked} bloccati (importati come bannati).",
+        "errorsTitle": "Righe non importate (prime {shown} di {total})",
+        "columns": {
+          "row": "Riga",
+          "email": "Email",
+          "reason": "Motivo"
+        },
+        "confirm": "Importa {count, plural, one {# utente} other {# utenti}}",
+        "importing": "Importazione…",
+        "done": "{count, plural, one {# utente importato.} other {# utenti importati.}}",
+        "doneConflicts": "{count, plural, one {# riga saltata} other {# righe saltate}}: un altro account ha preso l’indirizzo email o il nome utente dopo la prova a secco.",
+        "partial": "L’importazione si è interrotta dopo {created} utenti, {count} righe non sono state scritte. Eseguila di nuovo: gli utenti già importati vengono saltati.",
+        "viewUsers": "Vedi utenti",
+        "noFile": "Scegli un file da importare.",
+        "changed": "I file o le opzioni sono cambiati dopo la prova a secco. Esegui di nuovo la prova a secco.",
+        "reasons": {
+          "invalidRecord": "Record non valido",
+          "missingEmail": "Nessun indirizzo email",
+          "invalidEmail": "Indirizzo email non valido",
+          "invalidName": "Nome non valido (troppo lungo o con caratteri di controllo)",
+          "invalidUsername": "Nome utente non valido (da 3 a 30 lettere, cifre, _ o .)",
+          "invalidEmailVerified": "emailVerified non è né true né false",
+          "invalidRole": "Il ruolo non è né user né admin",
+          "adminNotAllowed": "Ruolo admin non consentito in questa importazione",
+          "unsupportedHash": "L’hash della password non è bcrypt",
+          "bcryptCost": "Costo bcrypt fuori da 4–14",
+          "duplicateInFile": "Stesso indirizzo email (o casella) di una riga precedente",
+          "usernameTaken": "Nome utente già in uso"
+        },
+        "fileErrors": {
+          "empty": "Il file non contiene utenti.",
+          "tooLarge": "I file superano {size} MB. Dividi l’esportazione in più file.",
+          "tooManyUsers": "Il file contiene più di {count} utenti. Dividi l’esportazione in più file.",
+          "invalidJson": "Il file non è JSON valido: è previsto un oggetto per riga oppure un array.",
+          "csvMissingEmail": "Il file CSV non ha la colonna email.",
+          "csvUnknownColumn": "Colonna CSV sconosciuta «{column}». Vengono lette solo le colonne documentate: rimuovila.",
+          "csvDuplicateColumn": "La colonna CSV «{column}» compare due volte.",
+          "csvUnbalancedQuotes": "Il file CSV contiene virgolette mai chiuse.",
+          "invalidHashFile": "L’esportazione degli hash delle password non è JSON valido."
+        }
+      },
       "consent": {
         "title": "Consensi",
         "description": "Autorizzazioni che le persone hanno concesso ai client OAuth, con gli scope e la data in cui sono state concesse.",
@@ -1660,7 +1788,9 @@
             "impersonate": "Accesso come utente",
             "reset_two_factor": "Autenticazione a due fattori reimpostata",
             "export_data": "Dati dell’account esportati",
-            "self_delete": "Ha eliminato il proprio account"
+            "self_delete": "Ha eliminato il proprio account",
+            "export_csv": "Utenti esportati in CSV",
+            "import": "Utenti importati"
           },
           "oauth_client": {
             "create": "Client OAuth registrato",
@@ -1672,6 +1802,7 @@
             "enable": "Client OAuth attivato",
             "branding_update": "Personalizzazione dell’accesso modificata",
             "branding_reset": "Personalizzazione dell’accesso reimpostata",
+            "claims_update": "Claim dei token modificati",
             "remove_duplicates": "Client OAuth duplicati rimossi"
           },
           "client_registration": {
@@ -1740,10 +1871,15 @@
             "rotate_secret": "Secret del webhook rigenerato",
             "test": "Evento di prova del webhook inviato",
             "redeliver": "Evento del webhook consegnato di nuovo"
+          },
+          "audit_log": {
+            "export_csv": "Registro di audit esportato in CSV"
           }
         },
         "actorPlaceholder": "Cerca per autore (email)…",
         "actorLabel": "Cerca per autore",
+        "exportCsv": "Esporta CSV",
+        "exportCsvHint": "Scarica tutte le voci che corrispondono al filtro e alla ricerca attuali come file CSV",
         "pagesLabel": "Pagine del registro di audit",
         "newest": "Voci più recenti",
         "older": "Voci precedenti"

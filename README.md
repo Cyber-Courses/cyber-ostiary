@@ -61,17 +61,20 @@ Hosted identity platforms are great until the bill scales with your users or you
 - Self-registration for MCP clients and AI agents: Dynamic Client Registration and Client ID Metadata Documents, off by default and controlled from the admin console. Anonymous registration is limited to public PKCE clients (no secret leaves without a sign-in) — see [MCP and AI agents](docs/mcp-and-agents.md)
 - Device sign-in (RFC 8628) for CLIs, TVs and other apps without a browser
 - Protected resources: JWT access tokens scoped to your APIs, with the user's role as a claim
+- Custom claims per application in the ID token, access token and UserInfo: fixed values or user attributes (role, organization, username…), declared in the admin console, no scripts
 - Organizations with members, roles and invitations
 - SCIM 2.0 provisioning per organization: Okta, Entra ID and other identity providers create and deactivate accounts
 
 **For you (admin console)**
 
 - Users: search, roles, bans, sessions, impersonation, two-factor reset
+- User import from an Auth0 export or a CSV file, with a dry run first: Auth0 bcrypt password hashes keep working and become scrypt at the next sign-in — see [Import users](docs/import-users.md)
 - Sign-in providers: turn social sign-in providers on and off, order them and paste their credentials (stored encrypted) without a redeploy
 - Sign-in branding per application: display name, logo, accent color (with WCAG contrast checks), tagline, side panel and which social buttons show, with a live preview
 - OAuth clients with their icons, an **App usage** page (tokens, users and consents per app over 30 days), consents, organizations, SSO providers
 - API keys: turn them on, set their maximum lifetime, see and revoke every key
 - Audit log of every admin action, sign-in activity and failed sign-in monitoring
+- CSV export of the users list and the audit log, with the page's filters, for audits and migrations
 - Signing keys: automatic rotation on a schedule, or rotate now, with a grace period during which old tokens keep verifying
 - Rate limits per client IP on sign-in, codes, password reset and token endpoints, counted in Postgres so they hold on serverless
 
@@ -157,6 +160,7 @@ The [full guide](docs/connect-an-app.md) covers protecting your APIs, signing ke
 | [Connect an app](docs/connect-an-app.md) | OIDC setup, APIs and scopes, signing keys, device flow, per-app branding, Google One Tap |
 | [Social sign-in](docs/social-sign-in.md) | Turning on Google, Apple, GitHub and 33 more providers from the admin console |
 | [Enterprise SSO](docs/enterprise-sso.md) | OIDC and SAML 2.0 identity providers (Okta, Entra ID, Google Workspace), domain verification |
+| [Import users](docs/import-users.md) | Moving users from Auth0 or a CSV file, with their bcrypt password hashes |
 | [SCIM provisioning](docs/scim.md) | Okta and Entra ID creating and deactivating accounts per organization |
 | [Webhooks](docs/webhooks.md) | Events, Standard Webhooks signatures, retries and the delivery log |
 | [MCP and AI agents](docs/mcp-and-agents.md) | Dynamic Client Registration, Client ID Metadata Documents, protecting an MCP server |
