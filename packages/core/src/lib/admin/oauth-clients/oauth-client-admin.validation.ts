@@ -4,6 +4,7 @@ import { ENV_API_SCOPES, OIDC_SCOPES } from "@ostiary/core/lib/oauth-scopes";
 
 import {
   DEVICE_CODE_GRANT_TYPE,
+  isMachineClient,
   type CreateOAuthClientAdminInput,
   type UpdateOAuthClientAdminInput,
 } from "@ostiary/core/lib/admin/oauth-clients/oauth-client-admin.types";
@@ -52,6 +53,15 @@ export function parseLogoUri(raw: unknown): BodyParseResult<string | null> {
   return { ok: true, value: parsed.data || null };
 }
 
+export const POST_LOGOUT_WITHOUT_END_SESSION_MESSAGE =
+  "post-logout redirect URIs need enable_end_session (RP-initiated logout)";
+
+/**
+ * Where the end-session endpoint may redirect after logout (exact match, like redirect URIs).
+ * Better Auth checks each URL; an empty list clears them on update.
+ */
+const postLogoutRedirectUrisSchema = z.array(z.string().trim().min(1)).optional();
+
 const DEFAULT_GRANT_TYPES = [
   "authorization_code",
   "refresh_token",
@@ -65,7 +75,8 @@ export const createOAuthClientBodySchema = (apiScopes: readonly string[] = ENV_A
   const allScopes: readonly string[] = [...OIDC_SCOPES, ...apiScopes];
   return z
     .object({
-      redirect_uris: z.array(z.string().min(1)).min(1),
+      // Only the authorization_code grant redirects (checked below): a machine client has none.
+      redirect_uris: z.array(z.string().min(1)).optional().default([]),
       client_name: z.string().optional(),
       token_endpoint_auth_method: tokenEndpointAuthMethodSchema.default(
         "client_secret_basic",
@@ -79,6 +90,9 @@ export const createOAuthClientBodySchema = (apiScopes: readonly string[] = ENV_A
       response_types: z.array(z.literal("code")).optional(),
       type: oauthClientApplicationTypeSchema.optional(),
       skip_consent: z.boolean().optional().default(false),
+      // Off unless asked for, as in Better Auth: the console's dialog asks for it explicitly.
+      enable_end_session: z.boolean().optional().default(false),
+      post_logout_redirect_uris: postLogoutRedirectUrisSchema,
       logo_uri: logoUriSchema,
       scope: z
         .string()
@@ -89,12 +103,36 @@ export const createOAuthClientBodySchema = (apiScopes: readonly string[] = ENV_A
           { message: `scope must only contain: ${allScopes.join(", ")}` },
         )
         .optional(),
+      // APIs to link the client to (Better Auth's oauth_client_resource), by identifier.
+      resources: z.array(z.string().trim().url()).max(100).optional().default([]),
     })
     .strict()
     .superRefine((v, ctx) => {
+      if (v.post_logout_redirect_uris?.length && !v.enable_end_session) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["post_logout_redirect_uris"],
+          message: POST_LOGOUT_WITHOUT_END_SESSION_MESSAGE,
+        });
+      }
+      if (v.grant_types.includes("authorization_code") && v.redirect_uris.length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["redirect_uris"],
+          message: "authorization_code clients need at least one redirect URI",
+        });
+      }
+      if (!v.grant_types.includes("client_credentials")) return;
+      // Better Auth gives public clients no machine scopes: their tokens would all be refused.
+      if (v.token_endpoint_auth_method === "none") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["token_endpoint_auth_method"],
+          message: "client_credentials clients must be confidential (client_secret_basic or client_secret_post)",
+        });
+      }
       // A client without scopes may request every server scope, so machine
       // clients must be limited to explicit API scopes.
-      if (!v.grant_types.includes("client_credentials")) return;
       const scopes = v.scope?.split(/\s+/) ?? [];
       if (scopes.length === 0 || !scopes.every((sc) => apiScopes.includes(sc))) {
         ctx.addIssue({
@@ -115,6 +153,8 @@ const updateOAuthClientBodyTransformSchema = z
     client_name: z.string().optional(),
     redirect_uris: z.array(z.string().min(1)).min(1).optional(),
     skip_consent: z.boolean().optional(),
+    enable_end_session: z.boolean().optional(),
+    post_logout_redirect_uris: postLogoutRedirectUrisSchema,
     device_code: z.boolean().optional(),
     // Empty or null clears it.
     logo_uri: logoUriSchema,
@@ -125,9 +165,15 @@ const updateOAuthClientBodyTransformSchema = z
       data.client_name !== undefined ||
       data.redirect_uris !== undefined ||
       data.skip_consent !== undefined ||
+      data.enable_end_session !== undefined ||
+      data.post_logout_redirect_uris !== undefined ||
       data.device_code !== undefined ||
       data.logo_uri !== undefined,
     { message: "No updatable fields provided" },
+  )
+  .refine(
+    (data) => !(data.enable_end_session === false && data.post_logout_redirect_uris?.length),
+    { path: ["post_logout_redirect_uris"], message: POST_LOGOUT_WITHOUT_END_SESSION_MESSAGE },
   )
   .transform((data): UpdateOAuthClientAdminInput => {
     const out: UpdateOAuthClientAdminInput = {};
@@ -139,6 +185,12 @@ const updateOAuthClientBodyTransformSchema = z
     }
     if (data.skip_consent !== undefined) {
       out.skip_consent = data.skip_consent;
+    }
+    if (data.enable_end_session !== undefined) {
+      out.enable_end_session = data.enable_end_session;
+    }
+    if (data.post_logout_redirect_uris !== undefined) {
+      out.post_logout_redirect_uris = data.post_logout_redirect_uris;
     }
     if (data.device_code !== undefined) {
       out.device_code = data.device_code;
@@ -160,6 +212,19 @@ export function withDeviceCodeGrant(
   const current = grantTypes?.length ? [...grantTypes] : ["authorization_code"];
   const others = current.filter((grant) => grant !== DEVICE_CODE_GRANT_TYPE);
   return enabled ? [...others, DEVICE_CODE_GRANT_TYPE] : others;
+}
+
+/**
+ * Why a device code grant change is refused, or null. A machine-to-machine client signs no
+ * user in: it gets no device sign-in.
+ */
+export function deviceCodeUpdateError(
+  grantTypes: readonly string[] | null | undefined,
+  enabled: boolean,
+): string | null {
+  return enabled && isMachineClient(grantTypes)
+    ? "A machine-to-machine client (client_credentials only) cannot use device sign-in."
+    : null;
 }
 
 /**
@@ -188,8 +253,13 @@ export function parseCreateOAuthClientBody(
       response_types: v.grant_types.includes("authorization_code") ? ["code"] : [],
       type: v.type,
       skip_consent: v.skip_consent,
+      enable_end_session: v.enable_end_session,
+      ...(v.post_logout_redirect_uris?.length
+        ? { post_logout_redirect_uris: v.post_logout_redirect_uris }
+        : {}),
       logo_uri: v.logo_uri || undefined,
       scope: v.scope?.split(/\s+/).join(" "),
+      resources: [...new Set(v.resources)],
     },
   };
 }

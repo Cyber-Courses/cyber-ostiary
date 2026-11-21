@@ -50,10 +50,29 @@ All notable changes are documented here. The format follows
 
 ### Added
 
+- **Sign-out from the app (RP-initiated logout).** **Register application** and **Edit
+  application** have a **Sign-out from the app (RP-initiated logout)** option and optional
+  **Post-logout redirect URIs**: the app may then send the user to the advertised
+  end-session endpoint (`/api/auth/oauth2/end-session`) to end the Ostiary session, and its ID
+  tokens carry `sid`. Before, admin-registered apps could never use it (#63). Ticked by default
+  for apps registered in the console; existing apps, and clients created with the JSON API
+  without `enable_end_session`, keep it off. `POST` and `PATCH /api/admin/oauth-clients` take
+  `enable_end_session` and `post_logout_redirect_uris` (an empty list clears them; URIs without
+  `enable_end_session` are refused). Changes are audited in `oauth_client.update`'s fields. See
+  `docs/connect-an-app.md`.
 - **Health endpoint.** `GET /api/health` on both apps answers 200 `{"status":"ok"}` when the
   database responds within 3 seconds and 503 otherwise, for load balancers and uptime
   monitors. The Docker images' `HEALTHCHECK` uses it (it used `/api/auth/ok` and `/icon`).
 
+- **Machine-to-machine applications from the console.** **Register application** has a
+  **Machine-to-machine (client credentials)** client type: a confidential client with the
+  `client_credentials` grant only, no redirect URIs, consent or device sign-in, limited to the
+  API scopes ticked in the dialog and linked to their APIs. The applications list shows the
+  type (and filters on it), and **Edit application** only offers the name and icon for such a
+  client. `POST /api/admin/oauth-clients` no longer requires `redirect_uris` without the
+  `authorization_code` grant, takes `resources` (APIs to link the client to), and refuses a
+  public `client_credentials` client; `PATCH` refuses device sign-in on a machine client. See
+  `docs/protect-an-api.md`.
 - **CSV export of users and the audit log.** An **Export CSV** button on the Users and Audit
   pages downloads what the page shows, with its search and filters, every page of it
   (`GET /api/admin/users/export`, `GET /api/admin/audit/export`; platform admins only, from the
@@ -419,6 +438,15 @@ All notable changes are documented here. The format follows
 
 ### Fixed
 
+- `EMAIL_DEDUP` is listed in both apps' `.env.example` (the admin console's user import
+  reads it), and the unused `SENTRY_DSN` and `LOG_REQUESTS` variables are gone (#65).
+- The **Deploy with Vercel** button asks for `CRON_SECRET`. Without it the daily cron
+  (`/api/cron/webhooks`) got `401`, so webhook retries and retention never ran on a fresh
+  deploy. Existing projects without it: add it and redeploy (docs/deploy-vercel.md).
+- The webhooks console no longer says that a disabled endpoint's pending events are sent again,
+  or wait, when it is turned back on (the endpoint notice, the **Enabled** hint and the delivery
+  log, in every language). Disabling an endpoint gives them up; the hints now say so and point
+  to **Redeliver** (#62).
 - **No more 500s while the database wakes up.** A new database connection that fails for a
   transient reason (serverless Postgres such as Neon starting, a refused or dropped
   connection, a server restarting) is retried up to 3 times within 12 seconds. Only the
